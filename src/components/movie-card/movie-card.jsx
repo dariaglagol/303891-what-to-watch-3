@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Header from "@components/header/header";
 
 const MovieCard = (props) => {
   const {filmData: {GENRE, RELEASE_YEAR, TITLE}} = props;
@@ -12,21 +13,7 @@ const MovieCard = (props) => {
 
       <h1 className="visually-hidden">WTW</h1>
 
-      <header className="page-header movie-card__head">
-        <div className="logo">
-          <a className="logo__link">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
-
-        <div className="user-block">
-          <div className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <div className="movie-card__wrap">
         <div className="movie-card__info">
@@ -40,7 +27,7 @@ const MovieCard = (props) => {
           </div>
 
           <div className="movie-card__desc">
-            <h2 className="movie-card__title">${TITLE}</h2>
+            <h2 className="movie-card__title">{TITLE}</h2>
             <p className="movie-card__meta">
               <span className="movie-card__genre">{GENRE}</span>
               <span className="movie-card__year">{RELEASE_YEAR}</span>
@@ -70,9 +57,9 @@ const MovieCard = (props) => {
 MovieCard.propTypes = {
   filmData: PropTypes.objectOf(
       PropTypes.shape({
-        GENRE: PropTypes.string.isRequired(),
-        RELEASE_YEAR: PropTypes.string.isRequired(),
-        TITLE: PropTypes.string.isRequired()
+        GENRE: PropTypes.string.isRequired,
+        RELEASE_YEAR: PropTypes.string.isRequired,
+        TITLE: PropTypes.string.isRequired
       })
   )
 };
