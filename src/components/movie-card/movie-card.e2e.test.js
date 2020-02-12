@@ -23,7 +23,7 @@ it(`Should header be clicked`, () => {
       />
   );
 
-  const movieCardTitle = movieCard.find(`movie-card__title`);
+  const movieCardTitle = movieCard.find(`.movie-card__title`);
 
   // movieCardTitle.simulate(`click`);
   movieCardTitle.props().onClick();

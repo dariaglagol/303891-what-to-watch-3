@@ -37,6 +37,7 @@ it(`Main component render`, () => {
         <Main
           filmData={MockFilmData}
           catalogFilmsNamesList={MOCK_CATALOG_FILMS_NAMES_LIST}
+          onTitleClick={() => {}}
         />
     )
     .toJSON();
