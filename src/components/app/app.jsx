@@ -3,9 +3,12 @@ import PropTypes from "prop-types";
 import Main from "@components/main/main";
 
 const App = ({filmData, catalogFilmsNamesList}) => {
+  const filmTitleClickHandler = () => {};
+
   return (
     <Main
       filmData={filmData}
+      onTitleClick={filmTitleClickHandler}
       catalogFilmsNamesList={catalogFilmsNamesList}
     />
   );
