@@ -23,13 +23,11 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  filmData: PropTypes.objectOf(
-      PropTypes.shape({
-        GENRE: PropTypes.string.isRequired,
-        RELEASE_YEAR: PropTypes.string.isRequired,
-        TITLE: PropTypes.string.isRequired
-      })
-  ),
+  filmData: PropTypes.shape({
+    GENRE: PropTypes.string.isRequired,
+    RELEASE_DATE: PropTypes.string.isRequired,
+    TITLE: PropTypes.string.isRequired
+  }),
   catalogFilmsNamesList: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 

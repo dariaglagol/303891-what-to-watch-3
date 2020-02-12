@@ -40,8 +40,8 @@ const Catalog = ({catalogFilmsNamesList}) => {
       </ul>
       <div className="catalog__movies-list">
         {
-          catalogFilmsNamesList.map((name) => (
-            <CatalogCard name={name} key={name}/>
+          catalogFilmsNamesList.map((name, index) => (
+            <CatalogCard name={name} key={`${name}-${index}`} />
           ))
         }
       </div>
