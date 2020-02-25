@@ -2,14 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import Main from "@components/main/main";
 
-const App = ({filmData, catalogFilmsNamesList}) => {
+const App = ({filmData, films}) => {
   const filmTitleClickHandler = () => {};
 
   return (
     <Main
       filmData={filmData}
       onTitleClick={filmTitleClickHandler}
-      catalogFilmsNamesList={catalogFilmsNamesList}
+      films={films}
     />
   );
 };
@@ -20,7 +20,7 @@ App.propTypes = {
     GENRE: PropTypes.string.isRequired,
     RELEASE_DATE: PropTypes.string.isRequired
   }),
-  catalogFilmsNamesList: PropTypes.arrayOf(PropTypes.string).isRequired
+  films: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default App;

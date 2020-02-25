@@ -5,7 +5,7 @@ import MovieCard from "@components/movie-card/movie-card";
 import Footer from "@components/footer/footer";
 
 const Main = (props) => {
-  const {filmData, catalogFilmsNamesList, onTitleClick} = props;
+  const {filmData, films, onTitleClick} = props;
 
   return (
     <React.Fragment>
@@ -15,7 +15,7 @@ const Main = (props) => {
       />
       <div className="page-content">
         <Catalog
-          catalogFilmsNamesList={catalogFilmsNamesList}
+          films={films}
         />
         <Footer />
       </div>
@@ -29,7 +29,7 @@ Main.propTypes = {
     RELEASE_DATE: PropTypes.string.isRequired,
     TITLE: PropTypes.string.isRequired
   }),
-  catalogFilmsNamesList: PropTypes.arrayOf(PropTypes.string).isRequired,
+  films: PropTypes.arrayOf(PropTypes.object).isRequired,
   onTitleClick: PropTypes.func.isRequired
 };
 

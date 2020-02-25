@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import CatalogCard from "@components/catalog-card/calalog-card";
 
-const Catalog = ({catalogFilmsNamesList}) => {
+const Catalog = ({films}) => {
   return (
     <section className="catalog">
       <h2 className="catalog__title visually-hidden"> Catalog </h2>
@@ -40,8 +40,11 @@ const Catalog = ({catalogFilmsNamesList}) => {
       </ul>
       <div className="catalog__movies-list">
         {
-          catalogFilmsNamesList.map((name, index) => (
-            <CatalogCard name={name} key={`${name}-${index}`} />
+          films.map((film, index) => (
+            <CatalogCard
+              film={film}
+              key={`${index}`}
+            />
           ))
         }
       </div>
@@ -56,7 +59,7 @@ const Catalog = ({catalogFilmsNamesList}) => {
 };
 
 Catalog.propTypes = {
-  catalogFilmsNamesList: PropTypes.arrayOf(PropTypes.string).isRequired
+  films: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default Catalog;
