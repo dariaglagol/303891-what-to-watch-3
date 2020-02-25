@@ -59,7 +59,10 @@ const Catalog = ({films}) => {
 };
 
 Catalog.propTypes = {
-  films: PropTypes.arrayOf(PropTypes.object).isRequired
+  films: PropTypes.arrayOf(PropTypes.exact({
+    title: PropTypes.string.isRequired,
+    posterUrl: PropTypes.string.isRequired
+  })).isRequired
 };
 
 export default Catalog;

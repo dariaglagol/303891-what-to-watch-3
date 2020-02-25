@@ -20,7 +20,10 @@ App.propTypes = {
     GENRE: PropTypes.string.isRequired,
     RELEASE_DATE: PropTypes.string.isRequired
   }),
-  films: PropTypes.arrayOf(PropTypes.object).isRequired
+  films: PropTypes.arrayOf(PropTypes.exact({
+    title: PropTypes.string.isRequired,
+    posterUrl: PropTypes.string.isRequired
+  })).isRequired
 };
 
 export default App;
