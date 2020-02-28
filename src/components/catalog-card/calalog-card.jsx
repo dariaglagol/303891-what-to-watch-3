@@ -2,10 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const CatalogCard = (props) => {
-  const {film: {title, posterUrl}} = props;
+  const {film, onFilmCatalogCardHover} = props;
+
+  const {title, posterUrl} = film;
+
+  function _onFilmHover() {
+    onFilmCatalogCardHover(film);
+  }
 
   return (
-    <article className="small-movie-card catalog__movies-card">
+    <article
+      className="small-movie-card catalog__movies-card"
+      onMouseEnter={_onFilmHover}
+    >
       <div className="small-movie-card__image">
         <img
           src={posterUrl}
@@ -25,7 +34,8 @@ CatalogCard.propTypes = {
   film: PropTypes.exact({
     title: PropTypes.string.isRequired,
     posterUrl: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  onFilmCatalogCardHover: PropTypes.func.isRequired
 };
 
 export default CatalogCard;
