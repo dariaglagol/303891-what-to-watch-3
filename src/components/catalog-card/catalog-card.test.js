@@ -12,6 +12,7 @@ it(`Render catalog card`, () => {
     .create(
         <CatalogCard
           film={MOCKED_FILM}
+          onFilmCatalogCardHover={() => {}}
         />
     )
     .toJSON();
