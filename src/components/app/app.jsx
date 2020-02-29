@@ -1,16 +1,28 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Main from "@components/main/main";
+import MovieDetails from "@components/movie-details/movie-details";
 
 const App = ({filmData, films}) => {
   const filmTitleClickHandler = () => {};
 
   return (
-    <Main
-      filmData={filmData}
-      onTitleClick={filmTitleClickHandler}
-      films={films}
-    />
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/">
+          <Main
+            filmData={filmData}
+            onTitleClick={filmTitleClickHandler}
+            films={films}
+          />
+        </Route>
+        <Route exact path="/dev-movie-details">
+          <MovieDetails />
+        </Route>
+      </Switch>
+    </BrowserRouter>
+
   );
 };
 
