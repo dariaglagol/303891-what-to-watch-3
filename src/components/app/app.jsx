@@ -13,7 +13,7 @@ const App = ({promoMovieCover, films, movieDetails}) => {
         <Route exact path="/">
           <Main
             promoMovieCover={promoMovieCover}
-            onTitleClick={filmTitleClickHandler}
+            onPromoFilmClick={filmTitleClickHandler}
             films={films}
           />
         </Route>

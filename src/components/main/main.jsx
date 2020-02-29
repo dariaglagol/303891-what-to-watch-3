@@ -5,13 +5,13 @@ import MovieCard from "@components/movie-card/movie-card";
 import Footer from "@components/footer/footer";
 
 const Main = (props) => {
-  const {promoMovieCover, films, onTitleClick} = props;
+  const {promoMovieCover, films, onPromoFilmClick} = props;
 
   return (
     <React.Fragment>
       <MovieCard
         promoMovieCover={promoMovieCover}
-        onTitleClick={onTitleClick}
+        onPromoFilmClick={onPromoFilmClick}
       />
       <div className="page-content">
         <Catalog
@@ -34,7 +34,7 @@ Main.propTypes = {
     genre: PropTypes.string.isRequired,
     posterUrl: PropTypes.string.isRequired
   })).isRequired,
-  onTitleClick: PropTypes.func.isRequired
+  onPromoFilmClick: PropTypes.func.isRequired
 };
 
 export default Main;

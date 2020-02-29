@@ -13,7 +13,7 @@ it(`Movie card render`, () => {
     .create(
         <MovieCard
           promoMovieCover={MockFilmData}
-          onTitleClick={() => {}}
+          onPromoFilmClick={() => {}}
         />
     )
     .toJSON();

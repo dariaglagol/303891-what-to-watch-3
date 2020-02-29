@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Header from "@components/header/header";
 
 const MovieCard = (props) => {
-  const {promoMovieCover: {TITLE, GENRE, RELEASE_DATE}, onTitleClick} = props;
+  const {promoMovieCover: {TITLE, GENRE, RELEASE_DATE}, onPromoFilmClick} = props;
 
   return (
     <section className="movie-card">
@@ -17,7 +17,10 @@ const MovieCard = (props) => {
 
       <div className="movie-card__wrap">
         <div className="movie-card__info">
-          <div className="movie-card__poster">
+          <div
+            className="movie-card__poster"
+            onClick={onPromoFilmClick}
+          >
             <img
               src="img/the-grand-budapest-hotel-poster.jpg"
               alt="The Grand Budapest Hotel poster"
@@ -29,7 +32,7 @@ const MovieCard = (props) => {
           <div className="movie-card__desc">
             <h2
               className="movie-card__title"
-              onClick={onTitleClick}
+              onClick={onPromoFilmClick}
             >
               {TITLE}
             </h2>
@@ -65,7 +68,7 @@ MovieCard.propTypes = {
     RELEASE_DATE: PropTypes.string.isRequired,
     TITLE: PropTypes.string.isRequired
   }),
-  onTitleClick: PropTypes.func.isRequired
+  onPromoFilmClick: PropTypes.func.isRequired,
 };
 
 export default MovieCard;

@@ -19,14 +19,30 @@ it(`Should header be clicked`, () => {
   const movieCard = shallow(
       <MovieCard
         promoMovieCover={MockFilmData}
-        onTitleClick={movieTitleClickHandler}
+        onPromoFilmClick={movieTitleClickHandler}
       />
   );
 
   const movieCardTitle = movieCard.find(`.movie-card__title`);
 
-  // movieCardTitle.simulate(`click`);
-  movieCardTitle.props().onClick();
+  movieCardTitle.simulate(`click`);
 
   expect(movieTitleClickHandler.mock.calls.length).toBe(1);
+});
+
+it(`Should poster be clicked`, () => {
+  const moviePosterClickHeader = jest.fn();
+
+  const movieCard = shallow(
+      <MovieCard
+        promoMovieCover={MockFilmData}
+        onPromoFilmClick={moviePosterClickHeader}
+      />
+  );
+
+  const movieCardTitle = movieCard.find(`.movie-card__poster`);
+
+  movieCardTitle.simulate(`click`);
+
+  expect(moviePosterClickHeader).toHaveBeenCalledTimes(1);
 });
