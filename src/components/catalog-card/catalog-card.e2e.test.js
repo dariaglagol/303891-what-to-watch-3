@@ -10,7 +10,8 @@ Enzyme.configure({
 const MOCK = {
   film: {
     title: `title`,
-    posterUrl: `url`
+    posterUrl: `url`,
+    genre: `genre`
   }
 };
 

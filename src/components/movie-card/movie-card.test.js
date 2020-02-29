@@ -12,7 +12,7 @@ it(`Movie card render`, () => {
   const movieCardComponent = renderer
     .create(
         <MovieCard
-          filmData={MockFilmData}
+          promoMovieCover={MockFilmData}
           onTitleClick={() => {}}
         />
     )

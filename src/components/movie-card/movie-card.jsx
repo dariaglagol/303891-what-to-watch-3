@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Header from "@components/header/header";
 
 const MovieCard = (props) => {
-  const {filmData: {TITLE, GENRE, RELEASE_DATE}, onTitleClick} = props;
+  const {promoMovieCover: {TITLE, GENRE, RELEASE_DATE}, onTitleClick} = props;
 
   return (
     <section className="movie-card">
@@ -60,7 +60,7 @@ const MovieCard = (props) => {
 };
 
 MovieCard.propTypes = {
-  filmData: PropTypes.shape({
+  promoMovieCover: PropTypes.shape({
     GENRE: PropTypes.string.isRequired,
     RELEASE_DATE: PropTypes.string.isRequired,
     TITLE: PropTypes.string.isRequired

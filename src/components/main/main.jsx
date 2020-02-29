@@ -5,12 +5,12 @@ import MovieCard from "@components/movie-card/movie-card";
 import Footer from "@components/footer/footer";
 
 const Main = (props) => {
-  const {filmData, films, onTitleClick} = props;
+  const {promoMovieCover, films, onTitleClick} = props;
 
   return (
     <React.Fragment>
       <MovieCard
-        filmData={filmData}
+        promoMovieCover={promoMovieCover}
         onTitleClick={onTitleClick}
       />
       <div className="page-content">
@@ -24,13 +24,14 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  filmData: PropTypes.shape({
+  promoMovieCover: PropTypes.shape({
     GENRE: PropTypes.string.isRequired,
     RELEASE_DATE: PropTypes.string.isRequired,
     TITLE: PropTypes.string.isRequired
   }),
   films: PropTypes.arrayOf(PropTypes.exact({
     title: PropTypes.string.isRequired,
+    genre: PropTypes.string.isRequired,
     posterUrl: PropTypes.string.isRequired
   })).isRequired,
   onTitleClick: PropTypes.func.isRequired

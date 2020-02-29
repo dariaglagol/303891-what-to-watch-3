@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import Catalog from "./catalog";
+import MoviesList from "./movies-list";
 
 const MOCK_CATALOG_FILMS_LIST = [
   {
@@ -45,14 +45,13 @@ const MOCK_CATALOG_FILMS_LIST = [
   }
 ];
 
-it(`Render Catalog`, () => {
-  const catalogComponent = renderer
+it(``, () => {
+  const moviesListComponent = renderer
     .create(
-        <Catalog
+        <MoviesList
           films={MOCK_CATALOG_FILMS_LIST}
         />
-    )
-    .toJSON();
+    ).toJSON();
 
-  expect(catalogComponent).toMatchSnapshot();
+  expect(moviesListComponent).toMatchSnapshot();
 });
