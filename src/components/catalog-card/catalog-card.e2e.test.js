@@ -20,11 +20,15 @@ const mockHoverEvent = {};
 it(`Hover on film card, film's info should pass to callback`, () => {
   const {film} = MOCK;
   const onFilmHover = jest.fn();
+  const onFilmClick = jest.fn();
 
-  const filmCard = shallow(<CatalogCard
-    film={film}
-    onFilmCatalogCardHover={onFilmHover}
-  />);
+  const filmCard = shallow(
+      <CatalogCard
+        film={film}
+        onFilmCatalogCardHover={onFilmHover}
+        onFilmClick={onFilmClick}
+      />
+  );
 
   filmCard.simulate(`mouseEnter`, mockHoverEvent);
 

@@ -14,6 +14,7 @@ it(`Render catalog card`, () => {
         <CatalogCard
           film={MOCKED_FILM}
           onFilmCatalogCardHover={() => {}}
+          onFilmClick={() => {}}
         />
     )
     .toJSON();

@@ -12,10 +12,10 @@ export default class App extends PureComponent {
       activePage: `main`
     };
 
-    this._promoFilmClickHandler = this._promoFilmClickHandler.bind(this);
+    this._filmClickHandler = this._filmClickHandler.bind(this);
   }
 
-  _promoFilmClickHandler(activePage) {
+  _filmClickHandler(activePage) {
     this.setState({
       activePage
     });
@@ -30,7 +30,7 @@ export default class App extends PureComponent {
         return (
           <Main
             promoMovieCover={promoMovieCover}
-            onPromoFilmClick={this._promoFilmClickHandler}
+            onFilmClick={this._filmClickHandler}
             films={films}
           />
         );
@@ -38,6 +38,7 @@ export default class App extends PureComponent {
         return (
           <MovieDetails
             promoMovieCover={promoMovieCover}
+            onFilmClick={this._filmClickHandler}
             films={films}
             movieDetails={movieDetails}
           />
@@ -58,6 +59,7 @@ export default class App extends PureComponent {
           <Route exact path="/dev-movie-details">
             <MovieDetails
               promoMovieCover={promoMovieCover}
+              onFilmClick={this._filmClickHandler}
               films={films}
               movieDetails={movieDetails}
             />

@@ -50,6 +50,7 @@ it(`Movie list render`, () => {
     .create(
         <MoviesList
           films={MOCK_CATALOG_FILMS_LIST}
+          onFilmClick={() => {}}
         />
     ).toJSON();
 

@@ -19,7 +19,7 @@ it(`Should header be clicked`, () => {
   const movieCard = shallow(
       <MovieCard
         promoMovieCover={MockFilmData}
-        onPromoFilmClick={movieTitleClickHandler}
+        onFilmClick={movieTitleClickHandler}
       />
   );
 
@@ -36,7 +36,7 @@ it(`Should poster be clicked`, () => {
   const movieCard = shallow(
       <MovieCard
         promoMovieCover={MockFilmData}
-        onPromoFilmClick={moviePosterClickHeader}
+        onFilmClick={moviePosterClickHeader}
       />
   );
 

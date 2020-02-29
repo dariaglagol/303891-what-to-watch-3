@@ -11,7 +11,8 @@ const MovieDetails = (props) => {
     movieDetails: {
       TITLE, GENRE, RELEASE_DATE, SCORE, RATING, DESCRIPTION, DIRECTOR, STARRING, POSTER
     },
-    films
+    films,
+    onFilmClick
   } = props;
 
   const movieMark = getMovieMark(SCORE);
@@ -109,6 +110,7 @@ const MovieDetails = (props) => {
 
           <MoviesList
             films={similarFilms}
+            onFilmClick={onFilmClick}
           />
         </section>
 
@@ -134,7 +136,8 @@ MovieDetails.propTypes = {
     title: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
     posterUrl: PropTypes.string.isRequired
-  })).isRequired
+  })).isRequired,
+  onFilmClick: PropTypes.func.isRequired
 };
 
 export default MovieDetails;

@@ -17,7 +17,7 @@ function _renderGenres() {
 }
 
 const Catalog = (props) => {
-  const {films} = props;
+  const {films, onFilmClick} = props;
 
   return (
     <section className="catalog">
@@ -30,6 +30,7 @@ const Catalog = (props) => {
       </ul>
       <MoviesList
         films={films}
+        onFilmClick={onFilmClick}
       />
       <div className="catalog__more">
         <button className="catalog__button" type="button">
@@ -47,5 +48,6 @@ Catalog.propTypes = {
     title: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
     posterUrl: PropTypes.string.isRequired
-  })).isRequired
+  })).isRequired,
+  onFilmClick: PropTypes.func.isRequired
 };

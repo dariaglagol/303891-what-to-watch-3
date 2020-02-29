@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const CatalogCard = (props) => {
-  const {film, onFilmCatalogCardHover} = props;
+  const {film, onFilmCatalogCardHover, onFilmClick} = props;
 
   const {title, posterUrl} = film;
 
@@ -10,10 +10,15 @@ const CatalogCard = (props) => {
     onFilmCatalogCardHover(film);
   }
 
+  function _onFilmClick() {
+    onFilmClick(`movie`);
+  }
+
   return (
     <article
       className="small-movie-card catalog__movies-card"
       onMouseEnter={_onFilmHover}
+      onClick={_onFilmClick}
     >
       <div className="small-movie-card__image">
         <img
@@ -36,7 +41,8 @@ CatalogCard.propTypes = {
     genre: PropTypes.string.isRequired,
     posterUrl: PropTypes.string.isRequired
   }).isRequired,
-  onFilmCatalogCardHover: PropTypes.func.isRequired
+  onFilmCatalogCardHover: PropTypes.func.isRequired,
+  onFilmClick: PropTypes.func.isRequired
 };
 
 export default CatalogCard;

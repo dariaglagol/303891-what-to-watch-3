@@ -57,7 +57,7 @@ it(`Main component render`, () => {
         <Main
           promoMovieCover={MockFilmData}
           films={MOCK_CATALOG_FILMS_LIST}
-          onPromoFilmClick={() => {}}
+          onFilmClick={() => {}}
         />
     )
     .toJSON();

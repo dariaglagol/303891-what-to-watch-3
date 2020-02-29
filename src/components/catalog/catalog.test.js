@@ -50,6 +50,7 @@ it(`Render Catalog`, () => {
     .create(
         <Catalog
           films={MOCK_CATALOG_FILMS_LIST}
+          onFilmClick={() => {}}
         />
     )
     .toJSON();

@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import Header from "@components/header/header";
 
 const MovieCard = (props) => {
-  const {promoMovieCover: {TITLE, GENRE, RELEASE_DATE}, onPromoFilmClick} = props;
+  const {promoMovieCover: {TITLE, GENRE, RELEASE_DATE}, onFilmClick} = props;
 
   function _onFilmClickHandler() {
-    onPromoFilmClick(`movie`);
+    onFilmClick(`movie`);
   }
 
   return (
@@ -72,7 +72,7 @@ MovieCard.propTypes = {
     RELEASE_DATE: PropTypes.string.isRequired,
     TITLE: PropTypes.string.isRequired
   }),
-  onPromoFilmClick: PropTypes.func.isRequired,
+  onFilmClick: PropTypes.func.isRequired,
 };
 
 export default MovieCard;

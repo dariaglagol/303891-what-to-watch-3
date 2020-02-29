@@ -20,12 +20,13 @@ export default class MoviesList extends PureComponent {
   }
 
   _renderFilmCatalogCards() {
-    const {films} = this.props;
+    const {films, onFilmClick} = this.props;
 
     return (
       films.map((film, index) => (
         <CatalogCard
           onFilmCatalogCardHover={this._filmCatalogCardHoverHandler}
+          onFilmClick={onFilmClick}
           film={film}
           key={`${index}`}
         />
@@ -47,5 +48,6 @@ MoviesList.propTypes = {
     title: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
     posterUrl: PropTypes.string.isRequired
-  })).isRequired
+  })).isRequired,
+  onFilmClick: PropTypes.func.isRequired
 };
