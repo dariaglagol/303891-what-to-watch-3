@@ -5,6 +5,10 @@ import Header from "@components/header/header";
 const MovieCard = (props) => {
   const {promoMovieCover: {TITLE, GENRE, RELEASE_DATE}, onPromoFilmClick} = props;
 
+  function _onFilmClickHandler() {
+    onPromoFilmClick(`movie`);
+  }
+
   return (
     <section className="movie-card">
       <div className="movie-card__bg">
@@ -19,7 +23,7 @@ const MovieCard = (props) => {
         <div className="movie-card__info">
           <div
             className="movie-card__poster"
-            onClick={onPromoFilmClick}
+            onClick={_onFilmClickHandler}
           >
             <img
               src="img/the-grand-budapest-hotel-poster.jpg"
@@ -32,7 +36,7 @@ const MovieCard = (props) => {
           <div className="movie-card__desc">
             <h2
               className="movie-card__title"
-              onClick={onPromoFilmClick}
+              onClick={_onFilmClickHandler}
             >
               {TITLE}
             </h2>

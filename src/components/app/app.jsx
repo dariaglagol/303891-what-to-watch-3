@@ -1,33 +1,72 @@
-import React from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Main from "@components/main/main";
 import MovieDetails from "@components/movie-details/movie-details";
 
-const App = ({promoMovieCover, films, movieDetails}) => {
-  const filmTitleClickHandler = () => {};
+export default class App extends React.PureComponent {
+  constructor(props) {
+    super(props);
 
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/">
+    this.state = {
+      activePage: `main`
+    };
+
+    this._promoFilmClickHandler = this._promoFilmClickHandler.bind(this);
+  }
+
+  _promoFilmClickHandler(activePage) {
+    this.setState({
+      activePage
+    });
+  }
+
+  _renderPages() {
+    const {activePage} = this.state;
+    const {promoMovieCover, films, movieDetails} = this.props;
+
+    switch (activePage) {
+      case `main`:
+        return (
           <Main
             promoMovieCover={promoMovieCover}
-            onPromoFilmClick={filmTitleClickHandler}
+            onPromoFilmClick={this._promoFilmClickHandler}
             films={films}
           />
-        </Route>
-        <Route exact path="/dev-movie-details">
+        );
+      case `movie`:
+        return (
           <MovieDetails
             promoMovieCover={promoMovieCover}
             films={films}
             movieDetails={movieDetails}
           />
-        </Route>
-      </Switch>
-    </BrowserRouter>
-  );
-};
+        );
+    }
+
+    return null;
+  }
+
+  render() {
+    const {promoMovieCover, films, movieDetails} = this.props;
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/">
+            {this._renderPages()}
+          </Route>
+          <Route exact path="/dev-movie-details">
+            <MovieDetails
+              promoMovieCover={promoMovieCover}
+              films={films}
+              movieDetails={movieDetails}
+            />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    );
+  }
+}
 
 App.propTypes = {
   promoMovieCover: PropTypes.shape({
@@ -52,5 +91,3 @@ App.propTypes = {
     RATING: PropTypes.number.isRequired,
   })
 };
-
-export default App;
