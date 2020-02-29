@@ -4,7 +4,7 @@ import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Main from "@components/main/main";
 import MovieDetails from "@components/movie-details/movie-details";
 
-export default class App extends React.PureComponent {
+export default class App extends PureComponent {
   constructor(props) {
     super(props);
 
