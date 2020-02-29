@@ -4,7 +4,8 @@ import CatalogCard from "./calalog-card";
 
 const MOCKED_FILM = {
   title: `Fantastic Beasts: The Crimes of Grindelwald`,
-  posterUrl: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`
+  posterUrl: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+  genre: `Comedy`
 };
 
 it(`Render catalog card`, () => {
@@ -13,6 +14,7 @@ it(`Render catalog card`, () => {
         <CatalogCard
           film={MOCKED_FILM}
           onFilmCatalogCardHover={() => {}}
+          onFilmClick={() => {}}
         />
     )
     .toJSON();

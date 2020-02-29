@@ -2,8 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import Header from "@components/header/header";
 
-const MovieCard = (props) => {
-  const {filmData: {TITLE, GENRE, RELEASE_DATE}, onTitleClick} = props;
+const PromoFilm = (props) => {
+  const {promoMovieCover: {TITLE, GENRE, RELEASE_DATE}, onFilmClick} = props;
+
+  function _onFilmClickHandler() {
+    onFilmClick(`movie`);
+  }
 
   return (
     <section className="movie-card">
@@ -17,7 +21,10 @@ const MovieCard = (props) => {
 
       <div className="movie-card__wrap">
         <div className="movie-card__info">
-          <div className="movie-card__poster">
+          <div
+            className="movie-card__poster"
+            onClick={_onFilmClickHandler}
+          >
             <img
               src="img/the-grand-budapest-hotel-poster.jpg"
               alt="The Grand Budapest Hotel poster"
@@ -29,7 +36,7 @@ const MovieCard = (props) => {
           <div className="movie-card__desc">
             <h2
               className="movie-card__title"
-              onClick={onTitleClick}
+              onClick={_onFilmClickHandler}
             >
               {TITLE}
             </h2>
@@ -59,13 +66,13 @@ const MovieCard = (props) => {
   );
 };
 
-MovieCard.propTypes = {
-  filmData: PropTypes.shape({
+PromoFilm.propTypes = {
+  promoMovieCover: PropTypes.shape({
     GENRE: PropTypes.string.isRequired,
     RELEASE_DATE: PropTypes.string.isRequired,
     TITLE: PropTypes.string.isRequired
   }),
-  onTitleClick: PropTypes.func.isRequired
+  onFilmClick: PropTypes.func.isRequired,
 };
 
-export default MovieCard;
+export default PromoFilm;

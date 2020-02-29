@@ -1,29 +1,95 @@
-import React from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Main from "@components/main/main";
+import MovieDetails from "@components/movie-details/movie-details";
 
-const App = ({filmData, films}) => {
-  const filmTitleClickHandler = () => {};
+export default class App extends PureComponent {
+  constructor(props) {
+    super(props);
 
-  return (
-    <Main
-      filmData={filmData}
-      onTitleClick={filmTitleClickHandler}
-      films={films}
-    />
-  );
-};
+    this.state = {
+      activePage: `main`
+    };
+
+    this._filmClickHandler = this._filmClickHandler.bind(this);
+  }
+
+  _filmClickHandler(activePage) {
+    this.setState({
+      activePage
+    });
+  }
+
+  _renderPages() {
+    const {activePage} = this.state;
+    const {promoMovieCover, films, movieDetails} = this.props;
+
+    switch (activePage) {
+      case `main`:
+        return (
+          <Main
+            promoMovieCover={promoMovieCover}
+            onFilmClick={this._filmClickHandler}
+            films={films}
+          />
+        );
+      case `movie`:
+        return (
+          <MovieDetails
+            promoMovieCover={promoMovieCover}
+            onFilmClick={this._filmClickHandler}
+            films={films}
+            movieDetails={movieDetails}
+          />
+        );
+    }
+
+    return null;
+  }
+
+  render() {
+    const {promoMovieCover, films, movieDetails} = this.props;
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/">
+            {this._renderPages()}
+          </Route>
+          <Route exact path="/dev-movie-details">
+            <MovieDetails
+              promoMovieCover={promoMovieCover}
+              onFilmClick={this._filmClickHandler}
+              films={films}
+              movieDetails={movieDetails}
+            />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    );
+  }
+}
 
 App.propTypes = {
-  filmData: PropTypes.shape({
+  promoMovieCover: PropTypes.shape({
     TITLE: PropTypes.string.isRequired,
     GENRE: PropTypes.string.isRequired,
     RELEASE_DATE: PropTypes.string.isRequired
   }),
   films: PropTypes.arrayOf(PropTypes.exact({
     title: PropTypes.string.isRequired,
+    genre: PropTypes.string.isRequired,
     posterUrl: PropTypes.string.isRequired
-  })).isRequired
+  })).isRequired,
+  movieDetails: PropTypes.exact({
+    TITLE: PropTypes.string.isRequired,
+    GENRE: PropTypes.string.isRequired,
+    RELEASE_DATE: PropTypes.string.isRequired,
+    POSTER: PropTypes.string.isRequired,
+    DESCRIPTION: PropTypes.string.isRequired,
+    DIRECTOR: PropTypes.string.isRequired,
+    STARRING: PropTypes.string.isRequired,
+    SCORE: PropTypes.number.isRequired,
+    RATING: PropTypes.number.isRequired,
+  })
 };
-
-export default App;
