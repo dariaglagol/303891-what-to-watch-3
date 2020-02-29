@@ -1,14 +1,4 @@
-import React from "react";
-import renderer from "react-test-renderer";
-import App from "./app";
-
-const MockFilmData = {
-  TITLE: `The Grand Budapest Hotel`,
-  GENRE: `Comedy`,
-  RELEASE_DATE: `2020`
-};
-
-const MOCK_CATALOG_FILMS_LIST = [
+export default [
   {
     title: `Fantastic Beasts: The Crimes of Grindelwald`,
     posterUrl: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`
@@ -42,16 +32,3 @@ const MOCK_CATALOG_FILMS_LIST = [
     posterUrl: `img/johnny-english.jpg`
   },
 ];
-
-it(`Render App`, () => {
-  const appComponent = renderer
-    .create(
-        <App
-          filmData={MockFilmData}
-          films={MOCK_CATALOG_FILMS_LIST}
-        />
-    )
-    .toJSON();
-
-  expect(appComponent).toMatchSnapshot();
-});

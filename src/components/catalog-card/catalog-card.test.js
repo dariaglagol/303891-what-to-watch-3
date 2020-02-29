@@ -2,13 +2,17 @@ import React from "react";
 import renderer from "react-test-renderer";
 import CatalogCard from "./calalog-card";
 
-const MOCKED_NAME = `What We Do in the Shadows`;
+const MOCKED_FILM = {
+  title: `Fantastic Beasts: The Crimes of Grindelwald`,
+  posterUrl: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`
+};
 
 it(`Render catalog card`, () => {
   const catalogCardComponent = renderer
     .create(
         <CatalogCard
-          name={MOCKED_NAME}
+          film={MOCKED_FILM}
+          onFilmCatalogCardHover={() => {}}
         />
     )
     .toJSON();
