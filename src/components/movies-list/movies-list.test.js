@@ -45,7 +45,7 @@ const MOCK_CATALOG_FILMS_LIST = [
   }
 ];
 
-it(``, () => {
+it(`Movie list render`, () => {
   const moviesListComponent = renderer
     .create(
         <MoviesList
