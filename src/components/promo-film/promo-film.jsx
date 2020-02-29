@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Header from "@components/header/header";
 
-const MovieCard = (props) => {
+const PromoFilm = (props) => {
   const {promoMovieCover: {TITLE, GENRE, RELEASE_DATE}, onFilmClick} = props;
 
   function _onFilmClickHandler() {
@@ -66,7 +66,7 @@ const MovieCard = (props) => {
   );
 };
 
-MovieCard.propTypes = {
+PromoFilm.propTypes = {
   promoMovieCover: PropTypes.shape({
     GENRE: PropTypes.string.isRequired,
     RELEASE_DATE: PropTypes.string.isRequired,
@@ -75,4 +75,4 @@ MovieCard.propTypes = {
   onFilmClick: PropTypes.func.isRequired,
 };
 
-export default MovieCard;
+export default PromoFilm;

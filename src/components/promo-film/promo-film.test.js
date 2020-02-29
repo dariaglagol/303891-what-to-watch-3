@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import MovieCard from "./movie-card";
+import PromoFilm from "./promo-film";
 
 const MockFilmData = {
   TITLE: `The Grand Budapest Hotel`,
@@ -11,7 +11,7 @@ const MockFilmData = {
 it(`Movie card render`, () => {
   const movieCardComponent = renderer
     .create(
-        <MovieCard
+        <PromoFilm
           promoMovieCover={MockFilmData}
           onFilmClick={() => {}}
         />

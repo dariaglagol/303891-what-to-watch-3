@@ -1,7 +1,7 @@
 import React from "react";
 import Enzyme, {shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import MovieCard from "./movie-card";
+import PromoFilm from "./promo-film";
 
 const MockFilmData = {
   TITLE: `The Grand Budapest Hotel`,
@@ -17,7 +17,7 @@ it(`Should header be clicked`, () => {
   const movieTitleClickHandler = jest.fn();
 
   const movieCard = shallow(
-      <MovieCard
+      <PromoFilm
         promoMovieCover={MockFilmData}
         onFilmClick={movieTitleClickHandler}
       />
@@ -34,7 +34,7 @@ it(`Should poster be clicked`, () => {
   const moviePosterClickHeader = jest.fn();
 
   const movieCard = shallow(
-      <MovieCard
+      <PromoFilm
         promoMovieCover={MockFilmData}
         onFilmClick={moviePosterClickHeader}
       />

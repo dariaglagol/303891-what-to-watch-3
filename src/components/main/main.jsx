@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Catalog from "@components/catalog/catalog";
-import MovieCard from "@components/movie-card/movie-card";
+import PromoFilm from "@components/promo-film/promo-film";
 import Footer from "@components/footer/footer";
 
 const Main = (props) => {
@@ -9,7 +9,7 @@ const Main = (props) => {
 
   return (
     <React.Fragment>
-      <MovieCard
+      <PromoFilm
         promoMovieCover={promoMovieCover}
         onFilmClick={onFilmClick}
       />
