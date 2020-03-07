@@ -1,19 +1,21 @@
-import {MOVIE_MARKS} from './constants';
+import {MovieMarksTypes} from './constants';
 
 const getMovieMark = (score) => {
-  const movieMarksKeys = MOVIE_MARKS.keys();
+  let key = ``;
 
-  const movieMarkKey = [...movieMarksKeys].find((key) => {
-    return score >= parseInt(key, 10);
-  });
+  for (let type in MovieMarksTypes) {
+    if (score >= parseInt(MovieMarksTypes[type], 10) && key === ``) {
+      key = type;
+    }
+  }
 
-  return MOVIE_MARKS.get(movieMarkKey);
+  return key;
 };
 
 const getSimilarMovies = (genre, movies) => {
   return movies.filter((movie) => {
     return movie.genre === genre;
-  });
+  }).splice(0, 4);
 };
 
 export {getMovieMark, getSimilarMovies};

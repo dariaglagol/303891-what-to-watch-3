@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {PageTypes} from "@utils/constants";
 
 const CatalogCard = (props) => {
   const {film, onFilmCatalogCardHover, onFilmClick} = props;
@@ -10,14 +11,19 @@ const CatalogCard = (props) => {
     onFilmCatalogCardHover(film);
   }
 
+  function _onFilmStopHover() {
+    onFilmCatalogCardHover();
+  }
+
   function _onFilmClick() {
-    onFilmClick(`movie`);
+    onFilmClick(PageTypes.MOVIE);
   }
 
   return (
     <article
       className="small-movie-card catalog__movies-card"
       onMouseEnter={_onFilmHover}
+      onMouseLeave={_onFilmStopHover}
       onClick={_onFilmClick}
     >
       <div className="small-movie-card__image">

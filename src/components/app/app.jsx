@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Main from "@components/main/main";
 import MovieDetails from "@components/movie-details/movie-details";
+import {PageTypes} from "@utils/constants";
 
 export default class App extends PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      activePage: `main`
+      activePage: PageTypes.MAIN
     };
 
     this._filmClickHandler = this._filmClickHandler.bind(this);
@@ -26,7 +27,7 @@ export default class App extends PureComponent {
     const {promoMovieCover, films, movieDetails} = this.props;
 
     switch (activePage) {
-      case `main`:
+      case PageTypes.MAIN:
         return (
           <Main
             promoMovieCover={promoMovieCover}
@@ -34,7 +35,7 @@ export default class App extends PureComponent {
             films={films}
           />
         );
-      case `movie`:
+      case PageTypes.MOVIE:
         return (
           <MovieDetails
             promoMovieCover={promoMovieCover}
@@ -82,14 +83,14 @@ App.propTypes = {
     posterUrl: PropTypes.string.isRequired
   })).isRequired,
   movieDetails: PropTypes.exact({
-    TITLE: PropTypes.string.isRequired,
-    GENRE: PropTypes.string.isRequired,
-    RELEASE_DATE: PropTypes.string.isRequired,
-    POSTER: PropTypes.string.isRequired,
-    DESCRIPTION: PropTypes.string.isRequired,
-    DIRECTOR: PropTypes.string.isRequired,
-    STARRING: PropTypes.string.isRequired,
-    SCORE: PropTypes.number.isRequired,
-    RATING: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    genre: PropTypes.string.isRequired,
+    releaseDate: PropTypes.string.isRequired,
+    poster: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    director: PropTypes.string.isRequired,
+    starring: PropTypes.string.isRequired,
+    score: PropTypes.number.isRequired,
+    rating: PropTypes.number.isRequired,
   })
 };

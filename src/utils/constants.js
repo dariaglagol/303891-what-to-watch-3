@@ -1,13 +1,18 @@
-const MOVIE_MARKS = new Map([
-  [`10`, `Awesome`],
-  [`8`, `Very good`],
-  [`5`, `Good`],
-  [`3`, `Normal`],
-  [`0`, `Bad`]
-]);
+const MovieMarksTypes = {
+  'Awesome': `10`,
+  'Very good': `8`,
+  'Good': `5`,
+  'Normal': `3`,
+  'Bad': `0`,
+};
 
 const GENRES = [
   `Comedies`, `Crime`, `Documentary`, `Dramas`, `Horror`, `Kids & Family`, `Romance`, `Sci-Fi`, `Thrillers`
 ];
 
-export {MOVIE_MARKS, GENRES};
+const PageTypes = {
+  MAIN: `main`,
+  MOVIE: `movie`
+};
+
+export {MovieMarksTypes, GENRES, PageTypes};

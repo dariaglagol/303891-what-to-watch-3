@@ -15,7 +15,7 @@ export default class MoviesList extends PureComponent {
 
   _filmCatalogCardHoverHandler(film) {
     this.setState({
-      activeFilm: film
+      activeFilm: film || null
     });
   }
 
@@ -23,12 +23,12 @@ export default class MoviesList extends PureComponent {
     const {films, onFilmClick} = this.props;
 
     return (
-      films.map((film, index) => (
+      films.map((film) => (
         <CatalogCard
           onFilmCatalogCardHover={this._filmCatalogCardHoverHandler}
           onFilmClick={onFilmClick}
           film={film}
-          key={`${index}`}
+          key={`${film.title}`}
         />
       ))
     );

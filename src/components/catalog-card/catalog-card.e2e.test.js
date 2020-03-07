@@ -7,11 +7,13 @@ Enzyme.configure({
   adapter: new Adapter(),
 });
 
-const MOCKED_FILM = {
+const MockedFilm = {
   title: `title`,
   posterUrl: `url`,
   genre: `genre`
 };
+
+const PAGE_TYPE = `movie`;
 
 const mockHoverEvent = {};
 
@@ -21,7 +23,7 @@ it(`Hover on film card, film's info should pass to callback`, () => {
 
   const filmCard = shallow(
       <CatalogCard
-        film={MOCKED_FILM}
+        film={MockedFilm}
         onFilmCatalogCardHover={onFilmHover}
         onFilmClick={onFilmClick}
       />
@@ -30,7 +32,7 @@ it(`Hover on film card, film's info should pass to callback`, () => {
   filmCard.simulate(`mouseEnter`, mockHoverEvent);
 
   expect(onFilmHover).toHaveBeenCalledTimes(1);
-  expect(onFilmHover).toBeCalledWith(MOCKED_FILM);
+  expect(onFilmHover).toBeCalledWith(MockedFilm);
 });
 
 it(`Click on film card to change page`, () => {
@@ -39,7 +41,7 @@ it(`Click on film card to change page`, () => {
 
   const filmCard = shallow(
       <CatalogCard
-        film={MOCKED_FILM}
+        film={MockedFilm}
         onFilmCatalogCardHover={onFilmHover}
         onFilmClick={onFilmClick}
       />
@@ -48,5 +50,5 @@ it(`Click on film card to change page`, () => {
   filmCard.simulate(`click`);
 
   expect(onFilmClick.mock.calls.length).toBe(1);
-  expect(onFilmClick).toBeCalledWith(`movie`);
+  expect(onFilmClick).toBeCalledWith(PAGE_TYPE);
 });
