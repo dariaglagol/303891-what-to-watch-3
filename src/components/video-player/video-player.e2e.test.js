@@ -11,15 +11,17 @@ const Mock = {
   src: `src`,
   poster: `poster`,
   isPlaying: false,
+  muteSound: true,
 };
 
 it(`Should film trailer played after hover`, () => {
-  const {src, poster, isPlaying} = Mock;
+  const {src, poster, isPlaying, muteSound} = Mock;
   const videoPLayerComponent = mount(
       <VideoPlayer
         src={src}
         poster={poster}
         isPlaying={isPlaying}
+        muteSound={muteSound}
       />
   );
 

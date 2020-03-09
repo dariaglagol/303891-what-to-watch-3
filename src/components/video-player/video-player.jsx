@@ -51,9 +51,7 @@ export default class VideoPlayer extends PureComponent {
     const video = this._videoRef.current;
 
     if (this.props.isPlaying) {
-      setTimeout(() => {
-        video.play();
-      }, 1000);
+      video.play();
     } else {
       video.pause();
     }
@@ -64,13 +62,13 @@ export default class VideoPlayer extends PureComponent {
   }
 
   render() {
-    const {src, poster} = this.props;
+    const {src, poster, muteSound} = this.props;
 
     return (
       <video
         poster={poster}
         ref={this._videoRef}
-        muted={true}
+        muted={muteSound}
       >
         <source
           src={src}
@@ -84,4 +82,5 @@ VideoPlayer.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   src: PropTypes.string.isRequired,
   poster: PropTypes.string.isRequired,
+  muteSound: PropTypes.bool.isRequired,
 };
