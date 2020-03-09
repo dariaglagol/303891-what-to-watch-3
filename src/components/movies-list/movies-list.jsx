@@ -19,14 +19,20 @@ export default class MoviesList extends PureComponent {
     });
   }
 
+  _isFilmActive(activeFilm, film) {
+    return activeFilm && activeFilm.title === film.title || false;
+  }
+
   _renderFilmCatalogCards() {
     const {films, onFilmClick} = this.props;
+    const {activeFilm} = this.state;
 
     return (
       films.map((film) => (
         <CatalogCard
           onFilmCatalogCardHover={this._filmCatalogCardHoverHandler}
           onFilmClick={onFilmClick}
+          isPlaying={this._isFilmActive(activeFilm, film)}
           film={film}
           key={`${film.title}`}
         />
