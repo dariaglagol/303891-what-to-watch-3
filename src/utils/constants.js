@@ -15,4 +15,6 @@ const PageTypes = {
   MOVIE: `movie`
 };
 
-export {MovieMarksTypes, GENRES, PageTypes};
+const TABS = [`Overview`, `Details`, `Reviews`];
+
+export {MovieMarksTypes, GENRES, PageTypes, TABS};
