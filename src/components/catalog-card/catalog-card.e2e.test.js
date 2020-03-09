@@ -16,6 +16,8 @@ const MockedFilm = {
 
 const MOCKED_PLAY_PROP = false;
 
+const MOCKED_MUTE_SOUND = true;
+
 const PAGE_TYPE = `movie`;
 
 const mockHoverEvent = {};
@@ -29,6 +31,7 @@ it(`Hover on film card, film's info should pass to callback`, () => {
         film={MockedFilm}
         onFilmCatalogCardHover={onFilmHover}
         onFilmClick={onFilmClick}
+        muteSound={MOCKED_MUTE_SOUND}
         isPlaying={MOCKED_PLAY_PROP}
       />
   );
@@ -48,6 +51,7 @@ it(`Click on film card to change page`, () => {
         film={MockedFilm}
         onFilmCatalogCardHover={onFilmHover}
         onFilmClick={onFilmClick}
+        muteSound={MOCKED_MUTE_SOUND}
         isPlaying={MOCKED_PLAY_PROP}
       />
   );

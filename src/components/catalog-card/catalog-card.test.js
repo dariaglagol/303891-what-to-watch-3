@@ -11,6 +11,8 @@ const MOCKED_FILM = {
 
 const MOCKED_PLAY_PROP = false;
 
+const MOCKED_MUTE_SOUND = true;
+
 it(`Render catalog card`, () => {
   const catalogCardComponent = renderer
     .create(
@@ -18,6 +20,7 @@ it(`Render catalog card`, () => {
           film={MOCKED_FILM}
           onFilmCatalogCardHover={() => {}}
           onFilmClick={() => {}}
+          muteSound={MOCKED_MUTE_SOUND}
           isPlaying={MOCKED_PLAY_PROP}
         />, {createNodeMock: () => {
           return {};
