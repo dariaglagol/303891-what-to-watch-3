@@ -20,7 +20,6 @@ it(`Render catalog card`, () => {
           film={MOCKED_FILM}
           onFilmCatalogCardHover={() => {}}
           onFilmClick={() => {}}
-          muteSound={MOCKED_MUTE_SOUND}
           isPlaying={MOCKED_PLAY_PROP}
         />, {createNodeMock: () => {
           return {};

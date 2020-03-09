@@ -8,18 +8,25 @@ export default class MoviesList extends PureComponent {
 
     this.state = {
       activeFilm: null,
-      muteSound: true,
     };
 
     this._filmCatalogCardHoverHandler = this._filmCatalogCardHoverHandler.bind(this);
   }
 
   _filmCatalogCardHoverHandler(film) {
-    setTimeout(() => {
-      this.setState({
-        activeFilm: film || null
-      });
-    }, 1000);
+    if (film) {
+      setTimeout(() => {
+        this.setState({
+          activeFilm: film
+        });
+      }, 1000);
+
+      return;
+    }
+
+    this.setState({
+      activeFilm: null
+    });
   }
 
   _isFilmActive(activeFilm, film) {
@@ -28,7 +35,7 @@ export default class MoviesList extends PureComponent {
 
   _renderFilmCatalogCards() {
     const {films, onFilmClick} = this.props;
-    const {activeFilm, muteSound} = this.state;
+    const {activeFilm} = this.state;
 
     return (
       films.map((film) => (
@@ -37,7 +44,6 @@ export default class MoviesList extends PureComponent {
           onFilmClick={onFilmClick}
           isPlaying={this._isFilmActive(activeFilm, film)}
           film={film}
-          muteSound={muteSound}
           key={`${film.title}`}
         />
       ))

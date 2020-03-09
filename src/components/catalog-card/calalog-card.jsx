@@ -4,7 +4,7 @@ import VideoPlayer from "@components/video-player/video-player";
 import {PageTypes} from "@utils/constants";
 
 const CatalogCard = (props) => {
-  const {film, onFilmCatalogCardHover, onFilmClick, isPlaying, muteSound} = props;
+  const {film, onFilmCatalogCardHover, onFilmClick, isPlaying} = props;
 
   const {title, posterUrl, preview} = film;
 
@@ -31,7 +31,6 @@ const CatalogCard = (props) => {
         <VideoPlayer
           isPlaying={isPlaying}
           poster={posterUrl}
-          muteSound={muteSound}
           src={preview}
         />
       </div>
@@ -52,7 +51,6 @@ CatalogCard.propTypes = {
   onFilmCatalogCardHover: PropTypes.func.isRequired,
   onFilmClick: PropTypes.func.isRequired,
   isPlaying: PropTypes.bool.isRequired,
-  muteSound: PropTypes.bool.isRequired,
 };
 
 export default CatalogCard;
