@@ -2,7 +2,7 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Main from "@components/main/main";
-import MovieDetails from "@components/movie-details/movie-details";
+import MovieExtended from "@components/movie-extended/movie-extended";
 import {PageTypes} from "@utils/constants";
 
 export default class App extends PureComponent {
@@ -37,7 +37,7 @@ export default class App extends PureComponent {
         );
       case PageTypes.MOVIE:
         return (
-          <MovieDetails
+          <MovieExtended
             promoMovieCover={promoMovieCover}
             onFilmClick={this._filmClickHandler}
             films={films}
@@ -58,7 +58,7 @@ export default class App extends PureComponent {
             {this._renderPages()}
           </Route>
           <Route exact path="/dev-movie-details">
-            <MovieDetails
+            <MovieExtended
               promoMovieCover={promoMovieCover}
               onFilmClick={this._filmClickHandler}
               films={films}

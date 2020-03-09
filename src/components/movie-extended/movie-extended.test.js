@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import MovieDetails from "./movie-details";
+import MovieExtended from "./movie-extended";
 
 const MOVIE_DETAILS = {
   title: `The Grand Budapest Hotel`,
@@ -66,9 +66,9 @@ const MOCK_CATALOG_FILMS_LIST = [
 ];
 
 it(`Movie details render`, () => {
-  const movieDetailsComponent = renderer
+  const movieExtendedComponent = renderer
     .create(
-        <MovieDetails
+        <MovieExtended
           movieDetails={MOVIE_DETAILS}
           films={MOCK_CATALOG_FILMS_LIST}
           onFilmClick={()=> {}}
@@ -77,5 +77,5 @@ it(`Movie details render`, () => {
         }}
     ).toJSON();
 
-  expect(movieDetailsComponent).toMatchSnapshot();
+  expect(movieExtendedComponent).toMatchSnapshot();
 });

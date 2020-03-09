@@ -2,11 +2,12 @@ import React from "react";
 import Header from "@components/header/header";
 import Footer from "@components/footer/footer";
 import MoviesList from "@components/movies-list/movies-list";
+import Tabs from "@components/tabs/tabs";
 
 import {getMovieMark, getSimilarMovies} from "@utils/utils";
 import PropTypes from "prop-types";
 
-const MovieDetails = (props) => {
+const MovieExtended = (props) => {
   const {
     movieDetails: {
       title, genre, releaseDate, score, rating, description, director, starring, poster
@@ -70,19 +71,7 @@ const MovieDetails = (props) => {
             </div>
 
             <div className="movie-card__desc">
-              <nav className="movie-nav movie-card__nav">
-                <ul className="movie-nav__list">
-                  <li className="movie-nav__item movie-nav__item--active">
-                    <a href="#" className="movie-nav__link">Overview</a>
-                  </li>
-                  <li className="movie-nav__item">
-                    <a href="#" className="movie-nav__link">Details</a>
-                  </li>
-                  <li className="movie-nav__item">
-                    <a href="#" className="movie-nav__link">Reviews</a>
-                  </li>
-                </ul>
-              </nav>
+              <Tabs />
 
               <div className="movie-rating">
                 <div className="movie-rating__score">{score}</div>
@@ -95,7 +84,7 @@ const MovieDetails = (props) => {
               <div className="movie-card__text">
                 <p>{description}</p>
 
-                <p className="movie-card__director"><strong>Director: ${director}</strong></p>
+                <p className="movie-card__director"><strong>Director: {director}</strong></p>
 
                 <p className="movie-card__starring"><strong>Starring: {starring}</strong></p>
               </div>
@@ -120,7 +109,7 @@ const MovieDetails = (props) => {
   );
 };
 
-MovieDetails.propTypes = {
+MovieExtended.propTypes = {
   movieDetails: PropTypes.exact({
     title: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
@@ -141,4 +130,4 @@ MovieDetails.propTypes = {
   onFilmClick: PropTypes.func.isRequired
 };
 
-export default MovieDetails;
+export default MovieExtended;
