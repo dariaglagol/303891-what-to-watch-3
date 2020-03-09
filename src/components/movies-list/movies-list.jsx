@@ -15,9 +15,11 @@ export default class MoviesList extends PureComponent {
 
   _filmCatalogCardHoverHandler(film) {
     if (film) {
-      setTimeout(() => {
+      const timeout = setTimeout(() => {
         this.setState({
           activeFilm: film
+        }, () => {
+          clearTimeout(timeout);
         });
       }, 1000);
 
