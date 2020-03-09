@@ -47,7 +47,8 @@ MoviesList.propTypes = {
   films: PropTypes.arrayOf(PropTypes.exact({
     title: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
-    posterUrl: PropTypes.string.isRequired
+    posterUrl: PropTypes.string.isRequired,
+    preview: PropTypes.string.isRequired,
   })).isRequired,
   onFilmClick: PropTypes.func.isRequired
 };

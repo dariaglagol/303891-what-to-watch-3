@@ -2,7 +2,7 @@ export default [
   {
     title: `Fantastic Beasts: The Crimes of Grindelwald`,
     posterUrl: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
-    previw: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     genre: `Comedy`
   },
   {
@@ -14,7 +14,7 @@ export default [
   {
     title: `Macbeth`,
     posterUrl: `img/macbeth.jpg`,
-    previw: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     genre: `Drama`
   },
   {
@@ -26,7 +26,7 @@ export default [
   {
     title: `We need to talk about Kevin`,
     posterUrl: `img/we-need-to-talk-about-kevin.jpg`,
-    previw: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     genre: `Science`
   },
   {
@@ -38,7 +38,7 @@ export default [
   {
     title: `Revenant`,
     posterUrl: `img/revenant.jpg`,
-    previw: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     genre: `Thriller`
   },
   {
