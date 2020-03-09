@@ -10,8 +10,11 @@ Enzyme.configure({
 const MockedFilm = {
   title: `title`,
   posterUrl: `url`,
-  genre: `genre`
+  genre: `genre`,
+  preview: `preview`,
 };
+
+const MOCKED_PLAY_PROP = false;
 
 const PAGE_TYPE = `movie`;
 
@@ -26,6 +29,7 @@ it(`Hover on film card, film's info should pass to callback`, () => {
         film={MockedFilm}
         onFilmCatalogCardHover={onFilmHover}
         onFilmClick={onFilmClick}
+        isPlaying={MOCKED_PLAY_PROP}
       />
   );
 
@@ -44,6 +48,7 @@ it(`Click on film card to change page`, () => {
         film={MockedFilm}
         onFilmCatalogCardHover={onFilmHover}
         onFilmClick={onFilmClick}
+        isPlaying={MOCKED_PLAY_PROP}
       />
   );
 

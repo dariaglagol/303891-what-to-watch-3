@@ -5,8 +5,11 @@ import CatalogCard from "./calalog-card";
 const MOCKED_FILM = {
   title: `Fantastic Beasts: The Crimes of Grindelwald`,
   posterUrl: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
-  genre: `Comedy`
+  genre: `Comedy`,
+  preview: `preview`,
 };
+
+const MOCKED_PLAY_PROP = false;
 
 it(`Render catalog card`, () => {
   const catalogCardComponent = renderer
@@ -15,7 +18,10 @@ it(`Render catalog card`, () => {
           film={MOCKED_FILM}
           onFilmCatalogCardHover={() => {}}
           onFilmClick={() => {}}
-        />
+          isPlaying={MOCKED_PLAY_PROP}
+        />, {createNodeMock: () => {
+          return {};
+        }}
     )
     .toJSON();
 
