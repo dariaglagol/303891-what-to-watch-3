@@ -1,4 +1,4 @@
-import {MovieMarksTypes} from './constants';
+import {MovieMarksTypes, SIMILAR_FILM_COUNT} from './constants';
 
 const getMovieMark = (score) => {
   let key = ``;
@@ -15,7 +15,7 @@ const getMovieMark = (score) => {
 const getSimilarMovies = (genre, movies) => {
   return movies.filter((movie) => {
     return movie.genre === genre;
-  }).splice(0, 4);
+  }).splice(0, SIMILAR_FILM_COUNT);
 };
 
 export {getMovieMark, getSimilarMovies};

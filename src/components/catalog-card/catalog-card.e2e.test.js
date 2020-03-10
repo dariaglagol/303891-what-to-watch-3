@@ -16,20 +16,18 @@ const MockedFilm = {
 
 const MOCKED_PLAY_PROP = false;
 
-const MOCKED_MUTE_SOUND = true;
-
 const PAGE_TYPE = `movie`;
 
 const mockHoverEvent = {};
 
 it(`Hover on film card, film's info should pass to callback`, () => {
-  const onFilmHover = jest.fn();
+  const filmCatalogCardHoverHandler = jest.fn();
   const onFilmClick = jest.fn();
 
   const filmCard = shallow(
       <CatalogCard
         film={MockedFilm}
-        onFilmCatalogCardHover={onFilmHover}
+        onFilmCatalogCardHover={filmCatalogCardHoverHandler}
         onFilmClick={onFilmClick}
         isPlaying={MOCKED_PLAY_PROP}
       />
@@ -37,8 +35,26 @@ it(`Hover on film card, film's info should pass to callback`, () => {
 
   filmCard.simulate(`mouseEnter`, mockHoverEvent);
 
-  expect(onFilmHover).toHaveBeenCalledTimes(1);
-  expect(onFilmHover).toBeCalledWith(MockedFilm);
+  expect(filmCatalogCardHoverHandler).toHaveBeenCalledTimes(1);
+  expect(filmCatalogCardHoverHandler).toBeCalledWith(MockedFilm);
+});
+
+it(`Stop hover on film card, film's info should pass to callback`, () => {
+  const filmCatalogCardHoverHandler = jest.fn();
+  const onFilmClick = jest.fn();
+
+  const filmCard = shallow(
+      <CatalogCard
+        film={MockedFilm}
+        onFilmCatalogCardHover={filmCatalogCardHoverHandler}
+        onFilmClick={onFilmClick}
+        isPlaying={MOCKED_PLAY_PROP}
+      />
+  );
+
+  filmCard.simulate(`mouseLeave`, mockHoverEvent);
+
+  expect(filmCatalogCardHoverHandler).toHaveBeenCalledTimes(1);
 });
 
 it(`Click on film card to change page`, () => {
