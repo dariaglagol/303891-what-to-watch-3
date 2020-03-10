@@ -9,22 +9,22 @@ import PropTypes from "prop-types";
 const MovieDetails = (props) => {
   const {
     movieDetails: {
-      TITLE, GENRE, RELEASE_DATE, SCORE, RATING, DESCRIPTION, DIRECTOR, STARRING, POSTER
+      title, genre, releaseDate, score, rating, description, director, starring, poster
     },
     films,
     onFilmClick
   } = props;
 
-  const movieMark = getMovieMark(SCORE);
+  const movieMark = getMovieMark(score);
 
-  const similarFilms = getSimilarMovies(GENRE, films);
+  const similarFilms = getSimilarMovies(genre, films);
 
   return (
     <React.Fragment>
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
-            <img src={POSTER} alt="The Grand Budapest Hotel"/>
+            <img src={poster} alt="The Grand Budapest Hotel"/>
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -33,10 +33,10 @@ const MovieDetails = (props) => {
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{TITLE}</h2>
+              <h2 className="movie-card__title">{title}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{GENRE}</span>
-                <span className="movie-card__year">{RELEASE_DATE}</span>
+                <span className="movie-card__genre">{genre}</span>
+                <span className="movie-card__year">{releaseDate}</span>
               </p>
 
               <div className="movie-card__buttons">
@@ -62,8 +62,8 @@ const MovieDetails = (props) => {
           <div className="movie-card__info">
             <div className="movie-card__poster movie-card__poster--big">
               <img
-                src={POSTER}
-                alt={TITLE}
+                src={poster}
+                alt={title}
                 width="218"
                 height="327"
               />
@@ -85,19 +85,19 @@ const MovieDetails = (props) => {
               </nav>
 
               <div className="movie-rating">
-                <div className="movie-rating__score">{SCORE}</div>
+                <div className="movie-rating__score">{score}</div>
                 <p className="movie-rating__meta">
                   <span className="movie-rating__level">{movieMark}</span>
-                  <span className="movie-rating__count">{RATING} ratings</span>
+                  <span className="movie-rating__count">{rating} ratings</span>
                 </p>
               </div>
 
               <div className="movie-card__text">
-                <p>{DESCRIPTION}</p>
+                <p>{description}</p>
 
-                <p className="movie-card__director"><strong>Director: ${DIRECTOR}</strong></p>
+                <p className="movie-card__director"><strong>Director: ${director}</strong></p>
 
-                <p className="movie-card__starring"><strong>Starring: {STARRING}</strong></p>
+                <p className="movie-card__starring"><strong>Starring: {starring}</strong></p>
               </div>
             </div>
           </div>
@@ -122,20 +122,21 @@ const MovieDetails = (props) => {
 
 MovieDetails.propTypes = {
   movieDetails: PropTypes.exact({
-    TITLE: PropTypes.string.isRequired,
-    GENRE: PropTypes.string.isRequired,
-    RELEASE_DATE: PropTypes.string.isRequired,
-    POSTER: PropTypes.string.isRequired,
-    DESCRIPTION: PropTypes.string.isRequired,
-    DIRECTOR: PropTypes.string.isRequired,
-    STARRING: PropTypes.string.isRequired,
-    SCORE: PropTypes.number.isRequired,
-    RATING: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    genre: PropTypes.string.isRequired,
+    releaseDate: PropTypes.string.isRequired,
+    poster: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    director: PropTypes.string.isRequired,
+    starring: PropTypes.string.isRequired,
+    score: PropTypes.number.isRequired,
+    rating: PropTypes.number.isRequired,
   }),
   films: PropTypes.arrayOf(PropTypes.exact({
     title: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
-    posterUrl: PropTypes.string.isRequired
+    posterUrl: PropTypes.string.isRequired,
+    preview: PropTypes.string.isRequired,
   })).isRequired,
   onFilmClick: PropTypes.func.isRequired
 };

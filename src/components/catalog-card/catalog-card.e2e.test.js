@@ -7,30 +7,54 @@ Enzyme.configure({
   adapter: new Adapter(),
 });
 
-const MOCKED_FILM = {
+const MockedFilm = {
   title: `title`,
   posterUrl: `url`,
-  genre: `genre`
+  genre: `genre`,
+  preview: `preview`,
 };
+
+const MOCKED_PLAY_PROP = false;
+
+const PAGE_TYPE = `movie`;
 
 const mockHoverEvent = {};
 
 it(`Hover on film card, film's info should pass to callback`, () => {
-  const onFilmHover = jest.fn();
+  const filmCatalogCardHoverHandler = jest.fn();
   const onFilmClick = jest.fn();
 
   const filmCard = shallow(
       <CatalogCard
-        film={MOCKED_FILM}
-        onFilmCatalogCardHover={onFilmHover}
+        film={MockedFilm}
+        onFilmCatalogCardHover={filmCatalogCardHoverHandler}
         onFilmClick={onFilmClick}
+        isPlaying={MOCKED_PLAY_PROP}
       />
   );
 
   filmCard.simulate(`mouseEnter`, mockHoverEvent);
 
-  expect(onFilmHover).toHaveBeenCalledTimes(1);
-  expect(onFilmHover).toBeCalledWith(MOCKED_FILM);
+  expect(filmCatalogCardHoverHandler).toHaveBeenCalledTimes(1);
+  expect(filmCatalogCardHoverHandler).toBeCalledWith(MockedFilm);
+});
+
+it(`Stop hover on film card, film's info should pass to callback`, () => {
+  const filmCatalogCardHoverHandler = jest.fn();
+  const onFilmClick = jest.fn();
+
+  const filmCard = shallow(
+      <CatalogCard
+        film={MockedFilm}
+        onFilmCatalogCardHover={filmCatalogCardHoverHandler}
+        onFilmClick={onFilmClick}
+        isPlaying={MOCKED_PLAY_PROP}
+      />
+  );
+
+  filmCard.simulate(`mouseLeave`, mockHoverEvent);
+
+  expect(filmCatalogCardHoverHandler).toHaveBeenCalledTimes(1);
 });
 
 it(`Click on film card to change page`, () => {
@@ -39,14 +63,15 @@ it(`Click on film card to change page`, () => {
 
   const filmCard = shallow(
       <CatalogCard
-        film={MOCKED_FILM}
+        film={MockedFilm}
         onFilmCatalogCardHover={onFilmHover}
         onFilmClick={onFilmClick}
+        isPlaying={MOCKED_PLAY_PROP}
       />
   );
 
   filmCard.simulate(`click`);
 
   expect(onFilmClick.mock.calls.length).toBe(1);
-  expect(onFilmClick).toBeCalledWith(`movie`);
+  expect(onFilmClick).toBeCalledWith(PAGE_TYPE);
 });

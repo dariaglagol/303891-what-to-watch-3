@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Header from "@components/header/header";
+import {PageTypes} from "@utils/constants";
 
 const PromoFilm = (props) => {
   const {promoMovieCover: {TITLE, GENRE, RELEASE_DATE}, onFilmClick} = props;
 
   function _onFilmClickHandler() {
-    onFilmClick(`movie`);
+    onFilmClick(PageTypes.MOVIE);
   }
 
   return (

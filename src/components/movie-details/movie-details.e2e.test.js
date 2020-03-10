@@ -1,6 +1,11 @@
 import React from "react";
-import renderer from "react-test-renderer";
+import Enzyme, {mount} from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
 import MovieDetails from "./movie-details";
+
+Enzyme.configure({
+  adapter: new Adapter(),
+});
 
 const MOVIE_DETAILS = {
   title: `The Grand Budapest Hotel`,
@@ -65,17 +70,23 @@ const MOCK_CATALOG_FILMS_LIST = [
   }
 ];
 
-it(`Movie details render`, () => {
-  const movieDetailsComponent = renderer
-    .create(
-        <MovieDetails
-          movieDetails={MOVIE_DETAILS}
-          films={MOCK_CATALOG_FILMS_LIST}
-          onFilmClick={()=> {}}
-        />, {createNodeMock: () => {
-          return {};
-        }}
-    ).toJSON();
+const PAGE_TYPE = `movie`;
 
-  expect(movieDetailsComponent).toMatchSnapshot();
+it(`Click on film card to call callback to change page`, () => {
+  const onFilmClick = jest.fn();
+
+  const movieDetailsComponent = mount(
+      <MovieDetails
+        movieDetails={MOVIE_DETAILS}
+        films={MOCK_CATALOG_FILMS_LIST}
+        onFilmClick={onFilmClick}
+      />
+  );
+
+  const filmCard = movieDetailsComponent.find(`.small-movie-card.small-movie-card`).at(1);
+
+  filmCard.simulate(`click`);
+
+  expect(onFilmClick).toHaveBeenCalledTimes(1);
+  expect(onFilmClick).toBeCalledWith(PAGE_TYPE);
 });

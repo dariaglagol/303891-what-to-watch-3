@@ -7,28 +7,46 @@ export default class MoviesList extends PureComponent {
     super(props);
 
     this.state = {
-      activeFilm: null
+      activeFilm: null,
     };
 
     this._filmCatalogCardHoverHandler = this._filmCatalogCardHoverHandler.bind(this);
   }
 
   _filmCatalogCardHoverHandler(film) {
+    clearTimeout(this._timeout);
+
+    if (film) {
+      this._timeout = setTimeout(() => {
+        this.setState({
+          activeFilm: film
+        });
+      }, 1000);
+
+      return;
+    }
+
     this.setState({
-      activeFilm: film
+      activeFilm: null
     });
+  }
+
+  _isFilmActive(activeFilm, film) {
+    return activeFilm && activeFilm.title === film.title || false;
   }
 
   _renderFilmCatalogCards() {
     const {films, onFilmClick} = this.props;
+    const {activeFilm} = this.state;
 
     return (
-      films.map((film, index) => (
+      films.map((film) => (
         <CatalogCard
           onFilmCatalogCardHover={this._filmCatalogCardHoverHandler}
           onFilmClick={onFilmClick}
+          isPlaying={this._isFilmActive(activeFilm, film)}
           film={film}
-          key={`${index}`}
+          key={`${film.title}`}
         />
       ))
     );
@@ -47,7 +65,8 @@ MoviesList.propTypes = {
   films: PropTypes.arrayOf(PropTypes.exact({
     title: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
-    posterUrl: PropTypes.string.isRequired
+    posterUrl: PropTypes.string.isRequired,
+    preview: PropTypes.string.isRequired,
   })).isRequired,
   onFilmClick: PropTypes.func.isRequired
 };
