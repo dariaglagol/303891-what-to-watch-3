@@ -11,8 +11,6 @@ const MOCKED_FILM = {
 
 const MOCKED_PLAY_PROP = false;
 
-const MOCKED_MUTE_SOUND = true;
-
 it(`Render catalog card`, () => {
   const catalogCardComponent = renderer
     .create(

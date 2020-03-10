@@ -8,8 +8,6 @@ export default class VideoPlayer extends PureComponent {
     this.state = {
       progress: 0,
       isLoading: true,
-      isPlaying: props.isPlaying,
-      currentTime: 0,
     };
 
     this._videoRef = createRef();
@@ -58,7 +56,8 @@ export default class VideoPlayer extends PureComponent {
     }
 
     if ((this.props.isPlaying === false) && (prevProps.isPlaying === true)) {
-      video.currentTime = null;
+      // video.currentTime = null;
+      video.load();
     }
   }
 
