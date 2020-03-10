@@ -3,22 +3,27 @@ import Header from "@components/header/header";
 import Footer from "@components/footer/footer";
 import MoviesList from "@components/movies-list/movies-list";
 import Tabs from "@components/tabs/tabs";
-
-import {getMovieMark, getSimilarMovies} from "@utils/utils";
 import PropTypes from "prop-types";
+import {getSimilarMovies} from "@utils/utils";
 
 const MovieExtended = (props) => {
   const {
     movieDetails: {
-      title, genre, releaseDate, score, rating, description, director, starring, poster
+      title, genre, releaseDate, poster
     },
     films,
-    onFilmClick
+    onFilmClick,
+    activeTab
   } = props;
 
-  const movieMark = getMovieMark(score);
-
   const similarFilms = getSimilarMovies(genre, films);
+
+  function _renderActiveTab() {
+    // switch (activeTab) {
+    //   case ``:
+    //
+    // }
+  }
 
   return (
     <React.Fragment>
@@ -73,21 +78,7 @@ const MovieExtended = (props) => {
             <div className="movie-card__desc">
               <Tabs />
 
-              <div className="movie-rating">
-                <div className="movie-rating__score">{score}</div>
-                <p className="movie-rating__meta">
-                  <span className="movie-rating__level">{movieMark}</span>
-                  <span className="movie-rating__count">{rating} ratings</span>
-                </p>
-              </div>
-
-              <div className="movie-card__text">
-                <p>{description}</p>
-
-                <p className="movie-card__director"><strong>Director: {director}</strong></p>
-
-                <p className="movie-card__starring"><strong>Starring: {starring}</strong></p>
-              </div>
+              {_renderActiveTab()}
             </div>
           </div>
         </div>
