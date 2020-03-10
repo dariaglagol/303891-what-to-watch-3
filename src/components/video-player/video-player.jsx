@@ -8,7 +8,6 @@ export default class VideoPlayer extends PureComponent {
     this.state = {
       progress: 0,
       isLoading: true,
-      // isPlaying: props.isPlaying,
       currentTime: 0,
     };
 
