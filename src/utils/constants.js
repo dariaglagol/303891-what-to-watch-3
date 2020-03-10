@@ -21,4 +21,6 @@ const SIMILAR_FILM_COUNT = 4;
 
 const TABS = [`Overview`, `Details`, `Reviews`];
 
-export {MovieMarksTypes, GENRES, PageTypes, TABS, SIMILAR_FILM_COUNT, DEFAULT_ACTIVE_GENRE};
+const DEFAULT_ACTIVE_TAB = `Overview`;
+
+export {MovieMarksTypes, GENRES, PageTypes, TABS, SIMILAR_FILM_COUNT, DEFAULT_ACTIVE_GENRE, DEFAULT_ACTIVE_TAB};
