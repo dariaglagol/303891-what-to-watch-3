@@ -13,17 +13,9 @@ const MovieExtended = (props) => {
     },
     films,
     onFilmClick,
-    activeTab
   } = props;
 
   const similarFilms = getSimilarMovies(genre, films);
-
-  function _renderActiveTab() {
-    // switch (activeTab) {
-    //   case ``:
-    //
-    // }
-  }
 
   return (
     <React.Fragment>

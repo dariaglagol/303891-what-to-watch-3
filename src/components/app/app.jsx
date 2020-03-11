@@ -3,7 +3,10 @@ import PropTypes from "prop-types";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Main from "@components/main/main";
 import MovieExtended from "@components/movie-extended/movie-extended";
+import withMovieExtended from "@hocs/with-movie-extended/with-movie-extended";
 import {PageTypes} from "@utils/constants";
+
+const movieExtendedComponentWrapped = withMovieExtended(MovieExtended);
 
 export default class App extends PureComponent {
   constructor(props) {
