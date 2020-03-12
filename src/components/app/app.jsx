@@ -96,5 +96,6 @@ App.propTypes = {
     starring: PropTypes.string.isRequired,
     score: PropTypes.number.isRequired,
     rating: PropTypes.number.isRequired,
+    runTime: PropTypes.number.isRequired
   })
 };

@@ -1,25 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const MovieReviews = () => {
+const MovieReviews = (props) => {
+  const {reviews} = props;
+
+  function _renderReview(review) {
+    const {text, author, date, rating} = review;
+    return (
+      <div className="review">
+        <blockquote className="review__quote">
+          <p className="review__text">{text}</p>
+
+          <footer className="review__details">
+            <cite className="review__author">{author}</cite>
+            <time className="review__date" dateTime="2016-12-24">{date}</time>
+          </footer>
+        </blockquote>
+
+        <div className="review__rating">{rating}</div>
+      </div>
+    );
+  }
+
   return (
     <div className="movie-card__reviews movie-card__row">
       <div className="movie-card__reviews-col">
-        <div className="review">
-          <blockquote className="review__quote">
-            <p className="review__text">Discerning travellers and Wes Anderson fans will luxuriate in the glorious
-              Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in
-              years.</p>
-
-            <footer className="review__details">
-              <cite className="review__author">Kate Muir</cite>
-              <time className="review__date" dateTime="2016-12-24">December 24, 2016</time>
-            </footer>
-          </blockquote>
-
-          <div className="review__rating">8,9</div>
-        </div>
-
         <div className="review">
           <blockquote className="review__quote">
             <p className="review__text">Anderson&apos;s films are too precious for some, but for those of us willing to lose
@@ -96,6 +101,13 @@ const MovieReviews = () => {
   );
 };
 
-MovieReviews.propTypes = {};
+// MovieReviews.propTypes = {
+//   reviews: PropTypes.shape({
+//     text: PropTypes.string.isRequired,
+//     author: PropTypes.author.isRequired,
+//     date: PropTypes.date.isRequired,
+//     rating: PropTypes.number.isRequired,
+//   })
+// };
 
 export default MovieReviews;

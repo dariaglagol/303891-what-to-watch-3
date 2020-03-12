@@ -27,10 +27,6 @@ const MovieDetails = (props) => {
 };
 
 MovieDetails.propTypes = {
-  title: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
-  releaseDate: PropTypes.string.isRequired,
-  poster: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   director: PropTypes.string.isRequired,
   starring: PropTypes.string.isRequired,

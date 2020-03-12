@@ -12,7 +12,7 @@ import {TabTypes} from "@utils/constants";
 const MovieExtended = (props) => {
   const {
     movieDetails: {
-      title, genre, releaseDate, poster
+      title, genre, releaseDate, poster, director, starring, runTime, score, rating, description
     },
     films,
     onFilmClick,
@@ -25,12 +25,26 @@ const MovieExtended = (props) => {
   function _renderTabsText() {
     switch (activeTab) {
       case TabTypes.OVERVIEW:
-        return <MovieOverview />;
+        return <MovieOverview
+          director={director}
+          starring={starring}
+          runTime={runTime}
+          releaseDate={releaseDate}
+          genre={genre}
+        />;
       case TabTypes.DETAILS:
-        return <MovieDetails />;
+        return <MovieDetails
+          score={score}
+          rating={rating}
+          description={description}
+          director={director}
+          starring={starring}
+        />;
       case TabTypes.REVIEWS:
-        return <MovieReviews />;
+        return <MovieReviews/>;
     }
+
+    return null;
   }
 
   return (
@@ -118,6 +132,7 @@ MovieExtended.propTypes = {
     starring: PropTypes.string.isRequired,
     score: PropTypes.number.isRequired,
     rating: PropTypes.number.isRequired,
+    runTime: PropTypes.number.isRequired,
   }),
   films: PropTypes.arrayOf(PropTypes.exact({
     title: PropTypes.string.isRequired,
@@ -125,7 +140,9 @@ MovieExtended.propTypes = {
     posterUrl: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
   })).isRequired,
-  onFilmClick: PropTypes.func.isRequired
+  onFilmClick: PropTypes.func.isRequired,
+  renderTabs: PropTypes.func.isRequired,
+  activeTab: PropTypes.string.isRequired,
 };
 
 export default MovieExtended;
