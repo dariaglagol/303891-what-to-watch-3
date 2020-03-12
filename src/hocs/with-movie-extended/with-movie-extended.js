@@ -10,17 +10,27 @@ const withMovieExtended = (Component) => {
       this.state = {
         activeTab: DEFAULT_ACTIVE_TAB,
       };
+
+      this._tabClickHandler = this._tabClickHandler.bind(this);
+    }
+
+    _tabClickHandler(newActiveTab) {
+      this.setState({
+        activeTab: newActiveTab
+      });
     }
 
     render() {
       const {activeTab} = this.state;
 
       return <Component
+        activeTab={activeTab}
         {...this.props}
         renderTabs={() => {
           return (
             <Tabs
               activeTab={activeTab}
+              onTabClick={this._tabClickHandler}
             />
           );
         }}

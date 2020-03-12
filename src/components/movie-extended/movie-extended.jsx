@@ -1,10 +1,13 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Header from "@components/header/header";
 import Footer from "@components/footer/footer";
 import MoviesList from "@components/movies-list/movies-list";
-import Tabs from "@components/tabs/tabs";
-import PropTypes from "prop-types";
+import MovieDetails from "@components/movie-extended/blocks/movie-details/movie-details";
+import MovieOverview from "@components/movie-extended/blocks/movie-overview/movie-overview";
+import MovieReviews from "@components/movie-extended/blocks/movies-reviews/movies-reviews";
 import {getSimilarMovies} from "@utils/utils";
+import {TabTypes} from "@utils/constants";
 
 const MovieExtended = (props) => {
   const {
@@ -13,9 +16,22 @@ const MovieExtended = (props) => {
     },
     films,
     onFilmClick,
+    renderTabs,
+    activeTab
   } = props;
 
   const similarFilms = getSimilarMovies(genre, films);
+
+  function _renderTabsText() {
+    switch (activeTab) {
+      case TabTypes.OVERVIEW:
+        return <MovieOverview />;
+      case TabTypes.DETAILS:
+        return <MovieDetails />;
+      case TabTypes.REVIEWS:
+        return <MovieReviews />;
+    }
+  }
 
   return (
     <React.Fragment>
@@ -68,9 +84,8 @@ const MovieExtended = (props) => {
             </div>
 
             <div className="movie-card__desc">
-              <Tabs />
-
-              {_renderActiveTab()}
+              {renderTabs()}
+              {_renderTabsText()}
             </div>
           </div>
         </div>

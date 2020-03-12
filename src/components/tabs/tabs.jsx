@@ -5,20 +5,20 @@ import {TABS} from "@utils/constants";
 export default class Tabs extends PureComponent {
   constructor(props) {
     super(props);
-
-    this.state = {
-      activeTab: `Overview`
-    };
   }
 
   _renderTab() {
-    const {activeTab} = this.state;
+    const {
+      activeTab,
+      onTabClick
+    } = this.props;
 
     return TABS.map((tab) => {
       return (
         <li
           className={`movie-nav__item ${activeTab === tab ? `movie-nav__item--active` : ``}`}
           key={tab}
+          onClick={() => onTabClick(tab)}
         >
           <a href="#" className="movie-nav__link">{tab}</a>
         </li>

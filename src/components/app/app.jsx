@@ -6,7 +6,7 @@ import MovieExtended from "@components/movie-extended/movie-extended";
 import withMovieExtended from "@hocs/with-movie-extended/with-movie-extended";
 import {PageTypes} from "@utils/constants";
 
-const movieExtendedComponentWrapped = withMovieExtended(MovieExtended);
+const MovieExtendedComponentWrapped = withMovieExtended(MovieExtended);
 
 export default class App extends PureComponent {
   constructor(props) {
@@ -61,7 +61,7 @@ export default class App extends PureComponent {
             {this._renderPages()}
           </Route>
           <Route exact path="/dev-movie-details">
-            <MovieExtended
+            <MovieExtendedComponentWrapped
               promoMovieCover={promoMovieCover}
               onFilmClick={this._filmClickHandler}
               films={films}

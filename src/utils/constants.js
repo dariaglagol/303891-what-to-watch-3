@@ -6,6 +6,12 @@ const MovieMarksTypes = {
   'Bad': `0`,
 };
 
+const TabTypes = {
+  OVERVIEW: `Overview`,
+  DETAILS: `Details`,
+  REVIEWS: `Reviews`
+};
+
 const GENRES = [
   `All genres`, `Comedies`, `Crime`, `Documentary`, `Dramas`, `Horror`, `Kids & Family`, `Romance`, `Sci-Fi`, `Thrillers`
 ];
@@ -23,4 +29,4 @@ const TABS = [`Overview`, `Details`, `Reviews`];
 
 const DEFAULT_ACTIVE_TAB = `Overview`;
 
-export {MovieMarksTypes, GENRES, PageTypes, TABS, SIMILAR_FILM_COUNT, DEFAULT_ACTIVE_GENRE, DEFAULT_ACTIVE_TAB};
+export {MovieMarksTypes, TabTypes, GENRES, PageTypes, TABS, SIMILAR_FILM_COUNT, DEFAULT_ACTIVE_GENRE, DEFAULT_ACTIVE_TAB};
