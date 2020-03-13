@@ -27,7 +27,7 @@ export default class App extends PureComponent {
 
   _renderPages() {
     const {activePage} = this.state;
-    const {promoMovieCover, films, movieDetails} = this.props;
+    const {promoMovieCover, films, movieDetails, reviews} = this.props;
 
     switch (activePage) {
       case PageTypes.MAIN:
@@ -40,11 +40,12 @@ export default class App extends PureComponent {
         );
       case PageTypes.MOVIE:
         return (
-          <MovieExtended
+          <MovieExtendedComponentWrapped
             promoMovieCover={promoMovieCover}
             onFilmClick={this._filmClickHandler}
             films={films}
             movieDetails={movieDetails}
+            reviews={reviews}
           />
         );
     }
@@ -53,7 +54,7 @@ export default class App extends PureComponent {
   }
 
   render() {
-    const {promoMovieCover, films, movieDetails} = this.props;
+    const {promoMovieCover, films, movieDetails, reviews} = this.props;
     return (
       <BrowserRouter>
         <Switch>
@@ -66,6 +67,7 @@ export default class App extends PureComponent {
               onFilmClick={this._filmClickHandler}
               films={films}
               movieDetails={movieDetails}
+              reviews={reviews}
             />
           </Route>
         </Switch>
@@ -97,5 +99,11 @@ App.propTypes = {
     score: PropTypes.number.isRequired,
     rating: PropTypes.number.isRequired,
     runTime: PropTypes.number.isRequired
-  })
+  }),
+  reviews: PropTypes.arrayOf(PropTypes.exact({
+    text: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    rating: PropTypes.number.isRequired,
+  }))
 };

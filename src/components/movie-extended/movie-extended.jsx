@@ -14,6 +14,7 @@ const MovieExtended = (props) => {
     movieDetails: {
       title, genre, releaseDate, poster, director, starring, runTime, score, rating, description
     },
+    reviews,
     films,
     onFilmClick,
     renderTabs,
@@ -41,7 +42,9 @@ const MovieExtended = (props) => {
           starring={starring}
         />;
       case TabTypes.REVIEWS:
-        return <MovieReviews/>;
+        return <MovieReviews
+          reviews={reviews}
+        />;
     }
 
     return null;
@@ -140,6 +143,12 @@ MovieExtended.propTypes = {
     posterUrl: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
   })).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.exact({
+    text: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    rating: PropTypes.number.isRequired,
+  })),
   onFilmClick: PropTypes.func.isRequired,
   renderTabs: PropTypes.func.isRequired,
   activeTab: PropTypes.string.isRequired,
