@@ -55,6 +55,7 @@ it(`Stop hover on film card, film's info should pass to callback`, () => {
   filmCard.simulate(`mouseLeave`, mockHoverEvent);
 
   expect(filmCatalogCardHoverHandler).toHaveBeenCalledTimes(1);
+  expect(filmCatalogCardHoverHandler).toBeCalledWith();
 });
 
 it(`Click on film card to change page`, () => {

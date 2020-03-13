@@ -2,8 +2,11 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Main from "@components/main/main";
-import MovieDetails from "@components/movie-details/movie-details";
+import MovieExtended from "@components/movie-extended/movie-extended";
+import withMovieExtended from "@hocs/with-movie-extended/with-movie-extended";
 import {PageTypes} from "@utils/constants";
+
+const MovieExtendedComponentWrapped = withMovieExtended(MovieExtended);
 
 export default class App extends PureComponent {
   constructor(props) {
@@ -24,7 +27,7 @@ export default class App extends PureComponent {
 
   _renderPages() {
     const {activePage} = this.state;
-    const {promoMovieCover, films, movieDetails} = this.props;
+    const {promoMovieCover, films, movieDetails, reviews} = this.props;
 
     switch (activePage) {
       case PageTypes.MAIN:
@@ -37,11 +40,12 @@ export default class App extends PureComponent {
         );
       case PageTypes.MOVIE:
         return (
-          <MovieDetails
+          <MovieExtendedComponentWrapped
             promoMovieCover={promoMovieCover}
             onFilmClick={this._filmClickHandler}
             films={films}
             movieDetails={movieDetails}
+            reviews={reviews}
           />
         );
     }
@@ -50,7 +54,7 @@ export default class App extends PureComponent {
   }
 
   render() {
-    const {promoMovieCover, films, movieDetails} = this.props;
+    const {promoMovieCover, films, movieDetails, reviews} = this.props;
     return (
       <BrowserRouter>
         <Switch>
@@ -58,11 +62,12 @@ export default class App extends PureComponent {
             {this._renderPages()}
           </Route>
           <Route exact path="/dev-movie-details">
-            <MovieDetails
+            <MovieExtendedComponentWrapped
               promoMovieCover={promoMovieCover}
               onFilmClick={this._filmClickHandler}
               films={films}
               movieDetails={movieDetails}
+              reviews={reviews}
             />
           </Route>
         </Switch>
@@ -93,5 +98,12 @@ App.propTypes = {
     starring: PropTypes.string.isRequired,
     score: PropTypes.number.isRequired,
     rating: PropTypes.number.isRequired,
-  })
+    runTime: PropTypes.number.isRequired
+  }),
+  reviews: PropTypes.arrayOf(PropTypes.exact({
+    text: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    rating: PropTypes.number.isRequired,
+  }))
 };

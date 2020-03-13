@@ -14,6 +14,7 @@ const Mock = {
 };
 
 it(`Should film trailer played after hover`, () => {
+  // TODO: поправить тест
   const {src, poster, isPlaying} = Mock;
   const videoPLayerComponent = mount(
       <VideoPlayer

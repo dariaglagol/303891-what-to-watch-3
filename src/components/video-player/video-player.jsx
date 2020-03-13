@@ -21,16 +21,6 @@ export default class VideoPlayer extends PureComponent {
       currentTime: null,
     });
 
-    video.onplay = () => {
-      this.setState({
-        isPlaying: true,
-      });
-    };
-
-    video.onpause = () => this.setState({
-      isPlaying: false,
-    });
-
     video.ontimeupdate = () => this.setState({
       progress: video.currentTime
     });
@@ -45,18 +35,13 @@ export default class VideoPlayer extends PureComponent {
     video.ontimeupdate = null;
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     const video = this._videoRef.current;
 
     if (this.props.isPlaying) {
       video.muted = true;
       video.play();
     } else {
-      video.pause();
-    }
-
-    if ((this.props.isPlaying === false) && (prevProps.isPlaying === true)) {
-      // video.currentTime = null;
       video.load();
     }
   }

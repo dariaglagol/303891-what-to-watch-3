@@ -1,23 +1,54 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Header from "@components/header/header";
 import Footer from "@components/footer/footer";
 import MoviesList from "@components/movies-list/movies-list";
+import MovieDetails from "@components/movie-extended/blocks/movie-details/movie-details";
+import MovieOverview from "@components/movie-extended/blocks/movie-overview/movie-overview";
+import MovieReviews from "@components/movie-extended/blocks/movies-reviews/movies-reviews";
+import {getSimilarMovies} from "@utils/utils";
+import {TabTypes} from "@utils/constants";
 
-import {getMovieMark, getSimilarMovies} from "@utils/utils";
-import PropTypes from "prop-types";
-
-const MovieDetails = (props) => {
+const MovieExtended = (props) => {
   const {
     movieDetails: {
-      title, genre, releaseDate, score, rating, description, director, starring, poster
+      title, genre, releaseDate, poster, director, starring, runTime, score, rating, description
     },
+    reviews,
     films,
-    onFilmClick
+    onFilmClick,
+    renderTabs,
+    activeTab
   } = props;
 
-  const movieMark = getMovieMark(score);
-
   const similarFilms = getSimilarMovies(genre, films);
+
+  function _renderTabsText() {
+    switch (activeTab) {
+      case TabTypes.OVERVIEW:
+        return <MovieOverview
+          director={director}
+          starring={starring}
+          runTime={runTime}
+          releaseDate={releaseDate}
+          genre={genre}
+        />;
+      case TabTypes.DETAILS:
+        return <MovieDetails
+          score={score}
+          rating={rating}
+          description={description}
+          director={director}
+          starring={starring}
+        />;
+      case TabTypes.REVIEWS:
+        return <MovieReviews
+          reviews={reviews}
+        />;
+    }
+
+    return null;
+  }
 
   return (
     <React.Fragment>
@@ -70,35 +101,8 @@ const MovieDetails = (props) => {
             </div>
 
             <div className="movie-card__desc">
-              <nav className="movie-nav movie-card__nav">
-                <ul className="movie-nav__list">
-                  <li className="movie-nav__item movie-nav__item--active">
-                    <a href="#" className="movie-nav__link">Overview</a>
-                  </li>
-                  <li className="movie-nav__item">
-                    <a href="#" className="movie-nav__link">Details</a>
-                  </li>
-                  <li className="movie-nav__item">
-                    <a href="#" className="movie-nav__link">Reviews</a>
-                  </li>
-                </ul>
-              </nav>
-
-              <div className="movie-rating">
-                <div className="movie-rating__score">{score}</div>
-                <p className="movie-rating__meta">
-                  <span className="movie-rating__level">{movieMark}</span>
-                  <span className="movie-rating__count">{rating} ratings</span>
-                </p>
-              </div>
-
-              <div className="movie-card__text">
-                <p>{description}</p>
-
-                <p className="movie-card__director"><strong>Director: ${director}</strong></p>
-
-                <p className="movie-card__starring"><strong>Starring: {starring}</strong></p>
-              </div>
+              {renderTabs()}
+              {_renderTabsText()}
             </div>
           </div>
         </div>
@@ -120,7 +124,7 @@ const MovieDetails = (props) => {
   );
 };
 
-MovieDetails.propTypes = {
+MovieExtended.propTypes = {
   movieDetails: PropTypes.exact({
     title: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
@@ -131,6 +135,7 @@ MovieDetails.propTypes = {
     starring: PropTypes.string.isRequired,
     score: PropTypes.number.isRequired,
     rating: PropTypes.number.isRequired,
+    runTime: PropTypes.number.isRequired,
   }),
   films: PropTypes.arrayOf(PropTypes.exact({
     title: PropTypes.string.isRequired,
@@ -138,7 +143,15 @@ MovieDetails.propTypes = {
     posterUrl: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
   })).isRequired,
-  onFilmClick: PropTypes.func.isRequired
+  reviews: PropTypes.arrayOf(PropTypes.exact({
+    text: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    rating: PropTypes.number.isRequired,
+  })),
+  onFilmClick: PropTypes.func.isRequired,
+  renderTabs: PropTypes.func.isRequired,
+  activeTab: PropTypes.string.isRequired,
 };
 
-export default MovieDetails;
+export default MovieExtended;
