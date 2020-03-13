@@ -37,4 +37,7 @@ export default class Tabs extends PureComponent {
   }
 }
 
-Tabs.propTypes = {};
+Tabs.propTypes = {
+  activeTab: PropTypes.string.isRequired,
+  onTabClick: PropTypes.func.isRequired
+};
