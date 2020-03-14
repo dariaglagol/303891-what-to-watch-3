@@ -29,4 +29,6 @@ const TABS = [`Overview`, `Details`, `Reviews`];
 
 const DEFAULT_ACTIVE_TAB = `Overview`;
 
-export {MovieMarksTypes, TabTypes, GENRES, PageTypes, TABS, SIMILAR_FILM_COUNT, DEFAULT_ACTIVE_GENRE, DEFAULT_ACTIVE_TAB};
+const FILM_REVIEWS_COLUMN_COUNT = 2;
+
+export {MovieMarksTypes, FILM_REVIEWS_COLUMN_COUNT, TabTypes, GENRES, PageTypes, TABS, SIMILAR_FILM_COUNT, DEFAULT_ACTIVE_GENRE, DEFAULT_ACTIVE_TAB};
