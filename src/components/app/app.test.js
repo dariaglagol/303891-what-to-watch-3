@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import App from "./app";
+import {App} from "./app";
 
 const MockFilmData = {
   TITLE: `The Grand Budapest Hotel`,
@@ -80,7 +80,10 @@ it(`Render App`, () => {
           promoMovieCover={MockFilmData}
           films={MOCK_CATALOG_FILMS_LIST}
           movieDetails={MOCK_MOVIE_DETAILS}
-        />, {createNodeMock: () => {
+          activeGenre={`All genres`}
+          onGenreTabClick={() => {}}
+        />
+        , {createNodeMock: () => {
           return {};
         }}
     )
