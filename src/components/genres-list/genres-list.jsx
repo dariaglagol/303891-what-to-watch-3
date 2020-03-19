@@ -1,25 +1,38 @@
 import React from "react";
-import {GENRES, DEFAULT_ACTIVE_GENRE} from "@utils/constants";
+import PropTypes from "prop-types";
+import {Genres} from "@utils/constants";
 
-function _renderGenres() {
-  return GENRES.map((genre) => {
-    return (
-      <li
-        className={`catalog__genres-item ${DEFAULT_ACTIVE_GENRE === genre ? `catalog__genres-item--active` : ``}`}
-        key={genre}
-      >
-        <a href="#" className="catalog__genres-link">{genre}</a>
-      </li>
-    );
-  });
-}
+const GenresList = (props) => {
+  const {activeGenre, onGenreTabClick} = props;
 
-const GenresList = () => {
+  function _renderGenres() {
+    return [...Genres.values()].map((genre) => {
+      const genreTabName = genre.multiply;
+      const genreSingleName = genre.single;
+      return (
+        <li
+          className={`catalog__genres-item ${activeGenre === genreTabName ? `catalog__genres-item--active` : ``}`}
+          key={genreTabName}
+          onClick={() => {
+            onGenreTabClick(genreSingleName);
+          }}
+        >
+          <a href="#" className="catalog__genres-link">{genreTabName}</a>
+        </li>
+      );
+    });
+  }
+
   return (
     <ul className="catalog__genres-list">
       {_renderGenres()}
     </ul>
   );
+};
+
+GenresList.propTypes = {
+  activeGenre: PropTypes.string.isRequired,
+  onGenreTabClick: PropTypes.func.isRequired,
 };
 
 export default GenresList;

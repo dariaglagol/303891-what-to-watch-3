@@ -1,17 +1,13 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {TABS} from "@utils/constants";
 
-export default class Tabs extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
-
-  _renderTab() {
+const MovieNavTabs = (props) => {
+  function _renderTab() {
     const {
       activeTab,
       onTabClick
-    } = this.props;
+    } = props;
 
     return TABS.map((tab) => {
       return (
@@ -26,18 +22,18 @@ export default class Tabs extends PureComponent {
     });
   }
 
-  render() {
-    return (
-      <nav className="movie-nav movie-card__nav">
-        <ul className="movie-nav__list">
-          {this._renderTab()}
-        </ul>
-      </nav>
-    );
-  }
-}
+  return (
+    <nav className="movie-nav movie-card__nav">
+      <ul className="movie-nav__list">
+        {_renderTab()}
+      </ul>
+    </nav>
+  );
+};
 
-Tabs.propTypes = {
+export default MovieNavTabs;
+
+MovieNavTabs.propTypes = {
   activeTab: PropTypes.string.isRequired,
   onTabClick: PropTypes.func.isRequired
 };

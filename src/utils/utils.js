@@ -18,4 +18,8 @@ const getSimilarMovies = (genre, movies) => {
   }).splice(0, SIMILAR_FILM_COUNT);
 };
 
-export {getMovieMark, getSimilarMovies};
+const extend = (a, b) => {
+  return Object.assign({}, a, b);
+};
+
+export {getMovieMark, getSimilarMovies, extend};

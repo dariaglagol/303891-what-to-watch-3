@@ -8,6 +8,8 @@ const MockFilmData = {
   RELEASE_DATE: `2020`
 };
 
+const ACTIVE_GENRE = `Comedies`;
+
 const MOCK_CATALOG_FILMS_LIST = [
   {
     title: `Fantastic Beasts: The Crimes of Grindelwald`,
@@ -66,6 +68,8 @@ it(`Main component render`, () => {
           promoMovieCover={MockFilmData}
           films={MOCK_CATALOG_FILMS_LIST}
           onFilmClick={() => {}}
+          activeGenre={ACTIVE_GENRE}
+          onGenreTabClick={() => {}}
         />, {createNodeMock: () => {
           return {};
         }}

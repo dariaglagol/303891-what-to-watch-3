@@ -4,12 +4,15 @@ import MoviesList from "@components/movies-list/movies-list";
 import GenresList from "@components/genres-list/genres-list";
 
 const Catalog = (props) => {
-  const {films, onFilmClick} = props;
+  const {films, onFilmClick, activeGenre, onGenreTabClick} = props;
 
   return (
     <section className="catalog">
       <h2 className="catalog__title visually-hidden"> Catalog </h2>
-      <GenresList />
+      <GenresList
+        onGenreTabClick={onGenreTabClick}
+        activeGenre={activeGenre}
+      />
       <MoviesList
         films={films}
         onFilmClick={onFilmClick}
@@ -32,5 +35,7 @@ Catalog.propTypes = {
     posterUrl: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
   })).isRequired,
-  onFilmClick: PropTypes.func.isRequired
+  onFilmClick: PropTypes.func.isRequired,
+  activeGenre: PropTypes.string.isRequired,
+  onGenreTabClick: PropTypes.func.isRequired,
 };

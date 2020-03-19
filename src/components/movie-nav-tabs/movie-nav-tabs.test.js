@@ -1,13 +1,13 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import Tabs from "./tabs";
+import MovieNavTabs from "./movie-nav-tabs";
 
 const ACTIVE_TAB_MOCK = `Overview`;
 
-it(`Render tabs`, () => {
+it(`Render movie nav tabs`, () => {
   const tabsComponent = renderer
     .create(
-        <Tabs
+        <MovieNavTabs
           activeTab={ACTIVE_TAB_MOCK}
           onTabClick={()=> {}}
         />

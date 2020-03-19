@@ -1,9 +1,9 @@
 import React, {PureComponent} from 'react';
-import Tabs from "@components/tabs/tabs";
+import Tabs from "@components/movie-nav-tabs/movie-nav-tabs";
 import {DEFAULT_ACTIVE_TAB} from "@utils/constants";
 
-const withMovieExtended = (Component) => {
-  class WithMovieExtended extends PureComponent {
+const withTabs = (Component) => {
+  class WithTabs extends PureComponent {
     constructor(props) {
       super(props);
 
@@ -38,9 +38,9 @@ const withMovieExtended = (Component) => {
     }
   }
 
-  WithMovieExtended.propTypes = {};
+  WithTabs.propTypes = {};
 
-  return WithMovieExtended;
+  return WithTabs;
 };
 
-export default withMovieExtended;
+export default withTabs;

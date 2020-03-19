@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import _ from "lodash";
+import chunk from "lodash/chunk";
+import {FILM_REVIEWS_COLUMN_COUNT} from "@utils/constants";
 
 const MovieReviews = (props) => {
   const {reviews} = props;
@@ -24,22 +25,22 @@ const MovieReviews = (props) => {
   }
 
   function _prepareReviewsArray() {
-    return _.chunk(reviews, 2);
+    return chunk(reviews, FILM_REVIEWS_COLUMN_COUNT);
   }
 
   function _renderReviews() {
-    const reviewChunks = _prepareReviewsArray();
+    const [firstChunk, secondChunk] = _prepareReviewsArray();
 
-    if (reviewChunks.length > 1) {
+    if (secondChunk > 1) {
       return (
         <React.Fragment>
           <div className="movie-card__reviews-col">
-            {reviewChunks[0].map((review) => {
+            {firstChunk.map((review) => {
               return _renderReview(review);
             })}
           </div>
           <div className="movie-card__reviews-col">
-            {reviewChunks[1].map((review) => {
+            {secondChunk.map((review) => {
               return _renderReview(review);
             })}
           </div>
@@ -49,7 +50,7 @@ const MovieReviews = (props) => {
 
     return (
       <div className="movie-card__reviews-col">
-        {reviewChunks[0].map((review) => {
+        {firstChunk.map((review) => {
           return _renderReview(review);
         })}
       </div>
