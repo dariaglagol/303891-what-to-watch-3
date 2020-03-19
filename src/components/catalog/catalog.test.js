@@ -53,12 +53,16 @@ const MOCK_CATALOG_FILMS_LIST = [
   }
 ];
 
+const ACTIVE_GENRE = `Comedies`;
+
 it(`Render Catalog`, () => {
   const catalogComponent = renderer
     .create(
         <Catalog
           films={MOCK_CATALOG_FILMS_LIST}
           onFilmClick={() => {}}
+          onGenreTabClick={() => {}}
+          activeGenre={ACTIVE_GENRE}
         />, {createNodeMock: () => {
           return {};
         }}

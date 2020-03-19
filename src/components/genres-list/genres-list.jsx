@@ -13,8 +13,7 @@ const GenresList = (props) => {
         <li
           className={`catalog__genres-item ${activeGenre === genreTabName ? `catalog__genres-item--active` : ``}`}
           key={genreTabName}
-          onClick={(e) => {
-            e.preventDefault();
+          onClick={() => {
             onGenreTabClick(genreSingleName);
           }}
         >
