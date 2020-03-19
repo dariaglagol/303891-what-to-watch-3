@@ -1,6 +1,6 @@
 import {extend} from "@utils/utils";
 import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
-import films from "@mocks/films";
+import films from "@mocks/films.js";
 
 const InitialState = {
   films,
@@ -12,15 +12,29 @@ const ActionType = {
   GET_MOVIES_BY_GENRE: `GET_MOVIES_BY_GENRE`,
 };
 
+const _filterFilmsByGenre = (activeGenre) => {
+  if (activeGenre === DEFAULT_ACTIVE_GENRE) {
+    return InitialState.films;
+  }
+
+  return films.filter((film) => {
+    return film.genre === activeGenre;
+  });
+};
+
 const ActionCreator = {
   changeGenre: (newGenre) => ({
     type: ActionType.CHANGE_GENRE,
     payload: newGenre,
   }),
-  getMoviesByGenre: (moviesByGenre) => ({
-    type: ActionType.GET_MOVIES_BY_GENRE,
-    payload: moviesByGenre
-  }),
+  getMoviesByGenre: (newGenre) => {
+    const filmsByGenre = _filterFilmsByGenre(newGenre);
+
+    return {
+      type: ActionType.GET_MOVIES_BY_GENRE,
+      payload: filmsByGenre
+    };
+  },
 };
 
 const reducer = (state = InitialState, action) => {

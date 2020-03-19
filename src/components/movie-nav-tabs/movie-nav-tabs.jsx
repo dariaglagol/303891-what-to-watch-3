@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {TABS} from "@utils/constants";
 
-const Tabs = (props) => {
+const MovieNavTabs = (props) => {
   function _renderTab() {
     const {
       activeTab,
@@ -31,9 +31,9 @@ const Tabs = (props) => {
   );
 };
 
-export default Tabs;
+export default MovieNavTabs;
 
-Tabs.propTypes = {
+MovieNavTabs.propTypes = {
   activeTab: PropTypes.string.isRequired,
   onTabClick: PropTypes.func.isRequired
 };

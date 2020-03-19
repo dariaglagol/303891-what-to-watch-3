@@ -1,14 +1,16 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
+import {connect} from "react-redux";
 import Main from "@components/main/main";
 import MovieExtended from "@components/movie-extended/movie-extended";
 import withTabs from "@hocs/with-tabs/with-tabs";
 import {PageTypes} from "@utils/constants";
+import {ActionCreator} from "../../reducer";
 
 const MovieExtendedComponentWrapped = withTabs(MovieExtended);
 
-export default class App extends PureComponent {
+class App extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -27,7 +29,14 @@ export default class App extends PureComponent {
 
   _renderPages() {
     const {activePage} = this.state;
-    const {promoMovieCover, films, movieDetails, reviews} = this.props;
+    const {
+      promoMovieCover,
+      films,
+      movieDetails,
+      reviews,
+      activeGenre,
+      onGenreTabClick
+    } = this.props;
 
     switch (activePage) {
       case PageTypes.MAIN:
@@ -35,6 +44,8 @@ export default class App extends PureComponent {
           <Main
             promoMovieCover={promoMovieCover}
             onFilmClick={this._filmClickHandler}
+            activeGenre={activeGenre}
+            onGenreTabClick={onGenreTabClick}
             films={films}
           />
         );
@@ -76,6 +87,21 @@ export default class App extends PureComponent {
   }
 }
 
+const mapStateToProps = (state) => ({
+  films: state.films,
+  activeGenre: state.activeGenre,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onGenreTabClick(activeGenre) {
+    dispatch(ActionCreator.changeGenre(activeGenre));
+    dispatch(ActionCreator.getMoviesByGenre(activeGenre));
+  }
+});
+
+export {App};
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
 App.propTypes = {
   promoMovieCover: PropTypes.shape({
     TITLE: PropTypes.string.isRequired,
@@ -105,5 +131,7 @@ App.propTypes = {
     author: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
-  }))
+  })),
+  activeGenre: PropTypes.string.isRequired,
+  onGenreTabClick: PropTypes.func.isRequired,
 };

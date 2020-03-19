@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import Tabs from "@components/tabs/tabs";
+import Tabs from "@components/movie-nav-tabs/movie-nav-tabs";
 import {DEFAULT_ACTIVE_TAB} from "@utils/constants";
 
 const withTabs = (Component) => {
