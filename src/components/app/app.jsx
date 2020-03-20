@@ -5,12 +5,12 @@ import {connect} from "react-redux";
 import Main from "@components/main/main";
 import MovieExtended from "@components/movie-extended/movie-extended";
 import withTabs from "@hocs/with-tabs/with-tabs";
-import withMovieList from "@hocs/with-movie-list/with-movie-list";
+import withCatalog from "@hocs/with-catalog/with-catalog";
 import {PageTypes} from "@utils/constants";
 import {ActionCreator} from "../../reducer";
 
 const MovieExtendedComponentWrapped = withTabs(MovieExtended);
-const MainComponentWrapped = withMovieList(Main);
+const MainComponentWrapped = withCatalog(Main);
 
 class App extends PureComponent {
   constructor(props) {

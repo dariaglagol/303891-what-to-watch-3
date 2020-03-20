@@ -2,8 +2,8 @@ import React, {PureComponent} from 'react';
 import Catalog from "@components/catalog/catalog";
 import {DEFAULT_SHOWN_FILMS} from "@utils/constants";
 
-const withMovieList = (Component) => {
-  class WithMovieList extends PureComponent {
+const withCatalog = (Component) => {
+  class WithCatalog extends PureComponent {
     constructor(props) {
       super(props);
 
@@ -38,9 +38,9 @@ const withMovieList = (Component) => {
     }
   }
 
-  WithMovieList.propTypes = {};
+  WithCatalog.propTypes = {};
 
-  return WithMovieList;
+  return WithCatalog;
 };
 
-export default withMovieList;
+export default withCatalog;
