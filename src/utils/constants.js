@@ -25,7 +25,10 @@ const Genres = new Map([
   [`THRILLER`, {single: `Thriller`, multiply: `Thrillers`}],
 ]);
 
-const DEFAULT_ACTIVE_GENRE = `All genres`;
+const DEFAULT_ACTIVE_GENRE = {
+  single: `All genres`,
+  multiply: `All genres`
+};
 
 const PageTypes = {
   MAIN: `main`,

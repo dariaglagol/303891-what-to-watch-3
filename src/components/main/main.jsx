@@ -33,7 +33,10 @@ Main.propTypes = {
     preview: PropTypes.string.isRequired,
   })).isRequired,
   onFilmClick: PropTypes.func.isRequired,
-  activeGenre: PropTypes.string.isRequired,
+  activeGenre: PropTypes.exact({
+    multiply: PropTypes.string.isRequired,
+    single: PropTypes.string.isRequired,
+  }).isRequired,
   onGenreTabClick: PropTypes.func.isRequired,
   renderCatalog: PropTypes.func.isRequired,
 };

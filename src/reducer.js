@@ -19,12 +19,12 @@ const ActionType = {
 };
 
 const _filterFilmsByGenre = (movies, activeGenre) => {
-  if (activeGenre === DEFAULT_ACTIVE_GENRE) {
+  if (activeGenre.single === DEFAULT_ACTIVE_GENRE) {
     return movies;
   }
 
   return movies.filter((movie) => {
-    return movie.genre === activeGenre;
+    return movie.genre === activeGenre.single;
   });
 };
 

@@ -7,14 +7,22 @@ Enzyme.configure({
   adapter: new Adapter(),
 });
 
-const ACTIVE_GENRE = `Comedies`;
+const DEFAULT_ACTIVE_GENRE = {
+  single: `All genres`,
+  multiply: `All genres`
+};
+
+const ACTIVE_GENRE = {
+  multiply: `Comedies`,
+  single: `Comedy`,
+};
 
 it(`Click to genre tab`, () => {
   const genreTabClickHandler = jest.fn();
 
   const genreList = shallow(
       <GenresList
-        activeGenre={ACTIVE_GENRE}
+        activeGenre={DEFAULT_ACTIVE_GENRE}
         onGenreTabClick={genreTabClickHandler}
       />
   );
@@ -24,5 +32,5 @@ it(`Click to genre tab`, () => {
   genreTabItem.simulate(`click`);
 
   expect(genreTabClickHandler).toHaveBeenCalledTimes(1);
-  expect(genreTabClickHandler).toBeCalledWith(`Comedy`);
+  expect(genreTabClickHandler).toBeCalledWith(ACTIVE_GENRE);
 });

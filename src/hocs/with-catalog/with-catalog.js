@@ -12,6 +12,13 @@ const withCatalog = (Component) => {
       };
 
       this._showMoreButtonClickHandler = this._showMoreButtonClickHandler.bind(this);
+      this._resetShownFilms = this._resetShownFilms.bind(this);
+    }
+
+    _resetShownFilms() {
+      this.setState({
+        currentShownFilms: DEFAULT_SHOWN_FILMS
+      });
     }
 
     _showMoreButtonClickHandler() {
@@ -29,6 +36,7 @@ const withCatalog = (Component) => {
           return (
             <Catalog
               {...this.props}
+              resetShownFilms={this._resetShownFilms}
               currentShownFilms={currentShownFilms}
               onShowMoreButtonClick={this._showMoreButtonClickHandler}
             />

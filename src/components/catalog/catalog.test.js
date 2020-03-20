@@ -53,7 +53,10 @@ const MOCK_CATALOG_FILMS_LIST = [
   }
 ];
 
-const ACTIVE_GENRE = `Comedies`;
+const DEFAULT_ACTIVE_GENRE = {
+  single: `All genres`,
+  multiply: `All genres`
+};
 
 const CURRENT_SHOWN_FILMS = 8;
 
@@ -65,7 +68,8 @@ it(`Render Catalog`, () => {
           onFilmClick={() => {}}
           onGenreTabClick={() => {}}
           onShowMoreButtonClick={() => {}}
-          activeGenre={ACTIVE_GENRE}
+          activeGenre={DEFAULT_ACTIVE_GENRE}
+          resetShownFilms={() => {}}
           currentShownFilms={CURRENT_SHOWN_FILMS}
         />, {createNodeMock: () => {
           return {};

@@ -16,7 +16,10 @@ const filteredFilms = [
   },
 ];
 
-const GIVEN_GENRE = `Comedies`;
+const GIVEN_GENRE = {
+  multiply: `Comedies`,
+  single: `Comedy`,
+};
 
 const InitialState = {
   films: [
@@ -174,7 +177,10 @@ describe(`Reducer tests`, () => {
   });
 
   it(`Action creator return correct film list after change genre`, () => {
-    expect(ActionCreator.getMoviesByGenre(`Comedy`)).toEqual({
+    expect(ActionCreator.getMoviesByGenre({
+      single: `Comedy`,
+      multiply: `Comedies`,
+    })).toEqual({
       type: ActionType.GET_MOVIES_BY_GENRE,
       payload: filteredFilms,
     });
