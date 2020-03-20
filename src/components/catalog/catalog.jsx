@@ -22,10 +22,12 @@ const Catalog = (props) => {
         films={filmsToShow}
         onFilmClick={onFilmClick}
       />
-      <ShowMoreButton
-        isButtonHide={isButtonHide}
-        onShowMoreButtonClick={onShowMoreButtonClick}
-      />
+      {
+        isButtonHide ? null :
+          (<ShowMoreButton
+            onShowMoreButtonClick={onShowMoreButtonClick}
+          />)
+      }
     </section>
   );
 };

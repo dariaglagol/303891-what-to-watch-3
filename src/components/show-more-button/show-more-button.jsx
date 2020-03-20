@@ -2,11 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const ShowMoreButton = (props) => {
-  const {onShowMoreButtonClick, isButtonHide} = props;
-
-  if (isButtonHide) {
-    return null;
-  }
+  const {onShowMoreButtonClick} = props;
 
   return (
     <div className="catalog__more">
@@ -29,7 +25,6 @@ ShowMoreButton.defaultProps = {
 
 ShowMoreButton.propTypes = {
   onShowMoreButtonClick: PropTypes.func.isRequired,
-  isButtonHide: PropTypes.bool.isRequired,
 };
 
 export default ShowMoreButton;

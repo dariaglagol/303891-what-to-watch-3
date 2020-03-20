@@ -7,15 +7,12 @@ Enzyme.configure({
   adapter: new Adapter(),
 });
 
-const IS_BUTTON_HIDE = false;
-
 it(`Click to show more button`, () => {
   const showMoreButtonClickHandler = jest.fn();
 
   const showMoreButtonComponent = shallow(
       <ShowMoreButton
         onShowMoreButtonClick={showMoreButtonClickHandler}
-        isButtonHide={IS_BUTTON_HIDE}
       />
   );
 
