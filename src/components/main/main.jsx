@@ -5,7 +5,7 @@ import PromoFilm from "@components/promo-film/promo-film";
 import Footer from "@components/footer/footer";
 
 const Main = (props) => {
-  const {promoMovieCover, films, onFilmClick, activeGenre, onGenreTabClick, renderMovieList} = props;
+  const {promoMovieCover, onFilmClick, renderCatalog} = props;
 
   return (
     <React.Fragment>
@@ -14,13 +14,7 @@ const Main = (props) => {
         onFilmClick={onFilmClick}
       />
       <div className="page-content">
-        <Catalog
-          films={films}
-          onGenreTabClick={onGenreTabClick}
-          activeGenre={activeGenre}
-          onFilmClick={onFilmClick}
-          renderMovieList={renderMovieList}
-        />
+        {renderCatalog()}
         <Footer />
       </div>
     </React.Fragment>
@@ -42,7 +36,7 @@ Main.propTypes = {
   onFilmClick: PropTypes.func.isRequired,
   activeGenre: PropTypes.string.isRequired,
   onGenreTabClick: PropTypes.func.isRequired,
-  renderMovieList: PropTypes.func.isRequired,
+  renderCatalog: PropTypes.func.isRequired,
 };
 
 export default Main;

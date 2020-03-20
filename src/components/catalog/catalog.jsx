@@ -1,9 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
+import MoviesList from "@components/movies-list/movies-list";
 import GenresList from "@components/genres-list/genres-list";
+import ShowMoreButton from "@components/show-more-button/show-more-button";
+import {sliceMovieArray} from "@utils/utils";
 
 const Catalog = (props) => {
-  const {activeGenre, onGenreTabClick, renderMovieList} = props;
+  const {films, onFilmClick, activeGenre, onGenreTabClick, onShowMoreButtonClick, currentShownFilms} = props;
+
+  const filmsToShow = sliceMovieArray(films, currentShownFilms);
+  const isButtonHide = films.length <= currentShownFilms;
 
   return (
     <section className="catalog">
@@ -12,12 +18,14 @@ const Catalog = (props) => {
         onGenreTabClick={onGenreTabClick}
         activeGenre={activeGenre}
       />
-      {renderMovieList()}
-      <div className="catalog__more">
-        <button className="catalog__button" type="button">
-          Show more
-        </button>
-      </div>
+      <MoviesList
+        films={filmsToShow}
+        onFilmClick={onFilmClick}
+      />
+      <ShowMoreButton
+        isButtonHide={isButtonHide}
+        onShowMoreButtonClick={onShowMoreButtonClick}
+      />
     </section>
   );
 };
@@ -25,7 +33,15 @@ const Catalog = (props) => {
 export default Catalog;
 
 Catalog.propTypes = {
-  renderMovieList: PropTypes.func.isRequired,
+  films: PropTypes.arrayOf(PropTypes.exact({
+    title: PropTypes.string.isRequired,
+    genre: PropTypes.string.isRequired,
+    posterUrl: PropTypes.string.isRequired,
+    preview: PropTypes.string.isRequired,
+  })).isRequired,
+  onFilmClick: PropTypes.func.isRequired,
   activeGenre: PropTypes.string.isRequired,
   onGenreTabClick: PropTypes.func.isRequired,
+  onShowMoreButtonClick: PropTypes.func.isRequired,
+  currentShownFilms: PropTypes.number.isRequired,
 };

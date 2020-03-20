@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
-import MoviesList from "@components/movies-list/movies-list";
+import Catalog from "@components/catalog/catalog";
 import {DEFAULT_SHOWN_FILMS} from "@utils/constants";
+import PropTypes from "prop-types";
 
 const withMovieList = (Component) => {
   class WithMovieList extends PureComponent {
@@ -22,15 +23,13 @@ const withMovieList = (Component) => {
 
     render() {
       const {currentShownFilms} = this.state;
-      const {films, onFilmClick} = this.props;
 
       return <Component
         {...this.props}
-        renderMovieList={() => {
+        renderCatalog={() => {
           return (
-            <MoviesList
-              films={films}
-              onFilmClick={onFilmClick}
+            <Catalog
+              {...this.props}
               currentShownFilms={currentShownFilms}
               onShowMoreButtonClick={this._showMoreButtonClickHandler}
             />
@@ -40,7 +39,8 @@ const withMovieList = (Component) => {
     }
   }
 
-  WithMovieList.propTypes = {};
+  WithMovieList.propTypes = {
+  };
 
   return WithMovieList;
 };
