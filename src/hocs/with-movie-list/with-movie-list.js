@@ -1,9 +1,9 @@
 import React, {PureComponent} from 'react';
-import GenresList from "@components/genres-list/genres-list";
+import MoviesList from "@components/movies-list/movies-list";
+import {DEFAULT_SHOWN_FILMS} from "@utils/constants";
 
-
-const withFilmCatalog = (Component) => {
-  class WithFilmCatalog extends PureComponent {
+const withMovieList = (Component) => {
+  class WithMovieList extends PureComponent {
     constructor(props) {
       super(props);
 
@@ -22,12 +22,15 @@ const withFilmCatalog = (Component) => {
 
     render() {
       const {currentShownFilms} = this.state;
+      const {films, onFilmClick} = this.props;
 
       return <Component
         {...this.props}
-        renderGenreTabs={() => {
+        renderMovieList={() => {
           return (
-            <GenresList
+            <MoviesList
+              films={films}
+              onFilmClick={onFilmClick}
               currentShownFilms={currentShownFilms}
               onShowMoreButtonClick={this._showMoreButtonClickHandler}
             />
@@ -37,9 +40,9 @@ const withFilmCatalog = (Component) => {
     }
   }
 
-  WithFilmCatalog.propTypes = {};
+  WithMovieList.propTypes = {};
 
-  return WithFilmCatalog;
+  return WithMovieList;
 };
 
-export default withFilmCatalog;
+export default withMovieList;
