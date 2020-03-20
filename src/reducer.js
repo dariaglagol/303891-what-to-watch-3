@@ -2,11 +2,15 @@ import {extend} from "@utils/utils";
 import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
 import films from "@mocks/films.js";
 import PromoMovieCover from '@mocks/promo-movie-cover';
+import MovieDetails from '@mocks/movie-details';
+import Reviews from '@mocks/reviews';
 
 const InitialState = {
   films,
   activeGenre: DEFAULT_ACTIVE_GENRE,
-  promoMovieCover: PromoMovieCover
+  promoMovieCover: PromoMovieCover,
+  movieDetails: MovieDetails,
+  reviews: Reviews,
 };
 
 const ActionType = {
