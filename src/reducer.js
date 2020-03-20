@@ -20,7 +20,7 @@ const ActionType = {
 
 const _filterFilmsByGenre = (movies, activeGenre) => {
   if (activeGenre === DEFAULT_ACTIVE_GENRE) {
-    return InitialState.films;
+    return movies;
   }
 
   return movies.filter((movie) => {
