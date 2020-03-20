@@ -68,6 +68,7 @@ it(`Main component render`, () => {
           promoMovieCover={MockFilmData}
           films={MOCK_CATALOG_FILMS_LIST}
           onFilmClick={() => {}}
+          renderCatalog={() => {}}
           activeGenre={ACTIVE_GENRE}
           onGenreTabClick={() => {}}
         />, {createNodeMock: () => {

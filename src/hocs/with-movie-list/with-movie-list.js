@@ -1,7 +1,6 @@
 import React, {PureComponent} from 'react';
 import Catalog from "@components/catalog/catalog";
 import {DEFAULT_SHOWN_FILMS} from "@utils/constants";
-import PropTypes from "prop-types";
 
 const withMovieList = (Component) => {
   class WithMovieList extends PureComponent {
@@ -39,8 +38,7 @@ const withMovieList = (Component) => {
     }
   }
 
-  WithMovieList.propTypes = {
-  };
+  WithMovieList.propTypes = {};
 
   return WithMovieList;
 };

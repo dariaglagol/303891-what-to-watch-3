@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Catalog from "@components/catalog/catalog";
 import PromoFilm from "@components/promo-film/promo-film";
 import Footer from "@components/footer/footer";
 

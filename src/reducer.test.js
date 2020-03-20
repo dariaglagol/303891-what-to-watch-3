@@ -74,6 +74,11 @@ describe(`Reducer tests`, () => {
     expect(reducer(void 0, {})).toEqual({
       films,
       activeGenre: DEFAULT_ACTIVE_GENRE,
+      promoMovieCover: {
+        TITLE: `The Grand Budapest Hotel`,
+        GENRE: `Comedy`,
+        RELEASE_DATE: `2020`
+      }
     });
   });
 
