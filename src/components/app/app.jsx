@@ -90,6 +90,7 @@ class App extends PureComponent {
 const mapStateToProps = (state) => ({
   films: state.films,
   activeGenre: state.activeGenre,
+  promoMovieCover: state.promoMovieCover,
 });
 
 const mapDispatchToProps = (dispatch) => ({

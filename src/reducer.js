@@ -1,10 +1,12 @@
 import {extend} from "@utils/utils";
 import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
 import films from "@mocks/films.js";
+import PromoMovieCover from '@mocks/promo-movie-cover';
 
 const InitialState = {
   films,
-  activeGenre: DEFAULT_ACTIVE_GENRE
+  activeGenre: DEFAULT_ACTIVE_GENRE,
+  promoMovieCover: PromoMovieCover
 };
 
 const ActionType = {
@@ -12,13 +14,13 @@ const ActionType = {
   GET_MOVIES_BY_GENRE: `GET_MOVIES_BY_GENRE`,
 };
 
-const _filterFilmsByGenre = (activeGenre) => {
+const _filterFilmsByGenre = (movies, activeGenre) => {
   if (activeGenre === DEFAULT_ACTIVE_GENRE) {
     return InitialState.films;
   }
 
-  return films.filter((film) => {
-    return film.genre === activeGenre;
+  return movies.filter((movie) => {
+    return movie.genre === activeGenre;
   });
 };
 
@@ -28,7 +30,7 @@ const ActionCreator = {
     payload: newGenre,
   }),
   getMoviesByGenre: (newGenre) => {
-    const filmsByGenre = _filterFilmsByGenre(newGenre);
+    const filmsByGenre = _filterFilmsByGenre(films, newGenre);
 
     return {
       type: ActionType.GET_MOVIES_BY_GENRE,
