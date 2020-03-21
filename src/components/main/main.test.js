@@ -8,7 +8,10 @@ const MockFilmData = {
   RELEASE_DATE: `2020`
 };
 
-const ACTIVE_GENRE = `Comedies`;
+const DEFAULT_ACTIVE_GENRE = {
+  single: `All genres`,
+  multiply: `All genres`
+};
 
 const MOCK_CATALOG_FILMS_LIST = [
   {
@@ -68,7 +71,8 @@ it(`Main component render`, () => {
           promoMovieCover={MockFilmData}
           films={MOCK_CATALOG_FILMS_LIST}
           onFilmClick={() => {}}
-          activeGenre={ACTIVE_GENRE}
+          renderCatalog={() => {}}
+          activeGenre={DEFAULT_ACTIVE_GENRE}
           onGenreTabClick={() => {}}
         />, {createNodeMock: () => {
           return {};

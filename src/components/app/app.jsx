@@ -5,10 +5,12 @@ import {connect} from "react-redux";
 import Main from "@components/main/main";
 import MovieExtended from "@components/movie-extended/movie-extended";
 import withTabs from "@hocs/with-tabs/with-tabs";
+import withCatalog from "@hocs/with-catalog/with-catalog";
 import {PageTypes} from "@utils/constants";
 import {ActionCreator} from "../../reducer";
 
 const MovieExtendedComponentWrapped = withTabs(MovieExtended);
+const MainComponentWrapped = withCatalog(Main);
 
 class App extends PureComponent {
   constructor(props) {
@@ -41,7 +43,7 @@ class App extends PureComponent {
     switch (activePage) {
       case PageTypes.MAIN:
         return (
-          <Main
+          <MainComponentWrapped
             promoMovieCover={promoMovieCover}
             onFilmClick={this._filmClickHandler}
             activeGenre={activeGenre}
@@ -90,6 +92,9 @@ class App extends PureComponent {
 const mapStateToProps = (state) => ({
   films: state.films,
   activeGenre: state.activeGenre,
+  promoMovieCover: state.promoMovieCover,
+  movieDetails: state.movieDetails,
+  reviews: state.reviews,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -132,6 +137,9 @@ App.propTypes = {
     date: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
   })),
-  activeGenre: PropTypes.string.isRequired,
+  activeGenre: PropTypes.exact({
+    multiply: PropTypes.string.isRequired,
+    single: PropTypes.string.isRequired,
+  }).isRequired,
   onGenreTabClick: PropTypes.func.isRequired,
 };

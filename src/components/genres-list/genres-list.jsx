@@ -8,13 +8,13 @@ const GenresList = (props) => {
   function _renderGenres() {
     return [...Genres.values()].map((genre) => {
       const genreTabName = genre.multiply;
-      const genreSingleName = genre.single;
+      const activeGenreMultipleName = activeGenre.multiply;
       return (
         <li
-          className={`catalog__genres-item ${activeGenre === genreTabName ? `catalog__genres-item--active` : ``}`}
+          className={`catalog__genres-item ${activeGenreMultipleName === genreTabName ? `catalog__genres-item--active` : ``}`}
           key={genreTabName}
           onClick={() => {
-            onGenreTabClick(genreSingleName);
+            onGenreTabClick(genre);
           }}
         >
           <a href="#" className="catalog__genres-link">{genreTabName}</a>
@@ -31,7 +31,10 @@ const GenresList = (props) => {
 };
 
 GenresList.propTypes = {
-  activeGenre: PropTypes.string.isRequired,
+  activeGenre: PropTypes.exact({
+    multiply: PropTypes.string.isRequired,
+    single: PropTypes.string.isRequired,
+  }).isRequired,
   onGenreTabClick: PropTypes.func.isRequired,
 };
 

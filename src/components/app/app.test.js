@@ -73,6 +73,11 @@ const MOCK_MOVIE_DETAILS = {
   runTime: 113,
 };
 
+const DEFAULT_ACTIVE_GENRE = {
+  single: `All genres`,
+  multiply: `All genres`
+};
+
 it(`Render App`, () => {
   const appComponent = renderer
     .create(
@@ -80,7 +85,7 @@ it(`Render App`, () => {
           promoMovieCover={MockFilmData}
           films={MOCK_CATALOG_FILMS_LIST}
           movieDetails={MOCK_MOVIE_DETAILS}
-          activeGenre={`All genres`}
+          activeGenre={DEFAULT_ACTIVE_GENRE}
           onGenreTabClick={() => {}}
         />
         , {createNodeMock: () => {

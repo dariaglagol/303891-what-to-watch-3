@@ -15,11 +15,15 @@ const getMovieMark = (score) => {
 const getSimilarMovies = (genre, movies) => {
   return movies.filter((movie) => {
     return movie.genre === genre;
-  }).splice(0, SIMILAR_FILM_COUNT);
+  }).slice(0, SIMILAR_FILM_COUNT);
+};
+
+const sliceMovieArray = (movies, count) => {
+  return movies.slice(0, count);
 };
 
 const extend = (a, b) => {
   return Object.assign({}, a, b);
 };
 
-export {getMovieMark, getSimilarMovies, extend};
+export {getMovieMark, getSimilarMovies, extend, sliceMovieArray};

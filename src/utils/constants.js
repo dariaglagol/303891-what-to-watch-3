@@ -25,7 +25,10 @@ const Genres = new Map([
   [`THRILLER`, {single: `Thriller`, multiply: `Thrillers`}],
 ]);
 
-const DEFAULT_ACTIVE_GENRE = `All genres`;
+const DEFAULT_ACTIVE_GENRE = {
+  single: `All genres`,
+  multiply: `All genres`
+};
 
 const PageTypes = {
   MAIN: `main`,
@@ -40,6 +43,8 @@ const DEFAULT_ACTIVE_TAB = `Overview`;
 
 const FILM_REVIEWS_COLUMN_COUNT = 2;
 
+const DEFAULT_SHOWN_FILMS = 8;
+
 export {
   MovieMarksTypes,
   FILM_REVIEWS_COLUMN_COUNT,
@@ -49,5 +54,6 @@ export {
   TABS,
   SIMILAR_FILM_COUNT,
   DEFAULT_ACTIVE_GENRE,
-  DEFAULT_ACTIVE_TAB
+  DEFAULT_ACTIVE_TAB,
+  DEFAULT_SHOWN_FILMS
 };

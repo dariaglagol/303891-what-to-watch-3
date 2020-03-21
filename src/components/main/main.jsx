@@ -1,11 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Catalog from "@components/catalog/catalog";
 import PromoFilm from "@components/promo-film/promo-film";
 import Footer from "@components/footer/footer";
 
 const Main = (props) => {
-  const {promoMovieCover, films, onFilmClick, activeGenre, onGenreTabClick} = props;
+  const {promoMovieCover, onFilmClick, renderCatalog} = props;
 
   return (
     <React.Fragment>
@@ -14,12 +13,7 @@ const Main = (props) => {
         onFilmClick={onFilmClick}
       />
       <div className="page-content">
-        <Catalog
-          films={films}
-          onGenreTabClick={onGenreTabClick}
-          activeGenre={activeGenre}
-          onFilmClick={onFilmClick}
-        />
+        {renderCatalog()}
         <Footer />
       </div>
     </React.Fragment>
@@ -39,8 +33,12 @@ Main.propTypes = {
     preview: PropTypes.string.isRequired,
   })).isRequired,
   onFilmClick: PropTypes.func.isRequired,
-  activeGenre: PropTypes.string.isRequired,
+  activeGenre: PropTypes.exact({
+    multiply: PropTypes.string.isRequired,
+    single: PropTypes.string.isRequired,
+  }).isRequired,
   onGenreTabClick: PropTypes.func.isRequired,
+  renderCatalog: PropTypes.func.isRequired,
 };
 
 export default Main;

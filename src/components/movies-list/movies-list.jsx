@@ -40,13 +40,13 @@ export default class MoviesList extends PureComponent {
     const {activeFilm} = this.state;
 
     return (
-      films.map((film) => (
+      films.map((film, index) => (
         <CatalogCard
           onFilmCatalogCardHover={this._filmCatalogCardHoverHandler}
           onFilmClick={onFilmClick}
           isPlaying={this._isFilmActive(activeFilm, film)}
           film={film}
-          key={`${film.title}`}
+          key={`${film.title}-${index}`}
         />
       ))
     );
