@@ -1,48 +1,21 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import CatalogCard from "@components/catalog-card/calalog-card";
+import {sliceMovieArray} from "@utils/utils";
 
 export default class MoviesList extends PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      activeFilm: null,
-    };
-
-    this._filmCatalogCardHoverHandler = this._filmCatalogCardHoverHandler.bind(this);
-  }
-
-  _filmCatalogCardHoverHandler(film) {
-    clearTimeout(this._timeout);
-
-    if (film) {
-      this._timeout = setTimeout(() => {
-        this.setState({
-          activeFilm: film
-        });
-      }, 1000);
-
-      return;
-    }
-
-    this.setState({
-      activeFilm: null
-    });
-  }
-
   _isFilmActive(activeFilm, film) {
     return activeFilm && activeFilm.title === film.title || false;
   }
 
   _renderFilmCatalogCards() {
-    const {films, onFilmClick} = this.props;
-    const {activeFilm} = this.state;
+    const {films, onFilmClick, onFilmCatalogCardHover, activeFilm, currentShownFilms} = this.props;
+    const filmsToShow = sliceMovieArray(films, currentShownFilms);
 
     return (
-      films.map((film, index) => (
+      filmsToShow.map((film, index) => (
         <CatalogCard
-          onFilmCatalogCardHover={this._filmCatalogCardHoverHandler}
+          onFilmCatalogCardHover={onFilmCatalogCardHover}
           onFilmClick={onFilmClick}
           isPlaying={this._isFilmActive(activeFilm, film)}
           film={film}
@@ -68,5 +41,13 @@ MoviesList.propTypes = {
     posterUrl: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
   })).isRequired,
-  onFilmClick: PropTypes.func.isRequired
+  onFilmClick: PropTypes.func.isRequired,
+  onFilmCatalogCardHover: PropTypes.func.isRequired,
+  activeFilm: PropTypes.exact({
+    title: PropTypes.string.isRequired,
+    genre: PropTypes.string.isRequired,
+    posterUrl: PropTypes.string.isRequired,
+    preview: PropTypes.string.isRequired,
+  }).isRequired,
+  currentShownFilms: PropTypes.number.isRequired,
 };

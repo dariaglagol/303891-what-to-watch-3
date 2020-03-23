@@ -65,7 +65,7 @@ it(`Render Catalog`, () => {
     .create(
         <Catalog
           films={MOCK_CATALOG_FILMS_LIST}
-          onFilmClick={() => {}}
+          renderMovieList={() => {}}
           onGenreTabClick={() => {}}
           onShowMoreButtonClick={() => {}}
           activeGenre={DEFAULT_ACTIVE_GENRE}

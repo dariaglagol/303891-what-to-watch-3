@@ -1,4 +1,4 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import {connect} from "react-redux";
@@ -6,11 +6,12 @@ import Main from "@components/main/main";
 import MovieExtended from "@components/movie-extended/movie-extended";
 import withTabs from "@hocs/with-tabs/with-tabs";
 import withCatalog from "@hocs/with-catalog/with-catalog";
+import withMovieList from "@hocs/with-movie-list/with-movie-list";
 import {PageTypes} from "@utils/constants";
 import {ActionCreator} from "../../reducer";
 
-const MovieExtendedComponentWrapped = withTabs(MovieExtended);
-const MainComponentWrapped = withCatalog(Main);
+const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
+const MainComponentWrapped = withMovieList(withCatalog(Main));
 
 const App = (props) => {
   const {

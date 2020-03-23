@@ -21,7 +21,7 @@ const ActionType = {
 };
 
 const _filterFilmsByGenre = (movies, activeGenre) => {
-  if (activeGenre.single === DEFAULT_ACTIVE_GENRE) {
+  if (activeGenre.single === DEFAULT_ACTIVE_GENRE.single) {
     return movies;
   }
 

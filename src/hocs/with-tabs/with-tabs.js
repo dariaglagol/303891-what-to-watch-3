@@ -29,6 +29,7 @@ const withTabs = (Component) => {
         renderTabs={() => {
           return (
             <Tabs
+              {...this.props}
               activeTab={activeTab}
               onTabClick={this._tabClickHandler}
             />

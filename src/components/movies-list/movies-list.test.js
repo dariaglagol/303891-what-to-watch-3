@@ -53,12 +53,24 @@ const MOCK_CATALOG_FILMS_LIST = [
   }
 ];
 
+const MOCKED_FILM = {
+  title: `Fantastic Beasts: The Crimes of Grindelwald`,
+  posterUrl: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+  genre: `Comedy`,
+  preview: `preview`,
+};
+
+const CURRENT_SHOWN_FILMS = 8;
+
 it(`Movie list render`, () => {
   const moviesListComponent = renderer
     .create(
         <MoviesList
           films={MOCK_CATALOG_FILMS_LIST}
           onFilmClick={() => {}}
+          onFilmCatalogCardHover={() => {}}
+          activeFilm={MOCKED_FILM}
+          currentShownFilms={CURRENT_SHOWN_FILMS}
         />
         , {createNodeMock: () => {
           return {};

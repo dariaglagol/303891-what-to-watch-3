@@ -3,12 +3,18 @@ import PropTypes from "prop-types";
 import MoviesList from "@components/movies-list/movies-list";
 import GenresList from "@components/genres-list/genres-list";
 import ShowMoreButton from "@components/show-more-button/show-more-button";
-import {sliceMovieArray} from "@utils/utils";
 
 const Catalog = (props) => {
-  const {films, onFilmClick, activeGenre, onGenreTabClick, onShowMoreButtonClick, currentShownFilms, resetShownFilms} = props;
+  const {
+    films,
+    activeGenre,
+    onGenreTabClick,
+    onShowMoreButtonClick,
+    currentShownFilms,
+    resetShownFilms,
+    renderMovieList,
+  } = props;
 
-  const filmsToShow = sliceMovieArray(films, currentShownFilms);
   const isButtonHide = films.length <= currentShownFilms;
 
   function _onTabClick(genre) {
@@ -23,10 +29,7 @@ const Catalog = (props) => {
         onGenreTabClick={_onTabClick}
         activeGenre={activeGenre}
       />
-      <MoviesList
-        films={filmsToShow}
-        onFilmClick={onFilmClick}
-      />
+      {renderMovieList(currentShownFilms)}
       {
         isButtonHide ? null :
           (<ShowMoreButton
@@ -46,7 +49,6 @@ Catalog.propTypes = {
     posterUrl: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
   })).isRequired,
-  onFilmClick: PropTypes.func.isRequired,
   activeGenre: PropTypes.exact({
     multiply: PropTypes.string.isRequired,
     single: PropTypes.string.isRequired,
@@ -54,5 +56,6 @@ Catalog.propTypes = {
   onGenreTabClick: PropTypes.func.isRequired,
   onShowMoreButtonClick: PropTypes.func.isRequired,
   resetShownFilms: PropTypes.func.isRequired,
+  renderMovieList: PropTypes.func.isRequired,
   currentShownFilms: PropTypes.number.isRequired,
 };
