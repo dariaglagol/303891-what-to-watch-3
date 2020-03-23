@@ -1,5 +1,6 @@
 import React, {PureComponent} from "react";
 import MoviesList from "@components/movies-list/movies-list";
+import PropTypes from "prop-types";
 
 const withMovieList = (Component) => {
   class WithMovieList extends PureComponent {
@@ -54,7 +55,15 @@ const withMovieList = (Component) => {
     }
   }
 
-  WithMovieList.propTypes = {};
+  WithMovieList.propTypes = {
+    films: PropTypes.arrayOf(PropTypes.exact({
+      title: PropTypes.string.isRequired,
+      genre: PropTypes.string.isRequired,
+      posterUrl: PropTypes.string.isRequired,
+      preview: PropTypes.string.isRequired,
+    })).isRequired,
+    onFilmClick: PropTypes.func.isRequired,
+  };
 
   return WithMovieList;
 };

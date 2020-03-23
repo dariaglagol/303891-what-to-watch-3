@@ -4,7 +4,7 @@ import VideoPlayer from "@components/video-player/video-player";
 import {PageTypes} from "@utils/constants";
 
 const CatalogCard = (props) => {
-  const {film, onFilmCatalogCardHover, onFilmClick, isPlaying} = props;
+  const {film, onFilmCatalogCardHover, onFilmClick, isPlaying, renderVideo} = props;
 
   const {title, posterUrl, preview} = film;
 
@@ -20,6 +20,12 @@ const CatalogCard = (props) => {
     onFilmClick(PageTypes.MOVIE);
   }
 
+  // <VideoPlayer
+  //   isPlaying={isPlaying}
+  //   poster={posterUrl}
+  //   src={preview}
+  // />
+
   return (
     <article
       className="small-movie-card catalog__movies-card"
@@ -28,11 +34,7 @@ const CatalogCard = (props) => {
       onClick={_onFilmClick}
     >
       <div className="small-movie-card__image">
-        <VideoPlayer
-          isPlaying={isPlaying}
-          poster={posterUrl}
-          src={preview}
-        />
+        {renderVideo()}
       </div>
       <h3 className="small-movie-card__title">
         <a className="small-movie-card__link" href="movie-page.html">{title}</a>
