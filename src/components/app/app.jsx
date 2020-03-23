@@ -12,40 +12,25 @@ import {ActionCreator} from "../../reducer";
 const MovieExtendedComponentWrapped = withTabs(MovieExtended);
 const MainComponentWrapped = withCatalog(Main);
 
-class App extends PureComponent {
-  constructor(props) {
-    super(props);
+const App = (props) => {
+  const {
+    promoMovieCover,
+    films,
+    movieDetails,
+    reviews,
+    activeGenre,
+    onGenreTabClick,
+    activePage,
+    onPageChange
+  } = props;
 
-    this.state = {
-      activePage: PageTypes.MAIN
-    };
-
-    this._filmClickHandler = this._filmClickHandler.bind(this);
-  }
-
-  _filmClickHandler(activePage) {
-    this.setState({
-      activePage
-    });
-  }
-
-  _renderPages() {
-    const {activePage} = this.state;
-    const {
-      promoMovieCover,
-      films,
-      movieDetails,
-      reviews,
-      activeGenre,
-      onGenreTabClick
-    } = this.props;
-
+  function _renderPages() {
     switch (activePage) {
       case PageTypes.MAIN:
         return (
           <MainComponentWrapped
             promoMovieCover={promoMovieCover}
-            onFilmClick={this._filmClickHandler}
+            onFilmClick={onPageChange}
             activeGenre={activeGenre}
             onGenreTabClick={onGenreTabClick}
             films={films}
@@ -55,7 +40,7 @@ class App extends PureComponent {
         return (
           <MovieExtendedComponentWrapped
             promoMovieCover={promoMovieCover}
-            onFilmClick={this._filmClickHandler}
+            onFilmClick={onPageChange}
             films={films}
             movieDetails={movieDetails}
             reviews={reviews}
@@ -66,28 +51,25 @@ class App extends PureComponent {
     return null;
   }
 
-  render() {
-    const {promoMovieCover, films, movieDetails, reviews} = this.props;
-    return (
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/">
-            {this._renderPages()}
-          </Route>
-          <Route exact path="/dev-movie-details">
-            <MovieExtendedComponentWrapped
-              promoMovieCover={promoMovieCover}
-              onFilmClick={this._filmClickHandler}
-              films={films}
-              movieDetails={movieDetails}
-              reviews={reviews}
-            />
-          </Route>
-        </Switch>
-      </BrowserRouter>
-    );
-  }
-}
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/">
+          {_renderPages()}
+        </Route>
+        <Route exact path="/dev-movie-details">
+          <MovieExtendedComponentWrapped
+            promoMovieCover={promoMovieCover}
+            onFilmClick={onPageChange}
+            films={films}
+            movieDetails={movieDetails}
+            reviews={reviews}
+          />
+        </Route>
+      </Switch>
+    </BrowserRouter>
+  );
+};
 
 const mapStateToProps = (state) => ({
   films: state.films,
@@ -95,13 +77,17 @@ const mapStateToProps = (state) => ({
   promoMovieCover: state.promoMovieCover,
   movieDetails: state.movieDetails,
   reviews: state.reviews,
+  activePage: state.activePage
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onGenreTabClick(activeGenre) {
     dispatch(ActionCreator.changeGenre(activeGenre));
     dispatch(ActionCreator.getMoviesByGenre(activeGenre));
-  }
+  },
+  onPageChange(activePage) {
+    dispatch(ActionCreator.getActivePage(activePage));
+  },
 });
 
 export {App};
@@ -142,4 +128,6 @@ App.propTypes = {
     single: PropTypes.string.isRequired,
   }).isRequired,
   onGenreTabClick: PropTypes.func.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+  activePage: PropTypes.string.isRequired,
 };

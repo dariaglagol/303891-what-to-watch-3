@@ -1,9 +1,9 @@
 import {extend} from "@utils/utils";
-import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
 import films from "@mocks/films.js";
 import PromoMovieCover from '@mocks/promo-movie-cover';
 import MovieDetails from '@mocks/movie-details';
 import Reviews from '@mocks/reviews';
+import {DEFAULT_ACTIVE_GENRE, PageTypes} from "@utils/constants";
 
 const InitialState = {
   films,
@@ -11,11 +11,13 @@ const InitialState = {
   promoMovieCover: PromoMovieCover,
   movieDetails: MovieDetails,
   reviews: Reviews,
+  activePage: PageTypes.MAIN
 };
 
 const ActionType = {
   CHANGE_GENRE: `CHANGE_GENRE`,
   GET_MOVIES_BY_GENRE: `GET_MOVIES_BY_GENRE`,
+  GET_ACTIVE_PAGE: `GET_ACTIVE_PAGE`
 };
 
 const _filterFilmsByGenre = (movies, activeGenre) => {
@@ -41,6 +43,12 @@ const ActionCreator = {
       payload: filmsByGenre
     };
   },
+  getActivePage: (page) => {
+    return {
+      type: ActionType.GET_ACTIVE_PAGE,
+      payload: page
+    };
+  },
 };
 
 const reducer = (state = InitialState, action) => {
@@ -49,6 +57,8 @@ const reducer = (state = InitialState, action) => {
       return extend(state, {activeGenre: action.payload});
     case ActionType.GET_MOVIES_BY_GENRE:
       return extend(state, {films: action.payload});
+    case ActionType.GET_ACTIVE_PAGE:
+      return extend(state, {activePage: action.payload});
     default:
       break;
   }
