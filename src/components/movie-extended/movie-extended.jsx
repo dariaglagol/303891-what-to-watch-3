@@ -2,12 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import Header from "@components/header/header";
 import Footer from "@components/footer/footer";
-import MoviesList from "@components/movies-list/movies-list";
 import MovieDetails from "@components/movie-extended/blocks/movie-details/movie-details";
 import MovieOverview from "@components/movie-extended/blocks/movie-overview/movie-overview";
 import MovieReviews from "@components/movie-extended/blocks/movies-reviews/movies-reviews";
 import {getSimilarMovies} from "@utils/utils";
-import {TabTypes} from "@utils/constants";
+import {TabTypes, DEFAULT_SHOWN_FILMS} from "@utils/constants";
 
 const MovieExtended = (props) => {
   const {
@@ -16,9 +15,9 @@ const MovieExtended = (props) => {
     },
     reviews,
     films,
-    onFilmClick,
     renderTabs,
-    activeTab
+    activeTab,
+    renderMovieList,
   } = props;
 
   const similarFilms = getSimilarMovies(genre, films);
@@ -111,11 +110,7 @@ const MovieExtended = (props) => {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-
-          <MoviesList
-            films={similarFilms}
-            onFilmClick={onFilmClick}
-          />
+          {renderMovieList(DEFAULT_SHOWN_FILMS, similarFilms)}
         </section>
 
         <Footer />
@@ -151,6 +146,7 @@ MovieExtended.propTypes = {
   })),
   onFilmClick: PropTypes.func.isRequired,
   renderTabs: PropTypes.func.isRequired,
+  renderMovieList: PropTypes.func.isRequired,
   activeTab: PropTypes.string.isRequired,
 };
 

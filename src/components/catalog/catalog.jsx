@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import MoviesList from "@components/movies-list/movies-list";
 import GenresList from "@components/genres-list/genres-list";
 import ShowMoreButton from "@components/show-more-button/show-more-button";
 

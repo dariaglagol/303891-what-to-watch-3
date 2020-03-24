@@ -78,6 +78,7 @@ const PAGE_TYPE = `movie`;
 it(`Click on film card to call callback to change page`, () => {
   const onFilmClick = jest.fn();
   const renderTabs = jest.fn();
+  const renderMovieList = jest.fn();
 
   const movieDetailsComponent = mount(
       <MovieDetails
@@ -85,6 +86,7 @@ it(`Click on film card to call callback to change page`, () => {
         films={MOCK_CATALOG_FILMS_LIST}
         onFilmClick={onFilmClick}
         renderTabs={renderTabs}
+        renderMovieList={renderMovieList}
         activeTab={ACTIVE_TAB_MOCK}
       />
   );

@@ -18,6 +18,7 @@ it(`Render catalog card`, () => {
           film={MOCKED_FILM}
           onFilmCatalogCardHover={() => {}}
           onFilmClick={() => {}}
+          renderVideo={() => {}}
           isPlaying={MOCKED_PLAY_PROP}
         />, {createNodeMock: () => {
           return {};

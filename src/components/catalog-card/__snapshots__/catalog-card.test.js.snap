@@ -9,15 +9,7 @@ exports[`Render catalog card 1`] = `
 >
   <div
     className="small-movie-card__image"
-  >
-    <video
-      poster="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
-    >
-      <source
-        src="preview"
-      />
-    </video>
-  </div>
+  />
   <h3
     className="small-movie-card__title"
   >

@@ -2,6 +2,7 @@ import React, {PureComponent} from "react";
 import MoviesList from "@components/movies-list/movies-list";
 import PropTypes from "prop-types";
 
+
 const withMovieList = (Component) => {
   class WithMovieList extends PureComponent {
     constructor(props) {
@@ -39,10 +40,10 @@ const withMovieList = (Component) => {
       return (
         <Component
           {...this.props}
-          renderMovieList={(currentShownFilms) => {
+          renderMovieList={(currentShownFilms, sortedFilms = films) => {
             return (
               <MoviesList
-                films={films}
+                films={sortedFilms}
                 currentShownFilms={currentShownFilms}
                 onFilmClick={onFilmClick}
                 onFilmCatalogCardHover={this._filmCatalogCardHoverHandler}

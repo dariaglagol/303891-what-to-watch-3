@@ -2,20 +2,18 @@ import React from "react";
 import renderer from "react-test-renderer";
 import VideoPlayer from "./video-player";
 
-const MOCK = {
-  src: `src`,
-  isPlaying: false,
-  poster: `src`,
+const MockedFilm = {
+  title: `title`,
+  posterUrl: `url`,
+  genre: `genre`,
+  preview: `preview`,
 };
 
 it(`Video player render`, () => {
-  const {src, isPlaying, poster} = MOCK;
   const videoPlayerComponent = renderer
     .create(
         <VideoPlayer
-          src={src}
-          isPlaying={isPlaying}
-          poster={poster}
+          film={MockedFilm}
         />,
         {createNodeMock: () => {
           return {};
