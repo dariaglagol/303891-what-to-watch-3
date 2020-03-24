@@ -1,7 +1,7 @@
 import React from "react";
 import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import MovieDetails from "./movie-extended";
+import MovieExtended from "./movie-extended";
 
 Enzyme.configure({
   adapter: new Adapter(),
@@ -81,7 +81,7 @@ it(`Click on film card to call callback to change page`, () => {
   const renderMovieList = jest.fn();
 
   const movieDetailsComponent = mount(
-      <MovieDetails
+      <MovieExtended
         movieDetails={MOVIE_DETAILS}
         films={MOCK_CATALOG_FILMS_LIST}
         onFilmClick={onFilmClick}
@@ -91,7 +91,7 @@ it(`Click on film card to call callback to change page`, () => {
       />
   );
 
-  const filmCard = movieDetailsComponent.find(`.small-movie-card.small-movie-card`).at(1);
+  const filmCard = movieDetailsComponent.find(`.small-movie-card`).at(1);
 
   filmCard.simulate(`click`);
 
