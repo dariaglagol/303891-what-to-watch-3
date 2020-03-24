@@ -46,12 +46,14 @@ MoviesList.propTypes = {
   })).isRequired,
   onFilmClick: PropTypes.func.isRequired,
   onFilmCatalogCardHover: PropTypes.func.isRequired,
-  activeFilm: PropTypes.oneOf([null, PropTypes.exact({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    posterUrl: PropTypes.string.isRequired,
-    preview: PropTypes.string.isRequired,
-  }).isRequired
+  activeFilm: PropTypes.oneOfType([
+    PropTypes.exact({
+      title: PropTypes.string.isRequired,
+      genre: PropTypes.string.isRequired,
+      posterUrl: PropTypes.string.isRequired,
+      preview: PropTypes.string.isRequired,
+    }).isRequired,
+    PropTypes.oneOf([null]).isRequired,
   ]),
   currentShownFilms: PropTypes.number.isRequired,
 };

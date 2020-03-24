@@ -49,12 +49,10 @@ const withVideoPlayer = (Component) => {
     }
 
     render() {
-      // console.log('WithVideoPlayer', this.props);
       return (
         <Component
           {...this.props}
           renderVideo={() => {
-            console.log('renderVideo', this.props.film);
             return (
               <VideoPlayer
                 {...this.props}
