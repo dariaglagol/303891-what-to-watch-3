@@ -1,50 +1,26 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import CatalogCard from "@components/catalog-card/calalog-card";
+import withVideoPlayer from "@hocs/with-video-player/with-video-player";
+import {sliceMovieArray} from "@utils/utils";
 
-export default class MoviesList extends PureComponent {
-  constructor(props) {
-    super(props);
+const WrappedMovieCard = withVideoPlayer(CatalogCard);
 
-    this.state = {
-      activeFilm: null,
-    };
-
-    this._filmCatalogCardHoverHandler = this._filmCatalogCardHoverHandler.bind(this);
-  }
-
-  _filmCatalogCardHoverHandler(film) {
-    clearTimeout(this._timeout);
-
-    if (film) {
-      this._timeout = setTimeout(() => {
-        this.setState({
-          activeFilm: film
-        });
-      }, 1000);
-
-      return;
-    }
-
-    this.setState({
-      activeFilm: null
-    });
-  }
-
-  _isFilmActive(activeFilm, film) {
+const MoviesList = (props) => {
+  function _isFilmActive(activeFilm, film) {
     return activeFilm && activeFilm.title === film.title || false;
   }
 
-  _renderFilmCatalogCards() {
-    const {films, onFilmClick} = this.props;
-    const {activeFilm} = this.state;
+  function _renderFilmCatalogCards() {
+    const {films, onFilmClick, onFilmCatalogCardHover, activeFilm, currentShownFilms} = props;
+    const filmsToShow = sliceMovieArray(films, currentShownFilms);
 
     return (
-      films.map((film, index) => (
-        <CatalogCard
-          onFilmCatalogCardHover={this._filmCatalogCardHoverHandler}
+      filmsToShow.map((film, index) => (
+        <WrappedMovieCard
+          onFilmCatalogCardHover={onFilmCatalogCardHover}
           onFilmClick={onFilmClick}
-          isPlaying={this._isFilmActive(activeFilm, film)}
+          isPlaying={_isFilmActive(activeFilm, film)}
           film={film}
           key={`${film.title}-${index}`}
         />
@@ -52,14 +28,14 @@ export default class MoviesList extends PureComponent {
     );
   }
 
-  render() {
-    return (
-      <div className="catalog__movies-list">
-        {this._renderFilmCatalogCards()}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="catalog__movies-list">
+      {_renderFilmCatalogCards()}
+    </div>
+  );
+};
+
+export default MoviesList;
 
 MoviesList.propTypes = {
   films: PropTypes.arrayOf(PropTypes.exact({
@@ -68,5 +44,16 @@ MoviesList.propTypes = {
     posterUrl: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
   })).isRequired,
-  onFilmClick: PropTypes.func.isRequired
+  onFilmClick: PropTypes.func.isRequired,
+  onFilmCatalogCardHover: PropTypes.func.isRequired,
+  activeFilm: PropTypes.oneOfType([
+    PropTypes.exact({
+      title: PropTypes.string.isRequired,
+      genre: PropTypes.string.isRequired,
+      posterUrl: PropTypes.string.isRequired,
+      preview: PropTypes.string.isRequired,
+    }).isRequired,
+    PropTypes.oneOf([null]).isRequired,
+  ]),
+  currentShownFilms: PropTypes.number.isRequired,
 };

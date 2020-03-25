@@ -2,10 +2,10 @@
 
 exports[`Video player render 1`] = `
 <video
-  poster="src"
+  poster="url"
 >
   <source
-    src="src"
+    src="preview"
   />
 </video>
 `;

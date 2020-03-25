@@ -1,5 +1,5 @@
 import React from "react";
-import Enzyme, {shallow} from "enzyme";
+import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import CatalogCard from "./calalog-card";
 
@@ -23,12 +23,14 @@ const mockHoverEvent = {};
 it(`Hover on film card, film's info should pass to callback`, () => {
   const filmCatalogCardHoverHandler = jest.fn();
   const onFilmClick = jest.fn();
+  const renderVideo = jest.fn();
 
-  const filmCard = shallow(
+  const filmCard = mount(
       <CatalogCard
         film={MockedFilm}
         onFilmCatalogCardHover={filmCatalogCardHoverHandler}
         onFilmClick={onFilmClick}
+        renderVideo={renderVideo}
         isPlaying={MOCKED_PLAY_PROP}
       />
   );
@@ -42,12 +44,14 @@ it(`Hover on film card, film's info should pass to callback`, () => {
 it(`Stop hover on film card, film's info should pass to callback`, () => {
   const filmCatalogCardHoverHandler = jest.fn();
   const onFilmClick = jest.fn();
+  const renderVideo = jest.fn();
 
-  const filmCard = shallow(
+  const filmCard = mount(
       <CatalogCard
         film={MockedFilm}
         onFilmCatalogCardHover={filmCatalogCardHoverHandler}
         onFilmClick={onFilmClick}
+        renderVideo={renderVideo}
         isPlaying={MOCKED_PLAY_PROP}
       />
   );
@@ -61,12 +65,14 @@ it(`Stop hover on film card, film's info should pass to callback`, () => {
 it(`Click on film card to change page`, () => {
   const onFilmHover = jest.fn();
   const onFilmClick = jest.fn();
+  const renderVideo = jest.fn();
 
-  const filmCard = shallow(
+  const filmCard = mount(
       <CatalogCard
         film={MockedFilm}
         onFilmCatalogCardHover={onFilmHover}
         onFilmClick={onFilmClick}
+        renderVideo={renderVideo}
         isPlaying={MOCKED_PLAY_PROP}
       />
   );

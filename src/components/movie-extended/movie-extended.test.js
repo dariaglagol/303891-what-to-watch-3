@@ -76,6 +76,7 @@ it(`Movie details render`, () => {
           films={MOCK_CATALOG_FILMS_LIST}
           renderTabs={() => {}}
           onFilmClick={() => {}}
+          renderMovieList={() => {}}
           activeTab={ACTIVE_TAB_MOCK}
         />, {createNodeMock: () => {
           return {};

@@ -78,6 +78,8 @@ const DEFAULT_ACTIVE_GENRE = {
   multiply: `All genres`
 };
 
+const ACTIVE_PAGE = `main`;
+
 it(`Render App`, () => {
   const appComponent = renderer
     .create(
@@ -87,6 +89,8 @@ it(`Render App`, () => {
           movieDetails={MOCK_MOVIE_DETAILS}
           activeGenre={DEFAULT_ACTIVE_GENRE}
           onGenreTabClick={() => {}}
+          onPageChange={() => {}}
+          activePage={ACTIVE_PAGE}
         />
         , {createNodeMock: () => {
           return {};

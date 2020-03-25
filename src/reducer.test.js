@@ -131,7 +131,8 @@ const InitialState = {
     date: `November 18, 2015`,
     rating: 8.0
   },
-  ]
+  ],
+  activePage: `main`
 };
 
 describe(`Reducer tests`, () => {
@@ -169,6 +170,19 @@ describe(`Reducer tests`, () => {
     });
   });
 
+  it(`Reducer should change current page list by a given value`, () => {
+    const {activePage} = InitialState;
+
+    expect(reducer({
+      activePage
+    }, {
+      type: ActionType.GET_ACTIVE_PAGE,
+      payload: `movie`
+    })).toEqual({
+      activePage: `movie`
+    });
+  });
+
   it(`Action creator return correct action after change genre`, () => {
     expect(ActionCreator.changeGenre(GIVEN_GENRE)).toEqual({
       type: ActionType.CHANGE_GENRE,
@@ -190,6 +204,13 @@ describe(`Reducer tests`, () => {
     expect(ActionCreator.getMoviesByGenre(`Genre`)).toEqual({
       type: ActionType.GET_MOVIES_BY_GENRE,
       payload: [],
+    });
+  });
+
+  it(`Action creator return correct page after change`, () => {
+    expect(ActionCreator.getActivePage(`movie`)).toEqual({
+      type: ActionType.GET_ACTIVE_PAGE,
+      payload: `movie`,
     });
   });
 });

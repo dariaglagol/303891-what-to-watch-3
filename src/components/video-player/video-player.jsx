@@ -1,69 +1,32 @@
-import React, {PureComponent, createRef} from "react";
+import React, {forwardRef} from "react";
 import PropTypes from "prop-types";
 
-export default class VideoPlayer extends PureComponent {
-  constructor(props) {
-    super(props);
+const VideoPlayer = forwardRef((props, ref) => {
+  const {film: {posterUrl, preview}} = props;
 
-    this.state = {
-      progress: 0,
-      isLoading: true,
-    };
+  return (
+    <video
+      poster={posterUrl}
+      ref={ref}
+    >
+      <source
+        src={preview}
+      />
+    </video>
+  );
+});
 
-    this._videoRef = createRef();
-  }
+VideoPlayer.displayName = `VideoPlayer`;
 
-  componentDidMount() {
-    const video = this._videoRef.current;
-
-    video.oncanplaythrough = () => this.setState({
-      isLoading: false,
-      currentTime: null,
-    });
-
-    video.ontimeupdate = () => this.setState({
-      progress: video.currentTime
-    });
-  }
-
-  componentWillUnmount() {
-    const video = this._videoRef.current;
-
-    video.oncanplaythrough = null;
-    video.onplay = null;
-    video.onpause = null;
-    video.ontimeupdate = null;
-  }
-
-  componentDidUpdate() {
-    const video = this._videoRef.current;
-
-    if (this.props.isPlaying) {
-      video.muted = true;
-      video.play();
-    } else {
-      video.load();
-    }
-  }
-
-  render() {
-    const {src, poster} = this.props;
-
-    return (
-      <video
-        poster={poster}
-        ref={this._videoRef}
-      >
-        <source
-          src={src}
-        />
-      </video>
-    );
-  }
-}
+export default VideoPlayer;
 
 VideoPlayer.propTypes = {
-  isPlaying: PropTypes.bool.isRequired,
-  src: PropTypes.string.isRequired,
-  poster: PropTypes.string.isRequired,
+  film: PropTypes.exact({
+    title: PropTypes.string.isRequired,
+    genre: PropTypes.string.isRequired,
+    posterUrl: PropTypes.string.isRequired,
+    preview: PropTypes.string.isRequired,
+  }).isRequired,
 };
+
+
