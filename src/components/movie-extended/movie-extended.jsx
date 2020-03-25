@@ -49,6 +49,10 @@ const MovieExtended = (props) => {
     return null;
   }
 
+  function _playButtonClickHandler() {
+
+  }
+
   return (
     <React.Fragment>
       <section className="movie-card movie-card--full">
@@ -70,7 +74,11 @@ const MovieExtended = (props) => {
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button">
+                <button
+                  className="btn btn--play movie-card__button"
+                  type="button"
+                  onClick={() => _playButtonClickHandler}
+                >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s" />
                   </svg>
@@ -131,11 +139,12 @@ MovieExtended.propTypes = {
     score: PropTypes.number.isRequired,
     rating: PropTypes.number.isRequired,
     runTime: PropTypes.number.isRequired,
+    preview: PropTypes.string.isRequired,
   }),
   films: PropTypes.arrayOf(PropTypes.exact({
     title: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
-    posterUrl: PropTypes.string.isRequired,
+    poster: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
   })).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.exact({

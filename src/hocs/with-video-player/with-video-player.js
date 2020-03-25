@@ -26,6 +26,12 @@ const withVideoPlayer = (Component) => {
       video.ontimeupdate = () => this.setState({
         progress: video.currentTime
       });
+
+      const {isFullscreenPlayerActive} = this.props;
+
+      if (isFullscreenPlayerActive) {
+        this._videoRef.current.requestFullscreen();
+      }
     }
 
     componentWillUnmount() {
@@ -66,7 +72,8 @@ const withVideoPlayer = (Component) => {
   }
 
   WithVideoPlayer.propTypes = {
-    isPlaying: PropTypes.bool.isRequired
+    isPlaying: PropTypes.bool.isRequired,
+    isFullscreenPlayerActive: PropTypes.bool.isRequired,
   };
 
   return WithVideoPlayer;

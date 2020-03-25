@@ -3,9 +3,9 @@ import renderer from "react-test-renderer";
 import PromoFilm from "./promo-film";
 
 const MockFilmData = {
-  TITLE: `The Grand Budapest Hotel`,
-  GENRE: `Comedy`,
-  RELEASE_DATE: `2020`
+  title: `The Grand Budapest Hotel`,
+  genre: `Comedy`,
+  releaseDate: `2020`
 };
 
 it(`Movie card render`, () => {

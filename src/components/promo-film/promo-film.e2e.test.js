@@ -8,9 +8,9 @@ Enzyme.configure({
 });
 
 const MockFilmData = {
-  TITLE: `The Grand Budapest Hotel`,
-  GENRE: `Comedy`,
-  RELEASE_DATE: `2020`
+  title: `The Grand Budapest Hotel`,
+  genre: `Comedy`,
+  releaseDate: `2020`
 };
 
 const PAGE_TYPE = `movie`;

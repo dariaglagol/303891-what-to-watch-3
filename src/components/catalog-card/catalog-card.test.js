@@ -4,7 +4,7 @@ import CatalogCard from "./calalog-card";
 
 const MOCKED_FILM = {
   title: `Fantastic Beasts: The Crimes of Grindelwald`,
-  posterUrl: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+  poster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
   genre: `Comedy`,
   preview: `preview`,
 };

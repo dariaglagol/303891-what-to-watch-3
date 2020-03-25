@@ -45,7 +45,7 @@ Catalog.propTypes = {
   films: PropTypes.arrayOf(PropTypes.exact({
     title: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
-    posterUrl: PropTypes.string.isRequired,
+    poster: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
   })).isRequired,
   activeGenre: PropTypes.exact({

@@ -22,7 +22,9 @@ const App = (props) => {
     activeGenre,
     onGenreTabClick,
     activePage,
-    onPageChange
+    onPageChange,
+    isFullscreenPlayerActive,
+    onFullScreenToggle,
   } = props;
 
   function _renderPages() {
@@ -34,6 +36,8 @@ const App = (props) => {
             onFilmClick={onPageChange}
             activeGenre={activeGenre}
             onGenreTabClick={onGenreTabClick}
+            isFullscreenPlayerActive={isFullscreenPlayerActive}
+            onFullScreenToggle={onFullScreenToggle}
             films={films}
           />
         );
@@ -78,7 +82,8 @@ const mapStateToProps = (state) => ({
   promoMovieCover: state.promoMovieCover,
   movieDetails: state.movieDetails,
   reviews: state.reviews,
-  activePage: state.activePage
+  activePage: state.activePage,
+  isFullscreenPlayerActive: state.isFullscreenPlayerActive,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -89,6 +94,9 @@ const mapDispatchToProps = (dispatch) => ({
   onPageChange(activePage) {
     dispatch(ActionCreator.getActivePage(activePage));
   },
+  onFullScreenToggle(state) {
+    dispatch(ActionCreator.toggleFullscreenPlayer(state));
+  }
 });
 
 export {App};
@@ -96,14 +104,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 App.propTypes = {
   promoMovieCover: PropTypes.shape({
-    TITLE: PropTypes.string.isRequired,
-    GENRE: PropTypes.string.isRequired,
-    RELEASE_DATE: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    genre: PropTypes.string.isRequired,
+    releaseDate: PropTypes.string.isRequired
   }),
   films: PropTypes.arrayOf(PropTypes.exact({
     title: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
-    posterUrl: PropTypes.string.isRequired,
+    poster: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
   })).isRequired,
   movieDetails: PropTypes.exact({
@@ -116,7 +124,8 @@ App.propTypes = {
     starring: PropTypes.string.isRequired,
     score: PropTypes.number.isRequired,
     rating: PropTypes.number.isRequired,
-    runTime: PropTypes.number.isRequired
+    runTime: PropTypes.number.isRequired,
+    preview: PropTypes.string.isRequired,
   }),
   reviews: PropTypes.arrayOf(PropTypes.exact({
     text: PropTypes.string.isRequired,

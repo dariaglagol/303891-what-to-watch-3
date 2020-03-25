@@ -4,7 +4,7 @@ import VideoPlayer from "./video-player";
 
 const MockedFilm = {
   title: `title`,
-  posterUrl: `url`,
+  poster: `url`,
   genre: `genre`,
   preview: `preview`,
 };
