@@ -187,6 +187,19 @@ describe(`Reducer tests`, () => {
     });
   });
 
+  it(`Reducer should toggle fullscreen player`, () => {
+    const {isFullscreenPlayerActive} = InitialState;
+
+    expect(reducer({
+      isFullscreenPlayerActive
+    }, {
+      type: ActionType.TOGGLE_FULLSCREEN_PLAYER,
+      payload: true
+    })).toEqual({
+      isFullscreenPlayerActive: true,
+    });
+  });
+
   it(`Action creator return correct action after change genre`, () => {
     expect(ActionCreator.changeGenre(GIVEN_GENRE)).toEqual({
       type: ActionType.CHANGE_GENRE,
@@ -215,6 +228,13 @@ describe(`Reducer tests`, () => {
     expect(ActionCreator.getActivePage(`movie`)).toEqual({
       type: ActionType.GET_ACTIVE_PAGE,
       payload: `movie`,
+    });
+  });
+
+  it(`Action creator return correct value after toggle fullscreen player`, () => {
+    expect(ActionCreator.toggleFullscreenPlayer(true)).toEqual({
+      type: ActionType.TOGGLE_FULLSCREEN_PLAYER,
+      payload: true
     });
   });
 });
