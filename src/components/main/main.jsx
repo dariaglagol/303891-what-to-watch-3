@@ -4,6 +4,7 @@ import PromoFilm from "@components/promo-film/promo-film";
 import Footer from "@components/footer/footer";
 import FullscreenPlayer from "@components/fullscreen-player/fullscreen-player";
 import withVideoPlayer from "@hocs/with-video-player/with-video-player";
+import {FULLSCREEN_VIDEO_CLASS} from "@utils/constants";
 
 const WrappedFullScreenVideo = withVideoPlayer(FullscreenPlayer);
 
@@ -29,6 +30,7 @@ const Main = (props) => {
         <WrappedFullScreenVideo
           isPlaying={true}
           film={promoMovieCover}
+          className={FULLSCREEN_VIDEO_CLASS}
           isFullscreenPlayerActive={isFullscreenPlayerActive}
           onExitClick={_getPlayEvent}
         />

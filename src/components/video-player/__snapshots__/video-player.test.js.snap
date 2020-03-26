@@ -2,6 +2,7 @@
 
 exports[`Video player render 1`] = `
 <video
+  className=""
   poster="url"
 >
   <source

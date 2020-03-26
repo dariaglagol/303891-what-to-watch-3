@@ -5,20 +5,37 @@ import Footer from "@components/footer/footer";
 import MovieDetails from "@components/movie-extended/blocks/movie-details/movie-details";
 import MovieOverview from "@components/movie-extended/blocks/movie-overview/movie-overview";
 import MovieReviews from "@components/movie-extended/blocks/movies-reviews/movies-reviews";
+import withVideoPlayer from "@hocs/with-video-player/with-video-player";
+import FullscreenPlayer from "@components/fullscreen-player/fullscreen-player";
 import {getSimilarMovies} from "@utils/utils";
-import {TabTypes, DEFAULT_SHOWN_FILMS} from "@utils/constants";
+import {TabTypes, DEFAULT_SHOWN_FILMS, FULLSCREEN_VIDEO_CLASS} from "@utils/constants";
+
+const WrappedFullScreenVideo = withVideoPlayer(FullscreenPlayer);
 
 const MovieExtended = (props) => {
   const {
-    movieDetails: {
-      title, genre, releaseDate, poster, director, starring, runTime, score, rating, description
-    },
+    movieDetails,
     reviews,
     films,
     renderTabs,
     activeTab,
     renderMovieList,
+    onFullScreenToggle,
+    isFullscreenPlayerActive,
   } = props;
+
+  const {
+    title,
+    genre,
+    releaseDate,
+    poster,
+    director,
+    starring,
+    runTime,
+    score,
+    rating,
+    description
+  } = movieDetails;
 
   const similarFilms = getSimilarMovies(genre, films);
 
@@ -49,8 +66,8 @@ const MovieExtended = (props) => {
     return null;
   }
 
-  function _playButtonClickHandler() {
-
+  function _getPlayEvent() {
+    onFullScreenToggle(!isFullscreenPlayerActive);
   }
 
   return (
@@ -63,7 +80,7 @@ const MovieExtended = (props) => {
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <Header />
+          <Header/>
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
@@ -77,16 +94,16 @@ const MovieExtended = (props) => {
                 <button
                   className="btn btn--play movie-card__button"
                   type="button"
-                  onClick={() => _playButtonClickHandler}
+                  onClick={_getPlayEvent}
                 >
                   <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s" />
+                    <use xlinkHref="#play-s"/>
                   </svg>
                   <span>Play</span>
                 </button>
                 <button className="btn btn--list movie-card__button" type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add" />
+                    <use xlinkHref="#add"/>
                   </svg>
                   <span>My list</span>
                 </button>
@@ -121,8 +138,18 @@ const MovieExtended = (props) => {
           {renderMovieList(DEFAULT_SHOWN_FILMS, similarFilms)}
         </section>
 
-        <Footer />
+        <Footer/>
       </div>
+
+      {isFullscreenPlayerActive &&
+        <WrappedFullScreenVideo
+          isPlaying={true}
+          film={movieDetails}
+          className={FULLSCREEN_VIDEO_CLASS}
+          isFullscreenPlayerActive={isFullscreenPlayerActive}
+          onExitClick={_getPlayEvent}
+        />
+      }
     </React.Fragment>
   );
 };
@@ -157,6 +184,8 @@ MovieExtended.propTypes = {
   renderTabs: PropTypes.func.isRequired,
   renderMovieList: PropTypes.func.isRequired,
   activeTab: PropTypes.string.isRequired,
+  isFullscreenPlayerActive: PropTypes.bool.isRequired,
+  onFullScreenToggle: PropTypes.func.isRequired,
 };
 
 export default MovieExtended;

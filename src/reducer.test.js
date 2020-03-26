@@ -1,6 +1,5 @@
 import {reducer, ActionCreator, ActionType} from "./reducer";
 import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
-import PropTypes from "prop-types";
 
 const filteredFilms = [
   {
@@ -77,7 +76,9 @@ const InitialState = {
   promoMovieCover: {
     title: `The Grand Budapest Hotel`,
     genre: `Comedy`,
-    releaseDate: `2020`
+    releaseDate: `2020`,
+    poster: `img/bohemian-rhapsody.jpg`,
+    preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`
   },
   movieDetails: {
     title: `The Grand Budapest Hotel`,
@@ -134,7 +135,8 @@ const InitialState = {
     rating: 8.0
   },
   ],
-  activePage: `main`
+  activePage: `main`,
+  isFullscreenPlayerActive: false,
 };
 
 describe(`Reducer tests`, () => {

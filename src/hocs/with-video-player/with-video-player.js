@@ -13,6 +13,7 @@ const withVideoPlayer = (Component) => {
       };
 
       this._videoRef = createRef();
+      this._fullscreenVideoRef = createRef();
     }
 
     componentDidMount() {
@@ -30,7 +31,7 @@ const withVideoPlayer = (Component) => {
       const {isFullscreenPlayerActive} = this.props;
 
       if (isFullscreenPlayerActive) {
-        this._videoRef.current.requestFullscreen();
+        this._fullscreenVideoRef.current.requestFullscreen();
       }
     }
 
@@ -55,13 +56,17 @@ const withVideoPlayer = (Component) => {
     }
 
     render() {
+      const {className} = this.props;
+
       return (
         <Component
           {...this.props}
+          ref={this._fullscreenVideoRef}
           renderVideo={() => {
             return (
               <VideoPlayer
                 {...this.props}
+                className={className}
                 ref={this._videoRef}
               />
             );
@@ -73,7 +78,8 @@ const withVideoPlayer = (Component) => {
 
   WithVideoPlayer.propTypes = {
     isPlaying: PropTypes.bool.isRequired,
-    isFullscreenPlayerActive: PropTypes.bool.isRequired,
+    isFullscreenPlayerActive: PropTypes.bool,
+    className: PropTypes.string,
   };
 
   return WithVideoPlayer;

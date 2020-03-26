@@ -11,7 +11,7 @@ const PromoFilm = (props) => {
   }
 
   function _playButtonClickHandler() {
-    onPlayButtonClick(`play`);
+    onPlayButtonClick();
   }
 
   return (

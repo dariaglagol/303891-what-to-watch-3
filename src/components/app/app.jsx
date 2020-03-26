@@ -48,6 +48,8 @@ const App = (props) => {
             onFilmClick={onPageChange}
             films={films}
             movieDetails={movieDetails}
+            isFullscreenPlayerActive={isFullscreenPlayerActive}
+            onFullScreenToggle={onFullScreenToggle}
             reviews={reviews}
           />
         );
@@ -68,6 +70,8 @@ const App = (props) => {
             onFilmClick={onPageChange}
             films={films}
             movieDetails={movieDetails}
+            isFullscreenPlayerActive={isFullscreenPlayerActive}
+            onFullScreenToggle={onFullScreenToggle}
             reviews={reviews}
           />
         </Route>
@@ -140,4 +144,6 @@ App.propTypes = {
   onGenreTabClick: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,
   activePage: PropTypes.string.isRequired,
+  isFullscreenPlayerActive: PropTypes.bool.isRequired,
+  onFullScreenToggle: PropTypes.func.isRequired,
 };
