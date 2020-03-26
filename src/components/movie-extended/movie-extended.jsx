@@ -5,8 +5,8 @@ import Footer from "@components/footer/footer";
 import MovieDetails from "@components/movie-extended/blocks/movie-details/movie-details";
 import MovieOverview from "@components/movie-extended/blocks/movie-overview/movie-overview";
 import MovieReviews from "@components/movie-extended/blocks/movies-reviews/movies-reviews";
-import withVideoPlayer from "@hocs/with-video-player/with-video-player";
 import FullscreenPlayer from "@components/fullscreen-player/fullscreen-player";
+import withVideoPlayer from "@hocs/with-video-player/with-video-player";
 import {getSimilarMovies} from "@utils/utils";
 import {TabTypes, DEFAULT_SHOWN_FILMS, FULLSCREEN_VIDEO_CLASS} from "@utils/constants";
 

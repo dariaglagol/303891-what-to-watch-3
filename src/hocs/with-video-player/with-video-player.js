@@ -13,7 +13,6 @@ const withVideoPlayer = (Component) => {
       };
 
       this._videoRef = createRef();
-      this._fullscreenVideoRef = createRef();
     }
 
     componentDidMount() {
@@ -27,12 +26,6 @@ const withVideoPlayer = (Component) => {
       video.ontimeupdate = () => this.setState({
         progress: video.currentTime
       });
-
-      const {isFullscreenPlayerActive} = this.props;
-
-      if (isFullscreenPlayerActive) {
-        this._fullscreenVideoRef.current.requestFullscreen();
-      }
     }
 
     componentWillUnmount() {
@@ -61,7 +54,6 @@ const withVideoPlayer = (Component) => {
       return (
         <Component
           {...this.props}
-          ref={this._fullscreenVideoRef}
           renderVideo={() => {
             return (
               <VideoPlayer

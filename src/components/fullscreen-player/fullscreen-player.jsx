@@ -1,14 +1,14 @@
-import React, {forwardRef} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
-const FullscreenPlayer = forwardRef((props, ref) => {
+const FullscreenPlayer = (props) => {
   const {
     onExitClick,
     renderVideo
   } = props;
 
   return (
-    <div className="player" ref={ref}>
+    <div className="player">
       {renderVideo()}
       <button type="button" className="player__exit" onClick={onExitClick}>Exit</button>
 
@@ -40,7 +40,7 @@ const FullscreenPlayer = forwardRef((props, ref) => {
       </div>
     </div>
   );
-});
+};
 
 FullscreenPlayer.displayName = `FullscreenPlayer`;
 

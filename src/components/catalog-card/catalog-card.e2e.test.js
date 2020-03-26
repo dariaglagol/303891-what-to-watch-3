@@ -1,5 +1,5 @@
 import React from "react";
-import Enzyme, {mount} from "enzyme";
+import Enzyme, {shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import CatalogCard from "./calalog-card";
 
@@ -25,7 +25,7 @@ it(`Hover on film card, film's info should pass to callback`, () => {
   const onFilmClick = jest.fn();
   const renderVideo = jest.fn();
 
-  const filmCard = mount(
+  const filmCard = shallow(
       <CatalogCard
         film={MockedFilm}
         onFilmCatalogCardHover={filmCatalogCardHoverHandler}
@@ -46,7 +46,7 @@ it(`Stop hover on film card, film's info should pass to callback`, () => {
   const onFilmClick = jest.fn();
   const renderVideo = jest.fn();
 
-  const filmCard = mount(
+  const filmCard = shallow(
       <CatalogCard
         film={MockedFilm}
         onFilmCatalogCardHover={filmCatalogCardHoverHandler}
@@ -67,7 +67,7 @@ it(`Click on film card to change page`, () => {
   const onFilmClick = jest.fn();
   const renderVideo = jest.fn();
 
-  const filmCard = mount(
+  const filmCard = shallow(
       <CatalogCard
         film={MockedFilm}
         onFilmCatalogCardHover={onFilmHover}
