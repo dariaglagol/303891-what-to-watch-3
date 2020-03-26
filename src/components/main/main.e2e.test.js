@@ -1,6 +1,11 @@
 import React from "react";
-import renderer from "react-test-renderer";
+import Enzyme, {mount} from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
 import Main from "./main";
+
+Enzyme.configure({
+  adapter: new Adapter(),
+});
 
 const Mocks = {
   mockFilmData: {
@@ -67,25 +72,29 @@ const Mocks = {
   isFullscreenPlayerActive: false,
 };
 
-it(`Main component render`, () => {
+it(`Click on play video button send callback with params`, () => {
   const {mockFilmData, defaultActiveGenre, mockedCatalogFilms, isFullscreenPlayerActive} = Mocks;
+  const filmClickHandler = jest.fn();
+  const renderCatalog = jest.fn();
+  const genreTabClickHandler = jest.fn();
+  const fullScreenToggleHandler = jest.fn();
 
-  const mainComponent = renderer
-    .create(
-        <Main
-          promoMovieCover={mockFilmData}
-          films={mockedCatalogFilms}
-          onFilmClick={() => {}}
-          renderCatalog={() => {}}
-          activeGenre={defaultActiveGenre}
-          isFullscreenPlayerActive={isFullscreenPlayerActive}
-          onFullScreenToggle={() => {}}
-          onGenreTabClick={() => {}}
-        />, {createNodeMock: () => {
-          return {};
-        }}
-    )
-    .toJSON();
+  const mainComponent = mount(
+      <Main
+        promoMovieCover={mockFilmData}
+        films={mockedCatalogFilms}
+        onFilmClick={filmClickHandler}
+        renderCatalog={renderCatalog}
+        activeGenre={defaultActiveGenre}
+        isFullscreenPlayerActive={isFullscreenPlayerActive}
+        onFullScreenToggle={fullScreenToggleHandler}
+        onGenreTabClick={genreTabClickHandler}
+      />
+  );
 
-  expect(mainComponent).toMatchSnapshot();
+  const playButton = mainComponent.find(`.btn--play`);
+
+  playButton.simulate(`click`);
+  expect(fullScreenToggleHandler).toHaveBeenCalledTimes(1);
+  expect(fullScreenToggleHandler).toBeCalledWith(true);
 });

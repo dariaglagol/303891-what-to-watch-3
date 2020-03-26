@@ -8,20 +8,24 @@ Enzyme.configure({
 });
 
 const MockFilmData = {
-  TITLE: `The Grand Budapest Hotel`,
-  GENRE: `Comedy`,
-  RELEASE_DATE: `2020`
+  title: `The Grand Budapest Hotel`,
+  genre: `Comedy`,
+  releaseDate: `2020`,
+  poster: `img/bohemian-rhapsody.jpg`,
+  preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`
 };
 
 const PAGE_TYPE = `movie`;
 
 it(`Should header be clicked`, () => {
   const movieTitleClickHandler = jest.fn();
+  const playButtonClickHandler = jest.fn();
 
   const movieCard = shallow(
       <PromoFilm
         promoMovieCover={MockFilmData}
         onFilmClick={movieTitleClickHandler}
+        onPlayButtonClick={playButtonClickHandler}
       />
   );
 
@@ -35,11 +39,13 @@ it(`Should header be clicked`, () => {
 
 it(`Should poster be clicked`, () => {
   const moviePosterClickHeader = jest.fn();
+  const playButtonClickHandler = jest.fn();
 
   const movieCard = shallow(
       <PromoFilm
         promoMovieCover={MockFilmData}
         onFilmClick={moviePosterClickHeader}
+        onPlayButtonClick={playButtonClickHandler}
       />
   );
 
@@ -49,4 +55,27 @@ it(`Should poster be clicked`, () => {
 
   expect(moviePosterClickHeader).toHaveBeenCalledTimes(1);
   expect(moviePosterClickHeader).toBeCalledWith(PAGE_TYPE);
+});
+
+it(`Click on play button calls callback to switch on video`, () => {
+  const moviePosterClickHeader = jest.fn();
+  const playButtonClickHandler = jest.fn();
+
+  const movieCard = shallow(
+      <PromoFilm
+        promoMovieCover={MockFilmData}
+        onFilmClick={moviePosterClickHeader}
+        onPlayButtonClick={playButtonClickHandler}
+      />
+  );
+
+  const playButton = movieCard.find(`.btn--play`);
+
+  playButton.simulate(`click`);
+
+  const playVideo = jest
+    .spyOn(window.HTMLMediaElement.prototype, `play`)
+    .mockImplementation(() => {});
+
+  playVideo.mockRestore();
 });

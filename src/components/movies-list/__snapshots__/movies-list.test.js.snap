@@ -14,6 +14,7 @@ exports[`Movie list render 1`] = `
       className="small-movie-card__image"
     >
       <video
+        className=""
         poster="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
       >
         <source
@@ -42,6 +43,7 @@ exports[`Movie list render 1`] = `
       className="small-movie-card__image"
     >
       <video
+        className=""
         poster="img/bohemian-rhapsody.jpg"
       >
         <source
@@ -70,6 +72,7 @@ exports[`Movie list render 1`] = `
       className="small-movie-card__image"
     >
       <video
+        className=""
         poster="img/macbeth.jpg"
       >
         <source
@@ -98,6 +101,7 @@ exports[`Movie list render 1`] = `
       className="small-movie-card__image"
     >
       <video
+        className=""
         poster="img/aviator.jpg"
       >
         <source
@@ -126,6 +130,7 @@ exports[`Movie list render 1`] = `
       className="small-movie-card__image"
     >
       <video
+        className=""
         poster="img/we-need-to-talk-about-kevin.jpg"
       >
         <source
@@ -154,6 +159,7 @@ exports[`Movie list render 1`] = `
       className="small-movie-card__image"
     >
       <video
+        className=""
         poster="img/what-we-do-in-the-shadows.jpg"
       >
         <source
@@ -182,6 +188,7 @@ exports[`Movie list render 1`] = `
       className="small-movie-card__image"
     >
       <video
+        className=""
         poster="img/revenant.jpg"
       >
         <source
@@ -210,6 +217,7 @@ exports[`Movie list render 1`] = `
       className="small-movie-card__image"
     >
       <video
+        className=""
         poster="img/johnny-english.jpg"
       >
         <source

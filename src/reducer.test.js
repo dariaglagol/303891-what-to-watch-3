@@ -4,13 +4,13 @@ import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
 const filteredFilms = [
   {
     title: `Fantastic Beasts: The Crimes of Grindelwald`,
-    posterUrl: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+    poster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
     preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     genre: `Comedy`
   },
   {
     title: `Aviator`,
-    posterUrl: `img/aviator.jpg`,
+    poster: `img/aviator.jpg`,
     preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
     genre: `Comedy`
   },
@@ -25,58 +25,60 @@ const InitialState = {
   films: [
     {
       title: `Fantastic Beasts: The Crimes of Grindelwald`,
-      posterUrl: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+      poster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
       preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
       genre: `Comedy`
     },
     {
       title: `Bohemian Rhapsody`,
-      posterUrl: `img/bohemian-rhapsody.jpg`,
+      poster: `img/bohemian-rhapsody.jpg`,
       preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
       genre: `Horror`
     },
     {
       title: `Macbeth`,
-      posterUrl: `img/macbeth.jpg`,
+      poster: `img/macbeth.jpg`,
       preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
       genre: `Drama`
     },
     {
       title: `Aviator`,
-      posterUrl: `img/aviator.jpg`,
+      poster: `img/aviator.jpg`,
       preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
       genre: `Comedy`
     },
     {
       title: `We need to talk about Kevin`,
-      posterUrl: `img/we-need-to-talk-about-kevin.jpg`,
+      poster: `img/we-need-to-talk-about-kevin.jpg`,
       preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
       genre: `Science`
     },
     {
       title: `What We Do in the Shadows`,
-      posterUrl: `img/what-we-do-in-the-shadows.jpg`,
+      poster: `img/what-we-do-in-the-shadows.jpg`,
       preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
       genre: `Detective`
     },
     {
       title: `Revenant`,
-      posterUrl: `img/revenant.jpg`,
+      poster: `img/revenant.jpg`,
       preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
       genre: `Thriller`
     },
     {
       title: `Johnny English`,
-      posterUrl: `img/johnny-english.jpg`,
+      poster: `img/johnny-english.jpg`,
       preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
       genre: `Historical`
     },
   ],
   activeGenre: DEFAULT_ACTIVE_GENRE,
   promoMovieCover: {
-    TITLE: `The Grand Budapest Hotel`,
-    GENRE: `Comedy`,
-    RELEASE_DATE: `2020`
+    title: `The Grand Budapest Hotel`,
+    genre: `Comedy`,
+    releaseDate: `2020`,
+    poster: `img/bohemian-rhapsody.jpg`,
+    preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`
   },
   movieDetails: {
     title: `The Grand Budapest Hotel`,
@@ -88,7 +90,8 @@ const InitialState = {
     description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.Gustave prides himself on providing first-class service to the hotel's guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave's lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.`,
     director: `Wes Andreson`,
     starring: `Bill Murray, Edward Norton, Jude Law, Willem Dafoe and other`,
-    runTime: 113
+    runTime: 113,
+    preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
   },
   reviews: [{
     text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
@@ -132,7 +135,8 @@ const InitialState = {
     rating: 8.0
   },
   ],
-  activePage: `main`
+  activePage: `main`,
+  isFullscreenPlayerActive: false,
 };
 
 describe(`Reducer tests`, () => {
@@ -183,6 +187,19 @@ describe(`Reducer tests`, () => {
     });
   });
 
+  it(`Reducer should toggle fullscreen player`, () => {
+    const {isFullscreenPlayerActive} = InitialState;
+
+    expect(reducer({
+      isFullscreenPlayerActive
+    }, {
+      type: ActionType.TOGGLE_FULLSCREEN_PLAYER,
+      payload: true
+    })).toEqual({
+      isFullscreenPlayerActive: true,
+    });
+  });
+
   it(`Action creator return correct action after change genre`, () => {
     expect(ActionCreator.changeGenre(GIVEN_GENRE)).toEqual({
       type: ActionType.CHANGE_GENRE,
@@ -211,6 +228,13 @@ describe(`Reducer tests`, () => {
     expect(ActionCreator.getActivePage(`movie`)).toEqual({
       type: ActionType.GET_ACTIVE_PAGE,
       payload: `movie`,
+    });
+  });
+
+  it(`Action creator return correct value after toggle fullscreen player`, () => {
+    expect(ActionCreator.toggleFullscreenPlayer(true)).toEqual({
+      type: ActionType.TOGGLE_FULLSCREEN_PLAYER,
+      payload: true
     });
   });
 });

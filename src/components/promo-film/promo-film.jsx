@@ -4,10 +4,14 @@ import Header from "@components/header/header";
 import {PageTypes} from "@utils/constants";
 
 const PromoFilm = (props) => {
-  const {promoMovieCover: {TITLE, GENRE, RELEASE_DATE}, onFilmClick} = props;
+  const {promoMovieCover: {title, genre, releaseDate}, onFilmClick, onPlayButtonClick} = props;
 
   function _onFilmClickHandler() {
     onFilmClick(PageTypes.MOVIE);
+  }
+
+  function _playButtonClickHandler() {
+    onPlayButtonClick();
   }
 
   return (
@@ -39,15 +43,19 @@ const PromoFilm = (props) => {
               className="movie-card__title"
               onClick={_onFilmClickHandler}
             >
-              {TITLE}
+              {title}
             </h2>
             <p className="movie-card__meta">
-              <span className="movie-card__genre">{GENRE}</span>
-              <span className="movie-card__year">{RELEASE_DATE}</span>
+              <span className="movie-card__genre">{genre}</span>
+              <span className="movie-card__year">{releaseDate}</span>
             </p>
 
             <div className="movie-card__buttons">
-              <button className="btn btn--play movie-card__button" type="button">
+              <button
+                className="btn btn--play movie-card__button"
+                type="button"
+                onClick={_playButtonClickHandler}
+              >
                 <svg viewBox="0 0 19 19" width="19" height="19">
                   <use xlinkHref="#play-s"/>
                 </svg>
@@ -69,11 +77,12 @@ const PromoFilm = (props) => {
 
 PromoFilm.propTypes = {
   promoMovieCover: PropTypes.shape({
-    GENRE: PropTypes.string.isRequired,
-    RELEASE_DATE: PropTypes.string.isRequired,
-    TITLE: PropTypes.string.isRequired
+    genre: PropTypes.string.isRequired,
+    releaseDate: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
   }),
   onFilmClick: PropTypes.func.isRequired,
+  onPlayButtonClick: PropTypes.func.isRequired,
 };
 
 export default PromoFilm;

@@ -1,6 +1,11 @@
 import React from "react";
-import renderer from "react-test-renderer";
+import Enzyme, {mount} from "enzyme/";
+import Adapter from "enzyme-adapter-react-16";
 import Catalog from "./catalog";
+
+Enzyme.configure({
+  adapter: new Adapter(),
+});
 
 const MOCK_CATALOG_FILMS_LIST = [
   {
@@ -60,22 +65,35 @@ const DEFAULT_ACTIVE_GENRE = {
 
 const CURRENT_SHOWN_FILMS = 8;
 
-it(`Render Catalog`, () => {
-  const catalogComponent = renderer
-    .create(
-        <Catalog
-          films={MOCK_CATALOG_FILMS_LIST}
-          renderMovieList={() => {}}
-          onGenreTabClick={() => {}}
-          onShowMoreButtonClick={() => {}}
-          activeGenre={DEFAULT_ACTIVE_GENRE}
-          resetShownFilms={() => {}}
-          currentShownFilms={CURRENT_SHOWN_FILMS}
-        />, {createNodeMock: () => {
-          return {};
-        }}
-    )
-    .toJSON();
+const ACTIVE_GENRE = {
+  multiply: `Comedies`,
+  single: `Comedy`,
+};
 
-  expect(catalogComponent).toMatchSnapshot();
+it(`Genre tab call callback`, () => {
+  const renderMovieList = jest.fn();
+  const onGenreTabClick = jest.fn();
+  const resetShownFilms = jest.fn();
+  const showMoreButtonClickHandler = jest.fn();
+
+  const catalogComponent = mount(
+      <Catalog
+        films={MOCK_CATALOG_FILMS_LIST}
+        renderMovieList={renderMovieList}
+        onGenreTabClick={onGenreTabClick}
+        onShowMoreButtonClick={showMoreButtonClickHandler}
+        activeGenre={DEFAULT_ACTIVE_GENRE}
+        resetShownFilms={resetShownFilms}
+        currentShownFilms={CURRENT_SHOWN_FILMS}
+      />
+  );
+
+  const genreTab = catalogComponent.find(`.catalog__genres-item`).at(1);
+  genreTab.simulate(`click`);
+
+  expect(onGenreTabClick).toHaveBeenCalledTimes(1);
+  expect(onGenreTabClick).toBeCalledWith(ACTIVE_GENRE);
+
+  expect(resetShownFilms).toHaveBeenCalledTimes(1);
+  expect(resetShownFilms).toBeCalledWith();
 });

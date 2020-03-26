@@ -104,6 +104,7 @@ Array [
           >
             <button
               className="btn btn--play movie-card__button"
+              onClick={[Function]}
               type="button"
             >
               <svg
@@ -279,6 +280,7 @@ Array [
             className="small-movie-card__image"
           >
             <video
+              className=""
               poster="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
             >
               <source
@@ -307,6 +309,7 @@ Array [
             className="small-movie-card__image"
           >
             <video
+              className=""
               poster="img/bohemian-rhapsody.jpg"
             >
               <source
@@ -335,6 +338,7 @@ Array [
             className="small-movie-card__image"
           >
             <video
+              className=""
               poster="img/macbeth.jpg"
             >
               <source
@@ -363,6 +367,7 @@ Array [
             className="small-movie-card__image"
           >
             <video
+              className=""
               poster="img/aviator.jpg"
             >
               <source
@@ -391,6 +396,7 @@ Array [
             className="small-movie-card__image"
           >
             <video
+              className=""
               poster="img/we-need-to-talk-about-kevin.jpg"
             >
               <source
@@ -419,6 +425,7 @@ Array [
             className="small-movie-card__image"
           >
             <video
+              className=""
               poster="img/what-we-do-in-the-shadows.jpg"
             >
               <source
@@ -447,6 +454,7 @@ Array [
             className="small-movie-card__image"
           >
             <video
+              className=""
               poster="img/revenant.jpg"
             >
               <source
@@ -475,6 +483,7 @@ Array [
             className="small-movie-card__image"
           >
             <video
+              className=""
               poster="img/johnny-english.jpg"
             >
               <source
