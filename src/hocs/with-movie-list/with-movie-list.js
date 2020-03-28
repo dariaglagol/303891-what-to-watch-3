@@ -58,7 +58,7 @@ const withMovieList = (Component) => {
 
   WithMovieList.propTypes = {
     films: PropTypes.arrayOf(PropTypes.exact({
-      title: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
       genre: PropTypes.string.isRequired,
       poster: PropTypes.string.isRequired,
       preview: PropTypes.string.isRequired,

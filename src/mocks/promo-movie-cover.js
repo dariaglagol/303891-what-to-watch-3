@@ -1,5 +1,5 @@
 export default {
-  title: `The Grand Budapest Hotel`,
+  name: `The Grand Budapest Hotel`,
   genre: `Comedy`,
   releaseDate: `2020`,
   poster: `img/bohemian-rhapsody.jpg`,

@@ -25,7 +25,7 @@ const MovieExtended = (props) => {
   } = props;
 
   const {
-    title,
+    name,
     genre,
     releaseDate,
     poster,
@@ -84,7 +84,7 @@ const MovieExtended = (props) => {
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{title}</h2>
+              <h2 className="movie-card__title">{name}</h2>
               <p className="movie-card__meta">
                 <span className="movie-card__genre">{genre}</span>
                 <span className="movie-card__year">{releaseDate}</span>
@@ -118,7 +118,7 @@ const MovieExtended = (props) => {
             <div className="movie-card__poster movie-card__poster--big">
               <img
                 src={poster}
-                alt={title}
+                alt={name}
                 width="218"
                 height="327"
               />
@@ -156,7 +156,7 @@ const MovieExtended = (props) => {
 
 MovieExtended.propTypes = {
   movieDetails: PropTypes.exact({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
     releaseDate: PropTypes.string.isRequired,
     poster: PropTypes.string.isRequired,
@@ -169,7 +169,7 @@ MovieExtended.propTypes = {
     preview: PropTypes.string.isRequired,
   }),
   films: PropTypes.arrayOf(PropTypes.exact({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
     poster: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,

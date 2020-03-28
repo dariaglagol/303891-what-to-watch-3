@@ -3,7 +3,7 @@ import renderer from "react-test-renderer";
 import VideoPlayer from "./video-player";
 
 const MockedFilm = {
-  title: `title`,
+  name: `title`,
   poster: `url`,
   genre: `genre`,
   preview: `preview`,

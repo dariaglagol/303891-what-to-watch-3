@@ -24,6 +24,7 @@
     "jest": "25.1.0",
     "prop-types": "15.7.2",
     "react-test-renderer": "16.12.0",
+    "redux-devtools-extension": "2.13.8",
     "redux-mock-store": "1.5.4",
     "webpack": "4.41.5",
     "webpack-cli": "3.3.10",
@@ -49,7 +50,8 @@
       "^@components(.*)$": "<rootDir>/src/components$1",
       "^@mocks(.*)$": "<rootDir>/src/mocks$1",
       "^@utils(.*)$": "<rootDir>/src/utils$1",
-      "^@hocs(.*)$": "<rootDir>/src/hocs$1"
+      "^@hocs(.*)$": "<rootDir>/src/hocs$1",
+      "^@reducers(.*)$": "<rootDir>/src/reducers$1"
     }
   }
 }

@@ -4,7 +4,7 @@ import Header from "@components/header/header";
 import {PageTypes} from "@utils/constants";
 
 const PromoFilm = (props) => {
-  const {promoMovieCover: {title, genre, releaseDate}, onFilmClick, onPlayButtonClick} = props;
+  const {promoMovie: {name, genre, released, poster_image, background_image}, onFilmClick, onPlayButtonClick} = props;
 
   function _onFilmClickHandler() {
     onFilmClick(PageTypes.MOVIE);
@@ -17,7 +17,7 @@ const PromoFilm = (props) => {
   return (
     <section className="movie-card">
       <div className="movie-card__bg">
-        <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
+        <img src={background_image} alt="The Grand Budapest Hotel"/>
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -31,7 +31,7 @@ const PromoFilm = (props) => {
             onClick={_onFilmClickHandler}
           >
             <img
-              src="img/the-grand-budapest-hotel-poster.jpg"
+              src={poster_image}
               alt="The Grand Budapest Hotel poster"
               width="218"
               height="327"
@@ -43,11 +43,11 @@ const PromoFilm = (props) => {
               className="movie-card__title"
               onClick={_onFilmClickHandler}
             >
-              {title}
+              {name}
             </h2>
             <p className="movie-card__meta">
               <span className="movie-card__genre">{genre}</span>
-              <span className="movie-card__year">{releaseDate}</span>
+              <span className="movie-card__year">{released}</span>
             </p>
 
             <div className="movie-card__buttons">
@@ -76,10 +76,10 @@ const PromoFilm = (props) => {
 };
 
 PromoFilm.propTypes = {
-  promoMovieCover: PropTypes.shape({
+  promoMovie: PropTypes.shape({
     genre: PropTypes.string.isRequired,
     releaseDate: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired
   }),
   onFilmClick: PropTypes.func.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,

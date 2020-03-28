@@ -2,20 +2,31 @@ import React from "react";
 import PropTypes from "prop-types";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import {connect} from "react-redux";
+
 import Main from "@components/main/main";
 import MovieExtended from "@components/movie-extended/movie-extended";
 import withTabs from "@hocs/with-tabs/with-tabs";
 import withCatalog from "@hocs/with-catalog/with-catalog";
 import withMovieList from "@hocs/with-movie-list/with-movie-list";
+
 import {PageTypes} from "@utils/constants";
-import {ActionCreator} from "../../reducer";
+
+import {ActionCreator as GenreUserCreator} from "@reducers/genre/genre";
+import {getActiveGenre} from "@reducers/genre/selectors";
+
+import {ActionCreator as CommonUserCreator} from "@reducers/common/common";
+import {getActivePage, getFullScreenPlayerState} from "@reducers/common/selectors";
+
+import {Operation as UserOperation} from "@reducers/user/user";
+
+import {getFilms, getReviews, getMovieDetails, getMovieCover} from "@reducers/data/selectors.js";
 
 const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
 const MainComponentWrapped = withMovieList(withCatalog(Main));
 
 const App = (props) => {
   const {
-    promoMovieCover,
+    promoMovie,
     films,
     movieDetails,
     reviews,
@@ -32,7 +43,7 @@ const App = (props) => {
       case PageTypes.MAIN:
         return (
           <MainComponentWrapped
-            promoMovieCover={promoMovieCover}
+            promoMovie={promoMovie}
             onFilmClick={onPageChange}
             activeGenre={activeGenre}
             onGenreTabClick={onGenreTabClick}
@@ -44,7 +55,7 @@ const App = (props) => {
       case PageTypes.MOVIE:
         return (
           <MovieExtendedComponentWrapped
-            promoMovieCover={promoMovieCover}
+            promoMovie={promoMovie}
             onFilmClick={onPageChange}
             films={films}
             movieDetails={movieDetails}
@@ -66,7 +77,7 @@ const App = (props) => {
         </Route>
         <Route exact path="/dev-movie-details">
           <MovieExtendedComponentWrapped
-            promoMovieCover={promoMovieCover}
+            promoMovie={promoMovie}
             onFilmClick={onPageChange}
             films={films}
             movieDetails={movieDetails}
@@ -81,45 +92,48 @@ const App = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  films: state.films,
-  activeGenre: state.activeGenre,
-  promoMovieCover: state.promoMovieCover,
-  movieDetails: state.movieDetails,
-  reviews: state.reviews,
-  activePage: state.activePage,
-  isFullscreenPlayerActive: state.isFullscreenPlayerActive,
+  films: getFilms(state), //TODO это не корретно, попроавь как будут фильмы полноценно
+  activeGenre: getActiveGenre(state),
+  promoMovie: getMovieCover(state),
+  movieDetails: getMovieDetails(state),
+  reviews: getReviews(state),
+  activePage: getActivePage(state),
+  isFullscreenPlayerActive: getFullScreenPlayerState(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onGenreTabClick(activeGenre) {
-    dispatch(ActionCreator.changeGenre(activeGenre));
-    dispatch(ActionCreator.getMoviesByGenre(activeGenre));
+    dispatch(GenreUserCreator.changeGenre(activeGenre));
+    dispatch(GenreUserCreator.getMoviesByGenre(activeGenre));
   },
   onPageChange(activePage) {
-    dispatch(ActionCreator.getActivePage(activePage));
+    dispatch(CommonUserCreator.getActivePage(activePage));
   },
   onFullScreenToggle(state) {
-    dispatch(ActionCreator.toggleFullscreenPlayer(state));
-  }
+    dispatch(CommonUserCreator.toggleFullscreenPlayer(state));
+  },
+  login(authData) {
+    dispatch(UserOperation.login(authData));
+  },
 });
 
 export {App};
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 App.propTypes = {
-  promoMovieCover: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+  promoMovie: PropTypes.shape({
+    name: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
     releaseDate: PropTypes.string.isRequired
   }),
   films: PropTypes.arrayOf(PropTypes.exact({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
     poster: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
   })).isRequired,
   movieDetails: PropTypes.exact({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
     releaseDate: PropTypes.string.isRequired,
     poster: PropTypes.string.isRequired,

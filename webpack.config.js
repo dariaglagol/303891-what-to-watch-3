@@ -30,6 +30,7 @@ module.exports = {
       '@utils': path.resolve(__dirname, ``, `src/utils`),
       '@hocs': path.resolve(__dirname, ``, `src/hocs`),
       '@mocks': path.resolve(__dirname, ``, `src/mocks`),
+      '@reducers': path.resolve(__dirname, ``, `src/reducers`),
     },
     extensions: [`.js`, `.jsx`]
   }

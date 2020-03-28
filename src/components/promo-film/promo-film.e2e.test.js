@@ -8,7 +8,7 @@ Enzyme.configure({
 });
 
 const MockFilmData = {
-  title: `The Grand Budapest Hotel`,
+  name: `The Grand Budapest Hotel`,
   genre: `Comedy`,
   releaseDate: `2020`,
   poster: `img/bohemian-rhapsody.jpg`,
@@ -23,7 +23,7 @@ it(`Should header be clicked`, () => {
 
   const movieCard = shallow(
       <PromoFilm
-        promoMovieCover={MockFilmData}
+        promoMovie={MockFilmData}
         onFilmClick={movieTitleClickHandler}
         onPlayButtonClick={playButtonClickHandler}
       />
@@ -43,7 +43,7 @@ it(`Should poster be clicked`, () => {
 
   const movieCard = shallow(
       <PromoFilm
-        promoMovieCover={MockFilmData}
+        promoMovie={MockFilmData}
         onFilmClick={moviePosterClickHeader}
         onPlayButtonClick={playButtonClickHandler}
       />
@@ -63,7 +63,7 @@ it(`Click on play button calls callback to switch on video`, () => {
 
   const movieCard = shallow(
       <PromoFilm
-        promoMovieCover={MockFilmData}
+        promoMovie={MockFilmData}
         onFilmClick={moviePosterClickHeader}
         onPlayButtonClick={playButtonClickHandler}
       />

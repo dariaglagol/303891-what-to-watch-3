@@ -5,7 +5,7 @@ import {PageTypes} from "@utils/constants";
 const CatalogCard = (props) => {
   const {film, onFilmCatalogCardHover, onFilmClick, renderVideo} = props;
 
-  const {title} = film;
+  const {name} = film;
 
   function _onFilmHover() {
     onFilmCatalogCardHover(film);
@@ -30,7 +30,7 @@ const CatalogCard = (props) => {
         {renderVideo()}
       </div>
       <h3 className="small-movie-card__title">
-        <a className="small-movie-card__link" href="movie-page.html">{title}</a>
+        <a className="small-movie-card__link" href="movie-page.html">{name}</a>
       </h3>
     </article>
   );
@@ -38,7 +38,7 @@ const CatalogCard = (props) => {
 
 CatalogCard.propTypes = {
   film: PropTypes.exact({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
     poster: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,

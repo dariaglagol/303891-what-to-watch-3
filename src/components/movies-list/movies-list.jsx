@@ -8,7 +8,7 @@ const WrappedMovieCard = withVideoPlayer(CatalogCard);
 
 const MoviesList = (props) => {
   function _isFilmActive(activeFilm, film) {
-    return activeFilm && activeFilm.title === film.title || false;
+    return activeFilm && activeFilm.id === film.id || false;
   }
 
   function _renderFilmCatalogCards() {
@@ -39,7 +39,7 @@ export default MoviesList;
 
 MoviesList.propTypes = {
   films: PropTypes.arrayOf(PropTypes.exact({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
     poster: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
@@ -48,7 +48,7 @@ MoviesList.propTypes = {
   onFilmCatalogCardHover: PropTypes.func.isRequired,
   activeFilm: PropTypes.oneOfType([
     PropTypes.exact({
-      title: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
       genre: PropTypes.string.isRequired,
       poster: PropTypes.string.isRequired,
       preview: PropTypes.string.isRequired,

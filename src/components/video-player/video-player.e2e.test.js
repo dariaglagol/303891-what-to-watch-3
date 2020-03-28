@@ -8,7 +8,7 @@ Enzyme.configure({
 });
 
 const MockedFilm = {
-  title: `title`,
+  name: `title`,
   poster: `url`,
   genre: `genre`,
   preview: `preview`,

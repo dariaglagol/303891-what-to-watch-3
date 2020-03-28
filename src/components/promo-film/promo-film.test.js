@@ -3,7 +3,7 @@ import renderer from "react-test-renderer";
 import PromoFilm from "./promo-film";
 
 const MockFilmData = {
-  title: `The Grand Budapest Hotel`,
+  name: `The Grand Budapest Hotel`,
   genre: `Comedy`,
   releaseDate: `2020`,
   poster: `img/bohemian-rhapsody.jpg`,
@@ -14,7 +14,7 @@ it(`Movie card render`, () => {
   const movieCardComponent = renderer
     .create(
         <PromoFilm
-          promoMovieCover={MockFilmData}
+          promoMovie={MockFilmData}
           onFilmClick={() => {}}
           onPlayButtonClick={() => {}}
         />

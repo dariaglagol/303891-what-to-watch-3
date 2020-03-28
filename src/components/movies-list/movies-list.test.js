@@ -4,49 +4,49 @@ import MoviesList from "./movies-list";
 
 const MOCK_CATALOG_FILMS_LIST = [
   {
-    title: `Fantastic Beasts: The Crimes of Grindelwald`,
+    name: `Fantastic Beasts: The Crimes of Grindelwald`,
     poster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
     genre: `Comedy`,
     preview: `preview`
   },
   {
-    title: `Bohemian Rhapsody`,
+    name: `Bohemian Rhapsody`,
     poster: `img/bohemian-rhapsody.jpg`,
     genre: `Horror`,
     preview: `preview`
   },
   {
-    title: `Macbeth`,
+    name: `Macbeth`,
     poster: `img/macbeth.jpg`,
     genre: `Drama`,
     preview: `preview`
   },
   {
-    title: `Aviator`,
+    name: `Aviator`,
     poster: `img/aviator.jpg`,
     genre: `Comedy`,
     preview: `preview`
   },
   {
-    title: `We need to talk about Kevin`,
+    name: `We need to talk about Kevin`,
     poster: `img/we-need-to-talk-about-kevin.jpg`,
     genre: `Science`,
     preview: `preview`
   },
   {
-    title: `What We Do in the Shadows`,
+    name: `What We Do in the Shadows`,
     poster: `img/what-we-do-in-the-shadows.jpg`,
     genre: `Detective`,
     preview: `preview`
   },
   {
-    title: `Revenant`,
+    name: `Revenant`,
     poster: `img/revenant.jpg`,
     genre: `Thriller`,
     preview: `preview`
   },
   {
-    title: `Johnny English`,
+    name: `Johnny English`,
     poster: `img/johnny-english.jpg`,
     genre: `Historical`,
     preview: `preview`
@@ -54,7 +54,7 @@ const MOCK_CATALOG_FILMS_LIST = [
 ];
 
 const MOCKED_FILM = {
-  title: `Fantastic Beasts: The Crimes of Grindelwald`,
+  name: `Fantastic Beasts: The Crimes of Grindelwald`,
   poster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
   genre: `Comedy`,
   preview: `preview`,
