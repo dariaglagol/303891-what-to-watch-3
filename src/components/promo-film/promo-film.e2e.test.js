@@ -73,9 +73,6 @@ it(`Click on play button calls callback to switch on video`, () => {
 
   playButton.simulate(`click`);
 
-  const playVideo = jest
-    .spyOn(window.HTMLMediaElement.prototype, `play`)
-    .mockImplementation(() => {});
-
-  playVideo.mockRestore();
+  expect(playButtonClickHandler).toHaveBeenCalledTimes(1);
+  expect(playButtonClickHandler).toBeCalledWith();
 });

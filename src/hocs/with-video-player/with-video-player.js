@@ -10,6 +10,7 @@ const withVideoPlayer = (Component) => {
       this.state = {
         progress: 0,
         isLoading: true,
+        duration: 0,
       };
 
       this._videoRef = createRef();
@@ -22,6 +23,7 @@ const withVideoPlayer = (Component) => {
       video.oncanplaythrough = () => this.setState({
         isLoading: false,
         currentTime: null,
+        duration: video.duration,
       });
 
       video.ontimeupdate = () => this.setState({
@@ -55,10 +57,13 @@ const withVideoPlayer = (Component) => {
 
     render() {
       const {className} = this.props;
+      const {progress, duration} = this.state;
 
       return (
         <Component
           {...this.props}
+          progress={progress}
+          duration={duration}
           renderVideo={() => {
             return (
               <VideoPlayer

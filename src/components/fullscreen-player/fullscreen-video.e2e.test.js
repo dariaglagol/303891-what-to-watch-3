@@ -15,6 +15,8 @@ it(`Click on close player button called callback`, () => {
       <FullscreenPlayer
         onExitClick={exitClickHandler}
         renderVideo={renderVideo}
+        progress={10}
+        duration={33}
       />
   );
 

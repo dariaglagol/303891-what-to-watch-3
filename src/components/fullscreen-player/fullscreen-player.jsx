@@ -1,11 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
+import moment from "moment";
 
 const FullscreenPlayer = (props) => {
   const {
     onExitClick,
-    renderVideo
+    renderVideo,
+    progress,
+    duration
   } = props;
+
+  const preparedDurationHours = moment.duration(duration, `seconds`).get(`hours`);
+  const preparedDurationMinutes = moment.duration(duration, `seconds`).get(`minutes`);
+  const preparedDurationSeconds = moment.duration(duration, `seconds`).get(`seconds`);
 
   return (
     <div className="player">
@@ -15,10 +22,10 @@ const FullscreenPlayer = (props) => {
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value="30" max="100" />
+            <progress className="player__progress" value={progress} max="100" />
             <div className="player__toggler" styles="left: 30%;">Toggler</div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div className="player__time-value">{preparedDurationHours}:{preparedDurationMinutes}:{preparedDurationSeconds}</div>
         </div>
 
         <div className="player__controls-row">
@@ -47,6 +54,8 @@ FullscreenPlayer.displayName = `FullscreenPlayer`;
 FullscreenPlayer.propTypes = {
   onExitClick: PropTypes.func.isRequired,
   renderVideo: PropTypes.func.isRequired,
+  progress: PropTypes.number.isRequired,
+  duration: PropTypes.number.isRequired,
 };
 
 export default FullscreenPlayer;
