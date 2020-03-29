@@ -1,7 +1,4 @@
-const AuthorizationStatus = {
-  AUTH: `AUTH`,
-  NO_AUTH: `NO_AUTH`,
-};
+import {AuthorizationStatus} from "@utils/constants";
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
@@ -26,6 +23,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         authorizationStatus: action.payload,
       });
+    default:
+      break;
   }
 
   return state;
@@ -52,7 +51,6 @@ const Operation = {
       });
   },
 };
-
 
 export {
   ActionCreator,
