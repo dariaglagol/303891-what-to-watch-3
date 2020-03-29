@@ -11,7 +11,7 @@ const MovieOverview = (props) => {
   } = props;
 
   function _renderStarringList() {
-    return starring.split(`,`).map((starringItem) => {
+    return starring.map((starringItem) => {
       return (
         <React.Fragment key={starringItem}>
           {starringItem} <br />
@@ -55,10 +55,10 @@ const MovieOverview = (props) => {
 
 MovieOverview.propTypes = {
   director: PropTypes.string.isRequired,
-  starring: PropTypes.string.isRequired,
+  starring: PropTypes.array.isRequired,
   runTime: PropTypes.number.isRequired,
   genre: PropTypes.string.isRequired,
-  released: PropTypes.string.isRequired,
+  released: PropTypes.number.isRequired,
 };
 
 export default MovieOverview;

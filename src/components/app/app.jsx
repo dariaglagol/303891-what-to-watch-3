@@ -53,7 +53,6 @@ const App = (props) => {
       case PageTypes.MOVIE:
         return (
           <MovieExtendedComponentWrapped
-            promoMovie={promoMovie}
             onFilmClick={onPageChange}
             films={films}
             movieDetails={movieDetails}
@@ -75,7 +74,6 @@ const App = (props) => {
         </Route>
         <Route exact path="/dev-movie-details">
           <MovieExtendedComponentWrapped
-            promoMovie={promoMovie}
             onFilmClick={onPageChange}
             films={films}
             movieDetails={movieDetails}

@@ -33,7 +33,7 @@ const MovieExtended = (props) => {
     director,
     starring,
     runTime,
-    score,
+    scoresCount,
     rating,
     description
   } = movieDetails;
@@ -52,7 +52,7 @@ const MovieExtended = (props) => {
         />;
       case TabTypes.DETAILS:
         return <MovieDetails
-          score={score}
+          scoresCount={scoresCount}
           rating={rating}
           description={description}
           director={director}
