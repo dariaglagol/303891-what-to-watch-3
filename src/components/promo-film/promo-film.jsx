@@ -4,7 +4,7 @@ import Header from "@components/header/header";
 import {PageTypes} from "@utils/constants";
 
 const PromoFilm = (props) => {
-  const {promoMovie: {name, genre, released, poster_image, background_image}, onFilmClick, onPlayButtonClick} = props;
+  const {promoMovie: {name, genre, released, posterUrl, promoCover}, onFilmClick, onPlayButtonClick} = props;
 
   function _onFilmClickHandler() {
     onFilmClick(PageTypes.MOVIE);
@@ -17,7 +17,7 @@ const PromoFilm = (props) => {
   return (
     <section className="movie-card">
       <div className="movie-card__bg">
-        <img src={background_image} alt="The Grand Budapest Hotel"/>
+        <img src={promoCover} alt="The Grand Budapest Hotel"/>
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -31,7 +31,7 @@ const PromoFilm = (props) => {
             onClick={_onFilmClickHandler}
           >
             <img
-              src={poster_image}
+              src={posterUrl}
               alt="The Grand Budapest Hotel poster"
               width="218"
               height="327"
@@ -76,11 +76,16 @@ const PromoFilm = (props) => {
 };
 
 PromoFilm.propTypes = {
-  promoMovie: PropTypes.shape({
-    genre: PropTypes.string.isRequired,
-    releaseDate: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
-  }),
+  promoMovie: PropTypes.oneOfType([
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      genre: PropTypes.string.isRequired,
+      released: PropTypes.string.isRequired,
+      posterUrl: PropTypes.string.isRequired,
+      promoCover: PropTypes.string.isRequired,
+    }),
+    PropTypes.shape({})
+  ]),
   onFilmClick: PropTypes.func.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,
 };

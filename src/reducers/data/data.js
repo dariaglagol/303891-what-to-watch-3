@@ -1,6 +1,7 @@
 import {extend} from "@utils/utils.js";
 import MovieDetails from "@mocks/movie-details";
 import MovieReviews from "@mocks/reviews";
+import FilmModel from "@utils/film-model";
 
 const initialState = {
   films: [],
@@ -18,13 +19,15 @@ const ActionCreator = {
   loadFilms: (films) => {
     return {
       type: ActionType.LOAD_FILMS,
-      payload: films,
+      payload: films.map((film) => {
+        return new FilmModel(film);
+      }),
     };
   },
   loadPromoFilm: (film) => {
     return {
       type: ActionType.LOAD_PROMO_FILM,
-      payload: film,
+      payload: new FilmModel(film),
     };
   },
 };
@@ -37,7 +40,7 @@ const Operation = {
       });
   },
   loadPromoFilm: () => (dispatch, getState, api) => {
-    return api.get(`films/promo`)
+    return api.get(`/films/promo`)
       .then((response) => {
         dispatch(ActionCreator.loadPromoFilm(response.data));
       });
