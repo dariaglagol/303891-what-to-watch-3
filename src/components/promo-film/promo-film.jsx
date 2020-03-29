@@ -80,7 +80,7 @@ PromoFilm.propTypes = {
     PropTypes.shape({
       name: PropTypes.string.isRequired,
       genre: PropTypes.string.isRequired,
-      released: PropTypes.string.isRequired,
+      released: PropTypes.number.isRequired,
       posterUrl: PropTypes.string.isRequired,
       promoCover: PropTypes.string.isRequired,
     }),
