@@ -72,7 +72,7 @@ Array [
           <img
             alt="The Grand Budapest Hotel poster"
             height="327"
-            src="img/the-grand-budapest-hotel-poster.jpg"
+            src="img/bg-the-grand-budapest-hotel.jpg"
             width="218"
           />
         </div>
@@ -284,7 +284,7 @@ Array [
               poster="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
             >
               <source
-                src="preview"
+                src="https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm"
               />
             </video>
           </div>
@@ -313,7 +313,7 @@ Array [
               poster="img/bohemian-rhapsody.jpg"
             >
               <source
-                src="preview"
+                src="previewVideoLink"
               />
             </video>
           </div>
@@ -342,7 +342,7 @@ Array [
               poster="img/macbeth.jpg"
             >
               <source
-                src="preview"
+                src="previewVideoLink"
               />
             </video>
           </div>
@@ -371,7 +371,7 @@ Array [
               poster="img/aviator.jpg"
             >
               <source
-                src="preview"
+                src="previewVideoLink"
               />
             </video>
           </div>
@@ -382,7 +382,7 @@ Array [
               className="small-movie-card__link"
               href="movie-page.html"
             >
-              Aviator
+              Bohemian Rhapsody
             </a>
           </h3>
         </article>
@@ -400,7 +400,7 @@ Array [
               poster="img/we-need-to-talk-about-kevin.jpg"
             >
               <source
-                src="preview"
+                src="previewVideoLink"
               />
             </video>
           </div>
@@ -429,7 +429,7 @@ Array [
               poster="img/what-we-do-in-the-shadows.jpg"
             >
               <source
-                src="preview"
+                src="previewVideoLink"
               />
             </video>
           </div>
@@ -458,7 +458,7 @@ Array [
               poster="img/revenant.jpg"
             >
               <source
-                src="preview"
+                src="previewVideoLink"
               />
             </video>
           </div>
@@ -487,7 +487,7 @@ Array [
               poster="img/johnny-english.jpg"
             >
               <source
-                src="preview"
+                src="previewVideoLink"
               />
             </video>
           </div>

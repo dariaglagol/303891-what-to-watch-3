@@ -171,7 +171,7 @@ Array [
                 <span
                   className="movie-card__details-value"
                 >
-                  Wes Anderson
+                  Wes Andreson
                 </span>
               </p>
               <p
@@ -188,13 +188,13 @@ Array [
                   Bill Murray
                    
                   <br />
-                   Edward Norton
+                  Edward Norton
                    
                   <br />
-                   Jude Law
+                  Jude Law
                    
                   <br />
-                   Willem Dafoe and other
+                  Willem Dafoe
                    
                   <br />
                 </span>

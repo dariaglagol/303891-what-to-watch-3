@@ -18,7 +18,7 @@ exports[`Movie list render 1`] = `
         poster="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
       >
         <source
-          src="previewVideoLink"
+          src="https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm"
         />
       </video>
     </div>
@@ -47,7 +47,7 @@ exports[`Movie list render 1`] = `
         poster="img/bohemian-rhapsody.jpg"
       >
         <source
-          src="preview"
+          src="previewVideoLink"
         />
       </video>
     </div>
@@ -76,7 +76,7 @@ exports[`Movie list render 1`] = `
         poster="img/macbeth.jpg"
       >
         <source
-          src="preview"
+          src="previewVideoLink"
         />
       </video>
     </div>
@@ -105,7 +105,7 @@ exports[`Movie list render 1`] = `
         poster="img/aviator.jpg"
       >
         <source
-          src="preview"
+          src="previewVideoLink"
         />
       </video>
     </div>
@@ -116,7 +116,7 @@ exports[`Movie list render 1`] = `
         className="small-movie-card__link"
         href="movie-page.html"
       >
-        Aviator
+        Bohemian Rhapsody
       </a>
     </h3>
   </article>
@@ -134,7 +134,7 @@ exports[`Movie list render 1`] = `
         poster="img/we-need-to-talk-about-kevin.jpg"
       >
         <source
-          src="preview"
+          src="previewVideoLink"
         />
       </video>
     </div>
@@ -163,7 +163,7 @@ exports[`Movie list render 1`] = `
         poster="img/what-we-do-in-the-shadows.jpg"
       >
         <source
-          src="preview"
+          src="previewVideoLink"
         />
       </video>
     </div>
@@ -192,7 +192,7 @@ exports[`Movie list render 1`] = `
         poster="img/revenant.jpg"
       >
         <source
-          src="preview"
+          src="previewVideoLink"
         />
       </video>
     </div>
@@ -221,7 +221,7 @@ exports[`Movie list render 1`] = `
         poster="img/johnny-english.jpg"
       >
         <source
-          src="preview"
+          src="previewVideoLink"
         />
       </video>
     </div>

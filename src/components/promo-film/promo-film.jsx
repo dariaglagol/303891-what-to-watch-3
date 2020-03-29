@@ -83,6 +83,7 @@ PromoFilm.propTypes = {
       released: PropTypes.number.isRequired,
       posterImage: PropTypes.string.isRequired,
       promoCover: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
     }),
     PropTypes.shape({})
   ]),
