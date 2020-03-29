@@ -1,18 +1,22 @@
+import {mapKeys, camelCase} from "lodash";
 import {extend} from "@utils/utils.js";
 import MovieDetails from "@mocks/movie-details";
 import MovieReviews from "@mocks/reviews";
-import FilmModel from "@utils/film-model";
+import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
 
-const initialState = {
+const InitialState = {
   films: [],
   promoMovie: {},
   movieDetails: MovieDetails,
-  reviews: MovieReviews
+  reviews: MovieReviews,
+  activeGenre: DEFAULT_ACTIVE_GENRE,
 };
 
 const ActionType = {
   LOAD_FILMS: `LOAD_FILMS`,
-  LOAD_PROMO_FILM: `LOAD_PROMO_FILM`
+  LOAD_PROMO_FILM: `LOAD_PROMO_FILM`,
+  GET_MOVIES_BY_GENRE: `GET_MOVIES_BY_GENRE`,
+  CHANGE_GENRE: `CHANGE_GENRE`,
 };
 
 const ActionCreator = {
@@ -20,16 +24,24 @@ const ActionCreator = {
     return {
       type: ActionType.LOAD_FILMS,
       payload: films.map((film) => {
-        return new FilmModel(film);
+        return mapKeys(film, (value, key) => {
+          return camelCase(key);
+        });
       }),
     };
   },
   loadPromoFilm: (film) => {
     return {
       type: ActionType.LOAD_PROMO_FILM,
-      payload: new FilmModel(film),
+      payload: mapKeys(film, (value, key) => {
+        return camelCase(key);
+      }),
     };
   },
+  changeGenre: (newGenre) => ({
+    type: ActionType.CHANGE_GENRE,
+    payload: newGenre,
+  }),
 };
 
 const Operation = {
@@ -47,7 +59,7 @@ const Operation = {
   },
 };
 
-const reducer = (state = initialState, action) => {
+const reducer = (state = InitialState, action) => {
   switch (action.type) {
     case ActionType.LOAD_FILMS:
       return extend(state, {
@@ -57,6 +69,8 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         promoMovie: action.payload,
       });
+    case ActionType.CHANGE_GENRE:
+      return extend(state, {activeGenre: action.payload});
     default:
       break;
   }

@@ -7,11 +7,11 @@ const MovieOverviewMock = {
   starring: `starring`,
   runTime: 113,
   genre: `genre`,
-  releaseDate: `releaseDate`
+  released: `released`
 };
 
 it(`Movie overview render`, () => {
-  const {director, starring, runTime, genre, releaseDate} = MovieOverviewMock;
+  const {director, starring, runTime, genre, released} = MovieOverviewMock;
 
   const movieOverviewComponent = renderer
     .create(
@@ -20,7 +20,7 @@ it(`Movie overview render`, () => {
           starring={starring}
           runTime={runTime}
           genre={genre}
-          releaseDate={releaseDate}
+          released={released}
         />
     ).toJSON();
 

@@ -18,7 +18,7 @@ exports[`Movie list render 1`] = `
         poster="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
       >
         <source
-          src="preview"
+          src="previewVideoLink"
         />
       </video>
     </div>

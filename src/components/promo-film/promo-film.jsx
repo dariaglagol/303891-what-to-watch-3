@@ -4,7 +4,7 @@ import Header from "@components/header/header";
 import {PageTypes} from "@utils/constants";
 
 const PromoFilm = (props) => {
-  const {promoMovie: {name, genre, released, posterUrl, promoCover}, onFilmClick, onPlayButtonClick} = props;
+  const {promoMovie: {name, genre, released, posterImage, backgroundImage}, onFilmClick, onPlayButtonClick} = props;
 
   function _onFilmClickHandler() {
     onFilmClick(PageTypes.MOVIE);
@@ -17,7 +17,7 @@ const PromoFilm = (props) => {
   return (
     <section className="movie-card">
       <div className="movie-card__bg">
-        <img src={promoCover} alt="The Grand Budapest Hotel"/>
+        <img src={backgroundImage} alt={name}/>
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -31,7 +31,7 @@ const PromoFilm = (props) => {
             onClick={_onFilmClickHandler}
           >
             <img
-              src={posterUrl}
+              src={posterImage}
               alt="The Grand Budapest Hotel poster"
               width="218"
               height="327"
@@ -81,7 +81,7 @@ PromoFilm.propTypes = {
       name: PropTypes.string.isRequired,
       genre: PropTypes.string.isRequired,
       released: PropTypes.number.isRequired,
-      posterUrl: PropTypes.string.isRequired,
+      posterImage: PropTypes.string.isRequired,
       promoCover: PropTypes.string.isRequired,
     }),
     PropTypes.shape({})

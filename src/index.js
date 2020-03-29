@@ -6,7 +6,7 @@ import thunk from "redux-thunk";
 import {Provider} from "react-redux";
 
 import reducer from "@reducers/reducer";
-import {ActionCreator as UserActionCreator, Operation as UserOperation} from "@reducers/user/user";
+import {ActionCreator as UserActionCreator} from "@reducers/user/user";
 import {Operation as DataOperation} from "@reducers/data/data";
 
 import App from "@components/app/app";

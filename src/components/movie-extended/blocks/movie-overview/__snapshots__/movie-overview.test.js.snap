@@ -33,7 +33,7 @@ exports[`Movie overview render 1`] = `
         className="movie-card__details-value"
       >
         starring
-         
+
         <br />
       </span>
     </p>
@@ -80,7 +80,7 @@ exports[`Movie overview render 1`] = `
       <span
         className="movie-card__details-value"
       >
-        releaseDate
+        released
       </span>
     </p>
   </div>

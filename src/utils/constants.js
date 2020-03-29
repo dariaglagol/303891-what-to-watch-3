@@ -48,7 +48,8 @@ const DEFAULT_SHOWN_FILMS = 8;
 const FULLSCREEN_VIDEO_CLASS = `player__video`;
 
 const Error = {
-  UNAUTHORIZED: 401
+  UNAUTHORIZED: 401,
+  SERVER_PROBLEMS: 500,
 };
 
 const TIMEOUT = 5000;

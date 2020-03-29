@@ -11,15 +11,13 @@ import withMovieList from "@hocs/with-movie-list/with-movie-list";
 
 import {PageTypes} from "@utils/constants";
 
-import {ActionCreator as GenreUserCreator} from "@reducers/genre/genre";
-import {getActiveGenre} from "@reducers/genre/selectors";
-
-import {ActionCreator as CommonUserCreator} from "@reducers/common/common";
+import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
 import {getActivePage, getFullScreenPlayerState} from "@reducers/common/selectors";
 
 import {Operation as UserOperation} from "@reducers/user/user";
 
-import {getFilms, getReviews, getMovieDetails, getMovieCover} from "@reducers/data/selectors.js";
+import {ActionCreator as DataActionCreator} from "@reducers/data/data";
+import {getActiveGenre, getFilteredFilms, getReviews, getMovieDetails, getMovieCover} from "@reducers/data/selectors.js";
 
 const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
 const MainComponentWrapped = withMovieList(withCatalog(Main));
@@ -92,7 +90,8 @@ const App = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  films: getFilms(state), //TODO это не корретно, попроавь как будут фильмы полноценно
+  films: getFilteredFilms(state),
+  filteredFilms: getFilteredFilms(state),
   activeGenre: getActiveGenre(state),
   promoMovie: getMovieCover(state),
   movieDetails: getMovieDetails(state),
@@ -103,14 +102,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onGenreTabClick(activeGenre) {
-    dispatch(GenreUserCreator.changeGenre(activeGenre));
-    dispatch(GenreUserCreator.getMoviesByGenre(activeGenre));
+    dispatch(DataActionCreator.changeGenre(activeGenre));
   },
   onPageChange(activePage) {
-    dispatch(CommonUserCreator.getActivePage(activePage));
+    dispatch(CommonActionCreator.getActivePage(activePage));
   },
   onFullScreenToggle(state) {
-    dispatch(CommonUserCreator.toggleFullscreenPlayer(state));
+    dispatch(CommonActionCreator.toggleFullscreenPlayer(state));
   },
   login(authData) {
     dispatch(UserOperation.login(authData));
@@ -121,45 +119,65 @@ App.propTypes = {
   promoMovie: PropTypes.oneOfType([
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      genre: PropTypes.string.isRequired,
-      releaseDate: PropTypes.string.isRequired
-    }),
-    PropTypes.shape({})
-  ]),
-  films: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.exact({
-      name: PropTypes.string.isRequired,
-      posterUrl: PropTypes.string.isRequired,
+      posterImage: PropTypes.string.isRequired,
       previewImage: PropTypes.string.isRequired,
-      promoCover: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
       backgroundColor: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
       rating: PropTypes.number.isRequired,
       scoresCount: PropTypes.number.isRequired,
       director: PropTypes.string.isRequired,
-      actors: PropTypes.array.isRequired,
+      starring: PropTypes.array.isRequired,
       runTime: PropTypes.number.isRequired,
       genre: PropTypes.string.isRequired,
       released: PropTypes.number.isRequired,
       id: PropTypes.number.isRequired,
       isFavorite: PropTypes.bool.isRequired,
       videoLink: PropTypes.string.isRequired,
-      preview: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
+    }),
+    PropTypes.shape({})
+  ]),
+  films: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.exact({
+      name: PropTypes.string.isRequired,
+      posterImage: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
+      backgroundColor: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      scoresCount: PropTypes.number.isRequired,
+      director: PropTypes.string.isRequired,
+      starring: PropTypes.array.isRequired,
+      runTime: PropTypes.number.isRequired,
+      genre: PropTypes.string.isRequired,
+      released: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+      videoLink: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
     })),
     PropTypes.array,
   ]).isRequired,
   movieDetails: PropTypes.exact({
     name: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    releaseDate: PropTypes.string.isRequired,
-    poster: PropTypes.string.isRequired,
+    posterImage: PropTypes.string.isRequired,
+    previewImage: PropTypes.string.isRequired,
+    backgroundImage: PropTypes.string.isRequired,
+    backgroundColor: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    starring: PropTypes.string.isRequired,
-    score: PropTypes.number.isRequired,
     rating: PropTypes.number.isRequired,
+    scoresCount: PropTypes.number.isRequired,
+    director: PropTypes.string.isRequired,
+    starring: PropTypes.array.isRequired,
     runTime: PropTypes.number.isRequired,
-    preview: PropTypes.string.isRequired,
+    genre: PropTypes.string.isRequired,
+    released: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
+    videoLink: PropTypes.string.isRequired,
+    previewVideoLink: PropTypes.string.isRequired,
   }),
   reviews: PropTypes.arrayOf(PropTypes.exact({
     text: PropTypes.string.isRequired,

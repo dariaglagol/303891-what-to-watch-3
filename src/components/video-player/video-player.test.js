@@ -6,7 +6,7 @@ const MockedFilm = {
   name: `title`,
   poster: `url`,
   genre: `genre`,
-  preview: `preview`,
+  previewVideoLink: `previewVideoLink`,
 };
 
 it(`Video player render`, () => {

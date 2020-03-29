@@ -6,7 +6,7 @@ exports[`Video player render 1`] = `
   poster="url"
 >
   <source
-    src="preview"
+    src="previewVideoLink"
   />
 </video>
 `;

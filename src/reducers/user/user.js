@@ -44,10 +44,8 @@ const Operation = {
 
   login: (authData) => (dispatch, getState, api) => {
     return api.post(`/login`, {
-      // email: authData.login,
-      email: `daria.glagol@gmail.com`,
-      password: `9j4twj33`,
-      // password: authData.password,
+      email: authData.login,
+      password: authData.password,
     })
       .then(() => {
         dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));

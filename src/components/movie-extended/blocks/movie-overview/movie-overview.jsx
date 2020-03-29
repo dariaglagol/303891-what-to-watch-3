@@ -7,7 +7,7 @@ const MovieOverview = (props) => {
     starring,
     runTime,
     genre,
-    releaseDate
+    released
   } = props;
 
   function _renderStarringList() {
@@ -46,7 +46,7 @@ const MovieOverview = (props) => {
         </p>
         <p className="movie-card__details-item">
           <strong className="movie-card__details-name">Released</strong>
-          <span className="movie-card__details-value">{releaseDate}</span>
+          <span className="movie-card__details-value">{released}</span>
         </p>
       </div>
     </div>
@@ -58,7 +58,7 @@ MovieOverview.propTypes = {
   starring: PropTypes.string.isRequired,
   runTime: PropTypes.number.isRequired,
   genre: PropTypes.string.isRequired,
-  releaseDate: PropTypes.string.isRequired,
+  released: PropTypes.string.isRequired,
 };
 
 export default MovieOverview;

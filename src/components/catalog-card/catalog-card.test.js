@@ -6,7 +6,7 @@ const MOCKED_FILM = {
   name: `Fantastic Beasts: The Crimes of Grindelwald`,
   poster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
   genre: `Comedy`,
-  preview: `preview`,
+  previewVideoLink: `previewVideoLink`,
 };
 
 const MOCKED_PLAY_PROP = false;
