@@ -20,7 +20,6 @@ const withVideoPlayer = (Component) => {
     }
 
     componentDidMount() {
-
       const video = this._videoRef.current;
 
       video.oncanplaythrough = () => this.setState({

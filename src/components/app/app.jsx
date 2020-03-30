@@ -37,6 +37,8 @@ const App = (props) => {
     onFullScreenToggle,
   } = props;
 
+  console.log(films);
+
   function _renderPages() {
     switch (activePage) {
       case PageTypes.MAIN:
@@ -92,6 +94,13 @@ const App = (props) => {
   );
 };
 
+App.defaultProps = {
+  films: null,
+  promoMovie: null,
+  reviews: null,
+  movieDetails: null,
+};
+
 const mapStateToProps = (state) => ({
   films: getFilteredFilms(state),
   filteredFilms: getFilteredFilms(state),
@@ -139,9 +148,10 @@ App.propTypes = {
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
     }),
-    PropTypes.oneOf([null]).isRequired
-  ]),
+    PropTypes.oneOf([null])
+  ]).isRequired,
   films: PropTypes.oneOfType([
+    PropTypes.oneOf([null]).isRequired,
     PropTypes.arrayOf(PropTypes.exact({
       name: PropTypes.string.isRequired,
       posterImage: PropTypes.string.isRequired,
@@ -161,7 +171,6 @@ App.propTypes = {
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
     })),
-    PropTypes.oneOf([null]).isRequired,
   ]).isRequired,
   movieDetails: PropTypes.oneOfType([
     PropTypes.shape({
@@ -182,7 +191,7 @@ App.propTypes = {
       isFavorite: PropTypes.bool.isRequired,
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
-    }),
+    }).isRequired,
     PropTypes.oneOf([null]).isRequired
   ]),
   reviews: PropTypes.arrayOf(PropTypes.exact({

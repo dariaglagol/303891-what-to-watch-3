@@ -14,7 +14,7 @@ const Catalog = (props) => {
     renderMovieList,
   } = props;
 
-  const isButtonHide = films.length <= currentShownFilms;
+  const isButtonHide = films && films.length <= currentShownFilms;
 
   function _onTabClick(genre) {
     resetShownFilms();
@@ -62,7 +62,7 @@ Catalog.propTypes = {
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
     })),
-    PropTypes.array,
+    PropTypes.oneOf([null]).isRequired,
   ]).isRequired,
   activeGenre: PropTypes.exact({
     multiply: PropTypes.string.isRequired,

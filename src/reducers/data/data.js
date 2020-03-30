@@ -1,5 +1,4 @@
-import {mapKeys, camelCase} from "lodash";
-import {extend} from "@utils/utils.js";
+import {extend, filmAdapter, filmsAdapter} from "@utils/utils.js";
 import MovieReviews from "@mocks/reviews";
 import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
 
@@ -14,7 +13,6 @@ const initialState = {
 const ActionType = {
   LOAD_FILMS: `LOAD_FILMS`,
   LOAD_PROMO_FILM: `LOAD_PROMO_FILM`,
-  GET_MOVIES_BY_GENRE: `GET_MOVIES_BY_GENRE`,
   CHANGE_GENRE: `CHANGE_GENRE`,
 };
 
@@ -22,19 +20,13 @@ const ActionCreator = {
   loadFilms: (films) => {
     return {
       type: ActionType.LOAD_FILMS,
-      payload: films.map((film) => {
-        return mapKeys(film, (value, key) => {
-          return camelCase(key);
-        });
-      }),
+      payload: filmsAdapter(films),
     };
   },
   loadPromoFilm: (film) => {
     return {
       type: ActionType.LOAD_PROMO_FILM,
-      payload: mapKeys(film, (value, key) => {
-        return camelCase(key);
-      }),
+      payload: filmAdapter(film),
     };
   },
   changeGenre: (newGenre) => ({

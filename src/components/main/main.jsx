@@ -60,8 +60,8 @@ Main.propTypes = {
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
     }),
-    PropTypes.shape({})
-  ]),
+    PropTypes.oneOf([null])
+  ]).isRequired,
   films: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.exact({
       name: PropTypes.string.isRequired,
@@ -82,7 +82,7 @@ Main.propTypes = {
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
     })),
-    PropTypes.array,
+    PropTypes.oneOf([null]),
   ]).isRequired,
   onFilmClick: PropTypes.func.isRequired,
   activeGenre: PropTypes.exact({

@@ -17,6 +17,10 @@ const withMovieList = (Component) => {
       this._filmCatalogClickHandler = this._filmCatalogClickHandler.bind(this);
     }
 
+    componentWillUnmount() {
+      clearTimeout(this._timeout);
+    }
+
     _filmCatalogCardHoverHandler(film) {
       clearTimeout(this._timeout);
 
@@ -37,7 +41,6 @@ const withMovieList = (Component) => {
 
     _filmCatalogClickHandler() {
       const {onFilmClick} = this.props;
-      clearTimeout(this._timeout);
       onFilmClick(PageTypes.MOVIE);
     }
 
@@ -66,6 +69,7 @@ const withMovieList = (Component) => {
 
   WithMovieList.propTypes = {
     films: PropTypes.oneOfType([
+      PropTypes.oneOf([null]),
       PropTypes.arrayOf(PropTypes.exact({
         name: PropTypes.string.isRequired,
         posterImage: PropTypes.string.isRequired,
@@ -85,7 +89,6 @@ const withMovieList = (Component) => {
         videoLink: PropTypes.string.isRequired,
         previewVideoLink: PropTypes.string.isRequired,
       })),
-      PropTypes.array,
     ]).isRequired,
     onFilmClick: PropTypes.func.isRequired,
   };

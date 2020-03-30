@@ -36,19 +36,21 @@ const store = createStore(
     )
 );
 
-store.dispatch(DataOperation.loadFilms());
-store.dispatch(DataOperation.loadPromoFilm());
-
+let currentFilmsValue;
 const storeChangeHandler = () => {
-  const previousValue = [];
-  const currentValue = store.getState().DATA.films;
-  if (previousValue !== currentValue) {
+  let previousFilmsValue = currentFilmsValue;
+  currentFilmsValue = store.getState().DATA.films;
+
+  if (previousFilmsValue !== currentFilmsValue) {
+    unsubscribe();
     store.dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
   }
 };
 
 const unsubscribe = store.subscribe(storeChangeHandler);
-unsubscribe();
+
+store.dispatch(DataOperation.loadFilms());
+store.dispatch(DataOperation.loadPromoFilm());
 
 ReactDOM.render(
     <Provider store={store}>
