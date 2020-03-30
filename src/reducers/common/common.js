@@ -1,20 +1,20 @@
 import {PageTypes} from "@utils/constants";
 import {extend} from "@utils/utils";
 
-const InitialState = {
-  activePage: PageTypes.MAIN,
+const initialState = {
+  activePage: PageTypes.LOADING,
   isFullscreenPlayerActive: false,
 };
 
 const ActionType = {
-  GET_ACTIVE_PAGE: `GET_ACTIVE_PAGE`,
+  SET_ACTIVE_PAGE: `SET_ACTIVE_PAGE`,
   TOGGLE_FULLSCREEN_PLAYER: `TOGGLE_FULLSCREEN_PLAYER`,
 };
 
 const ActionCreator = {
-  getActivePage: (page) => {
+  setActivePage: (page) => {
     return {
-      type: ActionType.GET_ACTIVE_PAGE,
+      type: ActionType.SET_ACTIVE_PAGE,
       payload: page
     };
   },
@@ -26,9 +26,9 @@ const ActionCreator = {
   },
 };
 
-const reducer = (state = InitialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.GET_ACTIVE_PAGE:
+    case ActionType.SET_ACTIVE_PAGE:
       return extend(state, {activePage: action.payload});
     case ActionType.TOGGLE_FULLSCREEN_PLAYER:
       return extend(state, {isFullscreenPlayerActive: action.payload});

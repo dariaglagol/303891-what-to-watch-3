@@ -8,6 +8,8 @@ it(`Render full screen component`, () => {
         <FullscreenPlayer
           onExitClick={() => {}}
           renderVideo={() => {}}
+          onFullScreenButtonClick={() => {}}
+          onPlayClick={() => {}}
           progress={10}
           duration={33}
         />

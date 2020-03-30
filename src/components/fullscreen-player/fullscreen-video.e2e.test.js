@@ -10,11 +10,15 @@ Enzyme.configure({
 it(`Click on close player button called callback`, () => {
   const exitClickHandler = jest.fn();
   const renderVideo = jest.fn();
+  const onFullScreenButtonClick = jest.fn();
+  const onPlayClick = jest.fn();
 
   const fullScreenComponent = shallow(
       <FullscreenPlayer
         onExitClick={exitClickHandler}
         renderVideo={renderVideo}
+        onFullScreenButtonClick={onFullScreenButtonClick}
+        onPlayClick={onPlayClick}
         progress={10}
         duration={33}
       />

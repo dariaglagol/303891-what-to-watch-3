@@ -1,8 +1,8 @@
 import {reducer, ActionCreator, ActionType} from "./common";
 import {getActivePage, getFullScreenPlayerState} from "./selectors";
 
-const InitialState = {
-  activePage: `main`,
+const initialState = {
+  activePage: `loading`,
   isFullscreenPlayerActive: false,
 };
 
@@ -15,16 +15,16 @@ const state = {
 
 describe(`Common reducer tests`, () => {
   it(`Reducer without params should return initial state`, () => {
-    expect(reducer(void 0, {})).toEqual(InitialState);
+    expect(reducer(void 0, {})).toEqual(initialState);
   });
 
   it(`Reducer should change current page list by a given value`, () => {
-    const {activePage} = InitialState;
+    const {activePage} = initialState;
 
     expect(reducer({
       activePage
     }, {
-      type: ActionType.GET_ACTIVE_PAGE,
+      type: ActionType.SET_ACTIVE_PAGE,
       payload: `movie`
     })).toEqual({
       activePage: `movie`
@@ -32,7 +32,7 @@ describe(`Common reducer tests`, () => {
   });
 
   it(`Reducer should toggle fullscreen player`, () => {
-    const {isFullscreenPlayerActive} = InitialState;
+    const {isFullscreenPlayerActive} = initialState;
 
     expect(reducer({
       isFullscreenPlayerActive
@@ -45,8 +45,8 @@ describe(`Common reducer tests`, () => {
   });
 
   it(`Action creator return correct page after change`, () => {
-    expect(ActionCreator.getActivePage(`movie`)).toEqual({
-      type: ActionType.GET_ACTIVE_PAGE,
+    expect(ActionCreator.setActivePage(`movie`)).toEqual({
+      type: ActionType.SET_ACTIVE_PAGE,
       payload: `movie`,
     });
   });

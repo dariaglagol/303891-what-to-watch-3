@@ -18,6 +18,7 @@ import {Operation as UserOperation} from "@reducers/user/user";
 
 import {ActionCreator as DataActionCreator} from "@reducers/data/data";
 import {getActiveGenre, getFilteredFilms, getReviews, getMovieDetails, getMovieCover} from "@reducers/data/selectors.js";
+import Loading from "@components/loading/loading";
 
 const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
 const MainComponentWrapped = withMovieList(withCatalog(Main));
@@ -61,6 +62,10 @@ const App = (props) => {
             reviews={reviews}
           />
         );
+      case PageTypes.LOADING:
+        return (
+          <Loading />
+        );
     }
 
     return null;
@@ -103,7 +108,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(DataActionCreator.changeGenre(activeGenre));
   },
   onPageChange(activePage) {
-    dispatch(CommonActionCreator.getActivePage(activePage));
+    dispatch(CommonActionCreator.setActivePage(activePage));
   },
   onFullScreenToggle(state) {
     dispatch(CommonActionCreator.toggleFullscreenPlayer(state));
@@ -134,7 +139,7 @@ App.propTypes = {
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
     }),
-    PropTypes.shape({})
+    PropTypes.oneOf([null]).isRequired
   ]),
   films: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.exact({
@@ -156,27 +161,30 @@ App.propTypes = {
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
     })),
-    PropTypes.array,
+    PropTypes.oneOf([null]).isRequired,
   ]).isRequired,
-  movieDetails: PropTypes.exact({
-    name: PropTypes.string.isRequired,
-    posterImage: PropTypes.string.isRequired,
-    previewImage: PropTypes.string.isRequired,
-    backgroundImage: PropTypes.string.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
-    scoresCount: PropTypes.number.isRequired,
-    director: PropTypes.string.isRequired,
-    starring: PropTypes.array.isRequired,
-    runTime: PropTypes.number.isRequired,
-    genre: PropTypes.string.isRequired,
-    released: PropTypes.number.isRequired,
-    id: PropTypes.number.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-    videoLink: PropTypes.string.isRequired,
-    previewVideoLink: PropTypes.string.isRequired,
-  }),
+  movieDetails: PropTypes.oneOfType([
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      posterImage: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
+      backgroundColor: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      scoresCount: PropTypes.number.isRequired,
+      director: PropTypes.string.isRequired,
+      starring: PropTypes.array.isRequired,
+      runTime: PropTypes.number.isRequired,
+      genre: PropTypes.string.isRequired,
+      released: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+      videoLink: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
+    }),
+    PropTypes.oneOf([null]).isRequired
+  ]),
   reviews: PropTypes.arrayOf(PropTypes.exact({
     text: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,

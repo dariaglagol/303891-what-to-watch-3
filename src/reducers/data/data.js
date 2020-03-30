@@ -1,13 +1,12 @@
 import {mapKeys, camelCase} from "lodash";
 import {extend} from "@utils/utils.js";
-import MovieDetails from "@mocks/movie-details";
 import MovieReviews from "@mocks/reviews";
 import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
 
-const InitialState = {
-  films: [],
-  promoMovie: {},
-  movieDetails: MovieDetails,
+const initialState = {
+  films: null,
+  promoMovie: null,
+  movieDetails: null,
   reviews: MovieReviews,
   activeGenre: DEFAULT_ACTIVE_GENRE,
 };
@@ -59,7 +58,7 @@ const Operation = {
   },
 };
 
-const reducer = (state = InitialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.LOAD_FILMS:
       return extend(state, {

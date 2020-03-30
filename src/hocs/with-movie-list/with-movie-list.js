@@ -1,6 +1,7 @@
 import React, {PureComponent} from "react";
 import MoviesList from "@components/movies-list/movies-list";
 import PropTypes from "prop-types";
+import {PageTypes} from "@utils/constants";
 
 
 const withMovieList = (Component) => {
@@ -13,6 +14,7 @@ const withMovieList = (Component) => {
       };
 
       this._filmCatalogCardHoverHandler = this._filmCatalogCardHoverHandler.bind(this);
+      this._filmCatalogClickHandler = this._filmCatalogClickHandler.bind(this);
     }
 
     _filmCatalogCardHoverHandler(film) {
@@ -33,9 +35,15 @@ const withMovieList = (Component) => {
       });
     }
 
+    _filmCatalogClickHandler() {
+      const {onFilmClick} = this.props;
+      clearTimeout(this._timeout);
+      onFilmClick(PageTypes.MOVIE);
+    }
+
     render() {
       const {activeFilm} = this.state;
-      const {films, onFilmClick} = this.props;
+      const {films} = this.props;
 
       return (
         <Component
@@ -45,7 +53,7 @@ const withMovieList = (Component) => {
               <MoviesList
                 films={sortedFilms}
                 currentShownFilms={currentShownFilms}
-                onFilmClick={onFilmClick}
+                onFilmClick={this._filmCatalogClickHandler}
                 onFilmCatalogCardHover={this._filmCatalogCardHoverHandler}
                 activeFilm={activeFilm}
               />
