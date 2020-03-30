@@ -4,7 +4,7 @@ import Header from "@components/header/header";
 import {PageTypes} from "@utils/constants";
 
 const PromoFilm = (props) => {
-  const {promoMovie: {name, genre, released, posterImage, backgroundImage}, onFilmClick, onPlayButtonClick} = props;
+  const {promoMovie: {name, genre, released, posterImage, backgroundImage}, onFilmClick, onPlayButtonClick, authStatus, onSignInClick} = props;
 
   function _onFilmClickHandler() {
     onFilmClick(PageTypes.MOVIE);
@@ -22,7 +22,10 @@ const PromoFilm = (props) => {
 
       <h1 className="visually-hidden">WTW</h1>
 
-      <Header />
+      <Header
+        authStatus={authStatus}
+        onSignInClick={onSignInClick}
+      />
 
       <div className="movie-card__wrap">
         <div className="movie-card__info">
@@ -89,6 +92,7 @@ PromoFilm.propTypes = {
   ]),
   onFilmClick: PropTypes.func.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,
+  authStatus: PropTypes.string.isRequired,
 };
 
 export default PromoFilm;

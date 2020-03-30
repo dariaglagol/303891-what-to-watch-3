@@ -22,6 +22,8 @@ const MovieExtended = (props) => {
     renderMovieList,
     onFullScreenToggle,
     isFullscreenPlayerActive,
+    authStatus,
+    onSignInClick
   } = props;
 
   const {
@@ -81,7 +83,10 @@ const MovieExtended = (props) => {
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <Header/>
+          <Header
+            authStatus={authStatus}
+            onSignInClick={onSignInClick}
+          />
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
@@ -209,6 +214,7 @@ MovieExtended.propTypes = {
   activeTab: PropTypes.string.isRequired,
   isFullscreenPlayerActive: PropTypes.bool.isRequired,
   onFullScreenToggle: PropTypes.func.isRequired,
+  authStatus: PropTypes.string.isRequired,
 };
 
 export default MovieExtended;

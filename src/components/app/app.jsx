@@ -15,9 +15,11 @@ import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
 import {getActivePage, getFullScreenPlayerState} from "@reducers/common/selectors";
 
 import {Operation as UserOperation} from "@reducers/user/user";
+import {getAuthStatus} from "@reducers/user/selectors";
 
 import {ActionCreator as DataActionCreator} from "@reducers/data/data";
 import {getActiveGenre, getFilteredFilms, getReviews, getMovieDetails, getMovieCover} from "@reducers/data/selectors.js";
+import SignIn from "@components/sign-in/sign-in";
 
 const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
 const MainComponentWrapped = withMovieList(withCatalog(Main));
@@ -34,6 +36,8 @@ const App = (props) => {
     onPageChange,
     isFullscreenPlayerActive,
     onFullScreenToggle,
+    authStatus,
+    login
   } = props;
 
   function _renderPages() {
@@ -41,8 +45,10 @@ const App = (props) => {
       case PageTypes.MAIN:
         return (
           <MainComponentWrapped
+            authStatus={authStatus}
             promoMovie={promoMovie}
             onFilmClick={onPageChange}
+            onSignInClick={onPageChange}
             activeGenre={activeGenre}
             onGenreTabClick={onGenreTabClick}
             isFullscreenPlayerActive={isFullscreenPlayerActive}
@@ -53,12 +59,20 @@ const App = (props) => {
       case PageTypes.MOVIE:
         return (
           <MovieExtendedComponentWrapped
+            authStatus={authStatus}
             onFilmClick={onPageChange}
+            onSignInClick={onPageChange}
             films={films}
             movieDetails={movieDetails}
             isFullscreenPlayerActive={isFullscreenPlayerActive}
             onFullScreenToggle={onFullScreenToggle}
             reviews={reviews}
+          />
+        );
+      case PageTypes.AUTH:
+        return (
+          <SignIn
+            onSubmit={login}
           />
         );
     }
@@ -74,7 +88,9 @@ const App = (props) => {
         </Route>
         <Route exact path="/dev-movie-details">
           <MovieExtendedComponentWrapped
+            authStatus={authStatus}
             onFilmClick={onPageChange}
+            onSignInClick={onPageChange}
             films={films}
             movieDetails={movieDetails}
             isFullscreenPlayerActive={isFullscreenPlayerActive}
@@ -96,6 +112,7 @@ const mapStateToProps = (state) => ({
   reviews: getReviews(state),
   activePage: getActivePage(state),
   isFullscreenPlayerActive: getFullScreenPlayerState(state),
+  authStatus: getAuthStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -192,6 +209,7 @@ App.propTypes = {
   activePage: PropTypes.string.isRequired,
   isFullscreenPlayerActive: PropTypes.bool.isRequired,
   onFullScreenToggle: PropTypes.func.isRequired,
+  authStatus: PropTypes.string.isRequired
 };
 
 export {App};

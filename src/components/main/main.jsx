@@ -9,7 +9,7 @@ import {FULLSCREEN_VIDEO_CLASS} from "@utils/constants";
 const WrappedFullScreenVideo = withVideoPlayer(FullscreenPlayer);
 
 const Main = (props) => {
-  const {promoMovie, onFilmClick, renderCatalog, isFullscreenPlayerActive, onFullScreenToggle} = props;
+  const {promoMovie, onFilmClick, renderCatalog, isFullscreenPlayerActive, onFullScreenToggle, authStatus, onSignInClick} = props;
 
   function _getPlayEvent() {
     onFullScreenToggle(!isFullscreenPlayerActive);
@@ -18,6 +18,8 @@ const Main = (props) => {
   return (
     <React.Fragment>
       <PromoFilm
+        onSignInClick={onSignInClick}
+        authStatus={authStatus}
         promoMovie={promoMovie}
         onFilmClick={onFilmClick}
         onPlayButtonClick={_getPlayEvent}
@@ -93,6 +95,7 @@ Main.propTypes = {
   renderCatalog: PropTypes.func.isRequired,
   isFullscreenPlayerActive: PropTypes.bool.isRequired,
   onFullScreenToggle: PropTypes.func.isRequired,
+  authStatus: PropTypes.string.isRequired,
 };
 
 export default Main;
