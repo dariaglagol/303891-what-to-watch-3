@@ -43,7 +43,6 @@ const storeChangeHandler = () => {
 
   if (previousFilmsValue !== currentFilmsValue) {
     unsubscribe();
-    store.dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
   }
 };
 

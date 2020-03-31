@@ -1,6 +1,7 @@
 import {extend, filmAdapter, filmsAdapter} from "@utils/utils.js";
 import MovieReviews from "@mocks/reviews";
-import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
+import {DEFAULT_ACTIVE_GENRE, PageTypes} from "@utils/constants";
+import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
 
 const initialState = {
   films: [],
@@ -45,6 +46,7 @@ const Operation = {
     return api.get(`/films`)
       .then((response) => {
         dispatch(ActionCreator.loadFilms(response.data));
+        dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
       });
   },
   loadPromoFilm: () => (dispatch, getState, api) => {
