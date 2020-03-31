@@ -5,7 +5,7 @@ import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
 const initialState = {
   films: [],
   promoMovie: {},
-  movieDetails: {},
+  activeFilmId: 0,
   reviews: MovieReviews,
   activeGenre: DEFAULT_ACTIVE_GENRE,
 };
@@ -14,6 +14,7 @@ const ActionType = {
   LOAD_FILMS: `LOAD_FILMS`,
   LOAD_PROMO_FILM: `LOAD_PROMO_FILM`,
   CHANGE_GENRE: `CHANGE_GENRE`,
+  GET_ACTIVE_FILM_ID: `GET_ACTIVE_FILM_ID`,
 };
 
 const ActionCreator = {
@@ -32,6 +33,10 @@ const ActionCreator = {
   changeGenre: (newGenre) => ({
     type: ActionType.CHANGE_GENRE,
     payload: newGenre,
+  }),
+  getActiveFilmId: (id) => ({
+    type: ActionType.GET_ACTIVE_FILM_ID,
+    payload: id
   }),
 };
 
@@ -62,6 +67,8 @@ const reducer = (state = initialState, action) => {
       });
     case ActionType.CHANGE_GENRE:
       return extend(state, {activeGenre: action.payload});
+    case ActionType.GET_ACTIVE_FILM_ID:
+      return extend(state, {activeFilmId: action.payload});
     default:
       break;
   }

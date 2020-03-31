@@ -39,6 +39,10 @@ const getReviews = (state) => {
   return state[NAME].reviews;
 };
 
+const getActiveFilmId = (state) => {
+  return state[NAME].activeFilmId;
+};
+
 const getFilmsSelector = createSelector(
     [getFilms, getFilteredFilms, getActiveGenre],
     (films, filteredFilms, activeGenre) => {
@@ -49,4 +53,13 @@ const getFilmsSelector = createSelector(
     }
 );
 
-export {getFilms, getFilteredFilms, getReviews, getMovieDetails, getMovieCover, getActiveGenre, getFilmsSelector};
+export {
+  getFilms,
+  getFilteredFilms,
+  getReviews,
+  getMovieDetails,
+  getMovieCover,
+  getActiveGenre,
+  getFilmsSelector,
+  getActiveFilmId
+};

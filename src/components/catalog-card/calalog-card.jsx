@@ -1,11 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {PageTypes} from "@utils/constants";
 
 const CatalogCard = (props) => {
   const {film, onFilmCatalogCardHover, onFilmClick, renderVideo} = props;
 
-  const {name} = film;
+  const {name, id} = film;
 
   function _onFilmHover() {
     onFilmCatalogCardHover(film);
@@ -16,7 +15,7 @@ const CatalogCard = (props) => {
   }
 
   function _onFilmClick() {
-    onFilmClick(PageTypes.MOVIE);
+    onFilmClick(id);
   }
 
   return (

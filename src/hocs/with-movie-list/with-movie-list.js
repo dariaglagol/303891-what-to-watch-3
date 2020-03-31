@@ -39,9 +39,9 @@ const withMovieList = (Component) => {
       });
     }
 
-    _filmCatalogClickHandler() {
+    _filmCatalogClickHandler(id) {
       const {onFilmClick} = this.props;
-      onFilmClick(PageTypes.MOVIE);
+      onFilmClick(id, PageTypes.MOVIE);
     }
 
     render() {

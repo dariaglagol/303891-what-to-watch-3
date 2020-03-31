@@ -17,7 +17,13 @@ import {getActivePage, getFullScreenPlayerState} from "@reducers/common/selector
 import {Operation as UserOperation} from "@reducers/user/user";
 
 import {ActionCreator as DataActionCreator} from "@reducers/data/data";
-import {getActiveGenre, getFilmsSelector, getReviews, getMovieDetails, getMovieCover} from "@reducers/data/selectors.js";
+import {
+  getActiveGenre,
+  getFilmsSelector,
+  getReviews,
+  getMovieCover,
+  getActiveFilmId
+} from "@reducers/data/selectors.js";
 import Loading from "@components/loading/loading";
 
 const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
@@ -27,7 +33,6 @@ const App = (props) => {
   const {
     promoMovie,
     films,
-    movieDetails,
     reviews,
     activeGenre,
     onGenreTabClick,
@@ -35,7 +40,10 @@ const App = (props) => {
     onPageChange,
     isFullscreenPlayerActive,
     onFullScreenToggle,
+    activeFilmId
   } = props;
+
+  const movieDetails = films.find((film) => film.id === activeFilmId) || {};
 
   function _renderPages() {
     switch (activePage) {
@@ -104,9 +112,9 @@ const mapStateToProps = (state) => ({
   filteredFilms: getFilmsSelector(state),
   activeGenre: getActiveGenre(state),
   promoMovie: getMovieCover(state),
-  movieDetails: getMovieDetails(state),
   reviews: getReviews(state),
   activePage: getActivePage(state),
+  activeFilmId: getActiveFilmId(state),
   isFullscreenPlayerActive: getFullScreenPlayerState(state),
 });
 
@@ -114,7 +122,8 @@ const mapDispatchToProps = (dispatch) => ({
   onGenreTabClick(activeGenre) {
     dispatch(DataActionCreator.changeGenre(activeGenre));
   },
-  onPageChange(activePage) {
+  onPageChange(id, activePage) {
+    dispatch(DataActionCreator.getActiveFilmId(id));
     dispatch(CommonActionCreator.setActivePage(activePage));
   },
   onFullScreenToggle(state) {
