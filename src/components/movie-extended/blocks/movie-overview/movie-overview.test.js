@@ -2,16 +2,28 @@ import React from "react";
 import renderer from "react-test-renderer";
 import MovieOverview from "./movie-overview";
 
-const MovieOverviewMock = {
-  director: `director`,
-  starring: `starring`,
+const movieOverViewMock = {
+  name: `givenPromoMovie name`,
+  genre: `givenPromoMovie genre`,
+  posterImage: `givenPromoMovie posterImage`,
+  previewImage: `givenPromoMovie previewImage`,
+  backgroundImage: `givenPromoMovie backgroundImage`,
+  backgroundColor: `givenPromoMovie backgroundColor`,
+  description: `givenPromoMovie description`,
+  rating: 124,
+  scoresCount: 8.9,
+  director: ` givenPromoMovie director`,
+  starring: [` givenPromoMovie starring`, `givenPromoMovie starring`],
   runTime: 113,
-  genre: `genre`,
-  releaseDate: `releaseDate`
+  released: 2020,
+  id: 1,
+  isFavorite: false,
+  videoLink: `givenPromoMovie videoLink`,
+  previewVideoLink: `givenPromoMovie previewVideoLink`,
 };
 
 it(`Movie overview render`, () => {
-  const {director, starring, runTime, genre, releaseDate} = MovieOverviewMock;
+  const {director, starring, runTime, genre, released} = movieOverViewMock;
 
   const movieOverviewComponent = renderer
     .create(
@@ -20,7 +32,7 @@ it(`Movie overview render`, () => {
           starring={starring}
           runTime={runTime}
           genre={genre}
-          releaseDate={releaseDate}
+          released={released}
         />
     ).toJSON();
 

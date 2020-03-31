@@ -2,24 +2,37 @@ import React from "react";
 import renderer from "react-test-renderer";
 import CatalogCard from "./calalog-card";
 
-const MOCKED_FILM = {
-  title: `Fantastic Beasts: The Crimes of Grindelwald`,
-  poster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
-  genre: `Comedy`,
-  preview: `preview`,
+const mockedFilm = {
+  name: `name`,
+  genre: `genre`,
+  posterImage: `posterImage`,
+  previewImage: `previewImage`,
+  backgroundImage: `backgroundImage`,
+  backgroundColor: `backgroundColor`,
+  description: `description`,
+  rating: 124,
+  scoresCount: 8.9,
+  director: ` director`,
+  starring: [` starring`, `starring`],
+  runTime: 113,
+  released: 2020,
+  id: 1,
+  isFavorite: false,
+  videoLink: `videoLink`,
+  previewVideoLink: `previewVideoLink`,
 };
 
-const MOCKED_PLAY_PROP = false;
+const mockedPlayProp = false;
 
 it(`Render catalog card`, () => {
   const catalogCardComponent = renderer
     .create(
         <CatalogCard
-          film={MOCKED_FILM}
+          film={mockedFilm}
           onFilmCatalogCardHover={() => {}}
           onFilmClick={() => {}}
           renderVideo={() => {}}
-          isPlaying={MOCKED_PLAY_PROP}
+          isPlaying={mockedPlayProp}
         />, {createNodeMock: () => {
           return {};
         }}

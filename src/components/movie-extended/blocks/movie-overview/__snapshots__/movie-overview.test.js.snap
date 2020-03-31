@@ -18,7 +18,7 @@ exports[`Movie overview render 1`] = `
       <span
         className="movie-card__details-value"
       >
-        director
+        Wes Andreson
       </span>
     </p>
     <p
@@ -32,7 +32,16 @@ exports[`Movie overview render 1`] = `
       <span
         className="movie-card__details-value"
       >
-        starring
+        Bill Murray
+         
+        <br />
+        Edward Norton
+         
+        <br />
+        Jude Law
+         
+        <br />
+        Willem Dafoe
          
         <br />
       </span>
@@ -66,7 +75,7 @@ exports[`Movie overview render 1`] = `
       <span
         className="movie-card__details-value"
       >
-        genre
+        Comedy
       </span>
     </p>
     <p
@@ -80,7 +89,7 @@ exports[`Movie overview render 1`] = `
       <span
         className="movie-card__details-value"
       >
-        releaseDate
+        2020
       </span>
     </p>
   </div>

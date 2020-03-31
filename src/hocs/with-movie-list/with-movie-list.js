@@ -1,6 +1,7 @@
 import React, {PureComponent} from "react";
 import MoviesList from "@components/movies-list/movies-list";
 import PropTypes from "prop-types";
+import {PageTypes} from "@utils/constants";
 
 
 const withMovieList = (Component) => {
@@ -13,6 +14,11 @@ const withMovieList = (Component) => {
       };
 
       this._filmCatalogCardHoverHandler = this._filmCatalogCardHoverHandler.bind(this);
+      this._filmCatalogClickHandler = this._filmCatalogClickHandler.bind(this);
+    }
+
+    componentWillUnmount() {
+      clearTimeout(this._timeout);
     }
 
     _filmCatalogCardHoverHandler(film) {
@@ -33,9 +39,14 @@ const withMovieList = (Component) => {
       });
     }
 
+    _filmCatalogClickHandler(id) {
+      const {onFilmClick} = this.props;
+      onFilmClick(id, PageTypes.MOVIE);
+    }
+
     render() {
       const {activeFilm} = this.state;
-      const {films, onFilmClick} = this.props;
+      const {films} = this.props;
 
       return (
         <Component
@@ -45,7 +56,7 @@ const withMovieList = (Component) => {
               <MoviesList
                 films={sortedFilms}
                 currentShownFilms={currentShownFilms}
-                onFilmClick={onFilmClick}
+                onFilmClick={this._filmCatalogClickHandler}
                 onFilmCatalogCardHover={this._filmCatalogCardHoverHandler}
                 activeFilm={activeFilm}
               />
@@ -57,12 +68,10 @@ const withMovieList = (Component) => {
   }
 
   WithMovieList.propTypes = {
-    films: PropTypes.arrayOf(PropTypes.exact({
-      title: PropTypes.string.isRequired,
-      genre: PropTypes.string.isRequired,
-      poster: PropTypes.string.isRequired,
-      preview: PropTypes.string.isRequired,
-    })).isRequired,
+    films: PropTypes.oneOfType([
+      PropTypes.exact([]),
+      PropTypes.arrayOf(PropTypes.object),
+    ]).isRequired,
     onFilmClick: PropTypes.func.isRequired,
   };
 

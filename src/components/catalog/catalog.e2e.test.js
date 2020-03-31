@@ -7,65 +7,54 @@ Enzyme.configure({
   adapter: new Adapter(),
 });
 
-const MOCK_CATALOG_FILMS_LIST = [
+const mockedCatalogFilmList = [
   {
-    title: `Fantastic Beasts: The Crimes of Grindelwald`,
-    poster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+    name: `name`,
     genre: `Comedy`,
-    preview: `preview`
-  },
-  {
-    title: `Bohemian Rhapsody`,
-    poster: `img/bohemian-rhapsody.jpg`,
-    genre: `Horror`,
-    preview: `preview`
-  },
-  {
-    title: `Macbeth`,
-    poster: `img/macbeth.jpg`,
-    genre: `Drama`,
-    preview: `preview`
-  },
-  {
-    title: `Aviator`,
-    poster: `img/aviator.jpg`,
+    posterImage: `posterImage`,
+    previewImage: `previewImage`,
+    backgroundImage: `backgroundImage`,
+    backgroundColor: `backgroundColor`,
+    description: `description`,
+    rating: 124,
+    scoresCount: 8.9,
+    director: `director`,
+    starring: [`starring`, `starring`],
+    runTime: 113,
+    released: 2020,
+    id: 1,
+    isFavorite: false,
+    videoLink: `videoLink`,
+    previewVideoLink: `previewVideoLink`,
+  }, {
+    name: `name 2`,
     genre: `Comedy`,
-    preview: `preview`
+    posterImage: `posterImage 2`,
+    previewImage: `previewImage 2`,
+    backgroundImage: `backgroundImage 2`,
+    backgroundColor: `backgroundColor 2`,
+    description: `description 2`,
+    rating: 124,
+    scoresCount: 8.9,
+    director: `director 2`,
+    starring: [`starring 2`, `starring 2`],
+    runTime: 113,
+    released: 2020,
+    id: 2,
+    isFavorite: false,
+    videoLink: `videoLink 2`,
+    previewVideoLink: `previewVideoLink 2`,
   },
-  {
-    title: `We need to talk about Kevin`,
-    poster: `img/we-need-to-talk-about-kevin.jpg`,
-    genre: `Science`,
-    preview: `preview`
-  },
-  {
-    title: `What We Do in the Shadows`,
-    poster: `img/what-we-do-in-the-shadows.jpg`,
-    genre: `Detective`,
-    preview: `preview`
-  },
-  {
-    title: `Revenant`,
-    poster: `img/revenant.jpg`,
-    genre: `Thriller`,
-    preview: `preview`
-  },
-  {
-    title: `Johnny English`,
-    poster: `img/johnny-english.jpg`,
-    genre: `Historical`,
-    preview: `preview`
-  }
 ];
 
-const DEFAULT_ACTIVE_GENRE = {
+const defaultActiveGenre = {
   single: `All genres`,
   multiply: `All genres`
 };
 
-const CURRENT_SHOWN_FILMS = 8;
+const currentShownFilms = 8;
 
-const ACTIVE_GENRE = {
+const activeGenre = {
   multiply: `Comedies`,
   single: `Comedy`,
 };
@@ -78,13 +67,13 @@ it(`Genre tab call callback`, () => {
 
   const catalogComponent = mount(
       <Catalog
-        films={MOCK_CATALOG_FILMS_LIST}
+        films={mockedCatalogFilmList}
         renderMovieList={renderMovieList}
         onGenreTabClick={onGenreTabClick}
         onShowMoreButtonClick={showMoreButtonClickHandler}
-        activeGenre={DEFAULT_ACTIVE_GENRE}
+        activeGenre={defaultActiveGenre}
         resetShownFilms={resetShownFilms}
-        currentShownFilms={CURRENT_SHOWN_FILMS}
+        currentShownFilms={currentShownFilms}
       />
   );
 
@@ -92,7 +81,7 @@ it(`Genre tab call callback`, () => {
   genreTab.simulate(`click`);
 
   expect(onGenreTabClick).toHaveBeenCalledTimes(1);
-  expect(onGenreTabClick).toBeCalledWith(ACTIVE_GENRE);
+  expect(onGenreTabClick).toBeCalledWith(activeGenre);
 
   expect(resetShownFilms).toHaveBeenCalledTimes(1);
   expect(resetShownFilms).toBeCalledWith();

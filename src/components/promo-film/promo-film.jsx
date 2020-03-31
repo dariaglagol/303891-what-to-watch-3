@@ -4,7 +4,7 @@ import Header from "@components/header/header";
 import {PageTypes} from "@utils/constants";
 
 const PromoFilm = (props) => {
-  const {promoMovieCover: {title, genre, releaseDate}, onFilmClick, onPlayButtonClick} = props;
+  const {promoMovie: {name, genre, released, posterImage, backgroundImage}, onFilmClick, onPlayButtonClick} = props;
 
   function _onFilmClickHandler() {
     onFilmClick(PageTypes.MOVIE);
@@ -17,7 +17,7 @@ const PromoFilm = (props) => {
   return (
     <section className="movie-card">
       <div className="movie-card__bg">
-        <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
+        <img src={backgroundImage} alt={name}/>
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -31,7 +31,7 @@ const PromoFilm = (props) => {
             onClick={_onFilmClickHandler}
           >
             <img
-              src="img/the-grand-budapest-hotel-poster.jpg"
+              src={posterImage}
               alt="The Grand Budapest Hotel poster"
               width="218"
               height="327"
@@ -43,11 +43,11 @@ const PromoFilm = (props) => {
               className="movie-card__title"
               onClick={_onFilmClickHandler}
             >
-              {title}
+              {name}
             </h2>
             <p className="movie-card__meta">
               <span className="movie-card__genre">{genre}</span>
-              <span className="movie-card__year">{releaseDate}</span>
+              <span className="movie-card__year">{released}</span>
             </p>
 
             <div className="movie-card__buttons">
@@ -76,11 +76,17 @@ const PromoFilm = (props) => {
 };
 
 PromoFilm.propTypes = {
-  promoMovieCover: PropTypes.shape({
-    genre: PropTypes.string.isRequired,
-    releaseDate: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired
-  }),
+  promoMovie: PropTypes.oneOfType([
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      genre: PropTypes.string.isRequired,
+      released: PropTypes.number.isRequired,
+      posterImage: PropTypes.string.isRequired,
+      promoCover: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
+    }),
+    PropTypes.shape({}).isRequired
+  ]),
   onFilmClick: PropTypes.func.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,
 };

@@ -17,7 +17,7 @@ exports[`Render catalog card 1`] = `
       className="small-movie-card__link"
       href="movie-page.html"
     >
-      Fantastic Beasts: The Crimes of Grindelwald
+      name
     </a>
   </h3>
 </article>

@@ -7,11 +7,11 @@ const MovieOverview = (props) => {
     starring,
     runTime,
     genre,
-    releaseDate
+    released
   } = props;
 
   function _renderStarringList() {
-    return starring.split(`,`).map((starringItem) => {
+    return starring.map((starringItem) => {
       return (
         <React.Fragment key={starringItem}>
           {starringItem} <br />
@@ -46,19 +46,27 @@ const MovieOverview = (props) => {
         </p>
         <p className="movie-card__details-item">
           <strong className="movie-card__details-name">Released</strong>
-          <span className="movie-card__details-value">{releaseDate}</span>
+          <span className="movie-card__details-value">{released}</span>
         </p>
       </div>
     </div>
   );
 };
 
+MovieOverview.defaultProps = {
+  director: ``,
+  starring: [],
+  runTime: 0,
+  genre: ``,
+  released: 0,
+};
+
 MovieOverview.propTypes = {
   director: PropTypes.string.isRequired,
-  starring: PropTypes.string.isRequired,
+  starring: PropTypes.array.isRequired,
   runTime: PropTypes.number.isRequired,
   genre: PropTypes.string.isRequired,
-  releaseDate: PropTypes.string.isRequired,
+  released: PropTypes.number.isRequired,
 };
 
 export default MovieOverview;

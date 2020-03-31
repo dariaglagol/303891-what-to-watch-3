@@ -25,14 +25,15 @@ const MovieExtended = (props) => {
   } = props;
 
   const {
-    title,
+    name,
     genre,
-    releaseDate,
-    poster,
+    released,
+    posterImage,
+    backgroundImage,
     director,
     starring,
     runTime,
-    score,
+    scoresCount,
     rating,
     description
   } = movieDetails;
@@ -46,12 +47,12 @@ const MovieExtended = (props) => {
           director={director}
           starring={starring}
           runTime={runTime}
-          releaseDate={releaseDate}
+          released={released}
           genre={genre}
         />;
       case TabTypes.DETAILS:
         return <MovieDetails
-          score={score}
+          scoresCount={scoresCount}
           rating={rating}
           description={description}
           director={director}
@@ -75,7 +76,7 @@ const MovieExtended = (props) => {
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
-            <img src={poster} alt="The Grand Budapest Hotel"/>
+            <img src={backgroundImage} alt={name}/>
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -84,10 +85,10 @@ const MovieExtended = (props) => {
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{title}</h2>
+              <h2 className="movie-card__title">{name}</h2>
               <p className="movie-card__meta">
                 <span className="movie-card__genre">{genre}</span>
-                <span className="movie-card__year">{releaseDate}</span>
+                <span className="movie-card__year">{released}</span>
               </p>
 
               <div className="movie-card__buttons">
@@ -117,8 +118,8 @@ const MovieExtended = (props) => {
           <div className="movie-card__info">
             <div className="movie-card__poster movie-card__poster--big">
               <img
-                src={poster}
-                alt={title}
+                src={posterImage}
+                alt={name}
                 width="218"
                 height="327"
               />
@@ -155,25 +156,50 @@ const MovieExtended = (props) => {
 };
 
 MovieExtended.propTypes = {
-  movieDetails: PropTypes.exact({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    releaseDate: PropTypes.string.isRequired,
-    poster: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    starring: PropTypes.string.isRequired,
-    score: PropTypes.number.isRequired,
-    rating: PropTypes.number.isRequired,
-    runTime: PropTypes.number.isRequired,
-    preview: PropTypes.string.isRequired,
-  }),
-  films: PropTypes.arrayOf(PropTypes.exact({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    poster: PropTypes.string.isRequired,
-    preview: PropTypes.string.isRequired,
-  })).isRequired,
+  movieDetails: PropTypes.oneOfType([
+    PropTypes.exact({
+      name: PropTypes.string.isRequired,
+      posterImage: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
+      backgroundColor: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      scoresCount: PropTypes.number.isRequired,
+      director: PropTypes.string.isRequired,
+      starring: PropTypes.array.isRequired,
+      runTime: PropTypes.number.isRequired,
+      genre: PropTypes.string.isRequired,
+      released: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+      videoLink: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
+    }),
+    PropTypes.exact({}).isRequired,
+  ]),
+  films: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.exact({
+      name: PropTypes.string.isRequired,
+      posterImage: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
+      backgroundColor: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      scoresCount: PropTypes.number.isRequired,
+      director: PropTypes.string.isRequired,
+      starring: PropTypes.array.isRequired,
+      runTime: PropTypes.number.isRequired,
+      genre: PropTypes.string.isRequired,
+      released: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+      videoLink: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
+    })).isRequired,
+    PropTypes.shape([]).isRequired,
+  ]).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.exact({
     text: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,

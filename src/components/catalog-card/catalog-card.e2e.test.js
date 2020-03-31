@@ -7,16 +7,29 @@ Enzyme.configure({
   adapter: new Adapter(),
 });
 
-const MockedFilm = {
-  title: `title`,
-  poster: `url`,
+const mockedFilm = {
+  name: `name`,
   genre: `genre`,
-  preview: `preview`,
+  posterImage: `posterImage`,
+  previewImage: `previewImage`,
+  backgroundImage: `backgroundImage`,
+  backgroundColor: `backgroundColor`,
+  description: `description`,
+  rating: 124,
+  scoresCount: 8.9,
+  director: ` director`,
+  starring: [` starring`, `starring`],
+  runTime: 113,
+  released: 2020,
+  id: 1,
+  isFavorite: false,
+  videoLink: `videoLink`,
+  previewVideoLink: `previewVideoLink`,
 };
 
-const MOCKED_PLAY_PROP = false;
+const mockedPlayProp = false;
 
-const PAGE_TYPE = `movie`;
+const filmId = 1;
 
 const mockHoverEvent = {};
 
@@ -27,18 +40,18 @@ it(`Hover on film card, film's info should pass to callback`, () => {
 
   const filmCard = shallow(
       <CatalogCard
-        film={MockedFilm}
+        film={mockedFilm}
         onFilmCatalogCardHover={filmCatalogCardHoverHandler}
         onFilmClick={onFilmClick}
         renderVideo={renderVideo}
-        isPlaying={MOCKED_PLAY_PROP}
+        isPlaying={mockedPlayProp}
       />
   );
 
   filmCard.simulate(`mouseEnter`, mockHoverEvent);
 
   expect(filmCatalogCardHoverHandler).toHaveBeenCalledTimes(1);
-  expect(filmCatalogCardHoverHandler).toBeCalledWith(MockedFilm);
+  expect(filmCatalogCardHoverHandler).toBeCalledWith(mockedFilm);
 });
 
 it(`Stop hover on film card, film's info should pass to callback`, () => {
@@ -48,11 +61,11 @@ it(`Stop hover on film card, film's info should pass to callback`, () => {
 
   const filmCard = shallow(
       <CatalogCard
-        film={MockedFilm}
+        film={mockedFilm}
         onFilmCatalogCardHover={filmCatalogCardHoverHandler}
         onFilmClick={onFilmClick}
         renderVideo={renderVideo}
-        isPlaying={MOCKED_PLAY_PROP}
+        isPlaying={mockedPlayProp}
       />
   );
 
@@ -69,16 +82,16 @@ it(`Click on film card to change page`, () => {
 
   const filmCard = shallow(
       <CatalogCard
-        film={MockedFilm}
+        film={mockedFilm}
         onFilmCatalogCardHover={onFilmHover}
         onFilmClick={onFilmClick}
         renderVideo={renderVideo}
-        isPlaying={MOCKED_PLAY_PROP}
+        isPlaying={mockedPlayProp}
       />
   );
 
   filmCard.simulate(`click`);
 
   expect(onFilmClick.mock.calls.length).toBe(1);
-  expect(onFilmClick).toBeCalledWith(PAGE_TYPE);
+  expect(onFilmClick).toBeCalledWith(filmId);
 });

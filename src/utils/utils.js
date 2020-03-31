@@ -1,3 +1,4 @@
+import {camelCase, mapKeys} from "lodash";
 import {MovieMarksTypes, SIMILAR_FILM_COUNT} from './constants';
 
 const getMovieMark = (score) => {
@@ -26,4 +27,16 @@ const extend = (a, b) => {
   return Object.assign({}, a, b);
 };
 
-export {getMovieMark, getSimilarMovies, extend, sliceMovieArray};
+const filmAdapter = (film) => {
+  return mapKeys(film, (value, key) => {
+    return camelCase(key);
+  });
+};
+
+const filmsAdapter = (films) => {
+  return films.map((film) => {
+    return filmAdapter(film);
+  });
+};
+
+export {getMovieMark, getSimilarMovies, extend, sliceMovieArray, filmAdapter, filmsAdapter};

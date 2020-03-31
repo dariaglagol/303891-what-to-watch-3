@@ -9,7 +9,7 @@ import {FULLSCREEN_VIDEO_CLASS} from "@utils/constants";
 const WrappedFullScreenVideo = withVideoPlayer(FullscreenPlayer);
 
 const Main = (props) => {
-  const {promoMovieCover, onFilmClick, renderCatalog, isFullscreenPlayerActive, onFullScreenToggle} = props;
+  const {promoMovie, onFilmClick, renderCatalog, isFullscreenPlayerActive, onFullScreenToggle} = props;
 
   function _getPlayEvent() {
     onFullScreenToggle(!isFullscreenPlayerActive);
@@ -18,7 +18,7 @@ const Main = (props) => {
   return (
     <React.Fragment>
       <PromoFilm
-        promoMovieCover={promoMovieCover}
+        promoMovie={promoMovie}
         onFilmClick={onFilmClick}
         onPlayButtonClick={_getPlayEvent}
       />
@@ -29,7 +29,7 @@ const Main = (props) => {
       {isFullscreenPlayerActive &&
         <WrappedFullScreenVideo
           isPlaying={true}
-          film={promoMovieCover}
+          film={promoMovie}
           className={FULLSCREEN_VIDEO_CLASS}
           isFullscreenPlayerActive={isFullscreenPlayerActive}
           onExitClick={_getPlayEvent}
@@ -40,17 +40,50 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  promoMovieCover: PropTypes.shape({
-    genre: PropTypes.string.isRequired,
-    releaseDate: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-  }),
-  films: PropTypes.arrayOf(PropTypes.exact({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    poster: PropTypes.string.isRequired,
-    preview: PropTypes.string.isRequired,
-  })).isRequired,
+  promoMovie: PropTypes.oneOfType([
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      posterImage: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
+      backgroundColor: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      scoresCount: PropTypes.number.isRequired,
+      director: PropTypes.string.isRequired,
+      starring: PropTypes.array.isRequired,
+      runTime: PropTypes.number.isRequired,
+      genre: PropTypes.string.isRequired,
+      released: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+      videoLink: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
+    }),
+    PropTypes.shape({}).isRequired
+  ]).isRequired,
+  films: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      posterImage: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
+      backgroundColor: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      scoresCount: PropTypes.number.isRequired,
+      director: PropTypes.string.isRequired,
+      starring: PropTypes.array.isRequired,
+      runTime: PropTypes.number.isRequired,
+      genre: PropTypes.string.isRequired,
+      released: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+      videoLink: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
+    })),
+    PropTypes.shape([]).isRequired,
+  ]).isRequired,
   onFilmClick: PropTypes.func.isRequired,
   activeGenre: PropTypes.exact({
     multiply: PropTypes.string.isRequired,

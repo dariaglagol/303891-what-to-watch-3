@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import {getMovieMark} from "@utils/utils";
 
 const MovieDetails = (props) => {
-  const {score, rating, description, director, starring} = props;
-  const movieMark = getMovieMark(score);
+  const {scoresCount, rating, description, director, starring} = props;
+  const movieMark = getMovieMark(scoresCount);
   return (
     <React.Fragment>
       <div className="movie-rating">
-        <div className="movie-rating__score">{score}</div>
+        <div className="movie-rating__score">{scoresCount}</div>
         <p className="movie-rating__meta">
           <span className="movie-rating__level">{movieMark}</span>
           <span className="movie-rating__count">{rating} ratings</span>
@@ -20,7 +20,7 @@ const MovieDetails = (props) => {
 
         <p className="movie-card__director"><strong>Director: {director}</strong></p>
 
-        <p className="movie-card__starring"><strong>Starring: {starring}</strong></p>
+        <p className="movie-card__starring"><strong>Starring: {starring.join(`, `)}</strong></p>
       </div>
     </React.Fragment>
   );
@@ -29,8 +29,8 @@ const MovieDetails = (props) => {
 MovieDetails.propTypes = {
   description: PropTypes.string.isRequired,
   director: PropTypes.string.isRequired,
-  starring: PropTypes.string.isRequired,
-  score: PropTypes.number.isRequired,
+  starring: PropTypes.array.isRequired,
+  scoresCount: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
 };
 

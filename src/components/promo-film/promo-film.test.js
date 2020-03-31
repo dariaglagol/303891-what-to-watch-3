@@ -2,19 +2,31 @@ import React from "react";
 import renderer from "react-test-renderer";
 import PromoFilm from "./promo-film";
 
-const MockFilmData = {
-  title: `The Grand Budapest Hotel`,
-  genre: `Comedy`,
-  releaseDate: `2020`,
-  poster: `img/bohemian-rhapsody.jpg`,
-  preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`
+const mockFilmData = {
+  name: `name`,
+  genre: `genre`,
+  posterImage: `posterImage`,
+  previewImage: `previewImage`,
+  backgroundImage: `backgroundImage`,
+  backgroundColor: `backgroundColor`,
+  description: `description`,
+  rating: 124,
+  scoresCount: 8.9,
+  director: `director`,
+  starring: [`starring`, `starring`],
+  runTime: 113,
+  released: 2020,
+  id: 1,
+  isFavorite: false,
+  videoLink: `videoLink`,
+  previewVideoLink: `previewVideoLink`,
 };
 
 it(`Movie card render`, () => {
   const movieCardComponent = renderer
     .create(
         <PromoFilm
-          promoMovieCover={MockFilmData}
+          promoMovie={mockFilmData}
           onFilmClick={() => {}}
           onPlayButtonClick={() => {}}
         />

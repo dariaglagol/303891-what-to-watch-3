@@ -32,7 +32,8 @@ const DEFAULT_ACTIVE_GENRE = {
 
 const PageTypes = {
   MAIN: `main`,
-  MOVIE: `movie`
+  MOVIE: `movie`,
+  LOADING: `loading`
 };
 
 const SIMILAR_FILM_COUNT = 4;
@@ -47,6 +48,18 @@ const DEFAULT_SHOWN_FILMS = 8;
 
 const FULLSCREEN_VIDEO_CLASS = `player__video`;
 
+const Error = {
+  UNAUTHORIZED: 401,
+  SERVER_PROBLEMS: 500,
+};
+
+const TIMEOUT = 5000;
+
+const AuthorizationStatus = {
+  NO_AUTH: `NO_AUTH`,
+  AUTH: `AUTH`
+};
+
 export {
   MovieMarksTypes,
   FILM_REVIEWS_COLUMN_COUNT,
@@ -58,5 +71,8 @@ export {
   DEFAULT_ACTIVE_GENRE,
   DEFAULT_ACTIVE_TAB,
   DEFAULT_SHOWN_FILMS,
-  FULLSCREEN_VIDEO_CLASS
+  FULLSCREEN_VIDEO_CLASS,
+  Error,
+  TIMEOUT,
+  AuthorizationStatus
 };

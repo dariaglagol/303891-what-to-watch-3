@@ -1,11 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {PageTypes} from "@utils/constants";
 
 const CatalogCard = (props) => {
   const {film, onFilmCatalogCardHover, onFilmClick, renderVideo} = props;
 
-  const {title} = film;
+  const {name, id} = film;
 
   function _onFilmHover() {
     onFilmCatalogCardHover(film);
@@ -16,7 +15,7 @@ const CatalogCard = (props) => {
   }
 
   function _onFilmClick() {
-    onFilmClick(PageTypes.MOVIE);
+    onFilmClick(id);
   }
 
   return (
@@ -30,7 +29,7 @@ const CatalogCard = (props) => {
         {renderVideo()}
       </div>
       <h3 className="small-movie-card__title">
-        <a className="small-movie-card__link" href="movie-page.html">{title}</a>
+        <a className="small-movie-card__link" href="movie-page.html">{name}</a>
       </h3>
     </article>
   );
@@ -38,11 +37,24 @@ const CatalogCard = (props) => {
 
 CatalogCard.propTypes = {
   film: PropTypes.exact({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    posterImage: PropTypes.string.isRequired,
+    previewImage: PropTypes.string.isRequired,
+    backgroundImage: PropTypes.string.isRequired,
+    backgroundColor: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    rating: PropTypes.number.isRequired,
+    scoresCount: PropTypes.number.isRequired,
+    director: PropTypes.string.isRequired,
+    starring: PropTypes.array.isRequired,
+    runTime: PropTypes.number.isRequired,
     genre: PropTypes.string.isRequired,
-    poster: PropTypes.string.isRequired,
-    preview: PropTypes.string.isRequired,
-  }).isRequired,
+    released: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
+    videoLink: PropTypes.string.isRequired,
+    previewVideoLink: PropTypes.string.isRequired,
+  }),
   onFilmCatalogCardHover: PropTypes.func.isRequired,
   onFilmClick: PropTypes.func.isRequired,
   renderVideo: PropTypes.func.isRequired,

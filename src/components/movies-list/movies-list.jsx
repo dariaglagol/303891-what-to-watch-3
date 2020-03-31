@@ -8,11 +8,22 @@ const WrappedMovieCard = withVideoPlayer(CatalogCard);
 
 const MoviesList = (props) => {
   function _isFilmActive(activeFilm, film) {
-    return activeFilm && activeFilm.title === film.title || false;
+    return activeFilm && activeFilm.id === film.id || false;
   }
 
   function _renderFilmCatalogCards() {
-    const {films, onFilmClick, onFilmCatalogCardHover, activeFilm, currentShownFilms} = props;
+    const {
+      films,
+      onFilmClick,
+      onFilmCatalogCardHover,
+      activeFilm,
+      currentShownFilms
+    } = props;
+
+    if (!films) {
+      return null;
+    }
+
     const filmsToShow = sliceMovieArray(films, currentShownFilms);
 
     return (
@@ -38,22 +49,51 @@ const MoviesList = (props) => {
 export default MoviesList;
 
 MoviesList.propTypes = {
-  films: PropTypes.arrayOf(PropTypes.exact({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    poster: PropTypes.string.isRequired,
-    preview: PropTypes.string.isRequired,
-  })).isRequired,
+  films: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.exact({
+      name: PropTypes.string.isRequired,
+      posterImage: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
+      backgroundColor: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      scoresCount: PropTypes.number.isRequired,
+      director: PropTypes.string.isRequired,
+      starring: PropTypes.array.isRequired,
+      runTime: PropTypes.number.isRequired,
+      genre: PropTypes.string.isRequired,
+      released: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+      videoLink: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
+    })),
+    PropTypes.shape([]).isRequired,
+  ]).isRequired,
   onFilmClick: PropTypes.func.isRequired,
   onFilmCatalogCardHover: PropTypes.func.isRequired,
   activeFilm: PropTypes.oneOfType([
     PropTypes.exact({
-      title: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      posterImage: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
+      backgroundColor: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      scoresCount: PropTypes.number.isRequired,
+      director: PropTypes.string.isRequired,
+      starring: PropTypes.array.isRequired,
+      runTime: PropTypes.number.isRequired,
       genre: PropTypes.string.isRequired,
-      poster: PropTypes.string.isRequired,
-      preview: PropTypes.string.isRequired,
-    }).isRequired,
-    PropTypes.oneOf([null]).isRequired,
+      released: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+      videoLink: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
+    }),
+    PropTypes.shape({}).isRequired,
   ]),
   currentShownFilms: PropTypes.number.isRequired,
 };

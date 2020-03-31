@@ -2,22 +2,37 @@ import React from "react";
 import PropTypes from "prop-types";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import {connect} from "react-redux";
+
 import Main from "@components/main/main";
 import MovieExtended from "@components/movie-extended/movie-extended";
 import withTabs from "@hocs/with-tabs/with-tabs";
 import withCatalog from "@hocs/with-catalog/with-catalog";
 import withMovieList from "@hocs/with-movie-list/with-movie-list";
+
 import {PageTypes} from "@utils/constants";
-import {ActionCreator} from "../../reducer";
+
+import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
+import {getActivePage, getFullScreenPlayerState} from "@reducers/common/selectors";
+
+import {Operation as UserOperation} from "@reducers/user/user";
+
+import {ActionCreator as DataActionCreator} from "@reducers/data/data";
+import {
+  getActiveGenre,
+  getFilmsSelector,
+  getReviews,
+  getMovieCover,
+  getActiveFilmId
+} from "@reducers/data/selectors.js";
+import Loading from "@components/loading/loading";
 
 const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
 const MainComponentWrapped = withMovieList(withCatalog(Main));
 
 const App = (props) => {
   const {
-    promoMovieCover,
+    promoMovie,
     films,
-    movieDetails,
     reviews,
     activeGenre,
     onGenreTabClick,
@@ -25,14 +40,17 @@ const App = (props) => {
     onPageChange,
     isFullscreenPlayerActive,
     onFullScreenToggle,
+    activeFilmId
   } = props;
+
+  const movieDetails = films.find((film) => film.id === activeFilmId) || {};
 
   function _renderPages() {
     switch (activePage) {
       case PageTypes.MAIN:
         return (
           <MainComponentWrapped
-            promoMovieCover={promoMovieCover}
+            promoMovie={promoMovie}
             onFilmClick={onPageChange}
             activeGenre={activeGenre}
             onGenreTabClick={onGenreTabClick}
@@ -44,7 +62,6 @@ const App = (props) => {
       case PageTypes.MOVIE:
         return (
           <MovieExtendedComponentWrapped
-            promoMovieCover={promoMovieCover}
             onFilmClick={onPageChange}
             films={films}
             movieDetails={movieDetails}
@@ -52,6 +69,10 @@ const App = (props) => {
             onFullScreenToggle={onFullScreenToggle}
             reviews={reviews}
           />
+        );
+      case PageTypes.LOADING:
+        return (
+          <Loading />
         );
     }
 
@@ -66,7 +87,6 @@ const App = (props) => {
         </Route>
         <Route exact path="/dev-movie-details">
           <MovieExtendedComponentWrapped
-            promoMovieCover={promoMovieCover}
             onFilmClick={onPageChange}
             films={films}
             movieDetails={movieDetails}
@@ -80,57 +100,85 @@ const App = (props) => {
   );
 };
 
+App.defaultProps = {
+  films: null,
+  promoMovie: null,
+  reviews: null,
+  movieDetails: null,
+};
+
 const mapStateToProps = (state) => ({
-  films: state.films,
-  activeGenre: state.activeGenre,
-  promoMovieCover: state.promoMovieCover,
-  movieDetails: state.movieDetails,
-  reviews: state.reviews,
-  activePage: state.activePage,
-  isFullscreenPlayerActive: state.isFullscreenPlayerActive,
+  films: getFilmsSelector(state),
+  filteredFilms: getFilmsSelector(state),
+  activeGenre: getActiveGenre(state),
+  promoMovie: getMovieCover(state),
+  reviews: getReviews(state),
+  activePage: getActivePage(state),
+  activeFilmId: getActiveFilmId(state),
+  isFullscreenPlayerActive: getFullScreenPlayerState(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onGenreTabClick(activeGenre) {
-    dispatch(ActionCreator.changeGenre(activeGenre));
-    dispatch(ActionCreator.getMoviesByGenre(activeGenre));
+    dispatch(DataActionCreator.changeGenre(activeGenre));
   },
-  onPageChange(activePage) {
-    dispatch(ActionCreator.getActivePage(activePage));
+  onPageChange(id, activePage) {
+    dispatch(DataActionCreator.getActiveFilmId(id));
+    dispatch(CommonActionCreator.setActivePage(activePage));
   },
   onFullScreenToggle(state) {
-    dispatch(ActionCreator.toggleFullscreenPlayer(state));
-  }
+    dispatch(CommonActionCreator.toggleFullscreenPlayer(state));
+  },
+  login(authData) {
+    dispatch(UserOperation.login(authData));
+  },
 });
 
-export {App};
-export default connect(mapStateToProps, mapDispatchToProps)(App);
-
 App.propTypes = {
-  promoMovieCover: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    releaseDate: PropTypes.string.isRequired
-  }),
-  films: PropTypes.arrayOf(PropTypes.exact({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    poster: PropTypes.string.isRequired,
-    preview: PropTypes.string.isRequired,
-  })).isRequired,
-  movieDetails: PropTypes.exact({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    releaseDate: PropTypes.string.isRequired,
-    poster: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    starring: PropTypes.string.isRequired,
-    score: PropTypes.number.isRequired,
-    rating: PropTypes.number.isRequired,
-    runTime: PropTypes.number.isRequired,
-    preview: PropTypes.string.isRequired,
-  }),
+  promoMovie: PropTypes.oneOfType([
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      posterImage: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
+      backgroundColor: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      scoresCount: PropTypes.number.isRequired,
+      director: PropTypes.string.isRequired,
+      starring: PropTypes.array.isRequired,
+      runTime: PropTypes.number.isRequired,
+      genre: PropTypes.string.isRequired,
+      released: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+      videoLink: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
+    }),
+    PropTypes.exact({}).isRequired
+  ]).isRequired,
+  films: PropTypes.oneOfType([
+    PropTypes.exact([]).isRequired,
+    PropTypes.arrayOf(PropTypes.exact({
+      name: PropTypes.string.isRequired,
+      posterImage: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
+      backgroundColor: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      scoresCount: PropTypes.number.isRequired,
+      director: PropTypes.string.isRequired,
+      starring: PropTypes.array.isRequired,
+      runTime: PropTypes.number.isRequired,
+      genre: PropTypes.string.isRequired,
+      released: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+      videoLink: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
+    })).isRequired,
+  ]).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.exact({
     text: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
@@ -146,4 +194,10 @@ App.propTypes = {
   activePage: PropTypes.string.isRequired,
   isFullscreenPlayerActive: PropTypes.bool.isRequired,
   onFullScreenToggle: PropTypes.func.isRequired,
+  activeFilmId: PropTypes.number.isRequired,
 };
+
+export {App};
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+
