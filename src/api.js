@@ -1,7 +1,7 @@
 import axios from "axios";
 import {Error, TIMEOUT} from "@utils/constants";
 
-export const createAPI = (onUnauthorized) => {
+export const createAPI = (onUnauthorized, onError) => {
   const api = axios.create({
     baseURL: `https://htmlacademy-react-3.appspot.com/wtw`,
     timeout: TIMEOUT,
@@ -13,17 +13,20 @@ export const createAPI = (onUnauthorized) => {
   };
 
   const onFail = (err) => {
-    const {response} = err;
+    try {
+      const {response} = err;
 
-    switch (response.status) {
-      case Error.UNAUTHORIZED:
-        onUnauthorized();
-        throw err;
-      case Error.SERVER_PROBLEMS:
-        throw new Error(`${response.status}: ${response.statusText}`);
+      switch (response.status) {
+        case Error.UNAUTHORIZED:
+          onUnauthorized();
+          break;
+        case response.status >= Error.SERVER_PROBLEMS:
+          onError(response);
+          break;
+      }
+    } catch (exception) {
+      throw err;
     }
-
-    throw err;
   };
 
   api.interceptors.response.use(onSuccess, onFail);

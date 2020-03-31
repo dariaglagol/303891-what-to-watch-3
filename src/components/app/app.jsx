@@ -18,6 +18,15 @@ import {Operation as UserOperation} from "@reducers/user/user";
 import {getAuthStatus} from "@reducers/user/selectors";
 
 import {ActionCreator as DataActionCreator} from "@reducers/data/data";
+import {
+  getActiveGenre,
+  getFilmsSelector,
+  getReviews,
+  getMovieCover,
+  getActiveFilmId,
+  getFilteredFilms
+} from "@reducers/data/selectors.js";
+import Loading from "@components/loading/loading";
 import {getActiveGenre, getFilteredFilms, getReviews, getMovieDetails, getMovieCover} from "@reducers/data/selectors.js";
 import SignIn from "@components/sign-in/sign-in";
 
@@ -28,7 +37,6 @@ const App = (props) => {
   const {
     promoMovie,
     films,
-    movieDetails,
     reviews,
     activeGenre,
     onGenreTabClick,
@@ -36,9 +44,12 @@ const App = (props) => {
     onPageChange,
     isFullscreenPlayerActive,
     onFullScreenToggle,
+    activeFilmId
     authStatus,
     login
   } = props;
+
+  const movieDetails = films.find((film) => film.id === activeFilmId) || {};
 
   function _renderPages() {
     switch (activePage) {
@@ -68,6 +79,10 @@ const App = (props) => {
             onFullScreenToggle={onFullScreenToggle}
             reviews={reviews}
           />
+        );
+      case PageTypes.LOADING:
+        return (
+          <Loading />
         );
       case PageTypes.AUTH:
         return (
@@ -103,14 +118,21 @@ const App = (props) => {
   );
 };
 
+App.defaultProps = {
+  films: null,
+  promoMovie: null,
+  reviews: null,
+  movieDetails: null,
+};
+
 const mapStateToProps = (state) => ({
-  films: getFilteredFilms(state),
-  filteredFilms: getFilteredFilms(state),
+  films: getFilmsSelector(state),
+  filteredFilms: getFilmsSelector(state),
   activeGenre: getActiveGenre(state),
   promoMovie: getMovieCover(state),
-  movieDetails: getMovieDetails(state),
   reviews: getReviews(state),
   activePage: getActivePage(state),
+  activeFilmId: getActiveFilmId(state),
   isFullscreenPlayerActive: getFullScreenPlayerState(state),
   authStatus: getAuthStatus(state),
 });
@@ -119,8 +141,9 @@ const mapDispatchToProps = (dispatch) => ({
   onGenreTabClick(activeGenre) {
     dispatch(DataActionCreator.changeGenre(activeGenre));
   },
-  onPageChange(activePage) {
-    dispatch(CommonActionCreator.getActivePage(activePage));
+  onPageChange(id, activePage) {
+    dispatch(DataActionCreator.getActiveFilmId(id));
+    dispatch(CommonActionCreator.setActivePage(activePage));
   },
   onFullScreenToggle(state) {
     dispatch(CommonActionCreator.toggleFullscreenPlayer(state));
@@ -151,9 +174,10 @@ App.propTypes = {
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
     }),
-    PropTypes.shape({})
-  ]),
+    PropTypes.exact({}).isRequired
+  ]).isRequired,
   films: PropTypes.oneOfType([
+    PropTypes.exact([]).isRequired,
     PropTypes.arrayOf(PropTypes.exact({
       name: PropTypes.string.isRequired,
       posterImage: PropTypes.string.isRequired,
@@ -172,28 +196,8 @@ App.propTypes = {
       isFavorite: PropTypes.bool.isRequired,
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
-    })),
-    PropTypes.array,
+    })).isRequired,
   ]).isRequired,
-  movieDetails: PropTypes.exact({
-    name: PropTypes.string.isRequired,
-    posterImage: PropTypes.string.isRequired,
-    previewImage: PropTypes.string.isRequired,
-    backgroundImage: PropTypes.string.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
-    scoresCount: PropTypes.number.isRequired,
-    director: PropTypes.string.isRequired,
-    starring: PropTypes.array.isRequired,
-    runTime: PropTypes.number.isRequired,
-    genre: PropTypes.string.isRequired,
-    released: PropTypes.number.isRequired,
-    id: PropTypes.number.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-    videoLink: PropTypes.string.isRequired,
-    previewVideoLink: PropTypes.string.isRequired,
-  }),
   reviews: PropTypes.arrayOf(PropTypes.exact({
     text: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
@@ -209,6 +213,7 @@ App.propTypes = {
   activePage: PropTypes.string.isRequired,
   isFullscreenPlayerActive: PropTypes.bool.isRequired,
   onFullScreenToggle: PropTypes.func.isRequired,
+  activeFilmId: PropTypes.number.isRequired,
   authStatus: PropTypes.string.isRequired
 };
 

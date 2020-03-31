@@ -12,8 +12,8 @@ Array [
         className="movie-card__bg"
       >
         <img
-          alt="The Grand Budapest Hotel"
-          src="img/bg-the-grand-budapest-hotel.jpg"
+          alt="givenPromoMovie name"
+          src="givenPromoMovie backgroundImage"
         />
       </div>
       <h1
@@ -71,7 +71,7 @@ Array [
           <h2
             className="movie-card__title"
           >
-            The Grand Budapest Hotel
+            givenPromoMovie name
           </h2>
           <p
             className="movie-card__meta"
@@ -79,7 +79,7 @@ Array [
             <span
               className="movie-card__genre"
             >
-              Comedy
+              givenPromoMovie genre
             </span>
             <span
               className="movie-card__year"
@@ -145,9 +145,9 @@ Array [
           className="movie-card__poster movie-card__poster--big"
         >
           <img
-            alt="The Grand Budapest Hotel"
+            alt="givenPromoMovie name"
             height="327"
-            src="img/bg-the-grand-budapest-hotel.jpg"
+            src="givenPromoMovie posterImage"
             width="218"
           />
         </div>
@@ -171,7 +171,7 @@ Array [
                 <span
                   className="movie-card__details-value"
                 >
-                  Wes Andreson
+                   givenPromoMovie director
                 </span>
               </p>
               <p
@@ -185,16 +185,10 @@ Array [
                 <span
                   className="movie-card__details-value"
                 >
-                  Bill Murray
+                   givenPromoMovie starring
                    
                   <br />
-                  Edward Norton
-                   
-                  <br />
-                  Jude Law
-                   
-                  <br />
-                  Willem Dafoe
+                  givenPromoMovie starring
                    
                   <br />
                 </span>
@@ -228,7 +222,7 @@ Array [
                 <span
                   className="movie-card__details-value"
                 >
-                  Comedy
+                  givenPromoMovie genre
                 </span>
               </p>
               <p

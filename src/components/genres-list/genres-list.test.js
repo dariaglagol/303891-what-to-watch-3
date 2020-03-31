@@ -2,7 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import GenresList from "./genres-list";
 
-const DEFAULT_ACTIVE_GENRE = {
+const defaultActiveGenre = {
   single: `All genres`,
   multiply: `All genres`
 };
@@ -11,7 +11,7 @@ it(`Render genres list`, () => {
   const genresListComponent = renderer
     .create(
         <GenresList
-          activeGenre={DEFAULT_ACTIVE_GENRE}
+          activeGenre={defaultActiveGenre}
           onGenreTabClick={() => {}}
         />
     ).toJSON();

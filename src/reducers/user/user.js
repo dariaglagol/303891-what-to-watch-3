@@ -44,13 +44,13 @@ const reducer = (state = initialState, action) => {
 };
 
 const Operation = {
-  checkAuth: () => (dispatch, getState, api) => {
+  checkAuth: (onError) => (dispatch, getState, api) => {
     return api.get(`/login`)
       .then(() => {
         dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
       })
-      .catch((err) => {
-        throw err;
+      .catch(() => {
+        onError();
       });
   },
   login: (authData) => (dispatch, getState, api) => {

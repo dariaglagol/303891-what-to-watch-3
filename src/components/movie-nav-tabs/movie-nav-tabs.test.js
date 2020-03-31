@@ -2,13 +2,13 @@ import React from "react";
 import renderer from "react-test-renderer";
 import MovieNavTabs from "./movie-nav-tabs";
 
-const ACTIVE_TAB_MOCK = `Overview`;
+const activeTab = `Overview`;
 
 it(`Render movie nav tabs`, () => {
   const tabsComponent = renderer
     .create(
         <MovieNavTabs
-          activeTab={ACTIVE_TAB_MOCK}
+          activeTab={activeTab}
           onTabClick={()=> {}}
         />
     ).toJSON();

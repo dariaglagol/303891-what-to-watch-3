@@ -7,12 +7,12 @@ Enzyme.configure({
   adapter: new Adapter(),
 });
 
-const DEFAULT_ACTIVE_GENRE = {
+const defaultActiveGenre = {
   single: `All genres`,
   multiply: `All genres`
 };
 
-const ACTIVE_GENRE = {
+const activeGenre = {
   multiply: `Comedies`,
   single: `Comedy`,
 };
@@ -22,7 +22,7 @@ it(`Click to genre tab`, () => {
 
   const genreList = shallow(
       <GenresList
-        activeGenre={DEFAULT_ACTIVE_GENRE}
+        activeGenre={defaultActiveGenre}
         onGenreTabClick={genreTabClickHandler}
       />
   );
@@ -32,5 +32,5 @@ it(`Click to genre tab`, () => {
   genreTabItem.simulate(`click`);
 
   expect(genreTabClickHandler).toHaveBeenCalledTimes(1);
-  expect(genreTabClickHandler).toBeCalledWith(ACTIVE_GENRE);
+  expect(genreTabClickHandler).toBeCalledWith(activeGenre);
 });

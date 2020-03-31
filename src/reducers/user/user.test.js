@@ -1,17 +1,17 @@
 import {reducer, ActionType, ActionCreator} from "./user";
 import {AuthorizationStatus} from "@utils/constants";
 
-const InitialState = {
+const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
 };
 
 describe(`User reducer test`, () => {
   it(`Reducer without params should return initial state`, () => {
-    expect(reducer(void 0, {})).toEqual(InitialState);
+    expect(reducer(void 0, {})).toEqual(initialState);
   });
 
   it(`Reducer should toggle authorization status`, () => {
-    const {authorizationStatus} = InitialState;
+    const {authorizationStatus} = initialState;
 
     expect(reducer({
       authorizationStatus

@@ -7,7 +7,9 @@ const FullscreenPlayer = (props) => {
     onExitClick,
     renderVideo,
     progress,
-    duration
+    duration,
+    onPlayClick,
+    onFullScreenButtonClick
   } = props;
 
   const preparedDurationHours = moment.duration(duration, `seconds`).get(`hours`);
@@ -29,7 +31,7 @@ const FullscreenPlayer = (props) => {
         </div>
 
         <div className="player__controls-row">
-          <button type="button" className="player__play">
+          <button type="button" className="player__play" onClick={onPlayClick}>
             <svg viewBox="0 0 19 19" width="19" height="19">
               <use xlinkHref="#play-s" />
             </svg>
@@ -37,7 +39,7 @@ const FullscreenPlayer = (props) => {
           </button>
           <div className="player__name">Transpotting</div>
 
-          <button type="button" className="player__full-screen">
+          <button type="button" className="player__full-screen" onClick={onFullScreenButtonClick}>
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen" />
             </svg>
@@ -54,6 +56,8 @@ FullscreenPlayer.displayName = `FullscreenPlayer`;
 FullscreenPlayer.propTypes = {
   onExitClick: PropTypes.func.isRequired,
   renderVideo: PropTypes.func.isRequired,
+  onPlayClick: PropTypes.func.isRequired,
+  onFullScreenButtonClick: PropTypes.func.isRequired,
   progress: PropTypes.number.isRequired,
   duration: PropTypes.number.isRequired,
 };

@@ -11,13 +11,15 @@ const withVideoPlayer = (Component) => {
         progress: 0,
         isLoading: true,
         duration: 0,
+        fullScreenVideoIsPlaying: false
       };
 
       this._videoRef = createRef();
+      this._playButtonClick = this._playButtonClick.bind(this);
+      this._setFullScreenPlayer = this._setFullScreenPlayer.bind(this);
     }
 
     componentDidMount() {
-      const {isFullscreenPlayerActive} = this.props;
       const video = this._videoRef.current;
 
       video.oncanplaythrough = () => this.setState({
@@ -30,9 +32,7 @@ const withVideoPlayer = (Component) => {
         progress: video.currentTime
       });
 
-      if (isFullscreenPlayerActive) {
-        this._videoRef.current.requestFullscreen();
-      }
+      this._setFullScreenPlayer();
     }
 
     componentWillUnmount() {
@@ -55,6 +55,29 @@ const withVideoPlayer = (Component) => {
       }
     }
 
+    _setFullScreenPlayer() {
+      const {isFullscreenPlayerActive} = this.props;
+
+      if (isFullscreenPlayerActive) {
+        this._videoRef.current.requestFullscreen();
+      }
+    }
+
+    _playButtonClick() {
+      const video = this._videoRef.current;
+      const {fullScreenVideoIsPlaying} = this.state;
+
+      if (fullScreenVideoIsPlaying) {
+        video.pause();
+      } else {
+        video.play();
+      }
+
+      this.setState((prevState) => {
+        return {fullScreenVideoIsPlaying: !prevState.fullScreenVideoIsPlaying};
+      });
+    }
+
     render() {
       const {className} = this.props;
       const {progress, duration} = this.state;
@@ -64,6 +87,8 @@ const withVideoPlayer = (Component) => {
           {...this.props}
           progress={progress}
           duration={duration}
+          onPlayClick={this._playButtonClick}
+          onFullScreenButtonClick={this._setFullScreenPlayer}
           renderVideo={() => {
             return (
               <VideoPlayer

@@ -53,6 +53,14 @@ const MovieOverview = (props) => {
   );
 };
 
+MovieOverview.defaultProps = {
+  director: ``,
+  starring: [],
+  runTime: 0,
+  genre: ``,
+  released: 0,
+};
+
 MovieOverview.propTypes = {
   director: PropTypes.string.isRequired,
   starring: PropTypes.array.isRequired,

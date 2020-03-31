@@ -33,7 +33,8 @@ const DEFAULT_ACTIVE_GENRE = {
 const PageTypes = {
   MAIN: `main`,
   MOVIE: `movie`,
-  AUTH: `auth`
+  AUTH: `auth`,
+  LOADING: `loading`
 };
 
 const SIMILAR_FILM_COUNT = 4;

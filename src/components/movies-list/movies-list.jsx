@@ -12,7 +12,18 @@ const MoviesList = (props) => {
   }
 
   function _renderFilmCatalogCards() {
-    const {films, onFilmClick, onFilmCatalogCardHover, activeFilm, currentShownFilms} = props;
+    const {
+      films,
+      onFilmClick,
+      onFilmCatalogCardHover,
+      activeFilm,
+      currentShownFilms
+    } = props;
+
+    if (!films) {
+      return null;
+    }
+
     const filmsToShow = sliceMovieArray(films, currentShownFilms);
 
     return (
@@ -58,7 +69,7 @@ MoviesList.propTypes = {
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
     })),
-    PropTypes.array,
+    PropTypes.shape([]).isRequired,
   ]).isRequired,
   onFilmClick: PropTypes.func.isRequired,
   onFilmCatalogCardHover: PropTypes.func.isRequired,
@@ -81,8 +92,8 @@ MoviesList.propTypes = {
       isFavorite: PropTypes.bool.isRequired,
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
-    }).isRequired,
-    PropTypes.oneOf([null]).isRequired,
+    }),
+    PropTypes.shape({}).isRequired,
   ]),
   currentShownFilms: PropTypes.number.isRequired,
 };

@@ -1,3 +1,4 @@
+import {createSelector} from "reselect";
 import NameSpace from "@reducers/name-space";
 import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
 
@@ -30,12 +31,30 @@ const getMovieCover = (state) => {
   return state[NAME].promoMovie;
 };
 
-const getMovieDetails = (state) => {
-  return state[NAME].movieDetails;
-};
-
 const getReviews = (state) => {
   return state[NAME].reviews;
 };
 
-export {getFilms, getFilteredFilms, getReviews, getMovieDetails, getMovieCover, getActiveGenre};
+const getActiveFilmId = (state) => {
+  return state[NAME].activeFilmId;
+};
+
+const getFilmsSelector = createSelector(
+    [getFilms, getFilteredFilms, getActiveGenre],
+    (films, filteredFilms, activeGenre) => {
+      if (activeGenre.single !== DEFAULT_ACTIVE_GENRE.single) {
+        return _filterFilmsByGenre(films, activeGenre);
+      }
+      return films;
+    }
+);
+
+export {
+  getFilms,
+  getFilteredFilms,
+  getReviews,
+  getMovieCover,
+  getActiveGenre,
+  getFilmsSelector,
+  getActiveFilmId
+};
