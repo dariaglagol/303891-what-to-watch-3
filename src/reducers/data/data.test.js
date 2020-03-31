@@ -3,7 +3,7 @@ import {
   getFilms,
   getFilteredFilms,
   getReviews,
-  getMovieDetails,
+  getActiveFilmId,
   getMovieCover,
   getActiveGenre
 } from "./selectors";
@@ -246,32 +246,14 @@ const reviewsList = [{
   rating: 8.0
 }];
 
-const movieDetails = {
-  name: `The Grand Budapest Hotel`,
-  genre: `Comedy`,
-  posterImage: `img/bg-the-grand-budapest-hotel.jpg`,
-  previewImage: `img/bg-the-grand-budapest-hotel.jpg`,
-  backgroundImage: `img/bg-the-grand-budapest-hotel.jpg`,
-  backgroundColor: `color`,
-  description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.Gustave prides himself on providing first-class service to the hotel's guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave's lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.`,
-  rating: 124,
-  scoresCount: 8.9,
-  director: `Wes Andreson`,
-  starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`],
-  runTime: 113,
-  released: 2020,
-  id: 1,
-  isFavorite: false,
-  videoLink: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
-  previewVideoLink: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
-};
+const changedActiveFilmId = 1;
 
 const GIVEN_GENRE = {
   multiply: `Comedies`,
   single: `Comedy`,
 };
 
-const promoMovie = {
+const givenPromoMovie = {
   name: `Fantastic Beasts: The Crimes of Grindelwald`,
   genre: `Comedy`,
   posterImage: `img/bg-the-grand-budapest-hotel.jpg`,
@@ -509,25 +491,7 @@ const state = {
       rating: 8.0
     },
     ],
-    movieDetails: {
-      name: `The Grand Budapest Hotel`,
-      genre: `Comedy`,
-      posterImage: `img/bg-the-grand-budapest-hotel.jpg`,
-      previewImage: `img/bg-the-grand-budapest-hotel.jpg`,
-      backgroundImage: `img/bg-the-grand-budapest-hotel.jpg`,
-      backgroundColor: `color`,
-      description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.Gustave prides himself on providing first-class service to the hotel's guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave's lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.`,
-      rating: 124,
-      scoresCount: 8.9,
-      director: `Wes Andreson`,
-      starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`],
-      runTime: 113,
-      released: 2020,
-      id: 1,
-      isFavorite: false,
-      videoLink: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
-      previewVideoLink: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
-    },
+    activeFilmId: 1,
   }
 };
 
@@ -535,7 +499,7 @@ const initialState = {
   films: [],
   activeGenre: DEFAULT_ACTIVE_GENRE,
   promoMovie: {},
-  movieDetails: {},
+  activeFilmId: 0,
   reviews: [{
     text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
     author: `Kate Muir`,
@@ -600,10 +564,70 @@ describe(`Data reducer tests`, () => {
     });
   });
 
+  it(`Reducer should change current film id by a given value`, () => {
+    const {activeFilmId} = initialState;
+
+    expect(reducer({
+      activeFilmId
+    }, {
+      type: ActionType.GET_ACTIVE_FILM_ID,
+      payload: activeFilmId
+    })).toEqual({
+      activeFilmId,
+    });
+  });
+
+  it(`Reducer should change film empty array by a given array`, () => {
+    const {films} = initialState;
+
+    expect(reducer({
+      films
+    }, {
+      type: ActionType.LOAD_FILMS,
+      payload: filmList
+    })).toEqual({
+      films: filmList,
+    });
+  });
+
+  it(`Reducer should change empty promo film id by a given object`, () => {
+    const {promoMovie} = initialState;
+
+    expect(reducer({
+      promoMovie
+    }, {
+      type: ActionType.LOAD_PROMO_FILM,
+      payload: givenPromoMovie
+    })).toEqual({
+      promoMovie: givenPromoMovie,
+    });
+  });
+
   it(`Action creator return correct action after change genre`, () => {
     expect(ActionCreator.changeGenre(GIVEN_GENRE)).toEqual({
       type: ActionType.CHANGE_GENRE,
       payload: GIVEN_GENRE,
+    });
+  });
+
+  it(`Action creator return correct film id`, () => {
+    expect(ActionCreator.getActiveFilmId(changedActiveFilmId)).toEqual({
+      type: ActionType.GET_ACTIVE_FILM_ID,
+      payload: changedActiveFilmId,
+    });
+  });
+
+  it(`Action creator return correct film list`, () => {
+    expect(ActionCreator.loadFilms(filmList)).toEqual({
+      type: ActionType.LOAD_FILMS,
+      payload: filmList,
+    });
+  });
+
+  it(`Action creator return correct promo film`, () => {
+    expect(ActionCreator.loadPromoFilm(givenPromoMovie)).toEqual({
+      type: ActionType.LOAD_PROMO_FILM,
+      payload: givenPromoMovie,
     });
   });
 
@@ -621,11 +645,11 @@ describe(`Data reducer tests`, () => {
   });
 
   it(`Selector getMovieDetails return right key`, () => {
-    expect(getMovieDetails(state)).toEqual(movieDetails);
+    expect(getActiveFilmId(state)).toEqual(changedActiveFilmId);
   });
 
   it(`Selector getMovieCover return right key`, () => {
-    expect(getMovieCover(state)).toEqual(promoMovie);
+    expect(getMovieCover(state)).toEqual(givenPromoMovie);
   });
 
   it(`Selector getActiveGenre return right key`, () => {

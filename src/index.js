@@ -8,13 +8,12 @@ import {Provider} from "react-redux";
 import reducer from "@reducers/reducer";
 import {ActionCreator as UserActionCreator} from "@reducers/user/user";
 import {Operation as DataOperation} from "@reducers/data/data";
-import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
 
 import App from "@components/app/app";
 import ErrorMessage from "@components/error-message/error-message";
 
 import {createAPI} from "./api";
-import {AuthorizationStatus, PageTypes} from "@utils/constants";
+import {AuthorizationStatus} from "@utils/constants";
 
 const onUnauthorized = () => {
   store.dispatch(UserActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH));

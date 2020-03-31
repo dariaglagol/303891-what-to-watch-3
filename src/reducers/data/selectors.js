@@ -31,10 +31,6 @@ const getMovieCover = (state) => {
   return state[NAME].promoMovie;
 };
 
-const getMovieDetails = (state) => {
-  return state[NAME].movieDetails;
-};
-
 const getReviews = (state) => {
   return state[NAME].reviews;
 };
@@ -57,7 +53,6 @@ export {
   getFilms,
   getFilteredFilms,
   getReviews,
-  getMovieDetails,
   getMovieCover,
   getActiveGenre,
   getFilmsSelector,

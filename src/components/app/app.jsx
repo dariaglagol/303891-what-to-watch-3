@@ -179,28 +179,6 @@ App.propTypes = {
       previewVideoLink: PropTypes.string.isRequired,
     })).isRequired,
   ]).isRequired,
-  movieDetails: PropTypes.oneOfType([
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      posterImage: PropTypes.string.isRequired,
-      previewImage: PropTypes.string.isRequired,
-      backgroundImage: PropTypes.string.isRequired,
-      backgroundColor: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-      scoresCount: PropTypes.number.isRequired,
-      director: PropTypes.string.isRequired,
-      starring: PropTypes.array.isRequired,
-      runTime: PropTypes.number.isRequired,
-      genre: PropTypes.string.isRequired,
-      released: PropTypes.number.isRequired,
-      id: PropTypes.number.isRequired,
-      isFavorite: PropTypes.bool.isRequired,
-      videoLink: PropTypes.string.isRequired,
-      previewVideoLink: PropTypes.string.isRequired,
-    }).isRequired,
-    PropTypes.shape({}).isRequired
-  ]),
   reviews: PropTypes.arrayOf(PropTypes.exact({
     text: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
@@ -216,6 +194,7 @@ App.propTypes = {
   activePage: PropTypes.string.isRequired,
   isFullscreenPlayerActive: PropTypes.bool.isRequired,
   onFullScreenToggle: PropTypes.func.isRequired,
+  activeFilmId: PropTypes.number.isRequired,
 };
 
 export {App};

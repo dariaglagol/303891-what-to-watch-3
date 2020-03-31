@@ -29,7 +29,7 @@ const MockedFilm = {
 
 const MOCKED_PLAY_PROP = false;
 
-const PAGE_TYPE = `movie`;
+const FILM_ID = 1;
 
 const mockHoverEvent = {};
 
@@ -93,5 +93,5 @@ it(`Click on film card to change page`, () => {
   filmCard.simulate(`click`);
 
   expect(onFilmClick.mock.calls.length).toBe(1);
-  expect(onFilmClick).toBeCalledWith(PAGE_TYPE);
+  expect(onFilmClick).toBeCalledWith(FILM_ID);
 });
