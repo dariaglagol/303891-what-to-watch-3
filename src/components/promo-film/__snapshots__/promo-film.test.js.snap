@@ -52,7 +52,7 @@ exports[`Movie card render 1`] = `
         <img
           alt="User avatar"
           height="63"
-          src="img/avatar.jpg"
+          src="avatarUrl"
           width="63"
         />
       </div>

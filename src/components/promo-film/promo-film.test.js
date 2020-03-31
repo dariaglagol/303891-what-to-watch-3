@@ -22,12 +22,21 @@ const mockFilmData = {
   previewVideoLink: `previewVideoLink`,
 };
 
+const userData = {
+  id: 1,
+  avatarUrl: `avatarUrl`,
+  email: `email`,
+  name: `name`,
+};
+
 it(`Movie card render`, () => {
   const movieCardComponent = renderer
     .create(
         <PromoFilm
           promoMovie={mockFilmData}
+          userData={userData}
           onFilmClick={() => {}}
+          onSignInClick={() => {}}
           onPlayButtonClick={() => {}}
         />
     )
