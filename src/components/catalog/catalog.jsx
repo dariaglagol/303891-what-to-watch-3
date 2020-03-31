@@ -62,7 +62,7 @@ Catalog.propTypes = {
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
     })),
-    PropTypes.oneOf([null]).isRequired,
+    PropTypes.shape([]).isRequired,
   ]).isRequired,
   activeGenre: PropTypes.exact({
     multiply: PropTypes.string.isRequired,

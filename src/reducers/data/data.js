@@ -3,9 +3,9 @@ import MovieReviews from "@mocks/reviews";
 import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
 
 const initialState = {
-  films: null,
-  promoMovie: null,
-  movieDetails: null,
+  films: [],
+  promoMovie: {},
+  movieDetails: {},
   reviews: MovieReviews,
   activeGenre: DEFAULT_ACTIVE_GENRE,
 };

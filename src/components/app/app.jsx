@@ -37,8 +37,6 @@ const App = (props) => {
     onFullScreenToggle,
   } = props;
 
-  console.log(films);
-
   function _renderPages() {
     switch (activePage) {
       case PageTypes.MAIN:
@@ -148,10 +146,10 @@ App.propTypes = {
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
     }),
-    PropTypes.oneOf([null])
+    PropTypes.exact({}).isRequired
   ]).isRequired,
   films: PropTypes.oneOfType([
-    PropTypes.oneOf([null]).isRequired,
+    PropTypes.exact([]).isRequired,
     PropTypes.arrayOf(PropTypes.exact({
       name: PropTypes.string.isRequired,
       posterImage: PropTypes.string.isRequired,
@@ -170,7 +168,7 @@ App.propTypes = {
       isFavorite: PropTypes.bool.isRequired,
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
-    })),
+    })).isRequired,
   ]).isRequired,
   movieDetails: PropTypes.oneOfType([
     PropTypes.shape({
@@ -192,7 +190,7 @@ App.propTypes = {
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
     }).isRequired,
-    PropTypes.oneOf([null]).isRequired
+    PropTypes.shape({}).isRequired
   ]),
   reviews: PropTypes.arrayOf(PropTypes.exact({
     text: PropTypes.string.isRequired,

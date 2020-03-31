@@ -69,7 +69,7 @@ MoviesList.propTypes = {
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
     })),
-    PropTypes.oneOf([null]),
+    PropTypes.shape([]).isRequired,
   ]).isRequired,
   onFilmClick: PropTypes.func.isRequired,
   onFilmCatalogCardHover: PropTypes.func.isRequired,
@@ -93,7 +93,7 @@ MoviesList.propTypes = {
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
     }),
-    PropTypes.oneOf([null]),
+    PropTypes.shape({}).isRequired,
   ]),
   currentShownFilms: PropTypes.number.isRequired,
 };

@@ -60,14 +60,14 @@ Main.propTypes = {
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
     }),
-    PropTypes.oneOf([null])
+    PropTypes.shape({}).isRequired
   ]).isRequired,
   films: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.exact({
+    PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string.isRequired,
       posterImage: PropTypes.string.isRequired,
       backgroundImage: PropTypes.string.isRequired,
-      promoCover: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
       backgroundColor: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
       rating: PropTypes.number.isRequired,
@@ -82,7 +82,7 @@ Main.propTypes = {
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
     })),
-    PropTypes.oneOf([null]),
+    PropTypes.shape([]).isRequired,
   ]).isRequired,
   onFilmClick: PropTypes.func.isRequired,
   activeGenre: PropTypes.exact({

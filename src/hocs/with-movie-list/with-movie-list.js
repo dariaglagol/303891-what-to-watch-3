@@ -69,26 +69,8 @@ const withMovieList = (Component) => {
 
   WithMovieList.propTypes = {
     films: PropTypes.oneOfType([
-      PropTypes.oneOf([null]),
-      PropTypes.arrayOf(PropTypes.exact({
-        name: PropTypes.string.isRequired,
-        posterImage: PropTypes.string.isRequired,
-        previewImage: PropTypes.string.isRequired,
-        backgroundImage: PropTypes.string.isRequired,
-        backgroundColor: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        rating: PropTypes.number.isRequired,
-        scoresCount: PropTypes.number.isRequired,
-        director: PropTypes.string.isRequired,
-        starring: PropTypes.array.isRequired,
-        runTime: PropTypes.number.isRequired,
-        genre: PropTypes.string.isRequired,
-        released: PropTypes.number.isRequired,
-        id: PropTypes.number.isRequired,
-        isFavorite: PropTypes.bool.isRequired,
-        videoLink: PropTypes.string.isRequired,
-        previewVideoLink: PropTypes.string.isRequired,
-      })),
+      PropTypes.exact([]),
+      PropTypes.arrayOf(PropTypes.object),
     ]).isRequired,
     onFilmClick: PropTypes.func.isRequired,
   };

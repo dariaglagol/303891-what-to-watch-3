@@ -85,7 +85,7 @@ PromoFilm.propTypes = {
       promoCover: PropTypes.string.isRequired,
       backgroundImage: PropTypes.string.isRequired,
     }),
-    PropTypes.oneOf([null]).isRequired
+    PropTypes.shape({}).isRequired
   ]),
   onFilmClick: PropTypes.func.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,

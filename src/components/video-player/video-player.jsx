@@ -44,7 +44,7 @@ VideoPlayer.propTypes = {
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
     }),
-    PropTypes.oneOf([null]),
+    PropTypes.shape({}).isRequired,
   ]).isRequired,
   className: PropTypes.string
 };
