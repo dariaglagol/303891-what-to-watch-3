@@ -23,19 +23,6 @@ const getFilteredFilms = (state) => {
   return _filterFilmsByGenre(films, activeGenre);
 };
 
-const getFilmsSelector = createSelector(
-    getFilms,
-    getFilteredFilms,
-    (activeGenre, films) => {
-      switch (activeGenre) {
-        case activeGenre.single !== DEFAULT_ACTIVE_GENRE.single:
-          return _filterFilmsByGenre(films, activeGenre);
-        default:
-          return films;
-      }
-    }
-);
-
 const getActiveGenre = (state) => {
   return state[NAME].activeGenre;
 };
@@ -51,5 +38,15 @@ const getMovieDetails = (state) => {
 const getReviews = (state) => {
   return state[NAME].reviews;
 };
+
+const getFilmsSelector = createSelector(
+    [getFilms, getFilteredFilms, getActiveGenre],
+    (films, filteredFilms, activeGenre) => {
+      if (activeGenre.single !== DEFAULT_ACTIVE_GENRE.single) {
+        return _filterFilmsByGenre(films, activeGenre);
+      }
+      return films;
+    }
+);
 
 export {getFilms, getFilteredFilms, getReviews, getMovieDetails, getMovieCover, getActiveGenre, getFilmsSelector};
