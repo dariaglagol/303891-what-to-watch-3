@@ -22,7 +22,7 @@ const MovieExtended = (props) => {
     renderMovieList,
     onFullScreenToggle,
     isFullscreenPlayerActive,
-    authStatus,
+    userData,
     onSignInClick
   } = props;
 
@@ -84,7 +84,7 @@ const MovieExtended = (props) => {
           <h1 className="visually-hidden">WTW</h1>
 
           <Header
-            authStatus={authStatus}
+            userData={userData}
             onSignInClick={onSignInClick}
           />
 
@@ -217,7 +217,16 @@ MovieExtended.propTypes = {
   activeTab: PropTypes.string.isRequired,
   isFullscreenPlayerActive: PropTypes.bool.isRequired,
   onFullScreenToggle: PropTypes.func.isRequired,
-  authStatus: PropTypes.string.isRequired,
+  userData: PropTypes.oneOfType([
+    PropTypes.exact({
+      id: PropTypes.number.isRequired,
+      email: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      avatarUrl: PropTypes.string.isRequired,
+    }),
+    PropTypes.exact({})
+  ]).isRequired,
+  onSignInClick: PropTypes.func.isRequired,
 };
 
 export default MovieExtended;

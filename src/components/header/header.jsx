@@ -1,11 +1,14 @@
 import React from "react";
-import {AuthorizationStatus, PageTypes} from "@utils/constants";
+import PropTypes from "prop-types";
+import {PageTypes} from "@utils/constants";
 
 const Header = (props) => {
   const {
-    authStatus,
+    userData,
     onSignInClick
   } = props;
+
+  const {avatarUrl} = userData;
 
   function _signInClickHandler(e) {
     e.preventDefault();
@@ -13,7 +16,7 @@ const Header = (props) => {
   }
 
   function _renderHeader() {
-    if (authStatus === AuthorizationStatus.AUTH) {
+    if (avatarUrl) {
       return (
         <header className="page-header movie-card__head">
           <div className="logo">
@@ -26,7 +29,7 @@ const Header = (props) => {
 
           <div className="user-block">
             <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
+              <img src={avatarUrl} alt="User avatar" width="63" height="63"/>
             </div>
           </div>
         </header>
@@ -61,5 +64,17 @@ const Header = (props) => {
   );
 };
 
-export default Header;
+Header.propTypes = {
+  userData: PropTypes.oneOfType([
+    PropTypes.exact({
+      id: PropTypes.number.isRequired,
+      email: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      avatarUrl: PropTypes.string.isRequired,
+    }),
+    PropTypes.exact({})
+  ]).isRequired,
+  onSignInClick: PropTypes.func.isRequired,
+};
 
+export default Header;

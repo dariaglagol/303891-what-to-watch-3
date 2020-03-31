@@ -15,7 +15,7 @@ import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
 import {getActivePage, getFullScreenPlayerState} from "@reducers/common/selectors";
 
 import {Operation as UserOperation} from "@reducers/user/user";
-import {getAuthStatus} from "@reducers/user/selectors";
+import {getAuthStatus, getUserData} from "@reducers/user/selectors";
 
 import {ActionCreator as DataActionCreator} from "@reducers/data/data";
 import {
@@ -23,11 +23,10 @@ import {
   getFilmsSelector,
   getReviews,
   getMovieCover,
-  getActiveFilmId,
-  getFilteredFilms
+  getActiveFilmId
 } from "@reducers/data/selectors.js";
+
 import Loading from "@components/loading/loading";
-import {getActiveGenre, getFilteredFilms, getReviews, getMovieDetails, getMovieCover} from "@reducers/data/selectors.js";
 import SignIn from "@components/sign-in/sign-in";
 
 const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
@@ -44,9 +43,9 @@ const App = (props) => {
     onPageChange,
     isFullscreenPlayerActive,
     onFullScreenToggle,
-    activeFilmId
-    authStatus,
-    login
+    activeFilmId,
+    login,
+    userData
   } = props;
 
   const movieDetails = films.find((film) => film.id === activeFilmId) || {};
@@ -56,7 +55,7 @@ const App = (props) => {
       case PageTypes.MAIN:
         return (
           <MainComponentWrapped
-            authStatus={authStatus}
+            userData={userData}
             promoMovie={promoMovie}
             onFilmClick={onPageChange}
             onSignInClick={onPageChange}
@@ -70,7 +69,7 @@ const App = (props) => {
       case PageTypes.MOVIE:
         return (
           <MovieExtendedComponentWrapped
-            authStatus={authStatus}
+            userData={userData}
             onFilmClick={onPageChange}
             onSignInClick={onPageChange}
             films={films}
@@ -103,7 +102,7 @@ const App = (props) => {
         </Route>
         <Route exact path="/dev-movie-details">
           <MovieExtendedComponentWrapped
-            authStatus={authStatus}
+            userData={userData}
             onFilmClick={onPageChange}
             onSignInClick={onPageChange}
             films={films}
@@ -119,10 +118,11 @@ const App = (props) => {
 };
 
 App.defaultProps = {
-  films: null,
-  promoMovie: null,
-  reviews: null,
-  movieDetails: null,
+  films: [],
+  promoMovie: {},
+  reviews: [],
+  movieDetails: {},
+  userData: {},
 };
 
 const mapStateToProps = (state) => ({
@@ -135,14 +135,17 @@ const mapStateToProps = (state) => ({
   activeFilmId: getActiveFilmId(state),
   isFullscreenPlayerActive: getFullScreenPlayerState(state),
   authStatus: getAuthStatus(state),
+  userData: getUserData(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onGenreTabClick(activeGenre) {
     dispatch(DataActionCreator.changeGenre(activeGenre));
   },
-  onPageChange(id, activePage) {
-    dispatch(DataActionCreator.getActiveFilmId(id));
+  onPageChange(activePage, id) {
+    if (id) {
+      dispatch(DataActionCreator.getActiveFilmId(id));
+    }
     dispatch(CommonActionCreator.setActivePage(activePage));
   },
   onFullScreenToggle(state) {
@@ -214,7 +217,17 @@ App.propTypes = {
   isFullscreenPlayerActive: PropTypes.bool.isRequired,
   onFullScreenToggle: PropTypes.func.isRequired,
   activeFilmId: PropTypes.number.isRequired,
-  authStatus: PropTypes.string.isRequired
+  authStatus: PropTypes.string.isRequired,
+  userData: PropTypes.oneOfType([
+    PropTypes.exact({
+      id: PropTypes.number.isRequired,
+      email: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      avatarUrl: PropTypes.string.isRequired,
+    }),
+    PropTypes.exact({})
+  ]).isRequired,
+  login: PropTypes.func.isRequired,
 };
 
 export {App};

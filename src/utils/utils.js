@@ -27,16 +27,16 @@ const extend = (a, b) => {
   return Object.assign({}, a, b);
 };
 
-const filmAdapter = (film) => {
+const itemAdapter = (film) => {
   return mapKeys(film, (value, key) => {
     return camelCase(key);
   });
 };
 
-const filmsAdapter = (films) => {
+const itemsAdapter = (films) => {
   return films.map((film) => {
-    return filmAdapter(film);
+    return itemAdapter(film);
   });
 };
 
-export {getMovieMark, getSimilarMovies, extend, sliceMovieArray, filmAdapter, filmsAdapter};
+export {getMovieMark, getSimilarMovies, extend, sliceMovieArray, itemAdapter, itemsAdapter};

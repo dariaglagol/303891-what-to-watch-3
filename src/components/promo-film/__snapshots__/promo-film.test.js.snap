@@ -8,8 +8,8 @@ exports[`Movie card render 1`] = `
     className="movie-card__bg"
   >
     <img
-      alt="The Grand Budapest Hotel"
-      src="img/bg-the-grand-budapest-hotel.jpg"
+      alt="name"
+      src="backgroundImage"
     />
   </div>
   <h1
@@ -71,7 +71,7 @@ exports[`Movie card render 1`] = `
         <img
           alt="The Grand Budapest Hotel poster"
           height="327"
-          src="img/bg-the-grand-budapest-hotel.jpg"
+          src="posterImage"
           width="218"
         />
       </div>
@@ -82,7 +82,7 @@ exports[`Movie card render 1`] = `
           className="movie-card__title"
           onClick={[Function]}
         >
-          The Grand Budapest Hotel
+          name
         </h2>
         <p
           className="movie-card__meta"
@@ -90,7 +90,7 @@ exports[`Movie card render 1`] = `
           <span
             className="movie-card__genre"
           >
-            Comedy
+            genre
           </span>
           <span
             className="movie-card__year"

@@ -17,8 +17,6 @@ export default class SignIn extends PureComponent {
 
     evt.preventDefault();
 
-    console.log(this._loginRef);
-
     onSubmit({
       login: this._loginRef.current.value,
       password: this._passwordRef.current.value,
@@ -76,3 +74,7 @@ export default class SignIn extends PureComponent {
     );
   }
 }
+
+SignIn.propTypes = {
+  onSubmit: PropTypes.func.isRequired
+};

@@ -1,5 +1,6 @@
-import {AuthorizationStatus} from "@utils/constants";
-import {extend} from "@utils/utils";
+import {AuthorizationStatus, PageTypes} from "@utils/constants";
+import {extend, itemAdapter} from "@utils/utils";
+import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
@@ -19,9 +20,11 @@ const ActionCreator = {
     };
   },
   setUserData: (userData) => {
+    let preparedUserData = itemAdapter(userData);
+    preparedUserData = extend(preparedUserData, {avatarUrl: `https://htmlacademy-react-3.appspot.com${preparedUserData.avatarUrl}`});
     return {
       type: ActionType.SET_USER_DATA,
-      payload: userData
+      payload: preparedUserData
     };
   }
 };
@@ -61,6 +64,7 @@ const Operation = {
       .then((response) => {
         dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
         dispatch(ActionCreator.setUserData(response.data));
+        dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
       });
   },
 };
