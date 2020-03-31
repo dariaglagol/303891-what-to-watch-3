@@ -17,7 +17,7 @@ import {getActivePage, getFullScreenPlayerState} from "@reducers/common/selector
 import {Operation as UserOperation} from "@reducers/user/user";
 
 import {ActionCreator as DataActionCreator} from "@reducers/data/data";
-import {getActiveGenre, getFilteredFilms, getReviews, getMovieDetails, getMovieCover} from "@reducers/data/selectors.js";
+import {getActiveGenre, getFilmsSelector, getReviews, getMovieDetails, getMovieCover} from "@reducers/data/selectors.js";
 import Loading from "@components/loading/loading";
 
 const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
@@ -100,8 +100,8 @@ App.defaultProps = {
 };
 
 const mapStateToProps = (state) => ({
-  films: getFilteredFilms(state),
-  filteredFilms: getFilteredFilms(state),
+  films: getFilmsSelector(state),
+  filteredFilms: getFilmsSelector(state),
   activeGenre: getActiveGenre(state),
   promoMovie: getMovieCover(state),
   movieDetails: getMovieDetails(state),

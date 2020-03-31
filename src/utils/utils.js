@@ -36,7 +36,7 @@ const filmAdapter = (film) => {
 const filmsAdapter = (films) => {
   return films.map((film) => {
     return filmAdapter(film);
-  })
+  });
 };
 
 export {getMovieMark, getSimilarMovies, extend, sliceMovieArray, filmAdapter, filmsAdapter};

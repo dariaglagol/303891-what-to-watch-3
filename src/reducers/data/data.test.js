@@ -532,10 +532,10 @@ const state = {
 };
 
 const initialState = {
-  films: null,
+  films: [],
   activeGenre: DEFAULT_ACTIVE_GENRE,
-  promoMovie: null,
-  movieDetails: null,
+  promoMovie: {},
+  movieDetails: {},
   reviews: [{
     text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
     author: `Kate Muir`,

@@ -24,7 +24,6 @@ export const createAPI = (onUnauthorized, onError) => {
           onError(response);
           break;
       }
-      throw err;
     } catch (exception) {
       throw err;
     }
