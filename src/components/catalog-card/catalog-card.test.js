@@ -2,37 +2,37 @@ import React from "react";
 import renderer from "react-test-renderer";
 import CatalogCard from "./calalog-card";
 
-const MOCKED_FILM = {
-  name: `The Grand Budapest Hotel`,
-  posterImage: `img/bg-the-grand-budapest-hotel.jpg`,
-  previewImage: `img/bg-the-grand-budapest-hotel.jpg`,
-  backgroundImage: `img/bg-the-grand-budapest-hotel.jpg`,
-  backgroundColor: `color`,
-  description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.Gustave prides himself on providing first-class service to the hotel's guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave's lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.`,
+const mockedFilm = {
+  name: `name`,
+  genre: `genre`,
+  posterImage: `posterImage`,
+  previewImage: `previewImage`,
+  backgroundImage: `backgroundImage`,
+  backgroundColor: `backgroundColor`,
+  description: `description`,
   rating: 124,
   scoresCount: 8.9,
-  director: `Wes Andreson`,
-  starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`],
+  director: ` director`,
+  starring: [` starring`, `starring`],
   runTime: 113,
-  genre: `Comedy`,
   released: 2020,
   id: 1,
   isFavorite: false,
-  videoLink: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
-  previewVideoLink: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
+  videoLink: `videoLink`,
+  previewVideoLink: `previewVideoLink`,
 };
 
-const MOCKED_PLAY_PROP = false;
+const mockedPlayProp = false;
 
 it(`Render catalog card`, () => {
   const catalogCardComponent = renderer
     .create(
         <CatalogCard
-          film={MOCKED_FILM}
+          film={mockedFilm}
           onFilmCatalogCardHover={() => {}}
           onFilmClick={() => {}}
           renderVideo={() => {}}
-          isPlaying={MOCKED_PLAY_PROP}
+          isPlaying={mockedPlayProp}
         />, {createNodeMock: () => {
           return {};
         }}
