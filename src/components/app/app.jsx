@@ -28,6 +28,7 @@ import {
 
 import Loading from "@components/loading/loading";
 import SignIn from "@components/sign-in/sign-in";
+import AddReview from "@components/add-review/add-review";
 
 const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
 const MainComponentWrapped = withMovieList(withCatalog(Main));
@@ -75,6 +76,7 @@ const App = (props) => {
           <MovieExtendedComponentWrapped
             userData={userData}
             authStatus={authStatus}
+            onAddReviewClick={onPageChange}
             onFilmClick={onPageChange}
             onSignInClick={onPageChange}
             films={films}
@@ -95,6 +97,10 @@ const App = (props) => {
             userErrors={userErrors}
           />
         );
+      case PageTypes.REVIEW:
+        return (
+          <AddReview />
+        );
     }
 
     return null;
@@ -112,12 +118,16 @@ const App = (props) => {
             authStatus={authStatus}
             onFilmClick={onPageChange}
             onSignInClick={onPageChange}
+            onAddReviewClick={onPageChange}
             films={films}
             movieDetails={movieDetails}
             isFullscreenPlayerActive={isFullscreenPlayerActive}
             onFullScreenToggle={onFullScreenToggle}
             reviews={reviews}
           />
+        </Route>
+        <Route exact path="/dev-review">
+          <AddReview />
         </Route>
       </Switch>
     </BrowserRouter>

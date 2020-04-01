@@ -34,7 +34,8 @@ const PageTypes = {
   MAIN: `main`,
   MOVIE: `movie`,
   AUTH: `auth`,
-  LOADING: `loading`
+  LOADING: `loading`,
+  REVIEW: `review`
 };
 
 const SIMILAR_FILM_COUNT = 4;
