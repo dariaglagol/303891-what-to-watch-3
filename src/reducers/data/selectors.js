@@ -39,6 +39,10 @@ const getActiveFilmId = (state) => {
   return state[NAME].activeFilmId;
 };
 
+const getReviewError = (state) => {
+  return state[NAME].error;
+};
+
 const getFilmsSelector = createSelector(
     [getFilms, getFilteredFilms, getActiveGenre],
     (films, filteredFilms, activeGenre) => {
@@ -56,5 +60,6 @@ export {
   getMovieCover,
   getActiveGenre,
   getFilmsSelector,
-  getActiveFilmId
+  getActiveFilmId,
+  getReviewError
 };

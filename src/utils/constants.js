@@ -64,12 +64,7 @@ const AuthorizationStatus = {
   AUTH: `AUTH`
 };
 
-const EMAIL_REGEXP = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/;
-
-const SignInFiled = {
-  LOGIN: `login`,
-  PASSWORD: `password`,
-};
+const RATING_STARS_COUNT = 5;
 
 export {
   MovieMarksTypes,
@@ -86,6 +81,5 @@ export {
   StatusCode,
   TIMEOUT,
   AuthorizationStatus,
-  EMAIL_REGEXP,
-  SignInFiled
+  RATING_STARS_COUNT
 };

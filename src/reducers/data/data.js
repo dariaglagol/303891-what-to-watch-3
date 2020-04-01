@@ -1,6 +1,6 @@
 import {extend, itemAdapter, itemsAdapter} from "@utils/utils.js";
 import MovieReviews from "@mocks/reviews";
-import {DEFAULT_ACTIVE_GENRE, PageTypes} from "@utils/constants";
+import {DEFAULT_ACTIVE_GENRE, PageTypes, StatusCode} from "@utils/constants";
 import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
 
 const initialState = {
@@ -9,6 +9,7 @@ const initialState = {
   activeFilmId: 0,
   reviews: MovieReviews,
   activeGenre: DEFAULT_ACTIVE_GENRE,
+  error: {}
 };
 
 const ActionType = {
@@ -16,6 +17,7 @@ const ActionType = {
   LOAD_PROMO_FILM: `LOAD_PROMO_FILM`,
   CHANGE_GENRE: `CHANGE_GENRE`,
   GET_ACTIVE_FILM_ID: `GET_ACTIVE_FILM_ID`,
+  SET_REVIEW_ERROR: `SET_REVIEW_ERROR`,
 };
 
 const ActionCreator = {
@@ -39,6 +41,10 @@ const ActionCreator = {
     type: ActionType.GET_ACTIVE_FILM_ID,
     payload: id
   }),
+  setReviewError: (error) => ({
+    type: ActionType.SET_REVIEW_ERROR,
+    payload: error
+  }),
 };
 
 const Operation = {
@@ -55,6 +61,27 @@ const Operation = {
         dispatch(ActionCreator.loadPromoFilm(response.data));
       });
   },
+  sendReview: (reviewData) => (dispatch, getState, api) => {
+    return api.post(`/comments/42`, {
+      rating: reviewData.rating,
+      comment: reviewData.review,
+    })
+      .then((response) => {
+        switch (response.status) {
+          case StatusCode.SUCCESS:
+            dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
+            break;
+          case StatusCode.UNAUTHORIZED:
+            dispatch(ActionCreator.setReviewError(response.data));
+            break;
+          default:
+            break;
+        }
+      })
+      .catch((err) => {
+        dispatch(ActionCreator.setReviewError(err));
+      });
+  }
 };
 
 const reducer = (state = initialState, action) => {
@@ -71,6 +98,8 @@ const reducer = (state = initialState, action) => {
       return extend(state, {activeGenre: action.payload});
     case ActionType.GET_ACTIVE_FILM_ID:
       return extend(state, {activeFilmId: action.payload});
+    case ActionType.SET_REVIEW_ERROR:
+      return extend(state, {error: action.payload});
     default:
       break;
   }

@@ -8,6 +8,7 @@ import MovieExtended from "@components/movie-extended/movie-extended";
 import withTabs from "@hocs/with-tabs/with-tabs";
 import withCatalog from "@hocs/with-catalog/with-catalog";
 import withMovieList from "@hocs/with-movie-list/with-movie-list";
+import withReview from "@hocs/with-review/with-review";
 import {PageTypes} from "@utils/constants";
 
 import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
@@ -16,13 +17,14 @@ import {getActivePage, getFullScreenPlayerState} from "@reducers/common/selector
 import {Operation as UserOperation} from "@reducers/user/user";
 import {getAuthStatus, getUserData, getUserError} from "@reducers/user/selectors";
 
-import {ActionCreator as DataActionCreator} from "@reducers/data/data";
+import {ActionCreator as DataActionCreator, Operation as DataOperation} from "@reducers/data/data";
 import {
   getActiveGenre,
   getFilmsSelector,
   getReviews,
   getMovieCover,
-  getActiveFilmId
+  getActiveFilmId,
+  getReviewError
 } from "@reducers/data/selectors.js";
 
 import Loading from "@components/loading/loading";
@@ -31,6 +33,7 @@ import AddReview from "@components/add-review/add-review";
 
 const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
 const MainComponentWrapped = withMovieList(withCatalog(Main));
+const ReviewComponentWrapped = withReview(AddReview);
 
 const App = (props) => {
   const {
@@ -48,6 +51,8 @@ const App = (props) => {
     userData,
     userErrors,
     authStatus,
+    addReview,
+    reviewError,
   } = props;
 
   const movieDetails = films.find((film) => film.id === activeFilmId) || {};
@@ -97,11 +102,13 @@ const App = (props) => {
         );
       case PageTypes.REVIEW:
         return (
-          <AddReview
+          <ReviewComponentWrapped
             userData={userData}
             authStatus={authStatus}
             movieDetails={movieDetails}
             onSignInClick={onPageChange}
+            onSubmit={addReview}
+            reviewError={reviewError}
           />
         );
     }
@@ -130,11 +137,13 @@ const App = (props) => {
           />
         </Route>
         <Route exact path="/dev-review">
-          <AddReview
+          <ReviewComponentWrapped
             userData={userData}
             authStatus={authStatus}
             movieDetails={movieDetails}
             onSignInClick={onPageChange}
+            onSubmit={addReview}
+            reviewError={reviewError}
           />
         </Route>
       </Switch>
@@ -162,6 +171,7 @@ const mapStateToProps = (state) => ({
   authStatus: getAuthStatus(state),
   userData: getUserData(state),
   userErrors: getUserError(state),
+  reviewError: getReviewError(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -180,6 +190,9 @@ const mapDispatchToProps = (dispatch) => ({
   login(authData) {
     dispatch(UserOperation.login(authData));
   },
+  addReview(reviewData) {
+    dispatch(DataOperation.sendReview(reviewData));
+  }
 });
 
 App.propTypes = {
