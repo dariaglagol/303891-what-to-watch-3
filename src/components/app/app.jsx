@@ -8,7 +8,6 @@ import MovieExtended from "@components/movie-extended/movie-extended";
 import withTabs from "@hocs/with-tabs/with-tabs";
 import withCatalog from "@hocs/with-catalog/with-catalog";
 import withMovieList from "@hocs/with-movie-list/with-movie-list";
-import withSignIn from "@hocs/with-sign-in/with-sign-in";
 import {PageTypes} from "@utils/constants";
 
 import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
@@ -31,7 +30,6 @@ import SignIn from "@components/sign-in/sign-in";
 
 const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
 const MainComponentWrapped = withMovieList(withCatalog(Main));
-const WrappedSingIn = withSignIn(SignIn);
 
 const App = (props) => {
   const {
@@ -90,7 +88,7 @@ const App = (props) => {
         );
       case PageTypes.AUTH:
         return (
-          <WrappedSingIn
+          <SignIn
             onSubmit={login}
             userErrors={userErrors}
           />

@@ -1,28 +1,16 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import withSingIn from "@hocs/with-sign-in/with-sign-in";
-const invalidEmptyFields = [];
+import SignIn from "./sign-in";
 
-const MockComponent = () => {
-  return (
-    <div>
-      Mocked Component
-    </div>
-  );
-};
-
-const MockSignInWrapped = withSingIn(MockComponent);
+const userErrors = {};
 
 it(`Render sign in`, () => {
   const signInComponent = renderer
     .create(
-        <MockSignInWrapped
+        <SignIn
           onSubmit={() => {}}
-          invalidEmptyFields={invalidEmptyFields}
-        />,
-        {createNodeMock: () => {
-          return {};
-        }}
+          userErrors={userErrors}
+        />
     ).toJSON();
 
   expect(signInComponent).toMatchSnapshot();
