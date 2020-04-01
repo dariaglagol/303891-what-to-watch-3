@@ -23,6 +23,7 @@ export default class SignIn extends PureComponent {
             name="user-email"
             id="user-email"
             required
+            pattern='^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$'
             ref={this._loginRef}
           />
           <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>

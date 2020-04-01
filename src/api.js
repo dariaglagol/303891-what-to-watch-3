@@ -24,9 +24,9 @@ export const createAPI = (onUnauthorized, onError) => {
           break;
         case StatusCode.AUTH_ERROR:
           return response;
+        default:
+          break;
       }
-
-      return response;
     } catch (exception) {
       throw err;
     }
