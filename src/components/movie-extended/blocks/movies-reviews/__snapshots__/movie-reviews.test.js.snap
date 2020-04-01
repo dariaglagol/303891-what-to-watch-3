@@ -57,13 +57,13 @@ exports[`Render movie reviews 1`] = `
           <cite
             className="review__author"
           >
-            author
+            author 1
           </cite>
           <time
             className="review__date"
             dateTime="2016-12-24"
           >
-            date
+            date 2
           </time>
         </footer>
       </blockquote>

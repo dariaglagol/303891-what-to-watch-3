@@ -1,5 +1,5 @@
 import axios from "axios";
-import {Error, TIMEOUT} from "@utils/constants";
+import {StatusCode, TIMEOUT} from "@utils/constants";
 
 export const createAPI = (onUnauthorized, onError) => {
   const api = axios.create({
@@ -15,14 +15,15 @@ export const createAPI = (onUnauthorized, onError) => {
   const onFail = (err) => {
     try {
       const {response} = err;
-
       switch (response.status) {
-        case Error.UNAUTHORIZED:
+        case StatusCode.UNAUTHORIZED:
           onUnauthorized();
           break;
-        case response.status >= Error.SERVER_PROBLEMS:
+        case StatusCode.SERVER_PROBLEMS:
           onError(response);
           break;
+        case StatusCode.AUTH_ERROR:
+          return response;
       }
     } catch (exception) {
       throw err;

@@ -18,49 +18,42 @@ const Header = (props) => {
   function _renderHeader() {
     if (avatarUrl) {
       return (
-        <header className="page-header movie-card__head">
-          <div className="logo">
-            <a className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="user-block">
-            <div className="user-block__avatar">
-              <img src={avatarUrl} alt="User avatar" width="63" height="63"/>
-            </div>
-          </div>
-        </header>
+        <div className="user-block__avatar">
+          <img
+            src={avatarUrl}
+            alt="User avatar"
+            width="63"
+            height="63"
+          />
+        </div>
       );
     }
 
     return (
-      <header className="page-header">
-        <div className="logo">
-          <a className="logo__link">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
-
-        <div className="user-block">
-          <a
-            href="sign-in.html"
-            className="user-block__link"
-            onClick={_signInClickHandler}
-          >
-            Sign in
-          </a>
-        </div>
-      </header>
+      <a
+        href="sign-in.html"
+        className="user-block__link"
+        onClick={_signInClickHandler}
+      >
+        Sign in
+      </a>
     );
   }
 
   return (
-    _renderHeader()
+    <header className="page-header">
+      <div className="logo">
+        <a className="logo__link">
+          <span className="logo__letter logo__letter--1">W</span>
+          <span className="logo__letter logo__letter--2">T</span>
+          <span className="logo__letter logo__letter--3">W</span>
+        </a>
+      </div>
+
+      <div className="user-block">
+        {_renderHeader()}
+      </div>
+    </header>
   );
 };
 

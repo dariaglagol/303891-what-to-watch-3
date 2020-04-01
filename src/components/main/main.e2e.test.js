@@ -71,14 +71,21 @@ const mocks = {
     },
   ],
   isFullscreenPlayerActive: false,
+  userData: {
+    id: 1,
+    email: `email`,
+    name: `name`,
+    avatarUrl: `avatarUrl`
+  },
 };
 
 it(`Click on play video button send callback with params`, () => {
-  const {mockFilmData, defaultActiveGenre, mockedCatalogFilms, isFullscreenPlayerActive} = mocks;
+  const {mockFilmData, defaultActiveGenre, mockedCatalogFilms, userData, isFullscreenPlayerActive} = mocks;
   const filmClickHandler = jest.fn();
   const renderCatalog = jest.fn();
   const genreTabClickHandler = jest.fn();
   const fullScreenToggleHandler = jest.fn();
+  const signInClickHandler = jest.fn();
 
   const mainComponent = mount(
       <Main
@@ -87,9 +94,11 @@ it(`Click on play video button send callback with params`, () => {
         onFilmClick={filmClickHandler}
         renderCatalog={renderCatalog}
         activeGenre={defaultActiveGenre}
+        userData={userData}
         isFullscreenPlayerActive={isFullscreenPlayerActive}
         onFullScreenToggle={fullScreenToggleHandler}
         onGenreTabClick={genreTabClickHandler}
+        onSignInClick={signInClickHandler}
       />
   );
 

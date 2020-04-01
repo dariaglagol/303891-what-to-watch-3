@@ -8,14 +8,14 @@ import MovieExtended from "@components/movie-extended/movie-extended";
 import withTabs from "@hocs/with-tabs/with-tabs";
 import withCatalog from "@hocs/with-catalog/with-catalog";
 import withMovieList from "@hocs/with-movie-list/with-movie-list";
-
+import withSignIn from "@hocs/with-sign-in/with-sign-in";
 import {PageTypes} from "@utils/constants";
 
 import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
 import {getActivePage, getFullScreenPlayerState} from "@reducers/common/selectors";
 
 import {Operation as UserOperation} from "@reducers/user/user";
-import {getAuthStatus, getUserData} from "@reducers/user/selectors";
+import {getAuthStatus, getUserData, getUserError} from "@reducers/user/selectors";
 
 import {ActionCreator as DataActionCreator} from "@reducers/data/data";
 import {
@@ -31,6 +31,7 @@ import SignIn from "@components/sign-in/sign-in";
 
 const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
 const MainComponentWrapped = withMovieList(withCatalog(Main));
+const WrappedSingIn = withSignIn(SignIn);
 
 const App = (props) => {
   const {
@@ -45,7 +46,8 @@ const App = (props) => {
     onFullScreenToggle,
     activeFilmId,
     login,
-    userData
+    userData,
+    userErrors,
   } = props;
 
   const movieDetails = films.find((film) => film.id === activeFilmId) || {};
@@ -85,8 +87,9 @@ const App = (props) => {
         );
       case PageTypes.AUTH:
         return (
-          <SignIn
+          <WrappedSingIn
             onSubmit={login}
+            userErrors={userErrors}
           />
         );
     }
@@ -136,6 +139,7 @@ const mapStateToProps = (state) => ({
   isFullscreenPlayerActive: getFullScreenPlayerState(state),
   authStatus: getAuthStatus(state),
   userData: getUserData(state),
+  userErrors: getUserError(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -228,6 +232,9 @@ App.propTypes = {
     PropTypes.exact({})
   ]).isRequired,
   login: PropTypes.func.isRequired,
+  userErrors: PropTypes.shape({
+    error: PropTypes.string,
+  })
 };
 
 export {App};

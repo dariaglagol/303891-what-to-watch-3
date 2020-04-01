@@ -2,7 +2,7 @@
 
 exports[`Header render 1`] = `
 <header
-  className="page-header movie-card__head"
+  className="page-header"
 >
   <div
     className="logo"
@@ -36,7 +36,7 @@ exports[`Header render 1`] = `
       <img
         alt="User avatar"
         height="63"
-        src="img/avatar.jpg"
+        src="avatarUrl"
         width="63"
       />
     </div>

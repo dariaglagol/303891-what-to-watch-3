@@ -9,4 +9,8 @@ const getUserData = (state) => {
   return state[NAME].userData;
 };
 
-export {getAuthStatus, getUserData};
+const getUserError = (state) => {
+  return state[NAME].error;
+};
+
+export {getAuthStatus, getUserData, getUserError};
