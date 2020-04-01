@@ -99,7 +99,12 @@ const App = (props) => {
         );
       case PageTypes.REVIEW:
         return (
-          <AddReview />
+          <AddReview
+            userData={userData}
+            authStatus={authStatus}
+            movieDetails={movieDetails}
+            onSignInClick={onPageChange}
+          />
         );
     }
 
@@ -127,7 +132,12 @@ const App = (props) => {
           />
         </Route>
         <Route exact path="/dev-review">
-          <AddReview />
+          <AddReview
+            userData={userData}
+            authStatus={authStatus}
+            movieDetails={movieDetails}
+            onSignInClick={onPageChange}
+          />
         </Route>
       </Switch>
     </BrowserRouter>
