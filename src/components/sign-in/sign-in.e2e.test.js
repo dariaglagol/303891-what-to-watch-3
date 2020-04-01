@@ -9,11 +9,11 @@ Enzyme.configure({
   adapter: new Adapter(),
 });
 
-const invalidEmptyFields = [];
-
 const mockEvent = {
   preventDefault() {}
 };
+
+const userErrors = {};
 
 const MockComponent = (props) => {
   const {onSubmit, passwordRef, loginRef, invalidFields} = props;
@@ -29,6 +29,13 @@ const MockComponent = (props) => {
   );
 };
 
+MockComponent.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  passwordRef: PropTypes.node.isRequired,
+  loginRef: PropTypes.node.isRequired,
+  invalidFields: PropTypes.array.isRequired
+};
+
 const MockSignInWrapped = withSingIn(MockComponent);
 
 it(`Sign in submit click`, () => {
@@ -37,11 +44,12 @@ it(`Sign in submit click`, () => {
   const signInComponent = mount(
       <MockSignInWrapped
         onSubmit={submitHandler}
-        invalidEmptyFields={invalidEmptyFields}
+        userErrors={userErrors}
       />
   );
 
   const submitButton = signInComponent.find(`.sign-in__form`);
+
   submitButton.simulate(`submit`, mockEvent);
 
   expect(submitHandler).toHaveBeenCalledTimes(1);

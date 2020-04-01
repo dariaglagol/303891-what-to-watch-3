@@ -59,16 +59,16 @@ const reducer = (state = initialState, action) => {
 };
 
 const Operation = {
-  checkAuth: (onError) => (dispatch, getState, api) => {
+  checkAuth: () => (dispatch, getState, api) => {
     return api.get(`/login`)
       .then((response) => {
-        if (response && response.data) {
+        if (response && response.status === StatusCode.SUCCESS) {
+          dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
           dispatch(ActionCreator.setUserData(response.data));
         }
-        dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
       })
-      .catch(() => {
-        onError();
+      .catch((err) => {
+        dispatch(ActionCreator.setError(err));
       });
   },
   login: (authData) => (dispatch, getState, api) => {
