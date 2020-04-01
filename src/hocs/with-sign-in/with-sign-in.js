@@ -1,4 +1,5 @@
 import React, {createRef, PureComponent} from "react";
+import PropTypes from "prop-types";
 import {EMAIL_REGEXP, SignInFiled} from "@utils/constants";
 
 const withSingIn = (Component) => {
@@ -76,6 +77,10 @@ const withSingIn = (Component) => {
       );
     }
   }
+
+  WithSignIn.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+  };
 
   return WithSignIn;
 };

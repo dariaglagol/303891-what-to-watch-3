@@ -68,7 +68,7 @@ const EMAIL_REGEXP = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.
 const SignInFiled = {
   LOGIN: `login`,
   PASSWORD: `password`,
-}
+};
 
 export {
   MovieMarksTypes,

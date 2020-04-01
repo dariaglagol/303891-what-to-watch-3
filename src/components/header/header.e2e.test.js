@@ -7,28 +7,28 @@ Enzyme.configure({
   adapter: new Adapter(),
 });
 
-const userData = {
-  id: 1,
-  avatarUrl: `avatarUrl`,
-  email: `email`,
-  name: `name`,
-};
+const unauthorizedUserData = {};
 
 const pageType = `auth`;
 
-it(`Header sign in click`, () => {
+const mockEvent = {
+  preventDefault() {}
+};
+
+it(`Header sign in click, when user unauthorized`, () => {
   const singInClickHandler = jest.fn();
 
   const headerComponent = shallow(
       <Header
-        userData={userData}
+        userData={unauthorizedUserData}
         onSignInClick={singInClickHandler}
       />
   );
 
   const signInButton = headerComponent.find(`.user-block__link`);
-  signInButton.simulate(`click`);
+  signInButton.simulate(`click`, mockEvent);
 
   expect(singInClickHandler).toHaveBeenCalledTimes(1);
   expect(singInClickHandler).toBeCalledWith(pageType);
 });
+

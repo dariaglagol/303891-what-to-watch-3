@@ -7,12 +7,13 @@ const SignIn = (props) => {
     onSubmit,
     loginRef,
     passwordRef,
-    invalidFields = []
+    invalidFields = [],
+    userErrors
   } = props;
 
   const [login, password] = invalidFields;
 
-  const {userErrors: {error}} = props;
+  const {error} = userErrors;
 
   function _renderInputs() {
     return (
@@ -87,11 +88,14 @@ const SignIn = (props) => {
 SignIn.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   userErrors: PropTypes.shape({
-    error: PropTypes.string.isRequired
+    error: PropTypes.string
   }),
   loginRef: PropTypes.node.isRequired,
   passwordRef: PropTypes.node.isRequired,
-  invalidFields: PropTypes.arrayOf(PropTypes.string).isRequired
+  invalidFields: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string).isRequired,
+    PropTypes.exact([])
+  ])
 };
 
 export default SignIn;
