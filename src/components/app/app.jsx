@@ -8,13 +8,13 @@ import MovieExtended from "@components/movie-extended/movie-extended";
 import withTabs from "@hocs/with-tabs/with-tabs";
 import withCatalog from "@hocs/with-catalog/with-catalog";
 import withMovieList from "@hocs/with-movie-list/with-movie-list";
-
 import {PageTypes} from "@utils/constants";
 
 import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
 import {getActivePage, getFullScreenPlayerState} from "@reducers/common/selectors";
 
 import {Operation as UserOperation} from "@reducers/user/user";
+import {getAuthStatus, getUserData, getUserError} from "@reducers/user/selectors";
 
 import {ActionCreator as DataActionCreator} from "@reducers/data/data";
 import {
@@ -24,7 +24,9 @@ import {
   getMovieCover,
   getActiveFilmId
 } from "@reducers/data/selectors.js";
+
 import Loading from "@components/loading/loading";
+import SignIn from "@components/sign-in/sign-in";
 
 const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
 const MainComponentWrapped = withMovieList(withCatalog(Main));
@@ -40,7 +42,11 @@ const App = (props) => {
     onPageChange,
     isFullscreenPlayerActive,
     onFullScreenToggle,
-    activeFilmId
+    activeFilmId,
+    login,
+    userData,
+    userErrors,
+    authStatus,
   } = props;
 
   const movieDetails = films.find((film) => film.id === activeFilmId) || {};
@@ -50,8 +56,11 @@ const App = (props) => {
       case PageTypes.MAIN:
         return (
           <MainComponentWrapped
+            userData={userData}
+            authStatus={authStatus}
             promoMovie={promoMovie}
             onFilmClick={onPageChange}
+            onSignInClick={onPageChange}
             activeGenre={activeGenre}
             onGenreTabClick={onGenreTabClick}
             isFullscreenPlayerActive={isFullscreenPlayerActive}
@@ -62,7 +71,10 @@ const App = (props) => {
       case PageTypes.MOVIE:
         return (
           <MovieExtendedComponentWrapped
+            userData={userData}
+            authStatus={authStatus}
             onFilmClick={onPageChange}
+            onSignInClick={onPageChange}
             films={films}
             movieDetails={movieDetails}
             isFullscreenPlayerActive={isFullscreenPlayerActive}
@@ -73,6 +85,13 @@ const App = (props) => {
       case PageTypes.LOADING:
         return (
           <Loading />
+        );
+      case PageTypes.AUTH:
+        return (
+          <SignIn
+            onSubmit={login}
+            userErrors={userErrors}
+          />
         );
     }
 
@@ -87,7 +106,10 @@ const App = (props) => {
         </Route>
         <Route exact path="/dev-movie-details">
           <MovieExtendedComponentWrapped
+            userData={userData}
+            authStatus={authStatus}
             onFilmClick={onPageChange}
+            onSignInClick={onPageChange}
             films={films}
             movieDetails={movieDetails}
             isFullscreenPlayerActive={isFullscreenPlayerActive}
@@ -101,10 +123,11 @@ const App = (props) => {
 };
 
 App.defaultProps = {
-  films: null,
-  promoMovie: null,
-  reviews: null,
-  movieDetails: null,
+  films: [],
+  promoMovie: {},
+  reviews: [],
+  movieDetails: {},
+  userData: {},
 };
 
 const mapStateToProps = (state) => ({
@@ -116,14 +139,19 @@ const mapStateToProps = (state) => ({
   activePage: getActivePage(state),
   activeFilmId: getActiveFilmId(state),
   isFullscreenPlayerActive: getFullScreenPlayerState(state),
+  authStatus: getAuthStatus(state),
+  userData: getUserData(state),
+  userErrors: getUserError(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onGenreTabClick(activeGenre) {
     dispatch(DataActionCreator.changeGenre(activeGenre));
   },
-  onPageChange(id, activePage) {
-    dispatch(DataActionCreator.getActiveFilmId(id));
+  onPageChange(activePage, id) {
+    if (id) {
+      dispatch(DataActionCreator.getActiveFilmId(id));
+    }
     dispatch(CommonActionCreator.setActivePage(activePage));
   },
   onFullScreenToggle(state) {
@@ -195,6 +223,20 @@ App.propTypes = {
   isFullscreenPlayerActive: PropTypes.bool.isRequired,
   onFullScreenToggle: PropTypes.func.isRequired,
   activeFilmId: PropTypes.number.isRequired,
+  authStatus: PropTypes.string.isRequired,
+  userData: PropTypes.oneOfType([
+    PropTypes.exact({
+      id: PropTypes.number.isRequired,
+      email: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      avatarUrl: PropTypes.string.isRequired,
+    }),
+    PropTypes.exact({})
+  ]).isRequired,
+  login: PropTypes.func.isRequired,
+  userErrors: PropTypes.shape({
+    error: PropTypes.string,
+  })
 };
 
 export {App};

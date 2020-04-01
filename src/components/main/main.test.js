@@ -66,10 +66,16 @@ const mocks = {
     },
   ],
   isFullscreenPlayerActive: false,
+  userData: {
+    id: 1,
+    email: `email`,
+    name: `name`,
+    avatarUrl: `avatarUrl`
+  },
 };
 
 it(`Main component render`, () => {
-  const {mockFilmData, defaultActiveGenre, mockedCatalogFilms, isFullscreenPlayerActive} = mocks;
+  const {mockFilmData, defaultActiveGenre, userData, mockedCatalogFilms, isFullscreenPlayerActive} = mocks;
 
   const mainComponent = renderer
     .create(
@@ -82,6 +88,9 @@ it(`Main component render`, () => {
           isFullscreenPlayerActive={isFullscreenPlayerActive}
           onFullScreenToggle={() => {}}
           onGenreTabClick={() => {}}
+          userData={userData}
+          authStatus={`NO_AUTH`}
+          onSignInClick={() => {}}
         />, {createNodeMock: () => {
           return {};
         }}

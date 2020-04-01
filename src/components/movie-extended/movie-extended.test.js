@@ -22,6 +22,12 @@ const mocks = {
     videoLink: `givenPromoMovie videoLink`,
     previewVideoLink: `givenPromoMovie previewVideoLink`,
   },
+  userData: {
+    id: 1,
+    email: `email`,
+    name: `name`,
+    avatarUrl: `avatarUrl`
+  },
   mockCatalogFilms: [
     {
       name: `name`,
@@ -66,7 +72,7 @@ const mocks = {
 };
 
 it(`Movie details render`, () => {
-  const {movieDetails, mockCatalogFilms, activeTab, isFullscreenPlayerActive} = mocks;
+  const {movieDetails, mockCatalogFilms, userData, activeTab, isFullscreenPlayerActive} = mocks;
   const movieExtendedComponent = renderer
     .create(
         <MovieExtended
@@ -78,6 +84,9 @@ it(`Movie details render`, () => {
           renderMovieList={() => {}}
           activeTab={activeTab}
           isFullscreenPlayerActive={isFullscreenPlayerActive}
+          onSignInClick={() => {}}
+          authStatus={`NO_AUTH`}
+          userData={userData}
         />, {createNodeMock: () => {
           return {};
         }}

@@ -18,7 +18,7 @@ exports[`Movie overview render 1`] = `
       <span
         className="movie-card__details-value"
       >
-        Wes Andreson
+         givenPromoMovie director
       </span>
     </p>
     <p
@@ -32,16 +32,10 @@ exports[`Movie overview render 1`] = `
       <span
         className="movie-card__details-value"
       >
-        Bill Murray
+         givenPromoMovie starring
          
         <br />
-        Edward Norton
-         
-        <br />
-        Jude Law
-         
-        <br />
-        Willem Dafoe
+        givenPromoMovie starring
          
         <br />
       </span>
@@ -75,7 +69,7 @@ exports[`Movie overview render 1`] = `
       <span
         className="movie-card__details-value"
       >
-        Comedy
+        givenPromoMovie genre
       </span>
     </p>
     <p

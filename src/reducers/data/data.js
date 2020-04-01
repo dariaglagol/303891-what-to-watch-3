@@ -1,4 +1,4 @@
-import {extend, filmAdapter, filmsAdapter} from "@utils/utils.js";
+import {extend, itemAdapter, itemsAdapter} from "@utils/utils.js";
 import MovieReviews from "@mocks/reviews";
 import {DEFAULT_ACTIVE_GENRE, PageTypes} from "@utils/constants";
 import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
@@ -22,13 +22,13 @@ const ActionCreator = {
   loadFilms: (films) => {
     return {
       type: ActionType.LOAD_FILMS,
-      payload: filmsAdapter(films),
+      payload: itemsAdapter(films),
     };
   },
   loadPromoFilm: (film) => {
     return {
       type: ActionType.LOAD_PROMO_FILM,
-      payload: filmAdapter(film),
+      payload: itemAdapter(film),
     };
   },
   changeGenre: (newGenre) => ({

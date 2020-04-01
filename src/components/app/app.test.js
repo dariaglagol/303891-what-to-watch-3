@@ -68,16 +68,27 @@ const mocks = {
   },
   defaultActivePage: `main`,
   isFullscreenPlayerActive: false,
+  userErrors: {},
+  userData: {
+    id: 1,
+    email: `email`,
+    name: `name`,
+    avatarUrl: `avatarUrl`
+  },
+  authStatus: `NO_AUTH`,
 };
 
 it(`Render App`, () => {
   const {
     mockFilmData,
+    authStatus,
     mockCatalogFilms,
     activeFilmId,
     defaultActiveGenre,
     defaultActivePage,
-    isFullscreenPlayerActive
+    isFullscreenPlayerActive,
+    userErrors,
+    userData,
   } = mocks;
 
   const appComponent = renderer
@@ -92,6 +103,10 @@ it(`Render App`, () => {
           onFullScreenToggle={() => {}}
           activePage={defaultActivePage}
           isFullscreenPlayerActive={isFullscreenPlayerActive}
+          login={() => {}}
+          authStatus={authStatus}
+          userErrors={userErrors}
+          userData={userData}
         />
         , {createNodeMock: () => {
           return {};

@@ -10,8 +10,8 @@ const movieReviewsMock = [
     rating: 8.9
   }, {
     text: `text`,
-    author: `author`,
-    date: `date`,
+    author: `author 1`,
+    date: `date 2`,
     rating: 8.0
   }
 ];

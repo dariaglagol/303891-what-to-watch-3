@@ -22,6 +22,9 @@ const MovieExtended = (props) => {
     renderMovieList,
     onFullScreenToggle,
     isFullscreenPlayerActive,
+    userData,
+    onSignInClick,
+    authStatus,
   } = props;
 
   const {
@@ -81,7 +84,11 @@ const MovieExtended = (props) => {
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <Header/>
+          <Header
+            userData={userData}
+            authStatus={authStatus}
+            onSignInClick={onSignInClick}
+          />
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
@@ -212,6 +219,17 @@ MovieExtended.propTypes = {
   activeTab: PropTypes.string.isRequired,
   isFullscreenPlayerActive: PropTypes.bool.isRequired,
   onFullScreenToggle: PropTypes.func.isRequired,
+  userData: PropTypes.oneOfType([
+    PropTypes.exact({
+      id: PropTypes.number.isRequired,
+      email: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      avatarUrl: PropTypes.string.isRequired,
+    }),
+    PropTypes.exact({})
+  ]).isRequired,
+  onSignInClick: PropTypes.func.isRequired,
+  authStatus: PropTypes.string.isRequired,
 };
 
 export default MovieExtended;

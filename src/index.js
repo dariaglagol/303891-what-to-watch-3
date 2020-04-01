@@ -6,7 +6,7 @@ import thunk from "redux-thunk";
 import {Provider} from "react-redux";
 
 import reducer from "@reducers/reducer";
-import {ActionCreator as UserActionCreator} from "@reducers/user/user";
+import {ActionCreator as UserActionCreator, Operation as UserOperation} from "@reducers/user/user";
 import {Operation as DataOperation} from "@reducers/data/data";
 
 import App from "@components/app/app";
@@ -49,6 +49,7 @@ const unsubscribe = store.subscribe(storeChangeHandler);
 
 store.dispatch(DataOperation.loadFilms());
 store.dispatch(DataOperation.loadPromoFilm());
+store.dispatch(UserOperation.checkAuth());
 
 ReactDOM.render(
     <Provider store={store}>

@@ -33,6 +33,7 @@ const DEFAULT_ACTIVE_GENRE = {
 const PageTypes = {
   MAIN: `main`,
   MOVIE: `movie`,
+  AUTH: `auth`,
   LOADING: `loading`
 };
 
@@ -48,9 +49,11 @@ const DEFAULT_SHOWN_FILMS = 8;
 
 const FULLSCREEN_VIDEO_CLASS = `player__video`;
 
-const Error = {
+const StatusCode = {
   UNAUTHORIZED: 401,
   SERVER_PROBLEMS: 500,
+  AUTH_ERROR: 400,
+  SUCCESS: 200,
 };
 
 const TIMEOUT = 5000;
@@ -58,6 +61,13 @@ const TIMEOUT = 5000;
 const AuthorizationStatus = {
   NO_AUTH: `NO_AUTH`,
   AUTH: `AUTH`
+};
+
+const EMAIL_REGEXP = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/;
+
+const SignInFiled = {
+  LOGIN: `login`,
+  PASSWORD: `password`,
 };
 
 export {
@@ -72,7 +82,9 @@ export {
   DEFAULT_ACTIVE_TAB,
   DEFAULT_SHOWN_FILMS,
   FULLSCREEN_VIDEO_CLASS,
-  Error,
+  StatusCode,
   TIMEOUT,
-  AuthorizationStatus
+  AuthorizationStatus,
+  EMAIL_REGEXP,
+  SignInFiled
 };

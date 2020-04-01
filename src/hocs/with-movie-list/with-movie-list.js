@@ -41,7 +41,7 @@ const withMovieList = (Component) => {
 
     _filmCatalogClickHandler(id) {
       const {onFilmClick} = this.props;
-      onFilmClick(id, PageTypes.MOVIE);
+      onFilmClick(PageTypes.MOVIE, id);
     }
 
     render() {

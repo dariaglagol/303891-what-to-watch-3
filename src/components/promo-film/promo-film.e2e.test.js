@@ -27,16 +27,27 @@ const mockFilmData = {
   previewVideoLink: `previewVideoLink`,
 };
 
+const userData = {
+  id: 1,
+  avatarUrl: `avatarUrl`,
+  email: `email`,
+  name: `name`,
+};
+
 const pageType = `movie`;
 
 it(`Should header be clicked`, () => {
   const movieTitleClickHandler = jest.fn();
   const playButtonClickHandler = jest.fn();
+  const signInClickHandler = jest.fn();
 
   const movieCard = shallow(
       <PromoFilm
         promoMovie={mockFilmData}
+        userData={userData}
+        onSignInClick={signInClickHandler}
         onFilmClick={movieTitleClickHandler}
+        authStatus={`NO_AUTH`}
         onPlayButtonClick={playButtonClickHandler}
       />
   );
@@ -52,11 +63,15 @@ it(`Should header be clicked`, () => {
 it(`Should poster be clicked`, () => {
   const moviePosterClickHeader = jest.fn();
   const playButtonClickHandler = jest.fn();
+  const signInClickHandler = jest.fn();
 
   const movieCard = shallow(
       <PromoFilm
         promoMovie={mockFilmData}
+        userData={userData}
+        onSignInClick={signInClickHandler}
         onFilmClick={moviePosterClickHeader}
+        authStatus={`NO_AUTH`}
         onPlayButtonClick={playButtonClickHandler}
       />
   );
@@ -72,11 +87,15 @@ it(`Should poster be clicked`, () => {
 it(`Click on play button calls callback to switch on video`, () => {
   const moviePosterClickHeader = jest.fn();
   const playButtonClickHandler = jest.fn();
+  const signInClickHandler = jest.fn();
 
   const movieCard = shallow(
       <PromoFilm
         promoMovie={mockFilmData}
+        userData={userData}
+        onSignInClick={signInClickHandler}
         onFilmClick={moviePosterClickHeader}
+        authStatus={`NO_AUTH`}
         onPlayButtonClick={playButtonClickHandler}
       />
   );
