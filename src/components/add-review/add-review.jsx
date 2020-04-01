@@ -1,8 +1,8 @@
 import React, {PureComponent, createRef} from "react";
 import PropTypes from "prop-types";
 import Header from "@components/header/header";
-import Rating from "@components/add-review/blocks/rating";
-import {RATING_STARS_COUNT} from "@utils/constants";
+import RatingStar from "@components/add-review/blocks/rating-star";
+import {RATING_STARS_COUNT, TextAreaMinMaxValues} from "@utils/constants";
 
 class AddReview extends PureComponent {
   constructor(props) {
@@ -23,7 +23,7 @@ class AddReview extends PureComponent {
     return (
       serviceRatingList.map((item, index) => {
         return (
-          <Rating
+          <RatingStar
             item={index + 1}
             key={`star-${index + 1}`}
             onChange={onStarsChange}
@@ -47,7 +47,7 @@ class AddReview extends PureComponent {
 
     const reviewText = this._reviewRef.current.value;
 
-    if (reviewText.length > 5 && reviewText.length < 400) {
+    if (reviewText.length > TextAreaMinMaxValues.MIN && reviewText.length < TextAreaMinMaxValues.MAX) {
       toggleSubmitButton(false);
     } else {
       toggleSubmitButton(true);
@@ -130,5 +130,51 @@ class AddReview extends PureComponent {
     );
   }
 }
+
+AddReview.propTypes = {
+  onStarsChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  toggleSubmitButton: PropTypes.func.isRequired,
+  onSignInClick: PropTypes.func.isRequired,
+  userData: PropTypes.oneOfType([
+    PropTypes.exact({
+      id: PropTypes.number.isRequired,
+      email: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      avatarUrl: PropTypes.string.isRequired,
+    }),
+    PropTypes.exact({})
+  ]).isRequired,
+  authStatus: PropTypes.string.isRequired,
+  movieDetails: PropTypes.oneOfType([
+    PropTypes.exact({
+      name: PropTypes.string.isRequired,
+      posterImage: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
+      backgroundColor: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      scoresCount: PropTypes.number.isRequired,
+      director: PropTypes.string.isRequired,
+      starring: PropTypes.array.isRequired,
+      runTime: PropTypes.number.isRequired,
+      genre: PropTypes.string.isRequired,
+      released: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+      videoLink: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
+    }),
+    PropTypes.exact({}).isRequired,
+  ]),
+  isSubmitButtonDisable: PropTypes.bool.isRequired,
+  reviewError: PropTypes.oneOfType([
+    PropTypes.shape({
+      error: PropTypes.string
+    }),
+    PropTypes.shape({})
+  ])
+};
 
 export default AddReview;

@@ -5,7 +5,8 @@ import {
   getReviews,
   getActiveFilmId,
   getMovieCover,
-  getActiveGenre
+  getActiveGenre,
+  getReviewError,
 } from "./selectors";
 import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
 
@@ -262,6 +263,7 @@ const state = {
     },
     ],
     activeFilmId: 1,
+    error: {},
   }
 };
 
@@ -270,6 +272,7 @@ const initialState = {
   activeGenre: DEFAULT_ACTIVE_GENRE,
   promoMovie: {},
   activeFilmId: 0,
+  error: {},
   reviews: [{
     text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
     author: `Kate Muir`,
@@ -373,10 +376,26 @@ describe(`Data reducer tests`, () => {
     });
   });
 
+  it(`Reducer should set error object by a given value`, () => {
+    const {error} = initialState;
+
+    expect(reducer({error}, {
+      type: ActionType.SET_REVIEW_ERROR,
+      payload: {error: `Error`}
+    })).toEqual({error: {error: `Error`}});
+  });
+
   it(`Action creator return correct action after change genre`, () => {
     expect(ActionCreator.changeGenre(GIVEN_GENRE)).toEqual({
       type: ActionType.CHANGE_GENRE,
       payload: GIVEN_GENRE,
+    });
+  });
+
+  it(`Action creator return correct action after call`, () => {
+    expect(ActionCreator.setReviewError({error: {error: `error`}})).toEqual({
+      type: ActionType.SET_REVIEW_ERROR,
+      payload: {error: {error: `error`}},
     });
   });
 
@@ -425,5 +444,9 @@ describe(`Data reducer tests`, () => {
 
   it(`Selector getActiveGenre return right key`, () => {
     expect(getActiveGenre(state)).toEqual(GIVEN_GENRE);
+  });
+
+  it(`Selector getReviewError return right key`, () => {
+    expect(getReviewError(state)).toEqual({});
   });
 });

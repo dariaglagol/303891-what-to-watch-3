@@ -71,7 +71,7 @@ const mocks = {
   isFullscreenPlayerActive: false,
 };
 
-it(`Movie details render`, () => {
+it(`Movie details render with NO_AUTH status`, () => {
   const {movieDetails, mockCatalogFilms, userData, activeTab, isFullscreenPlayerActive} = mocks;
   const movieExtendedComponent = renderer
     .create(
@@ -87,6 +87,32 @@ it(`Movie details render`, () => {
           onSignInClick={() => {}}
           authStatus={`NO_AUTH`}
           userData={userData}
+          onAddReviewClick={() => {}}
+        />, {createNodeMock: () => {
+          return {};
+        }}
+    ).toJSON();
+
+  expect(movieExtendedComponent).toMatchSnapshot();
+});
+
+it(`Movie details render with AUTH status`, () => {
+  const {movieDetails, mockCatalogFilms, userData, activeTab, isFullscreenPlayerActive} = mocks;
+  const movieExtendedComponent = renderer
+    .create(
+        <MovieExtended
+          movieDetails={movieDetails}
+          films={mockCatalogFilms}
+          renderTabs={() => {}}
+          onFilmClick={() => {}}
+          onFullScreenToggle={() => {}}
+          renderMovieList={() => {}}
+          activeTab={activeTab}
+          isFullscreenPlayerActive={isFullscreenPlayerActive}
+          onSignInClick={() => {}}
+          authStatus={`AUTH`}
+          userData={userData}
+          onAddReviewClick={() => {}}
         />, {createNodeMock: () => {
           return {};
         }}

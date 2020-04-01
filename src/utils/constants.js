@@ -66,6 +66,11 @@ const AuthorizationStatus = {
 
 const RATING_STARS_COUNT = 5;
 
+const TextAreaMinMaxValues = {
+  MIN: 5,
+  MAX: 400,
+};
+
 export {
   MovieMarksTypes,
   FILM_REVIEWS_COLUMN_COUNT,
@@ -81,5 +86,6 @@ export {
   StatusCode,
   TIMEOUT,
   AuthorizationStatus,
-  RATING_STARS_COUNT
+  RATING_STARS_COUNT,
+  TextAreaMinMaxValues
 };

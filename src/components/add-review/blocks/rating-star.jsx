@@ -1,6 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const Rating = ({item, onChange}) => {
+const RatingStar = ({item, onChange}) => {
   function _starClickHandler() {
     onChange(item);
   }
@@ -25,4 +26,9 @@ const Rating = ({item, onChange}) => {
   );
 };
 
-export default Rating;
+RatingStar.propTypes = {
+  item: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
+
+export default RatingStar;

@@ -269,7 +269,14 @@ App.propTypes = {
   login: PropTypes.func.isRequired,
   userErrors: PropTypes.shape({
     error: PropTypes.string,
-  })
+  }),
+  addReview: PropTypes.func.isRequired,
+  reviewError: PropTypes.oneOfType([
+    PropTypes.shape({
+      error: PropTypes.string
+    }),
+    PropTypes.shape({})
+  ]),
 };
 
 export {App};

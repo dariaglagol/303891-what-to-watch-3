@@ -1,4 +1,5 @@
 import React, {PureComponent} from "react";
+import PropTypes from "prop-types";
 
 const withReview = (Component) => {
   class WithReview extends PureComponent {
@@ -47,6 +48,10 @@ const withReview = (Component) => {
       );
     }
   }
+
+  WithReview.propTypes = {
+    onSubmit: PropTypes.func.isRequired
+  };
 
   return WithReview;
 };
