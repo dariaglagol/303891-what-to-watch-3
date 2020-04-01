@@ -14,6 +14,7 @@ it(`Header render`, () => {
     .create(
         <Header
           userData={userData}
+          authStatus={`NO_AUTH`}
           onSignInClick={() => {}}
         />
     )

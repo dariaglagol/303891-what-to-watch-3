@@ -37,6 +37,7 @@ it(`Movie card render`, () => {
           userData={userData}
           onFilmClick={() => {}}
           onSignInClick={() => {}}
+          authStatus={`NO_AUTH`}
           onPlayButtonClick={() => {}}
         />
     )

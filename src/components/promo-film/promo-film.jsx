@@ -13,7 +13,8 @@ const PromoFilm = (props) => {
     onFilmClick,
     onPlayButtonClick,
     userData,
-    onSignInClick
+    onSignInClick,
+    authStatus
   } = props;
 
   function _onFilmClickHandler() {
@@ -35,6 +36,7 @@ const PromoFilm = (props) => {
       <Header
         userData={userData}
         onSignInClick={onSignInClick}
+        authStatus={authStatus}
       />
 
       <div className="movie-card__wrap">
@@ -112,6 +114,7 @@ PromoFilm.propTypes = {
     PropTypes.exact({})
   ]).isRequired,
   onSignInClick: PropTypes.func.isRequired,
+  authStatus: PropTypes.string.isRequired,
 };
 
 export default PromoFilm;

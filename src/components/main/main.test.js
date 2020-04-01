@@ -89,6 +89,7 @@ it(`Main component render`, () => {
           onFullScreenToggle={() => {}}
           onGenreTabClick={() => {}}
           userData={userData}
+          authStatus={`NO_AUTH`}
           onSignInClick={() => {}}
         />, {createNodeMock: () => {
           return {};

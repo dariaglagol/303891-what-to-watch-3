@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {PageTypes} from "@utils/constants";
+import {AuthorizationStatus, PageTypes} from "@utils/constants";
 
 const Header = (props) => {
   const {
     userData,
-    onSignInClick
+    onSignInClick,
+    authStatus
   } = props;
 
   const {avatarUrl} = userData;
@@ -16,7 +17,7 @@ const Header = (props) => {
   }
 
   function _renderHeader() {
-    if (avatarUrl) {
+    if (authStatus === AuthorizationStatus.AUTH) {
       return (
         <div className="user-block__avatar">
           <img
@@ -68,6 +69,7 @@ Header.propTypes = {
     PropTypes.exact({})
   ]).isRequired,
   onSignInClick: PropTypes.func.isRequired,
+  authStatus: PropTypes.string.isRequired,
 };
 
 export default Header;

@@ -99,6 +99,7 @@ it(`Click on play video button send callback with params`, () => {
         onFullScreenToggle={fullScreenToggleHandler}
         onGenreTabClick={genreTabClickHandler}
         onSignInClick={signInClickHandler}
+        authStatus={`NO_AUTH`}
       />
   );
 

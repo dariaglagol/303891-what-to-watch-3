@@ -85,6 +85,7 @@ it(`Movie details render`, () => {
           activeTab={activeTab}
           isFullscreenPlayerActive={isFullscreenPlayerActive}
           onSignInClick={() => {}}
+          authStatus={`NO_AUTH`}
           userData={userData}
         />, {createNodeMock: () => {
           return {};

@@ -47,6 +47,7 @@ it(`Should header be clicked`, () => {
         userData={userData}
         onSignInClick={signInClickHandler}
         onFilmClick={movieTitleClickHandler}
+        authStatus={`NO_AUTH`}
         onPlayButtonClick={playButtonClickHandler}
       />
   );
@@ -70,6 +71,7 @@ it(`Should poster be clicked`, () => {
         userData={userData}
         onSignInClick={signInClickHandler}
         onFilmClick={moviePosterClickHeader}
+        authStatus={`NO_AUTH`}
         onPlayButtonClick={playButtonClickHandler}
       />
   );
@@ -93,6 +95,7 @@ it(`Click on play button calls callback to switch on video`, () => {
         userData={userData}
         onSignInClick={signInClickHandler}
         onFilmClick={moviePosterClickHeader}
+        authStatus={`NO_AUTH`}
         onPlayButtonClick={playButtonClickHandler}
       />
   );

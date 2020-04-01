@@ -21,6 +21,7 @@ it(`Header sign in click, when user unauthorized`, () => {
   const headerComponent = shallow(
       <Header
         userData={unauthorizedUserData}
+        authStatus={`NO_AUTH`}
         onSignInClick={singInClickHandler}
       />
   );

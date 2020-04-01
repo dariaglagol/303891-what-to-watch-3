@@ -48,6 +48,7 @@ const App = (props) => {
     login,
     userData,
     userErrors,
+    authStatus,
   } = props;
 
   const movieDetails = films.find((film) => film.id === activeFilmId) || {};
@@ -58,6 +59,7 @@ const App = (props) => {
         return (
           <MainComponentWrapped
             userData={userData}
+            authStatus={authStatus}
             promoMovie={promoMovie}
             onFilmClick={onPageChange}
             onSignInClick={onPageChange}
@@ -72,6 +74,7 @@ const App = (props) => {
         return (
           <MovieExtendedComponentWrapped
             userData={userData}
+            authStatus={authStatus}
             onFilmClick={onPageChange}
             onSignInClick={onPageChange}
             films={films}
@@ -106,6 +109,7 @@ const App = (props) => {
         <Route exact path="/dev-movie-details">
           <MovieExtendedComponentWrapped
             userData={userData}
+            authStatus={authStatus}
             onFilmClick={onPageChange}
             onSignInClick={onPageChange}
             films={films}

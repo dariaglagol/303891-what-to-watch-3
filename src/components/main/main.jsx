@@ -16,7 +16,8 @@ const Main = (props) => {
     isFullscreenPlayerActive,
     onFullScreenToggle,
     userData,
-    onSignInClick
+    onSignInClick,
+    authStatus,
   } = props;
 
   function _getPlayEvent() {
@@ -28,6 +29,7 @@ const Main = (props) => {
       <PromoFilm
         onSignInClick={onSignInClick}
         userData={userData}
+        authStatus={authStatus}
         promoMovie={promoMovie}
         onFilmClick={onFilmClick}
         onPlayButtonClick={_getPlayEvent}
@@ -113,6 +115,7 @@ Main.propTypes = {
     PropTypes.exact({})
   ]).isRequired,
   onSignInClick: PropTypes.func.isRequired,
+  authStatus: PropTypes.string.isRequired,
 };
 
 export default Main;
