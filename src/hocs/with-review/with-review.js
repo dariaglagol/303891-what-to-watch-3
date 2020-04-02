@@ -32,16 +32,18 @@ const withReview = (Component) => {
       const {onSubmit} = this.props;
       const {stars} = this.state;
 
-      onSubmit({stars, reviewText});
+      if (stars !== null && reviewText) {
+        onSubmit({stars, reviewText});
 
-      this.setState({
-        stars: 0,
-        isSubmitButtonDisable: true,
-      });
+        this.setState({
+          stars: null,
+          isSubmitButtonDisable: true,
+        });
+      }
     }
 
     render() {
-      const {isSubmitButtonDisable} = this.state;
+      const {isSubmitButtonDisable, stars} = this.state;
       return (
         <Component
           {...this.props}
@@ -49,6 +51,7 @@ const withReview = (Component) => {
           onSubmit={this._submitHandler}
           toggleSubmitButton={this._toggleSubmitButton}
           isSubmitButtonDisable={isSubmitButtonDisable}
+          stars={stars}
         />
       );
     }

@@ -35,13 +35,13 @@ class AddReview extends PureComponent {
 
   _submitHandler(e) {
     e.preventDefault();
-    const {onSubmit} = this.props;
+    const {onSubmit, stars} = this.props;
 
     const reviewText = this._reviewRef.current.value;
 
     onSubmit(reviewText);
 
-    this._reviewRef.current.value = ``;
+    this._reviewRef.current.value = stars ? `` : reviewText;
   }
 
   _reviewTypeHandler() {
@@ -176,7 +176,8 @@ AddReview.propTypes = {
       error: PropTypes.string
     }),
     PropTypes.shape({})
-  ])
+  ]),
+  stars: PropTypes.number.isRequired,
 };
 
 export default AddReview;
