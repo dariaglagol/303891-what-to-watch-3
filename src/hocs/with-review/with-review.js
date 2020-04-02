@@ -1,5 +1,6 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
+import {RATING_ERROR_TEXT} from "@utils/constants";
 
 const withReview = (Component) => {
   class WithReview extends PureComponent {
@@ -9,6 +10,7 @@ const withReview = (Component) => {
       this.state = {
         stars: 0,
         isSubmitButtonDisable: true,
+        validationErrors: []
       };
 
       this._starsChangeHandler = this._starsChangeHandler.bind(this);
@@ -32,18 +34,24 @@ const withReview = (Component) => {
       const {onSubmit} = this.props;
       const {stars} = this.state;
 
-      if (stars !== 0 && reviewText) {
-        onSubmit({stars, reviewText});
-
+      if (stars === 0) {
         this.setState({
-          stars: 0,
-          isSubmitButtonDisable: true,
+          validationErrors: [RATING_ERROR_TEXT]
         });
+
+        return;
       }
+
+      onSubmit({stars, reviewText});
+
+      this.setState({
+        stars: 0,
+        isSubmitButtonDisable: true,
+      });
     }
 
     render() {
-      const {isSubmitButtonDisable, stars} = this.state;
+      const {isSubmitButtonDisable, validationErrors} = this.state;
       return (
         <Component
           {...this.props}
@@ -51,7 +59,7 @@ const withReview = (Component) => {
           onSubmit={this._submitHandler}
           toggleSubmitButton={this._toggleSubmitButton}
           isSubmitButtonDisable={isSubmitButtonDisable}
-          stars={stars}
+          validationErrors={validationErrors}
         />
       );
     }

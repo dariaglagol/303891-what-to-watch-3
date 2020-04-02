@@ -31,7 +31,7 @@ const mock = {
   },
   reviewError: {},
   isSubmitButtonDisable: true,
-  stars: 1,
+  validationErrors: [],
 };
 
 it(`Render add review component`, () => {
@@ -41,7 +41,7 @@ it(`Render add review component`, () => {
     movieDetails,
     reviewError,
     isSubmitButtonDisable,
-    stars,
+    validationErrors,
   } = mock;
 
   const addReviewComponent = renderer
@@ -56,7 +56,7 @@ it(`Render add review component`, () => {
           toggleSubmitButton={() => {}}
           onSignInClick={() => {}}
           isSubmitButtonDisable={isSubmitButtonDisable}
-          stars={stars}
+          validationErrors={validationErrors}
         />
     ).toJSON();
 

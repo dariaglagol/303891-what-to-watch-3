@@ -35,13 +35,13 @@ class AddReview extends PureComponent {
 
   _submitHandler(e) {
     e.preventDefault();
-    const {onSubmit, stars} = this.props;
+    const {onSubmit, validationErrors} = this.props;
 
     const reviewText = this._reviewRef.current.value;
 
     onSubmit(reviewText);
 
-    this._reviewRef.current.value = stars ? `` : reviewText;
+    this._reviewRef.current.value = validationErrors.length ? `` : reviewText;
   }
 
   _reviewTypeHandler() {
@@ -56,6 +56,19 @@ class AddReview extends PureComponent {
     }
   }
 
+  _renderError() {
+    const {reviewError, validationErrors} = this.props;
+    const {error} = reviewError;
+
+    if (validationErrors) {
+      return (
+        <p>{error || validationErrors && validationErrors.join(`, `)}</p>
+      );
+    }
+
+    return null;
+  }
+
   render() {
     const {
       userData,
@@ -63,7 +76,6 @@ class AddReview extends PureComponent {
       onSignInClick,
       movieDetails,
       isSubmitButtonDisable,
-      reviewError
     } = this.props;
 
     const {
@@ -71,8 +83,6 @@ class AddReview extends PureComponent {
       posterImage,
       backgroundImage,
     } = movieDetails;
-
-    const {error} = reviewError;
 
     return (
       <section className="movie-card movie-card--full">
@@ -100,7 +110,7 @@ class AddReview extends PureComponent {
 
         <div className="add-review">
           <form action="#" className="add-review__form" onSubmit={this._submitHandler}>
-            <p>{error}</p>
+            {this._renderError()}
             <div className="rating">
               <div className="rating__stars">
                 {this._renderRating()}
@@ -177,7 +187,10 @@ AddReview.propTypes = {
     }),
     PropTypes.shape({})
   ]),
-  stars: PropTypes.number.isRequired,
+  validationErrors: PropTypes.oneOfType([
+    PropTypes.exact([]),
+    PropTypes.arrayOf(PropTypes.string)
+  ]).isRequired,
 };
 
 export default AddReview;

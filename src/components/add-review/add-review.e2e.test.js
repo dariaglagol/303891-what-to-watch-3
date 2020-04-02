@@ -36,7 +36,7 @@ const mock = {
   },
   reviewError: {},
   isSubmitButtonDisable: true,
-  stars: 1,
+  validationErrors: [],
 };
 
 const mockSubmitEvent = {
@@ -52,7 +52,7 @@ it(`Submit handler call onSubmit callback`, () => {
     movieDetails,
     reviewError,
     isSubmitButtonDisable,
-    stars,
+    validationErrors,
   } = mock;
 
   const starsClickHandler = jest.fn();
@@ -71,7 +71,7 @@ it(`Submit handler call onSubmit callback`, () => {
         toggleSubmitButton={toggleSubmitButton}
         onSignInClick={signInClickHandler}
         isSubmitButtonDisable={isSubmitButtonDisable}
-        stars={stars}
+        validationErrors={validationErrors}
       />
   );
 
@@ -93,7 +93,7 @@ it(`Click on stars call callback`, () => {
     movieDetails,
     reviewError,
     isSubmitButtonDisable,
-    stars,
+    validationErrors,
   } = mock;
 
   const starsClickHandler = jest.fn();
@@ -112,7 +112,7 @@ it(`Click on stars call callback`, () => {
         toggleSubmitButton={toggleSubmitButton}
         onSignInClick={signInClickHandler}
         isSubmitButtonDisable={isSubmitButtonDisable}
-        stars={stars}
+        validationErrors={validationErrors}
       />
   );
 

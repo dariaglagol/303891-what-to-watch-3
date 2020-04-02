@@ -71,6 +71,8 @@ const TextAreaMinMaxValues = {
   MAX: 400,
 };
 
+const RATING_ERROR_TEXT = `Оцените фильм`;
+
 export {
   MovieMarksTypes,
   FILM_REVIEWS_COLUMN_COUNT,
@@ -87,5 +89,6 @@ export {
   TIMEOUT,
   AuthorizationStatus,
   RATING_STARS_COUNT,
-  TextAreaMinMaxValues
+  TextAreaMinMaxValues,
+  RATING_ERROR_TEXT
 };
