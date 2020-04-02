@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const RatingStar = ({item, onChange}) => {
-  function _starClickHandler() {
+  function _starChangeHandler() {
     onChange(item);
   }
 
@@ -14,7 +14,7 @@ const RatingStar = ({item, onChange}) => {
         type="radio"
         name="rating"
         value={item}
-        onChange={_starClickHandler}
+        onChange={_starChangeHandler}
       />
       <label
         className="rating__label"

@@ -33,6 +33,11 @@ const withReview = (Component) => {
       const {stars} = this.state;
 
       onSubmit({stars, reviewText});
+
+      this.setState({
+        stars: 0,
+        isSubmitButtonDisable: true,
+      });
     }
 
     render() {

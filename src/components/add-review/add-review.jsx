@@ -40,6 +40,8 @@ class AddReview extends PureComponent {
     const reviewText = this._reviewRef.current.value;
 
     onSubmit(reviewText);
+
+    this._reviewRef.current.value = ``;
   }
 
   _reviewTypeHandler() {
