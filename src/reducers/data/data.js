@@ -71,10 +71,8 @@ const Operation = {
           case StatusCode.SUCCESS:
             dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
             break;
-          case StatusCode.UNAUTHORIZED:
-            dispatch(ActionCreator.setReviewError(response.data));
-            break;
           default:
+            dispatch(ActionCreator.setReviewError(response.data));
             break;
         }
       })
