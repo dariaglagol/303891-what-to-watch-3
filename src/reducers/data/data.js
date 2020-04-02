@@ -53,37 +53,23 @@ const Operation = {
       .then((response) => {
         dispatch(ActionCreator.loadFilms(response.data));
         dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
-      })
-      .catch((err) => {
-        dispatch(ActionCreator.setError(err));
       });
   },
   loadPromoFilm: () => (dispatch, getState, api) => {
     return api.get(`/films/promo`)
       .then((response) => {
         dispatch(ActionCreator.loadPromoFilm(response.data));
-      })
-      .catch((err) => {
-        dispatch(ActionCreator.setError(err));
       });
   },
   sendReview: (reviewData) => (dispatch, getState, api) => {
-    return api.post(`/comments/1`, {
+    return api.post(`/comments/42`, {
       rating: reviewData.stars,
       comment: reviewData.reviewText,
     })
       .then((response) => {
-        switch (response.status) {
-          case StatusCode.SUCCESS:
-            dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
-            break;
-          default:
-            dispatch(ActionCreator.setError(response.data));
-            break;
+        if (response.status === StatusCode.SUCCESS) {
+          dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
         }
-      })
-      .catch((err) => {
-        dispatch(ActionCreator.setError(err));
       });
   }
 };
