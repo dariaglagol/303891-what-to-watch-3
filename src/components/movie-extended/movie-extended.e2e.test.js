@@ -74,11 +74,6 @@ const mocks = {
   ],
   activeTab: `Overview`,
   isFullscreenPlayerActive: false,
-  pageType: `review`
-};
-
-const mockedSubmitEvent = {
-  preventDefault() {}
 };
 
 it(`Press on play button call full screen player`, () => {
@@ -116,7 +111,7 @@ it(`Press on play button call full screen player`, () => {
 });
 
 it(`Press on review button call callback`, () => {
-  const {movieDetails, pageType, userData, mockCatalogFilms, activeTab, isFullscreenPlayerActive} = mocks;
+  const {movieDetails, userData, mockCatalogFilms, activeTab, isFullscreenPlayerActive} = mocks;
 
   const signInClickHandler = jest.fn();
   const filmClickHandler = jest.fn();
@@ -143,8 +138,8 @@ it(`Press on review button call callback`, () => {
   );
 
   const reviewButton = movieExtendedComponent.find(`.movie-card__button`).at(2);
-  reviewButton.simulate(`click`, mockedSubmitEvent);
+  reviewButton.simulate(`click`);
 
   expect(addReviewClickHandler).toHaveBeenCalledTimes(1);
-  expect(addReviewClickHandler).toBeCalledWith(pageType);
+  expect(addReviewClickHandler).toBeCalledWith();
 });

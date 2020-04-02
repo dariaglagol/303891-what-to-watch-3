@@ -39,7 +39,7 @@ const getActiveFilmId = (state) => {
   return state[NAME].activeFilmId;
 };
 
-const getReviewError = (state) => {
+const getDataError = (state) => {
   return state[NAME].error;
 };
 
@@ -61,5 +61,5 @@ export {
   getActiveGenre,
   getFilmsSelector,
   getActiveFilmId,
-  getReviewError
+  getDataError
 };

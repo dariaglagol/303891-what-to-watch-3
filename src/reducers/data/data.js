@@ -17,7 +17,7 @@ const ActionType = {
   LOAD_PROMO_FILM: `LOAD_PROMO_FILM`,
   CHANGE_GENRE: `CHANGE_GENRE`,
   GET_ACTIVE_FILM_ID: `GET_ACTIVE_FILM_ID`,
-  SET_REVIEW_ERROR: `SET_REVIEW_ERROR`,
+  SET_ERROR: `SET_ERROR`,
 };
 
 const ActionCreator = {
@@ -41,8 +41,8 @@ const ActionCreator = {
     type: ActionType.GET_ACTIVE_FILM_ID,
     payload: id
   }),
-  setReviewError: (error) => ({
-    type: ActionType.SET_REVIEW_ERROR,
+  setError: (error) => ({
+    type: ActionType.SET_ERROR,
     payload: error
   }),
 };
@@ -53,12 +53,18 @@ const Operation = {
       .then((response) => {
         dispatch(ActionCreator.loadFilms(response.data));
         dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
+      })
+      .catch((err) => {
+        dispatch(ActionCreator.setError(err));
       });
   },
   loadPromoFilm: () => (dispatch, getState, api) => {
     return api.get(`/films/promo`)
       .then((response) => {
         dispatch(ActionCreator.loadPromoFilm(response.data));
+      })
+      .catch((err) => {
+        dispatch(ActionCreator.setError(err));
       });
   },
   sendReview: (reviewData) => (dispatch, getState, api) => {
@@ -72,12 +78,12 @@ const Operation = {
             dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
             break;
           default:
-            dispatch(ActionCreator.setReviewError(response.data));
+            dispatch(ActionCreator.setError(response.data));
             break;
         }
       })
       .catch((err) => {
-        dispatch(ActionCreator.setReviewError(err));
+        dispatch(ActionCreator.setError(err));
       });
   }
 };
@@ -96,7 +102,7 @@ const reducer = (state = initialState, action) => {
       return extend(state, {activeGenre: action.payload});
     case ActionType.GET_ACTIVE_FILM_ID:
       return extend(state, {activeFilmId: action.payload});
-    case ActionType.SET_REVIEW_ERROR:
+    case ActionType.SET_ERROR:
       return extend(state, {error: action.payload});
     default:
       break;

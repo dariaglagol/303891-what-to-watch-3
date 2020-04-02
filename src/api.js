@@ -13,23 +13,14 @@ export const createAPI = (onUnauthorized, onError) => {
   };
 
   const onFail = (err) => {
-    try {
-      const {response} = err;
-      switch (response.status) {
-        case StatusCode.UNAUTHORIZED:
-          onUnauthorized();
-          break;
-        case StatusCode.SERVER_PROBLEMS:
-          onError(response);
-          break;
-        case StatusCode.AUTH_ERROR:
-          return response;
-        default:
-          break;
-      }
-    } catch (exception) {
-      throw err;
+    const {response} = err;
+
+    if (response.status === StatusCode.UNAUTHORIZED) {
+      onUnauthorized();
+      return;
     }
+
+    onError(response);
   };
 
   api.interceptors.response.use(onSuccess, onFail);

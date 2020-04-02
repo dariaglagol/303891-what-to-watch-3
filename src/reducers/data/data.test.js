@@ -6,7 +6,7 @@ import {
   getActiveFilmId,
   getMovieCover,
   getActiveGenre,
-  getReviewError,
+  getDataError,
 } from "./selectors";
 import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
 
@@ -380,7 +380,7 @@ describe(`Data reducer tests`, () => {
     const {error} = initialState;
 
     expect(reducer({error}, {
-      type: ActionType.SET_REVIEW_ERROR,
+      type: ActionType.SET_ERROR,
       payload: {error: `Error`}
     })).toEqual({error: {error: `Error`}});
   });
@@ -393,8 +393,8 @@ describe(`Data reducer tests`, () => {
   });
 
   it(`Action creator return correct action after call`, () => {
-    expect(ActionCreator.setReviewError({error: {error: `error`}})).toEqual({
-      type: ActionType.SET_REVIEW_ERROR,
+    expect(ActionCreator.setError({error: {error: `error`}})).toEqual({
+      type: ActionType.SET_ERROR,
       payload: {error: {error: `error`}},
     });
   });
@@ -447,6 +447,6 @@ describe(`Data reducer tests`, () => {
   });
 
   it(`Selector getReviewError return right key`, () => {
-    expect(getReviewError(state)).toEqual({});
+    expect(getDataError(state)).toEqual({});
   });
 });
