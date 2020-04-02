@@ -76,6 +76,7 @@ class AddReview extends PureComponent {
       onSignInClick,
       movieDetails,
       isSubmitButtonDisable,
+      isLoading,
     } = this.props;
 
     const {
@@ -130,7 +131,7 @@ class AddReview extends PureComponent {
                 <button
                   className="add-review__btn"
                   type="submit"
-                  disabled={isSubmitButtonDisable}>
+                  disabled={isSubmitButtonDisable || isLoading}>
                   Post
                 </button>
               </div>
@@ -191,6 +192,7 @@ AddReview.propTypes = {
     PropTypes.exact([]),
     PropTypes.arrayOf(PropTypes.string)
   ]).isRequired,
+  isLoading: PropTypes.bool.isRequired
 };
 
 export default AddReview;

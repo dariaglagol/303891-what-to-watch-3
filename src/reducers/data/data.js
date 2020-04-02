@@ -9,7 +9,8 @@ const initialState = {
   activeFilmId: 0,
   reviews: MovieReviews,
   activeGenre: DEFAULT_ACTIVE_GENRE,
-  error: {}
+  error: {},
+  isLoading: false,
 };
 
 const ActionType = {
@@ -18,6 +19,7 @@ const ActionType = {
   CHANGE_GENRE: `CHANGE_GENRE`,
   GET_ACTIVE_FILM_ID: `GET_ACTIVE_FILM_ID`,
   SET_ERROR: `SET_ERROR`,
+  SET_LOADING_STATUS: `SET_LOADING_STATUS`
 };
 
 const ActionCreator = {
@@ -45,6 +47,10 @@ const ActionCreator = {
     type: ActionType.SET_ERROR,
     payload: error
   }),
+  setLoadingStatus: (value) => ({
+    type: ActionType.SET_LOADING_STATUS,
+    payload: value
+  }),
 };
 
 const Operation = {
@@ -62,14 +68,17 @@ const Operation = {
       });
   },
   sendReview: (reviewData) => (dispatch, getState, api) => {
-    return api.post(`/comments/42`, {
+    return api.post(`/comments/1`, {
       rating: reviewData.stars,
       comment: reviewData.reviewText,
     })
       .then((response) => {
+        dispatch(ActionCreator.setLoadingStatus(true));
         if (response.status === StatusCode.SUCCESS) {
           dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
         }
+      }).finally(() => {
+        dispatch(ActionCreator.setLoadingStatus(false));
       });
   }
 };
@@ -90,6 +99,8 @@ const reducer = (state = initialState, action) => {
       return extend(state, {activeFilmId: action.payload});
     case ActionType.SET_ERROR:
       return extend(state, {error: action.payload});
+    case ActionType.SET_LOADING_STATUS:
+      return extend(state, {isLoading: action.payload});
     default:
       break;
   }

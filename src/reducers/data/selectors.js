@@ -43,6 +43,10 @@ const getDataError = (state) => {
   return state[NAME].error;
 };
 
+const getLoadingStatus = (state) => {
+  return state[NAME].isLoading;
+};
+
 const getFilmsSelector = createSelector(
     [getFilms, getFilteredFilms, getActiveGenre],
     (films, filteredFilms, activeGenre) => {
@@ -61,5 +65,6 @@ export {
   getActiveGenre,
   getFilmsSelector,
   getActiveFilmId,
-  getDataError
+  getDataError,
+  getLoadingStatus
 };

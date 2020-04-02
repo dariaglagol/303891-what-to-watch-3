@@ -80,7 +80,9 @@ exports[`Render add review component 1`] = `
       className="add-review__form"
       onSubmit={[Function]}
     >
-      <p />
+      <p>
+        
+      </p>
       <div
         className="rating"
       >

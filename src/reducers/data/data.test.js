@@ -7,6 +7,7 @@ import {
   getMovieCover,
   getActiveGenre,
   getDataError,
+  getLoadingStatus
 } from "./selectors";
 import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
 
@@ -264,6 +265,7 @@ const state = {
     ],
     activeFilmId: 1,
     error: {},
+    isLoading: false,
   }
 };
 
@@ -273,6 +275,7 @@ const initialState = {
   promoMovie: {},
   activeFilmId: 0,
   error: {},
+  isLoading: false,
   reviews: [{
     text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
     author: `Kate Muir`,
@@ -385,6 +388,19 @@ describe(`Data reducer tests`, () => {
     })).toEqual({error: {error: `Error`}});
   });
 
+  it(`Reducer should set isLoading property by a given value`, () => {
+    const {isLoading} = initialState;
+
+    expect(reducer({isLoading}, {
+      type: ActionType.SET_LOADING_STATUS,
+      payload: true
+    })).toEqual({
+      isLoading: true
+    });
+  });
+});
+
+describe(`Action Creator tests`, () => {
   it(`Action creator return correct action after change genre`, () => {
     expect(ActionCreator.changeGenre(GIVEN_GENRE)).toEqual({
       type: ActionType.CHANGE_GENRE,
@@ -418,6 +434,19 @@ describe(`Data reducer tests`, () => {
       type: ActionType.LOAD_PROMO_FILM,
       payload: givenPromoMovie,
     });
+  });
+
+  it(`Action creator return correct isLoading status`, () => {
+    expect(ActionCreator.setLoadingStatus(true)).toEqual({
+      type: ActionType.SET_LOADING_STATUS,
+      payload: true,
+    });
+  });
+});
+
+describe(`Selectors tests`, () => {
+  it(`Selector getLoadingStatus return right key`, () => {
+    expect(getLoadingStatus(state)).toEqual(false);
   });
 
   it(`Selector getFilms return right key`, () => {

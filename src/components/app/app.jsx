@@ -27,7 +27,8 @@ import {
   getReviews,
   getMovieCover,
   getActiveFilmId,
-  getDataError
+  getDataError,
+  getLoadingStatus
 } from "@reducers/data/selectors.js";
 
 import Loading from "@components/loading/loading";
@@ -57,6 +58,7 @@ const App = (props) => {
     authStatus,
     addReview,
     dataError,
+    isLoading,
   } = props;
 
   const movieDetails = films.find((film) => film.id === activeFilmId) || {};
@@ -119,6 +121,7 @@ const App = (props) => {
             onSignInClick={onPageChange}
             onSubmit={addReview}
             reviewError={dataError}
+            isLoading={isLoading}
           />
         );
     }
@@ -169,6 +172,7 @@ const App = (props) => {
             onSignInClick={onPageChange}
             onSubmit={addReview}
             reviewError={dataError}
+            isLoading={isLoading}
           />
         </Route>
       </Switch>
@@ -197,6 +201,7 @@ const mapStateToProps = (state) => ({
   userData: getUserData(state),
   userErrors: getUserError(state),
   dataError: getDataError(state),
+  isLoading: getLoadingStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -302,6 +307,7 @@ App.propTypes = {
     }),
     PropTypes.shape({})
   ]),
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export {App};
