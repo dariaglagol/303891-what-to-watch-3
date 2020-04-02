@@ -8,7 +8,7 @@ import MovieReviews from "@components/movie-extended/blocks/movies-reviews/movie
 import FullscreenPlayer from "@components/fullscreen-player/fullscreen-player";
 import withVideoPlayer from "@hocs/with-video-player/with-video-player";
 import {getSimilarMovies} from "@utils/utils";
-import {TabTypes, DEFAULT_SHOWN_FILMS, FULLSCREEN_VIDEO_CLASS, PageTypes, AuthorizationStatus} from "@utils/constants";
+import {TabTypes, DEFAULT_SHOWN_FILMS, FULLSCREEN_VIDEO_CLASS, AuthorizationStatus} from "@utils/constants";
 
 const WrappedFullScreenVideo = withVideoPlayer(FullscreenPlayer);
 
@@ -75,18 +75,13 @@ const MovieExtended = (props) => {
     onFullScreenToggle(!isFullscreenPlayerActive);
   }
 
-  function _addReviewClickHandler(evt) {
-    evt.preventDefault();
-    onAddReviewClick(PageTypes.REVIEW);
-  }
-
   function _renderAddReviewButton() {
     if (authStatus === AuthorizationStatus.AUTH) {
       return (
         <a
           href="add-review.html"
           className="btn movie-card__button"
-          onClick={_addReviewClickHandler}
+          onClick={onAddReviewClick}
         >
           Add review
         </a>

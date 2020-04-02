@@ -79,7 +79,7 @@ const App = (props) => {
           <MovieExtendedComponentWrapped
             userData={userData}
             authStatus={authStatus}
-            onAddReviewClick={onPageChange}
+            onAddReviewClick={_addReviewClickHandler}
             onFilmClick={onPageChange}
             onSignInClick={onPageChange}
             films={films}
@@ -116,6 +116,11 @@ const App = (props) => {
     return null;
   }
 
+  function _addReviewClickHandler(evt) {
+    evt.preventDefault();
+    onPageChange(PageTypes.REVIEW);
+  }
+
   return (
     <BrowserRouter>
       <Switch>
@@ -128,7 +133,7 @@ const App = (props) => {
             authStatus={authStatus}
             onFilmClick={onPageChange}
             onSignInClick={onPageChange}
-            onAddReviewClick={onPageChange}
+            onAddReviewClick={_addReviewClickHandler}
             films={films}
             movieDetails={movieDetails}
             isFullscreenPlayerActive={isFullscreenPlayerActive}
