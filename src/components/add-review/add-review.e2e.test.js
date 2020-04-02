@@ -43,6 +43,8 @@ const mockSubmitEvent = {
   preventDefault() {}
 };
 
+const starCount = 2;
+
 it(`Submit handler call onSubmit callback`, () => {
   const {
     userData,
@@ -83,3 +85,41 @@ it(`Submit handler call onSubmit callback`, () => {
   expect(submitHandler).toHaveBeenCalledTimes(1);
   expect(submitHandler).toBeCalledWith(`sometext`);
 });
+
+it(`Click on stars call callback`, () => {
+  const {
+    userData,
+    authStatus,
+    movieDetails,
+    reviewError,
+    isSubmitButtonDisable,
+    stars,
+  } = mock;
+
+  const starsClickHandler = jest.fn();
+  const submitHandler = jest.fn((arg) => [...arg]);
+  const toggleSubmitButton = jest.fn();
+  const signInClickHandler = jest.fn();
+
+  const addReviewComponent = mount(
+      <AddReview
+        userData={userData}
+        authStatus={authStatus}
+        movieDetails={movieDetails}
+        reviewError={reviewError}
+        onStarsChange={starsClickHandler}
+        onSubmit={submitHandler}
+        toggleSubmitButton={toggleSubmitButton}
+        onSignInClick={signInClickHandler}
+        isSubmitButtonDisable={isSubmitButtonDisable}
+        stars={stars}
+      />
+  );
+
+  const star = addReviewComponent.find(`.rating__input`).at(1);
+  star.simulate(`change`);
+
+  expect(starsClickHandler).toHaveBeenCalledTimes(1);
+  expect(starsClickHandler).toBeCalledWith(starCount);
+});
+

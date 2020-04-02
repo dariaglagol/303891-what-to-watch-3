@@ -32,11 +32,11 @@ const withReview = (Component) => {
       const {onSubmit} = this.props;
       const {stars} = this.state;
 
-      if (stars !== null && reviewText) {
+      if (stars !== 0 && reviewText) {
         onSubmit({stars, reviewText});
 
         this.setState({
-          stars: null,
+          stars: 0,
           isSubmitButtonDisable: true,
         });
       }

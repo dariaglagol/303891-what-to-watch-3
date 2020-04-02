@@ -68,9 +68,9 @@ const Operation = {
       });
   },
   sendReview: (reviewData) => (dispatch, getState, api) => {
-    return api.post(`/comments/42`, {
-      rating: reviewData.rating,
-      comment: reviewData.review,
+    return api.post(`/comments/1`, {
+      rating: reviewData.stars,
+      comment: reviewData.reviewText,
     })
       .then((response) => {
         switch (response.status) {
