@@ -15,12 +15,12 @@ export const createAPI = (onUnauthorized, onError) => {
   const onFail = (err) => {
     const {response} = err;
 
-    if (response.status === StatusCode.UNAUTHORIZED) {
+    if (response && response.status === StatusCode.UNAUTHORIZED) {
       onUnauthorized();
       return;
     }
 
-    onError(response);
+    onError(response || err);
   };
 
   api.interceptors.response.use(onSuccess, onFail);

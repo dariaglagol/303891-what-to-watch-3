@@ -21,8 +21,8 @@ const onUnauthorized = () => {
   store.dispatch(UserActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH));
 };
 
-const onError = (response) => {
-  store.dispatch(DataActionCreator.setError(response.data));
+const onError = (error) => {
+  store.dispatch(DataActionCreator.setError(error));
 };
 
 const api = createAPI(onUnauthorized, onError);

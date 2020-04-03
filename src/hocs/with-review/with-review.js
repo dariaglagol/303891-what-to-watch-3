@@ -1,5 +1,6 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
+import {validateTextAreaInput, isSubmitButtonDisable} from "@utils/utils";
 import {RATING_ERROR_TEXT} from "@utils/constants";
 
 const withReview = (Component) => {
@@ -9,64 +10,70 @@ const withReview = (Component) => {
 
       this.state = {
         stars: 0,
-        isSubmitButtonDisable: true,
-        validationErrors: []
+        starStatus: null,
+        textStatus: null,
+        text: ``,
       };
 
       this._starsChangeHandler = this._starsChangeHandler.bind(this);
       this._submitHandler = this._submitHandler.bind(this);
-      this._toggleSubmitButton = this._toggleSubmitButton.bind(this);
+      this._textChangeHandler = this._textChangeHandler.bind(this);
     }
 
     _starsChangeHandler(stars) {
       this.setState({
-        stars
+        stars,
+        starStatus: !stars ? RATING_ERROR_TEXT : ``
       });
     }
 
-    _toggleSubmitButton(value) {
+    _textChangeHandler(text) {
       this.setState({
-        isSubmitButtonDisable: value
+        text,
+        textStatus: validateTextAreaInput(text)
       });
     }
 
-    _submitHandler(reviewText) {
-      const {onSubmit} = this.props;
-      const {stars} = this.state;
+    _submitHandler() {
+      const {onSubmit, commentFormSendingResult} = this.props;
+      const {stars, text} = this.state;
 
-      if (stars === 0) {
+      onSubmit({stars, text});
+
+      if (commentFormSendingResult) {
         this.setState({
-          validationErrors: [RATING_ERROR_TEXT]
+          stars: 0,
+          text: ``,
+          starStatus: null,
+          textStatus: null,
+          isSubmitButtonDisable: true,
         });
-
-        return;
       }
-
-      onSubmit({stars, reviewText});
-
-      this.setState({
-        stars: 0,
-        isSubmitButtonDisable: true,
-      });
     }
 
     render() {
-      const {isSubmitButtonDisable, validationErrors} = this.state;
+      const {text, textStatus, stars, starStatus} = this.state;
+
+      const isButtonDisabled = isSubmitButtonDisable(stars, textStatus);
+
       return (
         <Component
           {...this.props}
           onStarsChange={this._starsChangeHandler}
           onSubmit={this._submitHandler}
-          toggleSubmitButton={this._toggleSubmitButton}
-          isSubmitButtonDisable={isSubmitButtonDisable}
-          validationErrors={validationErrors}
+          isSubmitButtonDisable={isButtonDisabled}
+          validationErrors={[textStatus, starStatus]}
+          text={text}
+          onTextChange={this._textChangeHandler}
+          textStatus={textStatus}
         />
       );
     }
   }
 
   WithReview.propTypes = {
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
+    commentFormSendingResult: PropTypes.bool
   };
 
   return WithReview;

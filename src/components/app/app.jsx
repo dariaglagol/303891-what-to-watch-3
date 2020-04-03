@@ -28,7 +28,8 @@ import {
   getMovieCover,
   getActiveFilmId,
   getDataError,
-  getLoadingStatus
+  getLoadingStatus,
+  getCommentFormSendingResult
 } from "@reducers/data/selectors.js";
 
 import Loading from "@components/loading/loading";
@@ -56,9 +57,10 @@ const App = (props) => {
     userData,
     userErrors,
     authStatus,
-    addReview,
-    dataError,
+    sendReview,
+    reviewError,
     isLoading,
+    commentFormSendingResult,
   } = props;
 
   const movieDetails = films.find((film) => film.id === activeFilmId) || {};
@@ -119,9 +121,10 @@ const App = (props) => {
             authStatus={authStatus}
             movieDetails={movieDetails}
             onSignInClick={onPageChange}
-            onSubmit={addReview}
-            reviewError={dataError}
+            onSubmit={sendReview}
+            reviewError={reviewError}
             isLoading={isLoading}
+            commentFormSendingResult={commentFormSendingResult}
           />
         );
     }
@@ -135,8 +138,8 @@ const App = (props) => {
   }
 
   function _renderErrorMessage() {
-    if (Object.keys(dataError).length) {
-      return <ErrorMessage response={dataError} />;
+    if (Object.keys(reviewError).length) {
+      return <ErrorMessage errorMessage={reviewError} />;
     }
 
     return null;
@@ -170,9 +173,10 @@ const App = (props) => {
             authStatus={authStatus}
             movieDetails={movieDetails}
             onSignInClick={onPageChange}
-            onSubmit={addReview}
-            reviewError={dataError}
+            onSubmit={sendReview}
+            reviewError={reviewError}
             isLoading={isLoading}
+            commentFormSendingResult={commentFormSendingResult}
           />
         </Route>
       </Switch>
@@ -200,8 +204,9 @@ const mapStateToProps = (state) => ({
   authStatus: getAuthStatus(state),
   userData: getUserData(state),
   userErrors: getUserError(state),
-  dataError: getDataError(state),
+  reviewError: getDataError(state),
   isLoading: getLoadingStatus(state),
+  commentFormSendingResult: getCommentFormSendingResult(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -220,7 +225,7 @@ const mapDispatchToProps = (dispatch) => ({
   login(authData) {
     dispatch(UserOperation.login(authData));
   },
-  addReview(reviewData) {
+  sendReview(reviewData) {
     dispatch(DataOperation.sendReview(reviewData));
   }
 });
@@ -300,14 +305,15 @@ App.propTypes = {
   userErrors: PropTypes.shape({
     error: PropTypes.string,
   }),
-  addReview: PropTypes.func.isRequired,
-  dataError: PropTypes.oneOfType([
+  sendReview: PropTypes.func.isRequired,
+  reviewError: PropTypes.oneOfType([
     PropTypes.shape({
       error: PropTypes.string
     }),
     PropTypes.shape({})
   ]),
   isLoading: PropTypes.bool.isRequired,
+  commentFormSendingResult: PropTypes.bool,
 };
 
 export {App};

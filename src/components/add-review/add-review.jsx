@@ -2,7 +2,7 @@ import React, {PureComponent, createRef} from "react";
 import PropTypes from "prop-types";
 import Header from "@components/header/header";
 import RatingStar from "@components/add-review/blocks/rating-star";
-import {RATING_STARS_COUNT, TextAreaMinMaxValues} from "@utils/constants";
+import {RATING_STARS_COUNT} from "@utils/constants";
 
 class AddReview extends PureComponent {
   constructor(props) {
@@ -11,7 +11,7 @@ class AddReview extends PureComponent {
     this._reviewRef = createRef();
 
     this._submitHandler = this._submitHandler.bind(this);
-    this._reviewTypeHandler = this._reviewTypeHandler.bind(this);
+    this._reviewChangeHandler = this._reviewChangeHandler.bind(this);
   }
 
   _renderRating() {
@@ -29,40 +29,32 @@ class AddReview extends PureComponent {
             onChange={onStarsChange}
           />
         );
-      })
+      }).reverse()
     );
   }
 
   _submitHandler(e) {
     e.preventDefault();
-    const {onSubmit, validationErrors} = this.props;
-
-    const reviewText = this._reviewRef.current.value;
-
-    onSubmit(reviewText);
-
-    this._reviewRef.current.value = validationErrors.length ? `` : reviewText;
+    const {onSubmit} = this.props;
+    onSubmit();
   }
 
-  _reviewTypeHandler() {
-    const {toggleSubmitButton} = this.props;
+  _reviewChangeHandler(e) {
+    const {onTextChange} = this.props;
 
-    const reviewText = this._reviewRef.current.value;
+    const {target} = e;
 
-    if (reviewText.length > TextAreaMinMaxValues.MIN && reviewText.length < TextAreaMinMaxValues.MAX) {
-      toggleSubmitButton(false);
-    } else {
-      toggleSubmitButton(true);
-    }
+    onTextChange(target.value);
   }
 
   _renderError() {
     const {reviewError, validationErrors} = this.props;
-    const {error} = reviewError;
 
-    if (validationErrors) {
+    const error = reviewError.data && reviewError.data.error || reviewError.message;
+
+    if (error || validationErrors) {
       return (
-        <p>{error || validationErrors && validationErrors.join(`, `)}</p>
+        <p>{error || validationErrors.join(` `)}</p>
       );
     }
 
@@ -77,6 +69,7 @@ class AddReview extends PureComponent {
       movieDetails,
       isSubmitButtonDisable,
       isLoading,
+      text
     } = this.props;
 
     const {
@@ -112,31 +105,34 @@ class AddReview extends PureComponent {
         <div className="add-review">
           <form action="#" className="add-review__form" onSubmit={this._submitHandler}>
             {this._renderError()}
-            <div className="rating">
-              <div className="rating__stars">
-                {this._renderRating()}
-              </div>
-            </div>
-
-            <div className="add-review__text">
-              <textarea
-                className="add-review__textarea"
-                name="review-text"
-                id="review-text"
-                placeholder="Review text"
-                ref={this._reviewRef}
-                onKeyPress={this._reviewTypeHandler}
-              />
-              <div className="add-review__submit">
-                <button
-                  className="add-review__btn"
-                  type="submit"
-                  disabled={isSubmitButtonDisable || isLoading}>
-                  Post
-                </button>
+            <fieldset disabled={isLoading}>
+              <div className="rating">
+                <div className="rating__stars">
+                  {this._renderRating()}
+                </div>
               </div>
 
-            </div>
+              <div className="add-review__text">
+                <textarea
+                  className="add-review__textarea"
+                  name="review-text"
+                  id="review-text"
+                  placeholder="Review text"
+                  value={text}
+                  onChange={this._reviewChangeHandler}
+                />
+                <div className="add-review__submit">
+                  <button
+                    className="add-review__btn"
+                    type="submit"
+                    disabled={isSubmitButtonDisable}
+                  >
+                    Post
+                  </button>
+                </div>
+
+              </div>
+            </fieldset>
           </form>
         </div>
       </section>
@@ -147,7 +143,6 @@ class AddReview extends PureComponent {
 AddReview.propTypes = {
   onStarsChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  toggleSubmitButton: PropTypes.func.isRequired,
   onSignInClick: PropTypes.func.isRequired,
   userData: PropTypes.oneOfType([
     PropTypes.exact({
@@ -159,6 +154,7 @@ AddReview.propTypes = {
     PropTypes.exact({})
   ]).isRequired,
   authStatus: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
   movieDetails: PropTypes.oneOfType([
     PropTypes.exact({
       name: PropTypes.string.isRequired,
@@ -184,7 +180,10 @@ AddReview.propTypes = {
   isSubmitButtonDisable: PropTypes.bool.isRequired,
   reviewError: PropTypes.oneOfType([
     PropTypes.shape({
-      error: PropTypes.string
+      data: PropTypes.shape({
+        error: PropTypes.string,
+      }),
+      message: PropTypes.string,
     }),
     PropTypes.shape({})
   ]),
@@ -192,6 +191,7 @@ AddReview.propTypes = {
     PropTypes.exact([]),
     PropTypes.arrayOf(PropTypes.string)
   ]).isRequired,
+  onTextChange: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired
 };
 

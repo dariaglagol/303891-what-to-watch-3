@@ -1,5 +1,5 @@
 import {camelCase, mapKeys} from "lodash";
-import {MovieMarksTypes, SIMILAR_FILM_COUNT} from './constants';
+import {MovieMarksTypes, SIMILAR_FILM_COUNT, TextAreaMinMaxValues} from './constants';
 
 const getMovieMark = (score) => {
   let key = ``;
@@ -39,4 +39,35 @@ const itemsAdapter = (films) => {
   });
 };
 
-export {getMovieMark, getSimilarMovies, extend, sliceMovieArray, itemAdapter, itemsAdapter};
+const validateTextAreaInput = (text) => {
+  const textLength = text.length;
+  let remainingCharacters = 0;
+  if (textLength > TextAreaMinMaxValues.MAX) {
+    remainingCharacters = textLength - TextAreaMinMaxValues.MAX;
+
+    return `Удалите ${remainingCharacters} символов`;
+  } else if (textLength < TextAreaMinMaxValues.MIN) {
+    remainingCharacters = TextAreaMinMaxValues.MIN - textLength;
+
+    return `Введите еще ${remainingCharacters} символов`;
+  }
+
+  return ``;
+};
+
+const isSubmitButtonDisable = (stars, textStatus) => {
+  return (stars && textStatus !== ``) ||
+    (!stars && textStatus) ||
+    (!stars && textStatus !== ``);
+};
+
+export {
+  getMovieMark,
+  getSimilarMovies,
+  isSubmitButtonDisable,
+  extend,
+  validateTextAreaInput,
+  sliceMovieArray,
+  itemAdapter,
+  itemsAdapter
+};

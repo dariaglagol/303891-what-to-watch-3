@@ -67,7 +67,7 @@ const AuthorizationStatus = {
 const RATING_STARS_COUNT = 5;
 
 const TextAreaMinMaxValues = {
-  MIN: 5,
+  MIN: 50,
   MAX: 400,
 };
 
@@ -90,5 +90,5 @@ export {
   AuthorizationStatus,
   RATING_STARS_COUNT,
   TextAreaMinMaxValues,
-  RATING_ERROR_TEXT
+  RATING_ERROR_TEXT,
 };

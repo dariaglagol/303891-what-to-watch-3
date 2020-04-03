@@ -36,7 +36,7 @@ export default class SignIn extends PureComponent {
             name="user-password"
             id="user-password"
             required
-            pattern='[A-Za-z]+$'
+            pattern='[A-Za-z0-9]+$'
             ref={this._passwordRef}
           />
           <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>

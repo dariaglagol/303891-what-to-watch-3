@@ -47,6 +47,10 @@ const getLoadingStatus = (state) => {
   return state[NAME].isLoading;
 };
 
+const getCommentFormSendingResult = (state) => {
+  return state[NAME].commentFormSendingResult;
+};
+
 const getFilmsSelector = createSelector(
     [getFilms, getFilteredFilms, getActiveGenre],
     (films, filteredFilms, activeGenre) => {
@@ -66,5 +70,6 @@ export {
   getFilmsSelector,
   getActiveFilmId,
   getDataError,
-  getLoadingStatus
+  getLoadingStatus,
+  getCommentFormSendingResult
 };

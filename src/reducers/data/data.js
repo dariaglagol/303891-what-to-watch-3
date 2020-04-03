@@ -10,6 +10,7 @@ const initialState = {
   reviews: MovieReviews,
   activeGenre: DEFAULT_ACTIVE_GENRE,
   error: {},
+  commentFormSendingResult: null,
   isLoading: false,
 };
 
@@ -19,7 +20,8 @@ const ActionType = {
   CHANGE_GENRE: `CHANGE_GENRE`,
   GET_ACTIVE_FILM_ID: `GET_ACTIVE_FILM_ID`,
   SET_ERROR: `SET_ERROR`,
-  SET_LOADING_STATUS: `SET_LOADING_STATUS`
+  SET_LOADING_STATUS: `SET_LOADING_STATUS`,
+  SER_COMMENT_FORM_ACTION_RESULT: `SER_COMMENT_FORM_ACTION_RESULT`
 };
 
 const ActionCreator = {
@@ -51,6 +53,12 @@ const ActionCreator = {
     type: ActionType.SET_LOADING_STATUS,
     payload: value
   }),
+  setCommentFormSendingResult: (value) => {
+    return {
+      type: ActionType.SER_COMMENT_FORM_ACTION_RESULT,
+      payload: value,
+    };
+  },
 };
 
 const Operation = {
@@ -68,17 +76,21 @@ const Operation = {
       });
   },
   sendReview: (reviewData) => (dispatch, getState, api) => {
+    dispatch(ActionCreator.setLoadingStatus(true));
+
     return api.post(`/comments/1`, {
       rating: reviewData.stars,
-      comment: reviewData.reviewText,
+      comment: reviewData.text,
     })
       .then((response) => {
-        dispatch(ActionCreator.setLoadingStatus(true));
-        if (response.status === StatusCode.SUCCESS) {
-          dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
-        }
-      }).finally(() => {
         dispatch(ActionCreator.setLoadingStatus(false));
+
+        if (response && response.status === StatusCode.SUCCESS) {
+          dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
+          dispatch(ActionCreator.setCommentFormSendingResult(true));
+        }
+
+        dispatch(ActionCreator.setCommentFormSendingResult(false));
       });
   }
 };
@@ -98,9 +110,16 @@ const reducer = (state = initialState, action) => {
     case ActionType.GET_ACTIVE_FILM_ID:
       return extend(state, {activeFilmId: action.payload});
     case ActionType.SET_ERROR:
-      return extend(state, {error: action.payload});
+      return extend(state, {
+        error: action.payload,
+        isLoading: false,
+        commentFormSendingResult: false,
+      });
     case ActionType.SET_LOADING_STATUS:
-      return extend(state, {isLoading: action.payload});
+      return extend(state, {
+        isLoading: action.payload,
+        commentFormSendingResult: null,
+      });
     default:
       break;
   }
