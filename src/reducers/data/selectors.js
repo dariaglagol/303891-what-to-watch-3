@@ -39,6 +39,14 @@ const getActiveFilmId = (state) => {
   return state[NAME].activeFilmId;
 };
 
+const getLoadingStatus = (state) => {
+  return state[NAME].isLoading;
+};
+
+const getCommentFormSendingResult = (state) => {
+  return state[NAME].commentFormSendingResult;
+};
+
 const getFilmsSelector = createSelector(
     [getFilms, getFilteredFilms, getActiveGenre],
     (films, filteredFilms, activeGenre) => {
@@ -56,5 +64,7 @@ export {
   getMovieCover,
   getActiveGenre,
   getFilmsSelector,
-  getActiveFilmId
+  getActiveFilmId,
+  getLoadingStatus,
+  getCommentFormSendingResult
 };

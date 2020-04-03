@@ -9,8 +9,12 @@ const getUserData = (state) => {
   return state[NAME].userData;
 };
 
-const getUserError = (state) => {
-  return state[NAME].error;
+const getSignInLoadingStatus = (state) => {
+  return state[NAME].isLoading;
 };
 
-export {getAuthStatus, getUserData, getUserError};
+const getAuthFormSendingResult = (state) => {
+  return state[NAME].commentFormSendingResult;
+};
+
+export {getAuthStatus, getUserData, getSignInLoadingStatus, getAuthFormSendingResult};

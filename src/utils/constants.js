@@ -34,7 +34,8 @@ const PageTypes = {
   MAIN: `main`,
   MOVIE: `movie`,
   AUTH: `auth`,
-  LOADING: `loading`
+  LOADING: `loading`,
+  REVIEW: `review`
 };
 
 const SIMILAR_FILM_COUNT = 4;
@@ -63,12 +64,14 @@ const AuthorizationStatus = {
   AUTH: `AUTH`
 };
 
-const EMAIL_REGEXP = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/;
+const RATING_STARS_COUNT = 5;
 
-const SignInFiled = {
-  LOGIN: `login`,
-  PASSWORD: `password`,
+const TextAreaMinMaxValues = {
+  MIN: 50,
+  MAX: 400,
 };
+
+const RATING_ERROR_TEXT = `Оцените фильм`;
 
 export {
   MovieMarksTypes,
@@ -85,6 +88,7 @@ export {
   StatusCode,
   TIMEOUT,
   AuthorizationStatus,
-  EMAIL_REGEXP,
-  SignInFiled
+  RATING_STARS_COUNT,
+  TextAreaMinMaxValues,
+  RATING_ERROR_TEXT,
 };

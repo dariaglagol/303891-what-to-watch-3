@@ -76,6 +76,8 @@ const mocks = {
     avatarUrl: `avatarUrl`
   },
   authStatus: `NO_AUTH`,
+  dataError: {},
+  isLoading: false,
 };
 
 it(`Render App`, () => {
@@ -89,6 +91,8 @@ it(`Render App`, () => {
     isFullscreenPlayerActive,
     userErrors,
     userData,
+    dataError,
+    isLoading
   } = mocks;
 
   const appComponent = renderer
@@ -107,6 +111,9 @@ it(`Render App`, () => {
           authStatus={authStatus}
           userErrors={userErrors}
           userData={userData}
+          addReview={() => {}}
+          dataError={dataError}
+          isLoading={isLoading}
         />
         , {createNodeMock: () => {
           return {};

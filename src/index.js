@@ -9,8 +9,9 @@ import reducer from "@reducers/reducer";
 import {ActionCreator as UserActionCreator, Operation as UserOperation} from "@reducers/user/user";
 import {Operation as DataOperation} from "@reducers/data/data";
 
+import {ActionCreator as ErrorActionCreator} from "@reducers/common-error/common-error";
+
 import App from "@components/app/app";
-import ErrorMessage from "@components/error-message/error-message";
 
 import {createAPI} from "./api";
 import {AuthorizationStatus} from "@utils/constants";
@@ -19,11 +20,8 @@ const onUnauthorized = () => {
   store.dispatch(UserActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH));
 };
 
-const onError = (response) => {
-  ReactDOM.render(
-      <ErrorMessage response={response} />,
-      document.querySelector(`#root`)
-  );
+const onError = (error) => {
+  store.dispatch(ErrorActionCreator.setError(error));
 };
 
 const api = createAPI(onUnauthorized, onError);

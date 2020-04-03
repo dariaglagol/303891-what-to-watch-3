@@ -1,7 +1,8 @@
 import {extend, itemAdapter, itemsAdapter} from "@utils/utils.js";
 import MovieReviews from "@mocks/reviews";
-import {DEFAULT_ACTIVE_GENRE, PageTypes} from "@utils/constants";
+import {DEFAULT_ACTIVE_GENRE, PageTypes, StatusCode} from "@utils/constants";
 import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
+import {ActionCreator as ErrorActionCreator} from "@reducers/common-error/common-error";
 
 const initialState = {
   films: [],
@@ -9,6 +10,8 @@ const initialState = {
   activeFilmId: 0,
   reviews: MovieReviews,
   activeGenre: DEFAULT_ACTIVE_GENRE,
+  commentFormSendingResult: null,
+  isLoading: false,
 };
 
 const ActionType = {
@@ -16,6 +19,9 @@ const ActionType = {
   LOAD_PROMO_FILM: `LOAD_PROMO_FILM`,
   CHANGE_GENRE: `CHANGE_GENRE`,
   GET_ACTIVE_FILM_ID: `GET_ACTIVE_FILM_ID`,
+  SET_ERROR: `SET_ERROR`,
+  SET_LOADING_STATUS: `SET_LOADING_STATUS`,
+  SET_COMMENT_FORM_ACTION_RESULT: `SET_COMMENT_FORM_ACTION_RESULT`
 };
 
 const ActionCreator = {
@@ -39,6 +45,19 @@ const ActionCreator = {
     type: ActionType.GET_ACTIVE_FILM_ID,
     payload: id
   }),
+  setError: () => ({
+    type: ActionType.SET_ERROR
+  }),
+  setLoadingStatus: (value) => ({
+    type: ActionType.SET_LOADING_STATUS,
+    payload: value
+  }),
+  setCommentFormSendingResult: (value) => {
+    return {
+      type: ActionType.SET_COMMENT_FORM_ACTION_RESULT,
+      payload: value,
+    };
+  },
 };
 
 const Operation = {
@@ -55,6 +74,25 @@ const Operation = {
         dispatch(ActionCreator.loadPromoFilm(response.data));
       });
   },
+  sendReview: (reviewData) => (dispatch, getState, api) => {
+    dispatch(ActionCreator.setLoadingStatus(true));
+
+    return api.post(`/comments/1`, {
+      rating: reviewData.stars,
+      comment: reviewData.text,
+    })
+      .then((response) => {
+        dispatch(ActionCreator.setLoadingStatus(false));
+
+        if (response && response.status === StatusCode.SUCCESS) {
+          dispatch(ActionCreator.setCommentFormSendingResult(true));
+          dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
+          dispatch(ErrorActionCreator.setError({}));
+        }
+
+        dispatch(ActionCreator.setCommentFormSendingResult(false));
+      });
+  }
 };
 
 const reducer = (state = initialState, action) => {
@@ -71,6 +109,16 @@ const reducer = (state = initialState, action) => {
       return extend(state, {activeGenre: action.payload});
     case ActionType.GET_ACTIVE_FILM_ID:
       return extend(state, {activeFilmId: action.payload});
+    case ActionType.SET_ERROR:
+      return extend(state, {
+        isLoading: false,
+        commentFormSendingResult: false,
+      });
+    case ActionType.SET_LOADING_STATUS:
+      return extend(state, {
+        isLoading: action.payload,
+        commentFormSendingResult: null,
+      });
     default:
       break;
   }

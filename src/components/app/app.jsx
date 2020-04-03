@@ -8,28 +8,39 @@ import MovieExtended from "@components/movie-extended/movie-extended";
 import withTabs from "@hocs/with-tabs/with-tabs";
 import withCatalog from "@hocs/with-catalog/with-catalog";
 import withMovieList from "@hocs/with-movie-list/with-movie-list";
+import withReview from "@hocs/with-review/with-review";
 import {PageTypes} from "@utils/constants";
 
 import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
 import {getActivePage, getFullScreenPlayerState} from "@reducers/common/selectors";
 
-import {Operation as UserOperation} from "@reducers/user/user";
-import {getAuthStatus, getUserData, getUserError} from "@reducers/user/selectors";
+import {getError} from "@reducers/common-error/selectors";
 
-import {ActionCreator as DataActionCreator} from "@reducers/data/data";
+import {Operation as UserOperation} from "@reducers/user/user";
+import {getAuthStatus, getUserData, getSignInLoadingStatus, getAuthFormSendingResult} from "@reducers/user/selectors";
+
+import {
+  ActionCreator as DataActionCreator,
+  Operation as DataOperation
+} from "@reducers/data/data";
 import {
   getActiveGenre,
   getFilmsSelector,
   getReviews,
   getMovieCover,
-  getActiveFilmId
+  getActiveFilmId,
+  getLoadingStatus,
+  getCommentFormSendingResult
 } from "@reducers/data/selectors.js";
 
 import Loading from "@components/loading/loading";
 import SignIn from "@components/sign-in/sign-in";
+import AddReview from "@components/add-review/add-review";
+import ErrorMessage from "@components/error-message/error-message";
 
 const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
 const MainComponentWrapped = withMovieList(withCatalog(Main));
+const ReviewComponentWrapped = withReview(AddReview);
 
 const App = (props) => {
   const {
@@ -45,8 +56,13 @@ const App = (props) => {
     activeFilmId,
     login,
     userData,
-    userErrors,
     authStatus,
+    sendReview,
+    isReviewFromLoading,
+    commentFormSendingResult,
+    error,
+    isSignInLoading,
+    authFormSendingResult
   } = props;
 
   const movieDetails = films.find((film) => film.id === activeFilmId) || {};
@@ -55,32 +71,39 @@ const App = (props) => {
     switch (activePage) {
       case PageTypes.MAIN:
         return (
-          <MainComponentWrapped
-            userData={userData}
-            authStatus={authStatus}
-            promoMovie={promoMovie}
-            onFilmClick={onPageChange}
-            onSignInClick={onPageChange}
-            activeGenre={activeGenre}
-            onGenreTabClick={onGenreTabClick}
-            isFullscreenPlayerActive={isFullscreenPlayerActive}
-            onFullScreenToggle={onFullScreenToggle}
-            films={films}
-          />
+          <React.Fragment>
+            {_renderErrorMessage()}
+            <MainComponentWrapped
+              userData={userData}
+              authStatus={authStatus}
+              promoMovie={promoMovie}
+              onFilmClick={onPageChange}
+              onSignInClick={onPageChange}
+              activeGenre={activeGenre}
+              onGenreTabClick={onGenreTabClick}
+              isFullscreenPlayerActive={isFullscreenPlayerActive}
+              onFullScreenToggle={onFullScreenToggle}
+              films={films}
+            />
+          </React.Fragment>
         );
       case PageTypes.MOVIE:
         return (
-          <MovieExtendedComponentWrapped
-            userData={userData}
-            authStatus={authStatus}
-            onFilmClick={onPageChange}
-            onSignInClick={onPageChange}
-            films={films}
-            movieDetails={movieDetails}
-            isFullscreenPlayerActive={isFullscreenPlayerActive}
-            onFullScreenToggle={onFullScreenToggle}
-            reviews={reviews}
-          />
+          <React.Fragment>
+            {_renderErrorMessage()}
+            <MovieExtendedComponentWrapped
+              userData={userData}
+              authStatus={authStatus}
+              onAddReviewClick={_addReviewClickHandler}
+              onFilmClick={onPageChange}
+              onSignInClick={onPageChange}
+              films={films}
+              movieDetails={movieDetails}
+              isFullscreenPlayerActive={isFullscreenPlayerActive}
+              onFullScreenToggle={onFullScreenToggle}
+              reviews={reviews}
+            />
+          </React.Fragment>
         );
       case PageTypes.LOADING:
         return (
@@ -90,9 +113,37 @@ const App = (props) => {
         return (
           <SignIn
             onSubmit={login}
-            userErrors={userErrors}
+            userErrors={error}
+            isLoading={isSignInLoading}
+            authFormSendingResult={authFormSendingResult}
           />
         );
+      case PageTypes.REVIEW:
+        return (
+          <ReviewComponentWrapped
+            userData={userData}
+            authStatus={authStatus}
+            movieDetails={movieDetails}
+            onSignInClick={onPageChange}
+            onSubmit={sendReview}
+            reviewError={error}
+            isLoading={isReviewFromLoading}
+            commentFormSendingResult={commentFormSendingResult}
+          />
+        );
+    }
+
+    return null;
+  }
+
+  function _addReviewClickHandler(evt) {
+    evt.preventDefault();
+    onPageChange(PageTypes.REVIEW);
+  }
+
+  function _renderErrorMessage() {
+    if (Object.keys(error).length) {
+      return <ErrorMessage errorMessage={error} />;
     }
 
     return null;
@@ -105,16 +156,31 @@ const App = (props) => {
           {_renderPages()}
         </Route>
         <Route exact path="/dev-movie-details">
+          {_renderErrorMessage()}
           <MovieExtendedComponentWrapped
             userData={userData}
             authStatus={authStatus}
             onFilmClick={onPageChange}
             onSignInClick={onPageChange}
+            onAddReviewClick={_addReviewClickHandler}
             films={films}
             movieDetails={movieDetails}
             isFullscreenPlayerActive={isFullscreenPlayerActive}
             onFullScreenToggle={onFullScreenToggle}
             reviews={reviews}
+          />
+        </Route>
+        <Route exact path="/dev-review">
+          {_renderErrorMessage()}
+          <ReviewComponentWrapped
+            userData={userData}
+            authStatus={authStatus}
+            movieDetails={movieDetails}
+            onSignInClick={onPageChange}
+            onSubmit={sendReview}
+            reviewError={error}
+            isLoading={isReviewFromLoading}
+            commentFormSendingResult={commentFormSendingResult}
           />
         </Route>
       </Switch>
@@ -141,7 +207,11 @@ const mapStateToProps = (state) => ({
   isFullscreenPlayerActive: getFullScreenPlayerState(state),
   authStatus: getAuthStatus(state),
   userData: getUserData(state),
-  userErrors: getUserError(state),
+  error: getError(state),
+  isReviewFromLoading: getLoadingStatus(state),
+  commentFormSendingResult: getCommentFormSendingResult(state),
+  isSignInLoading: getSignInLoadingStatus(state),
+  authFormSendingResult: getAuthFormSendingResult(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -160,6 +230,9 @@ const mapDispatchToProps = (dispatch) => ({
   login(authData) {
     dispatch(UserOperation.login(authData));
   },
+  sendReview(reviewData) {
+    dispatch(DataOperation.sendReview(reviewData));
+  }
 });
 
 App.propTypes = {
@@ -234,9 +307,17 @@ App.propTypes = {
     PropTypes.exact({})
   ]).isRequired,
   login: PropTypes.func.isRequired,
-  userErrors: PropTypes.shape({
-    error: PropTypes.string,
-  })
+  sendReview: PropTypes.func.isRequired,
+  error: PropTypes.oneOfType([
+    PropTypes.shape({
+      error: PropTypes.string
+    }),
+    PropTypes.shape({})
+  ]),
+  isReviewFromLoading: PropTypes.bool.isRequired,
+  isSignInLoading: PropTypes.bool.isRequired,
+  commentFormSendingResult: PropTypes.bool,
+  authFormSendingResult: PropTypes.bool,
 };
 
 export {App};

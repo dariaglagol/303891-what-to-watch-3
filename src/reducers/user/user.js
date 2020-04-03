@@ -1,17 +1,20 @@
 import {AuthorizationStatus, PageTypes, StatusCode} from "@utils/constants";
 import {extend, itemAdapter} from "@utils/utils";
 import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
+import {ActionCreator as ErrorActionCreator} from "@reducers/common-error/common-error";
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   userData: {},
-  error: {},
+  authSendingResult: null,
+  isLoading: false,
 };
 
 const ActionType = {
   REQUIRED_AUTHORIZATION: `REQUIRED_AUTHORIZATION`,
   SET_USER_DATA: `SET_USER_DATA`,
-  SET_ERROR: `SET_ERROR`,
+  SET_LOADING_STATUS: `SET_LOADING_STATUS`,
+  SET_AUTH_FORM_ACTION_RESULT: `SET_AUTH_FORM_ACTION_RESULT`
 };
 
 const ActionCreator = {
@@ -29,10 +32,17 @@ const ActionCreator = {
       payload: preparedUserData
     };
   },
-  setError: (error) => {
+  setError: () => ({
+    type: ActionType.SET_ERROR
+  }),
+  setLoadingStatus: (value) => ({
+    type: ActionType.SET_LOADING_STATUS,
+    payload: value
+  }),
+  setAuthFormSendingResult: (value) => {
     return {
-      type: ActionType.SET_ERROR,
-      payload: error
+      type: ActionType.SET_AUTH_FORM_ACTION_RESULT,
+      payload: value,
     };
   },
 };
@@ -49,7 +59,13 @@ const reducer = (state = initialState, action) => {
       });
     case ActionType.SET_ERROR:
       return extend(state, {
-        error: action.payload
+        isLoading: false,
+        authSendingResult: false,
+      });
+    case ActionType.SET_LOADING_STATUS:
+      return extend(state, {
+        isLoading: action.payload,
+        authSendingResult: null,
       });
     default:
       break;
@@ -68,27 +84,30 @@ const Operation = {
         }
       })
       .catch((err) => {
-        dispatch(ActionCreator.setError(err));
+        dispatch(ErrorActionCreator.setError(err));
       });
   },
   login: (authData) => (dispatch, getState, api) => {
+    dispatch(ActionCreator.setLoadingStatus(true));
+
     return api.post(`/login`, {
       email: authData.login,
       password: authData.password,
     })
       .then((response) => {
-        if (response.status === StatusCode.SUCCESS) {
+        dispatch(ActionCreator.setLoadingStatus(false));
+
+        if (response && response.status === StatusCode.SUCCESS) {
           dispatch(ActionCreator.setUserData(response.data));
           dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
+          dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
+          dispatch(ErrorActionCreator.setError({}));
         }
-        if (response.status === StatusCode.AUTH_ERROR) {
-          dispatch(ActionCreator.setError(response.data));
+        if (response && response.status === StatusCode.AUTH_ERROR) {
+          dispatch(ErrorActionCreator.setError(response.data));
         }
 
-        dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
-      })
-      .catch((err) => {
-        dispatch(ActionCreator.setError(err));
+        dispatch(ActionCreator.setAuthFormSendingResult(false));
       });
   },
 };

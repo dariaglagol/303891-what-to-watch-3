@@ -8,7 +8,7 @@ import MovieReviews from "@components/movie-extended/blocks/movies-reviews/movie
 import FullscreenPlayer from "@components/fullscreen-player/fullscreen-player";
 import withVideoPlayer from "@hocs/with-video-player/with-video-player";
 import {getSimilarMovies} from "@utils/utils";
-import {TabTypes, DEFAULT_SHOWN_FILMS, FULLSCREEN_VIDEO_CLASS} from "@utils/constants";
+import {TabTypes, DEFAULT_SHOWN_FILMS, FULLSCREEN_VIDEO_CLASS, AuthorizationStatus} from "@utils/constants";
 
 const WrappedFullScreenVideo = withVideoPlayer(FullscreenPlayer);
 
@@ -25,6 +25,7 @@ const MovieExtended = (props) => {
     userData,
     onSignInClick,
     authStatus,
+    onAddReviewClick,
   } = props;
 
   const {
@@ -74,6 +75,22 @@ const MovieExtended = (props) => {
     onFullScreenToggle(!isFullscreenPlayerActive);
   }
 
+  function _renderAddReviewButton() {
+    if (authStatus === AuthorizationStatus.AUTH) {
+      return (
+        <a
+          href="add-review.html"
+          className="btn movie-card__button"
+          onClick={onAddReviewClick}
+        >
+          Add review
+        </a>
+      );
+    }
+
+    return null;
+  }
+
   return (
     <React.Fragment>
       <section className="movie-card movie-card--full">
@@ -115,7 +132,7 @@ const MovieExtended = (props) => {
                   </svg>
                   <span>My list</span>
                 </button>
-                <a href="add-review.html" className="btn movie-card__button">Add review</a>
+                {_renderAddReviewButton()}
               </div>
             </div>
           </div>
@@ -230,6 +247,7 @@ MovieExtended.propTypes = {
   ]).isRequired,
   onSignInClick: PropTypes.func.isRequired,
   authStatus: PropTypes.string.isRequired,
+  onAddReviewClick: PropTypes.func.isRequired,
 };
 
 export default MovieExtended;
