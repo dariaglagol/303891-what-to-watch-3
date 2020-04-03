@@ -12,6 +12,7 @@ const withReview = (Component) => {
         stars: 0,
         starStatus: null,
         textStatus: null,
+        isSubmitButtonDisable: true,
         text: ``,
       };
 

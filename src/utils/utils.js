@@ -56,9 +56,11 @@ const validateTextAreaInput = (text) => {
 };
 
 const isSubmitButtonDisable = (stars, textStatus) => {
-  return (stars && textStatus !== ``) ||
-    (!stars && textStatus) ||
-    (!stars && textStatus !== ``);
+  if (!stars || textStatus !== ``) {
+    return true;
+  }
+
+  return false;
 };
 
 export {

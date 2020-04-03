@@ -1,4 +1,4 @@
-import React, {PureComponent, createRef} from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import Header from "@components/header/header";
 import RatingStar from "@components/add-review/blocks/rating-star";
@@ -7,8 +7,6 @@ import {RATING_STARS_COUNT} from "@utils/constants";
 class AddReview extends PureComponent {
   constructor(props) {
     super(props);
-
-    this._reviewRef = createRef();
 
     this._submitHandler = this._submitHandler.bind(this);
     this._reviewChangeHandler = this._reviewChangeHandler.bind(this);
