@@ -7,10 +7,9 @@ import {Provider} from "react-redux";
 
 import reducer from "@reducers/reducer";
 import {ActionCreator as UserActionCreator, Operation as UserOperation} from "@reducers/user/user";
-import {
-  Operation as DataOperation,
-  ActionCreator as DataActionCreator
-} from "@reducers/data/data";
+import {Operation as DataOperation} from "@reducers/data/data";
+
+import {ActionCreator as ErrorActionCreator} from "@reducers/common-error/common-error";
 
 import App from "@components/app/app";
 
@@ -22,7 +21,7 @@ const onUnauthorized = () => {
 };
 
 const onError = (error) => {
-  store.dispatch(DataActionCreator.setError(error));
+  store.dispatch(ErrorActionCreator.setError(error));
 };
 
 const api = createAPI(onUnauthorized, onError);

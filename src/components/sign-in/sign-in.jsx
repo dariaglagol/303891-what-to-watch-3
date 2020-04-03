@@ -52,7 +52,8 @@ export default class SignIn extends PureComponent {
 
   _renderMessage() {
     const {userErrors} = this.props;
-    const {error} = userErrors;
+
+    const error = userErrors.data && userErrors.data.error || userErrors.message;
 
     if (error) {
       return (
@@ -79,6 +80,8 @@ export default class SignIn extends PureComponent {
   }
 
   render() {
+    const {isLoading} = this.props;
+
     return (
       <div className="user-page">
         <header className="page-header user-page__head">
@@ -94,13 +97,15 @@ export default class SignIn extends PureComponent {
         </header>
         <div className="sign-in user-page__content">
           <form action="#" className="sign-in__form" onSubmit={this.handleSubmit}>
-            {this._renderMessage()}
-            <div className="sign-in__fields">
-              {this._renderInputs()}
-            </div>
-            <div className="sign-in__submit">
-              <button className="sign-in__btn" type="submit">Sign in</button>
-            </div>
+            <fieldset disabled={isLoading}>
+              {this._renderMessage()}
+              <div className="sign-in__fields">
+                {this._renderInputs()}
+              </div>
+              <div className="sign-in__submit">
+                <button className="sign-in__btn" type="submit">Sign in</button>
+              </div>
+            </fieldset>
           </form>
         </div>
         <Footer />
@@ -111,11 +116,18 @@ export default class SignIn extends PureComponent {
 
 SignIn.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  userErrors: PropTypes.shape({
-    error: PropTypes.string
-  }),
+  userErrors: PropTypes.oneOfType([
+    PropTypes.shape({
+      data: PropTypes.shape({
+        error: PropTypes.string,
+      }),
+      message: PropTypes.string,
+    }),
+    PropTypes.shape({})
+  ]),
   invalidFields: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string).isRequired,
     PropTypes.exact([])
-  ])
+  ]),
+  isLoading: PropTypes.bool.isRequired
 };

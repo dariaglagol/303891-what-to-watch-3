@@ -14,8 +14,10 @@ import {PageTypes} from "@utils/constants";
 import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
 import {getActivePage, getFullScreenPlayerState} from "@reducers/common/selectors";
 
+import {getError} from "@reducers/common-error/selectors";
+
 import {Operation as UserOperation} from "@reducers/user/user";
-import {getAuthStatus, getUserData, getUserError} from "@reducers/user/selectors";
+import {getAuthStatus, getUserData, getSignInLoadingStatus, getAuthFormSendingResult} from "@reducers/user/selectors";
 
 import {
   ActionCreator as DataActionCreator,
@@ -27,7 +29,6 @@ import {
   getReviews,
   getMovieCover,
   getActiveFilmId,
-  getDataError,
   getLoadingStatus,
   getCommentFormSendingResult
 } from "@reducers/data/selectors.js";
@@ -55,12 +56,13 @@ const App = (props) => {
     activeFilmId,
     login,
     userData,
-    userErrors,
     authStatus,
     sendReview,
-    reviewError,
-    isLoading,
+    isReviewFromLoading,
     commentFormSendingResult,
+    error,
+    isSignInLoading,
+    authFormSendingResult
   } = props;
 
   const movieDetails = films.find((film) => film.id === activeFilmId) || {};
@@ -111,7 +113,9 @@ const App = (props) => {
         return (
           <SignIn
             onSubmit={login}
-            userErrors={userErrors}
+            userErrors={error}
+            isLoading={isSignInLoading}
+            authFormSendingResult={authFormSendingResult}
           />
         );
       case PageTypes.REVIEW:
@@ -122,8 +126,8 @@ const App = (props) => {
             movieDetails={movieDetails}
             onSignInClick={onPageChange}
             onSubmit={sendReview}
-            reviewError={reviewError}
-            isLoading={isLoading}
+            reviewError={error}
+            isLoading={isReviewFromLoading}
             commentFormSendingResult={commentFormSendingResult}
           />
         );
@@ -138,8 +142,8 @@ const App = (props) => {
   }
 
   function _renderErrorMessage() {
-    if (Object.keys(reviewError).length) {
-      return <ErrorMessage errorMessage={reviewError} />;
+    if (Object.keys(error).length) {
+      return <ErrorMessage errorMessage={error} />;
     }
 
     return null;
@@ -174,8 +178,8 @@ const App = (props) => {
             movieDetails={movieDetails}
             onSignInClick={onPageChange}
             onSubmit={sendReview}
-            reviewError={reviewError}
-            isLoading={isLoading}
+            reviewError={error}
+            isLoading={isReviewFromLoading}
             commentFormSendingResult={commentFormSendingResult}
           />
         </Route>
@@ -203,10 +207,11 @@ const mapStateToProps = (state) => ({
   isFullscreenPlayerActive: getFullScreenPlayerState(state),
   authStatus: getAuthStatus(state),
   userData: getUserData(state),
-  userErrors: getUserError(state),
-  reviewError: getDataError(state),
-  isLoading: getLoadingStatus(state),
+  error: getError(state),
+  isReviewFromLoading: getLoadingStatus(state),
   commentFormSendingResult: getCommentFormSendingResult(state),
+  isSignInLoading: getSignInLoadingStatus(state),
+  authFormSendingResult: getAuthFormSendingResult(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -302,18 +307,17 @@ App.propTypes = {
     PropTypes.exact({})
   ]).isRequired,
   login: PropTypes.func.isRequired,
-  userErrors: PropTypes.shape({
-    error: PropTypes.string,
-  }),
   sendReview: PropTypes.func.isRequired,
-  reviewError: PropTypes.oneOfType([
+  error: PropTypes.oneOfType([
     PropTypes.shape({
       error: PropTypes.string
     }),
     PropTypes.shape({})
   ]),
-  isLoading: PropTypes.bool.isRequired,
+  isReviewFromLoading: PropTypes.bool.isRequired,
+  isSignInLoading: PropTypes.bool.isRequired,
   commentFormSendingResult: PropTypes.bool,
+  authFormSendingResult: PropTypes.bool,
 };
 
 export {App};

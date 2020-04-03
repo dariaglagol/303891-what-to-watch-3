@@ -39,10 +39,6 @@ const getActiveFilmId = (state) => {
   return state[NAME].activeFilmId;
 };
 
-const getDataError = (state) => {
-  return state[NAME].error;
-};
-
 const getLoadingStatus = (state) => {
   return state[NAME].isLoading;
 };
@@ -69,7 +65,6 @@ export {
   getActiveGenre,
   getFilmsSelector,
   getActiveFilmId,
-  getDataError,
   getLoadingStatus,
   getCommentFormSendingResult
 };
