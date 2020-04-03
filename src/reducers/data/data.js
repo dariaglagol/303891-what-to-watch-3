@@ -86,8 +86,9 @@ const Operation = {
         dispatch(ActionCreator.setLoadingStatus(false));
 
         if (response && response.status === StatusCode.SUCCESS) {
-          dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
           dispatch(ActionCreator.setCommentFormSendingResult(true));
+          dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
+          dispatch(ActionCreator.setError({}));
         }
 
         dispatch(ActionCreator.setCommentFormSendingResult(false));

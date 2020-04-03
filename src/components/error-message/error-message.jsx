@@ -3,13 +3,15 @@ import PropTypes from "prop-types";
 
 const ErrorMessage = (props) => {
   const {errorMessage: {
-    data: {error},
+    data,
     message
   }} = props;
 
+  const showingMessage = data && data.error || message;
+
   return (
     <div className="error-message">
-      <h1 className="user-page__title">{error || message}</h1>
+      <h1 className="user-page__title">{showingMessage}</h1>
     </div>
   );
 };
