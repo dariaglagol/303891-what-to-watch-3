@@ -258,10 +258,14 @@ MovieExtended.propTypes = {
     PropTypes.shape([]).isRequired,
   ]).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.exact({
-    text: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
+    comment: PropTypes.string.isRequired,
+    user: PropTypes.exact({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired
+    }),
     date: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
   })),
   onFilmClick: PropTypes.func.isRequired,
   renderTabs: PropTypes.func.isRequired,

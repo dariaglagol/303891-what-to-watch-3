@@ -256,9 +256,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(DataActionCreator.changeGenre(activeGenre));
   },
   onFilmClick(film) {
-    if (film) {
-      dispatch(DataActionCreator.setFilm(film));
-    }
+    dispatch(DataActionCreator.setFilm(film));
+    dispatch(DataOperation.loadReviews(film.id));
   },
   onFullScreenToggle(state) {
     dispatch(CommonActionCreator.toggleFullscreenPlayer(state));
@@ -320,10 +319,14 @@ App.propTypes = {
     })).isRequired,
   ]).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.exact({
-    text: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
+    comment: PropTypes.string.isRequired,
+    user: PropTypes.exact({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired
+    }),
     date: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
   })),
   activeGenre: PropTypes.string.isRequired,
   onGenreTabClick: PropTypes.func.isRequired,

@@ -1,5 +1,4 @@
-import {extend, itemAdapter, itemsAdapter} from "@utils/utils.js";
-import MovieReviews from "@mocks/reviews";
+import {extend, itemAdapter, itemsAdapter, toRawItemsAdapter} from "@utils/utils.js";
 import {DEFAULT_ACTIVE_GENRE, StatusCode} from "@utils/constants";
 import {ActionCreator as ErrorActionCreator} from "@reducers/common-error/common-error";
 import history from "../../history";
@@ -8,7 +7,7 @@ const initialState = {
   films: [],
   promoMovie: {},
   activeFilmId: 0,
-  reviews: MovieReviews,
+  reviews: [],
   activeGenre: DEFAULT_ACTIVE_GENRE,
   commentFormSendingResult: null,
   film: {},
@@ -18,6 +17,7 @@ const initialState = {
 const ActionType = {
   LOAD_FILMS: `LOAD_FILMS`,
   LOAD_PROMO_FILM: `LOAD_PROMO_FILM`,
+  LOAD_REVIEWS: `LOAD_REVIEWS`,
   CHANGE_GENRE: `CHANGE_GENRE`,
   GET_FILM: `GET_FILM`,
   SET_ERROR: `SET_ERROR`,
@@ -36,6 +36,12 @@ const ActionCreator = {
     return {
       type: ActionType.LOAD_PROMO_FILM,
       payload: itemAdapter(film),
+    };
+  },
+  loadReviews: (reviews) => {
+    return {
+      type: ActionType.LOAD_REVIEWS,
+      payload: itemsAdapter(reviews),
     };
   },
   changeGenre: (newGenre) => ({
@@ -72,14 +78,13 @@ const Operation = {
         dispatch(ActionCreator.loadFilms(response.data));
       });
   },
-  toggleFilmFavorite: (id, status) => (dispatch, getState, api) => {
+  toggleFilmFavorite: (filmId, status) => (dispatch, getState, api) => {
     dispatch(ActionCreator.setLoadingStatus(true));
-    return api.post(`/favorite/${id}/${status}`, {
-      film_id: id,
-      status,
-    }).then((response) => {
+    const data = toRawItemsAdapter({filmId, status});
+
+    return api.post(`/favorite/${filmId}/${status}`, data).then((response) => {
       dispatch(ActionCreator.setLoadingStatus(false));
-      if (id === getState().DATA.promoMovie.id) {
+      if (filmId === getState().DATA.promoMovie.id) {
         dispatch(ActionCreator.loadPromoFilm(response.data));
         return;
       }
@@ -115,7 +120,15 @@ const Operation = {
 
         dispatch(ActionCreator.setCommentFormSendingResult(false));
       });
-  }
+  },
+  loadReviews: (id) => (dispatch, getState, api) => {
+    dispatch(ActionCreator.setLoadingStatus(true));
+    return api.get(`/comments/${id}`)
+      .then((response) => {
+        dispatch(ActionCreator.setLoadingStatus(false));
+        dispatch(ActionCreator.loadReviews(response.data));
+      });
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -141,6 +154,10 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         isLoading: action.payload,
         commentFormSendingResult: null,
+      });
+    case ActionType.LOAD_REVIEWS:
+      return extend(state, {
+        reviews: action.payload,
       });
     default:
       break;

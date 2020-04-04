@@ -1,4 +1,4 @@
-import {camelCase, mapKeys} from "lodash";
+import {camelCase, mapKeys, snakeCase} from "lodash";
 import {MovieMarksTypes, SIMILAR_FILM_COUNT, TextAreaMinMaxValues} from './constants';
 
 const getMovieMark = (score) => {
@@ -39,6 +39,12 @@ const itemsAdapter = (films) => {
   });
 };
 
+const toRawItemsAdapter = (data) => {
+  return mapKeys(data, (value, key) => {
+    return snakeCase(key);
+  });
+};
+
 const validateTextAreaInput = (text) => {
   const textLength = text.length;
   let remainingCharacters = 0;
@@ -57,8 +63,6 @@ const validateTextAreaInput = (text) => {
 
 const isSubmitButtonDisable = (stars, textStatus) => {
   return !stars || textStatus !== ``;
-
-
 };
 
 const getRoute = (route, id) => {
@@ -85,5 +89,6 @@ export {
   itemAdapter,
   itemsAdapter,
   getRoute,
-  getGenres
+  getGenres,
+  toRawItemsAdapter
 };
