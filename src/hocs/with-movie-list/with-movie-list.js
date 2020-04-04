@@ -3,7 +3,6 @@ import MoviesList from "@components/movies-list/movies-list";
 import PropTypes from "prop-types";
 import {PageTypes} from "@utils/constants";
 
-
 const withMovieList = (Component) => {
   class WithMovieList extends PureComponent {
     constructor(props) {

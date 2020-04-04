@@ -1,5 +1,5 @@
 import {camelCase, mapKeys} from "lodash";
-import {MovieMarksTypes, SIMILAR_FILM_COUNT, TextAreaMinMaxValues} from './constants';
+import {MovieMarksTypes, SIMILAR_FILM_COUNT, AppRoute, TextAreaMinMaxValues} from './constants';
 
 const getMovieMark = (score) => {
   let key = ``;
@@ -63,6 +63,10 @@ const isSubmitButtonDisable = (stars, textStatus) => {
   return false;
 };
 
+const getRoute = (route, id) => {
+  return `${route}/${id}`;
+};
+
 export {
   getMovieMark,
   getSimilarMovies,
@@ -71,5 +75,6 @@ export {
   validateTextAreaInput,
   sliceMovieArray,
   itemAdapter,
-  itemsAdapter
+  itemsAdapter,
+  getRoute
 };

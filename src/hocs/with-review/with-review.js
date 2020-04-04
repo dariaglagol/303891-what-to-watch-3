@@ -21,7 +21,7 @@ const withReview = (Component) => {
       this._textChangeHandler = this._textChangeHandler.bind(this);
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate() {
       const {commentFormSendingResult} = this.state;
 
       if (commentFormSendingResult) {

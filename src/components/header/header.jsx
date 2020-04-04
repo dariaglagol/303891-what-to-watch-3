@@ -1,54 +1,53 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {AuthorizationStatus, PageTypes} from "@utils/constants";
+import {Link} from "react-router-dom";
+import {AppRoute, AuthorizationStatus} from "@utils/constants";
 
 const Header = (props) => {
   const {
     userData,
-    onSignInClick,
     authStatus
   } = props;
 
   const {avatarUrl} = userData;
 
-  function _signInClickHandler(e) {
-    e.preventDefault();
-    onSignInClick(PageTypes.AUTH);
-  }
-
   function _renderHeader() {
     if (authStatus === AuthorizationStatus.AUTH) {
       return (
         <div className="user-block__avatar">
-          <img
-            src={avatarUrl}
-            alt="User avatar"
-            width="63"
-            height="63"
-          />
+          <Link to={AppRoute.MY_LIST}>
+            <img
+              src={avatarUrl}
+              alt="User avatar"
+              width="63"
+              height="63"
+            />
+          </Link>
         </div>
       );
     }
 
     return (
-      <a
-        href="sign-in.html"
+      <Link
+        to={AppRoute.LOGIN}
         className="user-block__link"
-        onClick={_signInClickHandler}
       >
         Sign in
-      </a>
+      </Link>
     );
   }
 
   return (
     <header className="page-header">
       <div className="logo">
-        <a className="logo__link">
+        <Link
+          to={AppRoute.ROOT}
+          className="logo__link"
+        >
           <span className="logo__letter logo__letter--1">W</span>
           <span className="logo__letter logo__letter--2">T</span>
           <span className="logo__letter logo__letter--3">W</span>
-        </a>
+        </Link>
       </div>
 
       <div className="user-block">
@@ -68,7 +67,6 @@ Header.propTypes = {
     }),
     PropTypes.exact({})
   ]).isRequired,
-  onSignInClick: PropTypes.func.isRequired,
   authStatus: PropTypes.string.isRequired,
 };
 

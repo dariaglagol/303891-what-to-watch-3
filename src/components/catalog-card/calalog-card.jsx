@@ -1,5 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
+import {getRoute} from "@utils/utils";
+import {AppRoute} from "@utils/constants";
 
 const CatalogCard = (props) => {
   const {film, onFilmCatalogCardHover, onFilmClick, renderVideo} = props;
@@ -25,12 +28,14 @@ const CatalogCard = (props) => {
       onMouseLeave={_onFilmStopHover}
       onClick={_onFilmClick}
     >
-      <div className="small-movie-card__image">
-        {renderVideo()}
-      </div>
-      <h3 className="small-movie-card__title">
-        <a className="small-movie-card__link" href="movie-page.html">{name}</a>
-      </h3>
+      <Link to={getRoute(AppRoute.MOVIE, id)}>
+        <div className="small-movie-card__image">
+          {renderVideo()}
+        </div>
+        <h3 className="small-movie-card__title">
+          <span className="small-movie-card__link">{name}</span>
+        </h3>
+      </Link>
     </article>
   );
 };

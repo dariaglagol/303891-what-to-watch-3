@@ -35,7 +35,6 @@ const PromoFilm = (props) => {
 
       <Header
         userData={userData}
-        onSignInClick={onSignInClick}
         authStatus={authStatus}
       />
 

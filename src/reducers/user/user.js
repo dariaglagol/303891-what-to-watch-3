@@ -99,7 +99,6 @@ const Operation = {
 
         if (response && response.status === StatusCode.SUCCESS) {
           dispatch(ActionCreator.setUserData(response.data));
-          dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
           dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
           dispatch(ErrorActionCreator.setError({}));
         }

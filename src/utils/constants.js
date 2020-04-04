@@ -73,6 +73,14 @@ const TextAreaMinMaxValues = {
 
 const RATING_ERROR_TEXT = `Оцените фильм`;
 
+const AppRoute = {
+  LOGIN: `/login`,
+  MOVIE: `/films`,
+  REVIEW: `/review`,
+  MY_LIST: `/mylist`,
+  ROOT: `/`,
+};
+
 export {
   MovieMarksTypes,
   FILM_REVIEWS_COLUMN_COUNT,
@@ -91,4 +99,5 @@ export {
   RATING_STARS_COUNT,
   TextAreaMinMaxValues,
   RATING_ERROR_TEXT,
+  AppRoute
 };

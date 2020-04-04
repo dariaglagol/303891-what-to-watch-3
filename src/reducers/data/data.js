@@ -1,8 +1,9 @@
 import {extend, itemAdapter, itemsAdapter} from "@utils/utils.js";
 import MovieReviews from "@mocks/reviews";
-import {DEFAULT_ACTIVE_GENRE, PageTypes, StatusCode} from "@utils/constants";
+import {DEFAULT_ACTIVE_GENRE, AppRoute, StatusCode} from "@utils/constants";
 import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
 import {ActionCreator as ErrorActionCreator} from "@reducers/common-error/common-error";
+import history from "../../history";
 
 const initialState = {
   films: [],
@@ -11,6 +12,7 @@ const initialState = {
   reviews: MovieReviews,
   activeGenre: DEFAULT_ACTIVE_GENRE,
   commentFormSendingResult: null,
+  film: {},
   isLoading: false,
 };
 
@@ -19,6 +21,7 @@ const ActionType = {
   LOAD_PROMO_FILM: `LOAD_PROMO_FILM`,
   CHANGE_GENRE: `CHANGE_GENRE`,
   GET_ACTIVE_FILM_ID: `GET_ACTIVE_FILM_ID`,
+  GET_ACTIVE_FILM: `GET_ACTIVE_FILM`,
   SET_ERROR: `SET_ERROR`,
   SET_LOADING_STATUS: `SET_LOADING_STATUS`,
   SET_COMMENT_FORM_ACTION_RESULT: `SET_COMMENT_FORM_ACTION_RESULT`
@@ -41,6 +44,12 @@ const ActionCreator = {
     type: ActionType.CHANGE_GENRE,
     payload: newGenre,
   }),
+  getFilm: (film) => {
+    return {
+      type: ActionType.GET_ACTIVE_FILM,
+      payload: film
+    };
+  },
   getActiveFilmId: (id) => ({
     type: ActionType.GET_ACTIVE_FILM_ID,
     payload: id
@@ -62,22 +71,36 @@ const ActionCreator = {
 
 const Operation = {
   loadFilms: () => (dispatch, getState, api) => {
+    dispatch(ActionCreator.setLoadingStatus(true));
     return api.get(`/films`)
       .then((response) => {
+        dispatch(ActionCreator.setLoadingStatus(false));
         dispatch(ActionCreator.loadFilms(response.data));
-        dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
+      });
+  },
+  loadFilm: (id) => (dispatch, getState, api) => {
+    dispatch(ActionCreator.setLoadingStatus(true));
+
+    return api.get(`/films/${id}`)
+      .then(() => {
+        dispatch(ActionCreator.setLoadingStatus(false));
+        dispatch(ActionCreator.getFilm);
       });
   },
   loadPromoFilm: () => (dispatch, getState, api) => {
+    dispatch(ActionCreator.setLoadingStatus(true));
     return api.get(`/films/promo`)
       .then((response) => {
+        dispatch(ActionCreator.setLoadingStatus(false));
         dispatch(ActionCreator.loadPromoFilm(response.data));
       });
   },
   sendReview: (reviewData) => (dispatch, getState, api) => {
     dispatch(ActionCreator.setLoadingStatus(true));
 
-    return api.post(`/comments/1`, {
+    const activeFilmId = getState().DATA.activeFilmId;
+
+    return api.post(`/comments/${activeFilmId}`, {
       rating: reviewData.stars,
       comment: reviewData.text,
     })
@@ -86,7 +109,7 @@ const Operation = {
 
         if (response && response.status === StatusCode.SUCCESS) {
           dispatch(ActionCreator.setCommentFormSendingResult(true));
-          dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
+          history(history.goBack());
           dispatch(ErrorActionCreator.setError({}));
         }
 

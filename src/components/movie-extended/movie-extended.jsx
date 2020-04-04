@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
 import Header from "@components/header/header";
 import Footer from "@components/footer/footer";
 import MovieDetails from "@components/movie-extended/blocks/movie-details/movie-details";
@@ -7,8 +8,8 @@ import MovieOverview from "@components/movie-extended/blocks/movie-overview/movi
 import MovieReviews from "@components/movie-extended/blocks/movies-reviews/movies-reviews";
 import FullscreenPlayer from "@components/fullscreen-player/fullscreen-player";
 import withVideoPlayer from "@hocs/with-video-player/with-video-player";
-import {getSimilarMovies} from "@utils/utils";
-import {TabTypes, DEFAULT_SHOWN_FILMS, FULLSCREEN_VIDEO_CLASS, AuthorizationStatus} from "@utils/constants";
+import {getRoute, getSimilarMovies} from "@utils/utils";
+import {TabTypes, DEFAULT_SHOWN_FILMS, FULLSCREEN_VIDEO_CLASS, AuthorizationStatus, AppRoute} from "@utils/constants";
 
 const WrappedFullScreenVideo = withVideoPlayer(FullscreenPlayer);
 
@@ -23,7 +24,6 @@ const MovieExtended = (props) => {
     onFullScreenToggle,
     isFullscreenPlayerActive,
     userData,
-    onSignInClick,
     authStatus,
     onAddReviewClick,
   } = props;
@@ -39,7 +39,8 @@ const MovieExtended = (props) => {
     runTime,
     scoresCount,
     rating,
-    description
+    description,
+    id,
   } = movieDetails;
 
   const similarFilms = getSimilarMovies(genre, films);
@@ -78,13 +79,13 @@ const MovieExtended = (props) => {
   function _renderAddReviewButton() {
     if (authStatus === AuthorizationStatus.AUTH) {
       return (
-        <a
-          href="add-review.html"
+        <Link
+          to={getRoute(AppRoute.REVIEW, id)}
           className="btn movie-card__button"
           onClick={onAddReviewClick}
         >
           Add review
-        </a>
+        </Link>
       );
     }
 
@@ -104,7 +105,6 @@ const MovieExtended = (props) => {
           <Header
             userData={userData}
             authStatus={authStatus}
-            onSignInClick={onSignInClick}
           />
 
           <div className="movie-card__wrap">
@@ -245,7 +245,6 @@ MovieExtended.propTypes = {
     }),
     PropTypes.exact({})
   ]).isRequired,
-  onSignInClick: PropTypes.func.isRequired,
   authStatus: PropTypes.string.isRequired,
   onAddReviewClick: PropTypes.func.isRequired,
 };
