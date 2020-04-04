@@ -79,6 +79,12 @@ const getGenres = (films) => {
   return genres;
 };
 
+const findFilm = (films, id) => {
+  films.find((film) => {
+    return film.id === parseInt(id, 10);
+  });
+};
+
 export {
   getMovieMark,
   getSimilarMovies,
@@ -91,4 +97,5 @@ export {
   getRoute,
   getGenres,
   toRawItemsAdapter,
+  findFilm
 };

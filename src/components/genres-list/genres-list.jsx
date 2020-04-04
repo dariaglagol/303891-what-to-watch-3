@@ -28,6 +28,7 @@ const GenresList = (props) => {
 };
 
 GenresList.propTypes = {
+  genreList: PropTypes.exact(PropTypes.string.isRequired).isRequired,
   activeGenre: PropTypes.string.isRequired,
   onGenreTabClick: PropTypes.func.isRequired,
 };

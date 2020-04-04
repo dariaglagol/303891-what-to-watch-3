@@ -126,11 +126,14 @@ PromoFilm.propTypes = {
       posterImage: PropTypes.string.isRequired,
       promoCover: PropTypes.string.isRequired,
       backgroundImage: PropTypes.string.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+      id: PropTypes.number.isRequired,
     }),
     PropTypes.shape({}).isRequired
   ]),
   onFilmClick: PropTypes.func.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,
+  toggleFilmFavorite: PropTypes.func.isRequired,
   userData: PropTypes.oneOfType([
     PropTypes.exact({
       id: PropTypes.number.isRequired,

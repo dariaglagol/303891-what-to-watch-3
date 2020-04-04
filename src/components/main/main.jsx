@@ -102,6 +102,7 @@ Main.propTypes = {
   renderCatalog: PropTypes.func.isRequired,
   isFullscreenPlayerActive: PropTypes.bool.isRequired,
   onFullScreenToggle: PropTypes.func.isRequired,
+  toggleFilmFavorite: PropTypes.func.isRequired,
   userData: PropTypes.oneOfType([
     PropTypes.exact({
       id: PropTypes.number.isRequired,

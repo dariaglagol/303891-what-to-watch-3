@@ -1,6 +1,5 @@
-import {AuthorizationStatus, PageTypes, StatusCode} from "@utils/constants";
+import {AuthorizationStatus, StatusCode} from "@utils/constants";
 import {extend, itemAdapter} from "@utils/utils";
-import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
 import {ActionCreator as ErrorActionCreator} from "@reducers/common-error/common-error";
 
 const initialState = {
