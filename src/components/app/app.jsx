@@ -15,7 +15,7 @@ import AddReview from "@components/add-review/add-review";
 import ErrorMessage from "@components/error-message/error-message";
 
 import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
-import {getActivePage, getFullScreenPlayerState} from "@reducers/common/selectors";
+import {getFullScreenPlayerState} from "@reducers/common/selectors";
 
 import {getError} from "@reducers/common-error/selectors";
 
@@ -183,7 +183,6 @@ const mapStateToProps = (state) => ({
   activeGenre: getActiveGenre(state),
   promoMovie: getPromoMovie(state),
   reviews: getReviews(state),
-  activePage: getActivePage(state),
   film: getFilm(state),
   isFullscreenPlayerActive: getFullScreenPlayerState(state),
   authStatus: getAuthStatus(state),
@@ -316,7 +315,6 @@ App.propTypes = {
   onGenreTabClick: PropTypes.func.isRequired,
   onFilmClick: PropTypes.func.isRequired,
   toggleFilmFavorite: PropTypes.func.isRequired,
-  activePage: PropTypes.string.isRequired,
   isFullscreenPlayerActive: PropTypes.bool.isRequired,
   onFullScreenToggle: PropTypes.func.isRequired,
   authStatus: PropTypes.string.isRequired,

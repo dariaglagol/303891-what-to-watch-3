@@ -104,7 +104,7 @@ const Operation = {
   sendReview: (reviewData) => (dispatch, getState, api) => {
     dispatch(ActionCreator.setLoadingStatus(true));
 
-    const activeFilmId = getState().DATA.activeFilmId;
+    const activeFilmId = reviewData.id;
 
     return api.post(`/comments/${activeFilmId}`, {
       rating: reviewData.stars,

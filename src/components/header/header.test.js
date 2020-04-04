@@ -1,4 +1,5 @@
 import React from "react";
+import {Router} from "react-router-dom";
 import renderer from "react-test-renderer";
 import Header from "./header";
 
@@ -12,11 +13,13 @@ const userData = {
 it(`Header render`, () => {
   const headerComponent = renderer
     .create(
-        <Header
-          userData={userData}
-          authStatus={`NO_AUTH`}
-          onSignInClick={() => {}}
-        />
+        <Router>
+          <Header
+            userData={userData}
+            authStatus={`NO_AUTH`}
+            onSignInClick={() => {}}
+          />
+        </Router>
     )
     .toJSON();
 

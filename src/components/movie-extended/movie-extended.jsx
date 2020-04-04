@@ -32,13 +32,14 @@ export default class MovieExtended extends PureComponent {
 
     this.movieDetails = film || findFilm(films, params.id);
 
-    this._addToFavoriteButtonClickHandler = this._addToFavoriteButtonClickHandler.bind(this)
+    this._addToFavoriteButtonClickHandler = this._addToFavoriteButtonClickHandler.bind(this);
   }
 
-  componentDidMount() {
-    const {onFilmClick} = this.props;
-    // onFilmClick(this.movieDetails);
-  }
+  // componentDidMount() {
+  //   console.log('update');
+  //   const {onFilmClick} = this.props;
+  //   onFilmClick(this.movieDetails);
+  // }
 
   _renderTabsText() {
     const {reviews, activeTab} = this.props;
@@ -105,8 +106,6 @@ export default class MovieExtended extends PureComponent {
 
   _addToFavoriteButtonClickHandler() {
     const {isFavorite, id} = this.movieDetails;
-
-    console.log(`isFavorite`, isFavorite);
     const {toggleFilmFavorite} = this.props;
 
     const statusFavoriteInvert = isFavorite ?

@@ -49,11 +49,11 @@ const withReview = (Component) => {
       });
     }
 
-    _submitHandler() {
+    _submitHandler(id) {
       const {onSubmit} = this.props;
       const {stars, text} = this.state;
 
-      onSubmit({stars, text});
+      onSubmit({stars, text, id});
     }
 
     render() {

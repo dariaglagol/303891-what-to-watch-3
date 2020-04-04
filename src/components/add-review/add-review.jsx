@@ -34,8 +34,8 @@ class AddReview extends PureComponent {
 
   _submitHandler(e) {
     e.preventDefault();
-    const {onSubmit} = this.props;
-    onSubmit();
+    const {onSubmit, match: {params}} = this.props;
+    onSubmit(params.id);
   }
 
   _reviewChangeHandler(e) {

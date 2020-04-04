@@ -3,11 +3,11 @@ import {
   getFilms,
   getFilteredFilms,
   getReviews,
-  getActiveFilmId,
-  getMovieCover,
+  getPromoMovie,
   getActiveGenre,
-  getDataError,
-  getLoadingStatus
+  getFilm,
+  getLoadingStatus,
+  getCommentFormSendingResult
 } from "./selectors";
 import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
 

@@ -13,14 +13,6 @@ const TabTypes = {
 };
 
 const DEFAULT_ACTIVE_GENRE = `All genres`;
-// TODO удали это
-const PageTypes = {
-  MAIN: `main`,
-  MOVIE: `movie`,
-  AUTH: `auth`,
-  LOADING: `loading`,
-  REVIEW: `review`
-};
 
 const SIMILAR_FILM_COUNT = 4;
 
@@ -74,7 +66,6 @@ export {
   MovieMarksTypes,
   FILM_REVIEWS_COLUMN_COUNT,
   TabTypes,
-  PageTypes,
   TABS,
   SIMILAR_FILM_COUNT,
   DEFAULT_ACTIVE_GENRE,

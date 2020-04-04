@@ -1,4 +1,5 @@
 import React from "react";
+import {Router} from "react-router-dom";
 import renderer from "react-test-renderer";
 import CatalogCard from "./calalog-card";
 
@@ -27,13 +28,15 @@ const mockedPlayProp = false;
 it(`Render catalog card`, () => {
   const catalogCardComponent = renderer
     .create(
-        <CatalogCard
-          film={mockedFilm}
-          onFilmCatalogCardHover={() => {}}
-          onFilmClick={() => {}}
-          renderVideo={() => {}}
-          isPlaying={mockedPlayProp}
-        />, {createNodeMock: () => {
+        <Router>
+          <CatalogCard
+            film={mockedFilm}
+            onFilmCatalogCardHover={() => {}}
+            onFilmClick={() => {}}
+            renderVideo={() => {}}
+            isPlaying={mockedPlayProp}
+          />
+        </Router>, {createNodeMock: () => {
           return {};
         }}
     )
