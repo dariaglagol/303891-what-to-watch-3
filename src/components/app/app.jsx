@@ -39,7 +39,6 @@ import {
 
 import history from "../../history";
 import {AppRoute, AuthorizationStatus} from "@utils/constants";
-import {getRoute} from "@utils/utils";
 
 const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
 const MainComponentWrapped = withMovieList(withCatalog(Main));
@@ -78,22 +77,6 @@ const App = (props) => {
   }
 
   function _renderRoot() {
-    if (isDataLoading) {
-      return (
-        <Loading />
-      );
-    }
-    if (authStatus === AuthorizationStatus.NO_AUTH) {
-      return (
-        <SignIn
-          onSubmit={login}
-          userErrors={error}
-          isLoading={isSignInLoading}
-          authFormSendingResult={authFormSendingResult}
-        />
-      );
-    }
-
     return (
       <React.Fragment>
         {_renderErrorMessage()}
@@ -113,6 +96,23 @@ const App = (props) => {
     );
   }
 
+  if (isDataLoading) {
+    return (
+      <Loading />
+    );
+  }
+
+  if (authStatus === AuthorizationStatus.NO_AUTH) {
+    return (
+      <SignIn
+        onSubmit={login}
+        userErrors={error}
+        isLoading={isSignInLoading}
+        authFormSendingResult={authFormSendingResult}
+      />
+    );
+  }
+
   return (
     <Router history={history}>
       <Switch>
@@ -127,16 +127,18 @@ const App = (props) => {
             authFormSendingResult={authFormSendingResult}
           />
         </Route>
-        <Route exact path={`${AppRoute.FILMS}/:id`}
-          render={() => (
+        <Route
+          exact
+          path={`${AppRoute.FILMS}/:id`}
+          render={({match}) => (
             <React.Fragment>
               {_renderErrorMessage()}
               <MovieExtendedComponentWrapped
+                match={match}
                 userData={userData}
                 authStatus={authStatus}
                 onFilmClick={onFilmClick}
                 films={films}
-                movieDetails={film}
                 isFullscreenPlayerActive={isFullscreenPlayerActive}
                 onFullScreenToggle={onFullScreenToggle}
                 reviews={reviews}
@@ -193,7 +195,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(DataActionCreator.changeGenre(activeGenre));
   },
   onFilmClick(film) {
-    // dispatch(DataActionCreator.setFilmId(id));
     dispatch(DataActionCreator.setFilm(film));
     dispatch(DataOperation.loadReviews(film.id));
   },

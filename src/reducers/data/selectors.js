@@ -47,6 +47,10 @@ const getFilmId = (state) => {
   return state[NAME].filmId;
 };
 
+const getFilmById = (state) => {
+  return state[NAME].films.find((film) => film.id === 1)
+};
+
 const getFilmsSelector = createSelector(
     [getFilms, getFilteredFilms, getActiveGenre],
     (films, filteredFilms, activeGenre) => {
@@ -67,5 +71,6 @@ export {
   getLoadingStatus,
   getCommentFormSendingResult,
   getFilm,
-  getFilmId
+  getFilmId,
+  getFilmById
 };

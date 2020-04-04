@@ -81,8 +81,8 @@ const Operation = {
     dispatch(ActionCreator.setLoadingStatus(true));
     return api.get(`/films`)
       .then((response) => {
-        dispatch(ActionCreator.setLoadingStatus(false));
         dispatch(ActionCreator.loadFilms(response.data));
+        dispatch(ActionCreator.setLoadingStatus(false));
       });
   },
   toggleFilmFavorite: (filmId, status) => (dispatch, getState, api) => {
@@ -90,20 +90,19 @@ const Operation = {
     const data = toRawItemsAdapter({filmId, status});
 
     return api.post(`/favorite/${filmId}/${status}`, data).then((response) => {
-      dispatch(ActionCreator.setLoadingStatus(false));
       if (filmId === getState().DATA.promoMovie.id) {
         dispatch(ActionCreator.loadPromoFilm(response.data));
+        dispatch(ActionCreator.setLoadingStatus(false));
         return;
       }
 
       dispatch(ActionCreator.setFilm(response.data));
+      dispatch(ActionCreator.setLoadingStatus(false));
     });
   },
   loadPromoFilm: () => (dispatch, getState, api) => {
-    dispatch(ActionCreator.setLoadingStatus(true));
     return api.get(`/films/promo`)
       .then((response) => {
-        dispatch(ActionCreator.setLoadingStatus(false));
         dispatch(ActionCreator.loadPromoFilm(response.data));
       });
   },
