@@ -65,7 +65,7 @@ const ActionCreator = {
   setFilm: (film) => {
     return {
       type: ActionType.SET_FILM,
-      payload: film,
+      payload: itemAdapter(film),
     };
   }
 };
