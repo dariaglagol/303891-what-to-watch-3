@@ -103,9 +103,6 @@ const Operation = {
           dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
           dispatch(ErrorActionCreator.setError({}));
         }
-        if (response && response.status === StatusCode.AUTH_ERROR) {
-          dispatch(ErrorActionCreator.setError(response.data));
-        }
 
         dispatch(ActionCreator.setAuthFormSendingResult(false));
       });
