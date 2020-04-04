@@ -62,6 +62,12 @@ const ActionCreator = {
       payload: value,
     };
   },
+  setFilm: (film) => {
+    return {
+      type: ActionType.SET_FILM,
+      payload: film,
+    };
+  }
 };
 
 const Operation = {

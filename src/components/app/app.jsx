@@ -97,7 +97,9 @@ const App = (props) => {
     );
   }
 
-  if (isDataLoading) {
+  console.log(isDataLoading);
+
+  if (isDataLoading || films.length === 0) {
     return (
       <Loading />
     );
