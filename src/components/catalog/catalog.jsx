@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import GenresList from "@components/genres-list/genres-list";
 import ShowMoreButton from "@components/show-more-button/show-more-button";
+import {getGenres} from "@utils/utils";
 
 const Catalog = (props) => {
   const {
@@ -27,6 +28,7 @@ const Catalog = (props) => {
       <GenresList
         onGenreTabClick={_onTabClick}
         activeGenre={activeGenre}
+        genreList={getGenres(films)}
       />
       {renderMovieList(currentShownFilms)}
       {
@@ -64,10 +66,7 @@ Catalog.propTypes = {
     })),
     PropTypes.shape([]).isRequired,
   ]).isRequired,
-  activeGenre: PropTypes.exact({
-    multiply: PropTypes.string.isRequired,
-    single: PropTypes.string.isRequired,
-  }).isRequired,
+  activeGenre: PropTypes.string.isRequired,
   onGenreTabClick: PropTypes.func.isRequired,
   onShowMoreButtonClick: PropTypes.func.isRequired,
   resetShownFilms: PropTypes.func.isRequired,

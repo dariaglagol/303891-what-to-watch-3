@@ -1,5 +1,5 @@
 import {camelCase, mapKeys} from "lodash";
-import {MovieMarksTypes, SIMILAR_FILM_COUNT, AppRoute, TextAreaMinMaxValues} from './constants';
+import {MovieMarksTypes, SIMILAR_FILM_COUNT, TextAreaMinMaxValues} from './constants';
 
 const getMovieMark = (score) => {
   let key = ``;
@@ -56,15 +56,23 @@ const validateTextAreaInput = (text) => {
 };
 
 const isSubmitButtonDisable = (stars, textStatus) => {
-  if (!stars || textStatus !== ``) {
-    return true;
-  }
+  return !stars || textStatus !== ``;
 
-  return false;
+
 };
 
 const getRoute = (route, id) => {
   return `${route}/${id}`;
+};
+
+const getGenres = (films) => {
+  const genres = new Set();
+
+  films.forEach((film) => {
+    genres.add(film.genre);
+  });
+
+  return genres;
 };
 
 export {
@@ -76,5 +84,6 @@ export {
   sliceMovieArray,
   itemAdapter,
   itemsAdapter,
-  getRoute
+  getRoute,
+  getGenres
 };

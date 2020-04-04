@@ -12,24 +12,8 @@ const TabTypes = {
   REVIEWS: `Reviews`
 };
 
-const Genres = new Map([
-  [`ALL_GENRES`, {single: `All genres`, multiply: `All genres`}],
-  [`COMEDY`, {single: `Comedy`, multiply: `Comedies`}],
-  [`CRIME`, {single: `Crime`, multiply: `Crime`}],
-  [`DOCUMENTARY`, {single: `Documentary`, multiply: `Documentary`}],
-  [`DRAMA`, {single: `Drama`, multiply: `Dramas`}],
-  [`HORROR`, {single: `Horror`, multiply: `Horror`}],
-  [`KIDS_AND_FAMILY`, {single: `Kids & Family`, multiply: `Kids & Family`}],
-  [`ROMANCE`, {single: `Romance`, multiply: `Romance`}],
-  [`SCI_FI`, {single: `Sci-Fi`, multiply: `Sci-Fi`}],
-  [`THRILLER`, {single: `Thriller`, multiply: `Thrillers`}],
-]);
-
-const DEFAULT_ACTIVE_GENRE = {
-  single: `All genres`,
-  multiply: `All genres`
-};
-
+const DEFAULT_ACTIVE_GENRE = `All genres`;
+// TODO удали это
 const PageTypes = {
   MAIN: `main`,
   MOVIE: `movie`,
@@ -90,7 +74,6 @@ export {
   MovieMarksTypes,
   FILM_REVIEWS_COLUMN_COUNT,
   TabTypes,
-  Genres,
   PageTypes,
   TABS,
   SIMILAR_FILM_COUNT,

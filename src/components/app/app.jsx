@@ -325,10 +325,7 @@ App.propTypes = {
     date: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
   })),
-  activeGenre: PropTypes.exact({
-    multiply: PropTypes.string.isRequired,
-    single: PropTypes.string.isRequired,
-  }).isRequired,
+  activeGenre: PropTypes.string.isRequired,
   onGenreTabClick: PropTypes.func.isRequired,
   onFilmClick: PropTypes.func.isRequired,
   activePage: PropTypes.string.isRequired,

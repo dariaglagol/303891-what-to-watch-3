@@ -97,10 +97,7 @@ Main.propTypes = {
     PropTypes.shape([]).isRequired,
   ]).isRequired,
   onFilmClick: PropTypes.func.isRequired,
-  activeGenre: PropTypes.exact({
-    multiply: PropTypes.string.isRequired,
-    single: PropTypes.string.isRequired,
-  }).isRequired,
+  activeGenre: PropTypes.string.isRequired,
   onGenreTabClick: PropTypes.func.isRequired,
   renderCatalog: PropTypes.func.isRequired,
   isFullscreenPlayerActive: PropTypes.bool.isRequired,

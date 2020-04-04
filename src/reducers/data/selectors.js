@@ -5,12 +5,8 @@ import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
 const NAME = NameSpace.DATA;
 
 const _filterFilmsByGenre = (movies, activeGenre) => {
-  if (activeGenre.single === DEFAULT_ACTIVE_GENRE.single) {
-    return movies;
-  }
-
   return movies.filter((movie) => {
-    return movie.genre === activeGenre.single;
+    return movie.genre === activeGenre;
   });
 };
 
@@ -50,7 +46,7 @@ const getCommentFormSendingResult = (state) => {
 const getFilmsSelector = createSelector(
     [getFilms, getFilteredFilms, getActiveGenre],
     (films, filteredFilms, activeGenre) => {
-      if (activeGenre.single !== DEFAULT_ACTIVE_GENRE.single) {
+      if (activeGenre !== DEFAULT_ACTIVE_GENRE) {
         return _filterFilmsByGenre(films, activeGenre);
       }
       return films;

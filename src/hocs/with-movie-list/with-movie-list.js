@@ -38,7 +38,6 @@ const withMovieList = (Component) => {
     }
 
     _filmCatalogClickHandler(film) {
-      console.log(film);
       const {onFilmClick} = this.props;
       onFilmClick(film);
     }
