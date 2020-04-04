@@ -80,7 +80,7 @@ const getGenres = (films) => {
 };
 
 const findFilm = (films, id) => {
-  films.find((film) => {
+  return films.find((film) => {
     return film.id === parseInt(id, 10);
   });
 };
