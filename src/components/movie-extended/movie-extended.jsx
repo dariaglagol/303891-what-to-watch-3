@@ -32,11 +32,12 @@ const MovieExtended = (props) => {
     userData,
     authStatus,
     toggleFilmFavorite,
+    film,
     match: {params},
   } = props;
 
-  const movieDetails = films.find((film) => {
-    return film.id === parseInt(params.id, 10);
+  const movieDetails = film || films.find((filmItem) => {
+    return filmItem.id === parseInt(params.id, 10);
   });
 
   const {

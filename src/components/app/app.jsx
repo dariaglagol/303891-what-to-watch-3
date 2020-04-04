@@ -63,6 +63,7 @@ const App = (props) => {
     isSignInLoading,
     authFormSendingResult,
     toggleFilmFavorite,
+    film
   } = props;
 
   function _renderErrorMessage() {
@@ -136,6 +137,7 @@ const App = (props) => {
                 authStatus={authStatus}
                 onFilmClick={onFilmClick}
                 films={films}
+                film={film}
                 isFullscreenPlayerActive={isFullscreenPlayerActive}
                 onFullScreenToggle={onFullScreenToggle}
                 reviews={reviews}
