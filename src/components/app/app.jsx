@@ -34,6 +34,7 @@ import {
   getLoadingStatus,
   getCommentFormSendingResult,
   getFilm,
+  getFilms
 } from "@reducers/data/selectors.js";
 
 import history from "../../history";
@@ -47,6 +48,7 @@ const App = (props) => {
   const {
     promoMovie,
     films,
+    filteredFilms,
     reviews,
     activeGenre,
     onGenreTabClick,
@@ -87,7 +89,8 @@ const App = (props) => {
           onGenreTabClick={onGenreTabClick}
           isFullscreenPlayerActive={isFullscreenPlayerActive}
           onFullScreenToggle={onFullScreenToggle}
-          films={films}
+          films={filteredFilms}
+          rawFilms={films}
           toggleFilmFavorite={toggleFilmFavorite}
         />
       </React.Fragment>
@@ -136,7 +139,7 @@ const App = (props) => {
                 userData={userData}
                 authStatus={authStatus}
                 onFilmClick={onFilmClick}
-                films={films}
+                films={filteredFilms}
                 film={film}
                 isFullscreenPlayerActive={isFullscreenPlayerActive}
                 onFullScreenToggle={onFullScreenToggle}
@@ -157,7 +160,7 @@ const App = (props) => {
               onSubmit={sendReview}
               reviewError={error}
               isLoading={isDataLoading}
-              films={films}
+              films={filteredFilms}
               commentFormSendingResult={commentFormSendingResult}
             />)}
         />
@@ -175,7 +178,7 @@ App.defaultProps = {
 };
 
 const mapStateToProps = (state) => ({
-  films: getFilmsSelector(state),
+  films: getFilms(state),
   filteredFilms: getFilmsSelector(state),
   activeGenre: getActiveGenre(state),
   promoMovie: getPromoMovie(state),
@@ -197,7 +200,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(DataActionCreator.changeGenre(activeGenre));
   },
   onFilmClick(film) {
-    dispatch(DataActionCreator.setFilm(film));
     dispatch(DataOperation.loadReviews(film.id));
   },
   onFullScreenToggle(state) {

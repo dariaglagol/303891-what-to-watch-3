@@ -7,6 +7,7 @@ import {getGenres} from "@utils/utils";
 const Catalog = (props) => {
   const {
     films,
+    rawFilms,
     activeGenre,
     onGenreTabClick,
     onShowMoreButtonClick,
@@ -28,7 +29,7 @@ const Catalog = (props) => {
       <GenresList
         onGenreTabClick={_onTabClick}
         activeGenre={activeGenre}
-        genreList={getGenres(films)}
+        genreList={getGenres(rawFilms)}
       />
       {renderMovieList(currentShownFilms)}
       {

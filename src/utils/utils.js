@@ -1,5 +1,5 @@
 import {camelCase, mapKeys, snakeCase} from "lodash";
-import {MovieMarksTypes, SIMILAR_FILM_COUNT, TextAreaMinMaxValues} from './constants';
+import {MovieMarksTypes, SIMILAR_FILM_COUNT, TextAreaMinMaxValues, DEFAULT_ACTIVE_GENRE} from './constants';
 
 const getMovieMark = (score) => {
   let key = ``;
@@ -71,7 +71,7 @@ const getRoute = (route, id) => {
 
 const getGenres = (films) => {
   const genres = new Set();
-
+  genres.add(DEFAULT_ACTIVE_GENRE);
   films.forEach((film) => {
     genres.add(film.genre);
   });

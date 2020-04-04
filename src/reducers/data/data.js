@@ -1,4 +1,4 @@
-import {extend, itemAdapter, itemsAdapter, toRawItemsAdapter, setFilm} from "@utils/utils.js";
+import {extend, itemAdapter, itemsAdapter, toRawItemsAdapter} from "@utils/utils.js";
 import {DEFAULT_ACTIVE_GENRE, StatusCode} from "@utils/constants";
 import {ActionCreator as ErrorActionCreator} from "@reducers/common-error/common-error";
 import history from "../../history";
@@ -49,12 +49,6 @@ const ActionCreator = {
     type: ActionType.CHANGE_GENRE,
     payload: newGenre,
   }),
-  setFilm: (film) => {
-    return {
-      type: ActionType.SET_FILM,
-      payload: itemAdapter(film)
-    };
-  },
   setError: () => ({
     type: ActionType.SET_ERROR
   }),
@@ -75,8 +69,8 @@ const Operation = {
     dispatch(ActionCreator.setLoadingStatus(true));
     return api.get(`/films`)
       .then((response) => {
-        dispatch(ActionCreator.loadFilms(response.data));
         dispatch(ActionCreator.setLoadingStatus(false));
+        dispatch(ActionCreator.loadFilms(response.data));
       });
   },
   toggleFilmFavorite: (filmId, status) => (dispatch, getState, api) => {
@@ -84,16 +78,15 @@ const Operation = {
     const data = toRawItemsAdapter({filmId, status});
 
     return api.post(`/favorite/${filmId}/${status}`, data).then((response) => {
+      dispatch(ActionCreator.setLoadingStatus(false));
       const freshFilm = response.data;
       const promoFilm = getPromoMovie(getState());
       if (filmId === promoFilm.id) {
         dispatch(ActionCreator.loadPromoFilm(freshFilm));
-        dispatch(ActionCreator.setLoadingStatus(false));
         return;
       }
 
       dispatch(ActionCreator.setFilm(response.data));
-      dispatch(ActionCreator.setLoadingStatus(false));
     });
   },
   loadPromoFilm: () => (dispatch, getState, api) => {
