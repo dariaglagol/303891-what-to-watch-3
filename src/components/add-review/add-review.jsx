@@ -63,11 +63,16 @@ class AddReview extends PureComponent {
     const {
       userData,
       authStatus,
-      movieDetails,
       isSubmitButtonDisable,
       isLoading,
-      text
+      text,
+      films,
+      match: {params},
     } = this.props;
+
+    const movieDetails = films.find((film) => {
+      return film.id === parseInt(params.id, 10);
+    });
 
     const {
       name,

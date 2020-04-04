@@ -90,5 +90,5 @@ export {
   itemsAdapter,
   getRoute,
   getGenres,
-  toRawItemsAdapter
+  toRawItemsAdapter,
 };

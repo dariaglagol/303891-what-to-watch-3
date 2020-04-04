@@ -30,11 +30,10 @@ import {
   getActiveGenre,
   getFilmsSelector,
   getReviews,
-  getMovieCover,
+  getPromoMovie,
   getLoadingStatus,
   getCommentFormSendingResult,
   getFilm,
-  getFilmId
 } from "@reducers/data/selectors.js";
 
 import history from "../../history";
@@ -63,9 +62,7 @@ const App = (props) => {
     error,
     isSignInLoading,
     authFormSendingResult,
-    film,
     toggleFilmFavorite,
-    activeFilmId
   } = props;
 
   function _renderErrorMessage() {
@@ -147,17 +144,21 @@ const App = (props) => {
             </React.Fragment>
           )}
         />
-        <Route exact path={`${AppRoute.REVIEW}/:id`}>
-          <ReviewComponentWrapped
-            userData={userData}
-            authStatus={authStatus}
-            movieDetails={film}
-            onSubmit={sendReview}
-            reviewError={error}
-            isLoading={isDataLoading}
-            commentFormSendingResult={commentFormSendingResult}
-          />
-        </Route>
+        <Route
+          exact
+          path={`${AppRoute.REVIEW}/:id`}
+          render={({match}) => (
+            <ReviewComponentWrapped
+              match={match}
+              userData={userData}
+              authStatus={authStatus}
+              onSubmit={sendReview}
+              reviewError={error}
+              isLoading={isDataLoading}
+              films={films}
+              commentFormSendingResult={commentFormSendingResult}
+            />)}
+        />
       </Switch>
     </Router>
   );
@@ -175,7 +176,7 @@ const mapStateToProps = (state) => ({
   films: getFilmsSelector(state),
   filteredFilms: getFilmsSelector(state),
   activeGenre: getActiveGenre(state),
-  promoMovie: getMovieCover(state),
+  promoMovie: getPromoMovie(state),
   reviews: getReviews(state),
   activePage: getActivePage(state),
   film: getFilm(state),
@@ -187,7 +188,6 @@ const mapStateToProps = (state) => ({
   commentFormSendingResult: getCommentFormSendingResult(state),
   isSignInLoading: getSignInLoadingStatus(state),
   authFormSendingResult: getAuthFormSendingResult(state),
-  activeFilmId: getFilmId(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

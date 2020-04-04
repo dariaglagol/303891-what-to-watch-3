@@ -1,7 +1,8 @@
-import {extend, itemAdapter, itemsAdapter, toRawItemsAdapter} from "@utils/utils.js";
+import {extend, itemAdapter, itemsAdapter, toRawItemsAdapter, setFilm} from "@utils/utils.js";
 import {DEFAULT_ACTIVE_GENRE, StatusCode} from "@utils/constants";
 import {ActionCreator as ErrorActionCreator} from "@reducers/common-error/common-error";
 import history from "../../history";
+import {getPromoMovie} from "@reducers/data/selectors";
 
 const initialState = {
   films: [],
@@ -10,7 +11,7 @@ const initialState = {
   reviews: [],
   activeGenre: DEFAULT_ACTIVE_GENRE,
   commentFormSendingResult: null,
-  film: {},
+  film: null,
   isLoading: false,
 };
 
@@ -23,7 +24,6 @@ const ActionType = {
   SET_ERROR: `SET_ERROR`,
   SET_LOADING_STATUS: `SET_LOADING_STATUS`,
   SET_COMMENT_FORM_ACTION_RESULT: `SET_COMMENT_FORM_ACTION_RESULT`,
-  SET_FILM_ID: `SET_FILM_ID`,
 };
 
 const ActionCreator = {
@@ -55,12 +55,6 @@ const ActionCreator = {
       payload: itemAdapter(film)
     };
   },
-  setFilmId: (id) => {
-    return {
-      type: ActionType.SET_FILM_ID,
-      payload: id
-    };
-  },
   setError: () => ({
     type: ActionType.SET_ERROR
   }),
@@ -90,8 +84,10 @@ const Operation = {
     const data = toRawItemsAdapter({filmId, status});
 
     return api.post(`/favorite/${filmId}/${status}`, data).then((response) => {
-      if (filmId === getState().DATA.promoMovie.id) {
-        dispatch(ActionCreator.loadPromoFilm(response.data));
+      const freshFilm = response.data;
+      const promoFilm = getPromoMovie(getState());
+      if (filmId === promoFilm.id) {
+        dispatch(ActionCreator.loadPromoFilm(freshFilm));
         dispatch(ActionCreator.setLoadingStatus(false));
         return;
       }
@@ -150,7 +146,9 @@ const reducer = (state = initialState, action) => {
     case ActionType.CHANGE_GENRE:
       return extend(state, {activeGenre: action.payload});
     case ActionType.SET_FILM:
-      return extend(state, {film: action.payload});
+      return extend(state, {
+        film: action.payload
+      });
     case ActionType.SET_ERROR:
       return extend(state, {
         isLoading: false,
@@ -165,8 +163,6 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         reviews: action.payload,
       });
-    case ActionType.SET_FILM_ID:
-      return extend(state, {filmId: action.payload});
     default:
       break;
   }

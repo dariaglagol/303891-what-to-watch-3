@@ -23,7 +23,7 @@ const getActiveGenre = (state) => {
   return state[NAME].activeGenre;
 };
 
-const getMovieCover = (state) => {
+const getPromoMovie = (state) => {
   return state[NAME].promoMovie;
 };
 
@@ -43,14 +43,6 @@ const getCommentFormSendingResult = (state) => {
   return state[NAME].commentFormSendingResult;
 };
 
-const getFilmId = (state) => {
-  return state[NAME].filmId;
-};
-
-const getFilmById = (state) => {
-  return state[NAME].films.find((film) => film.id === 1)
-};
-
 const getFilmsSelector = createSelector(
     [getFilms, getFilteredFilms, getActiveGenre],
     (films, filteredFilms, activeGenre) => {
@@ -65,12 +57,10 @@ export {
   getFilms,
   getFilteredFilms,
   getReviews,
-  getMovieCover,
+  getPromoMovie,
   getActiveGenre,
   getFilmsSelector,
   getLoadingStatus,
   getCommentFormSendingResult,
   getFilm,
-  getFilmId,
-  getFilmById
 };

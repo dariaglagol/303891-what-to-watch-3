@@ -18,8 +18,6 @@ import {
   FilmStatusFavorite
 } from "@utils/constants";
 
-import {getFilmById} from "@reducers/data/selectors";
-
 const WrappedFullScreenVideo = withVideoPlayer(FullscreenPlayer);
 
 const MovieExtended = (props) => {
@@ -34,7 +32,7 @@ const MovieExtended = (props) => {
     userData,
     authStatus,
     toggleFilmFavorite,
-    match: {params}
+    match: {params},
   } = props;
 
   const movieDetails = films.find((film) => {
