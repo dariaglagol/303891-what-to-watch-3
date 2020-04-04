@@ -6,7 +6,7 @@ import history from "../../history";
 const initialState = {
   films: [],
   promoMovie: {},
-  activeFilmId: 0,
+  filmId: 0,
   reviews: [],
   activeGenre: DEFAULT_ACTIVE_GENRE,
   commentFormSendingResult: null,
@@ -19,10 +19,11 @@ const ActionType = {
   LOAD_PROMO_FILM: `LOAD_PROMO_FILM`,
   LOAD_REVIEWS: `LOAD_REVIEWS`,
   CHANGE_GENRE: `CHANGE_GENRE`,
-  GET_FILM: `GET_FILM`,
+  SET_FILM: `SET_FILM`,
   SET_ERROR: `SET_ERROR`,
   SET_LOADING_STATUS: `SET_LOADING_STATUS`,
-  SET_COMMENT_FORM_ACTION_RESULT: `SET_COMMENT_FORM_ACTION_RESULT`
+  SET_COMMENT_FORM_ACTION_RESULT: `SET_COMMENT_FORM_ACTION_RESULT`,
+  SET_FILM_ID: `SET_FILM_ID`,
 };
 
 const ActionCreator = {
@@ -50,8 +51,14 @@ const ActionCreator = {
   }),
   setFilm: (film) => {
     return {
-      type: ActionType.GET_FILM,
+      type: ActionType.SET_FILM,
       payload: itemAdapter(film)
+    };
+  },
+  setFilmId: (id) => {
+    return {
+      type: ActionType.SET_FILM_ID,
+      payload: id
     };
   },
   setError: () => ({
@@ -143,7 +150,7 @@ const reducer = (state = initialState, action) => {
       });
     case ActionType.CHANGE_GENRE:
       return extend(state, {activeGenre: action.payload});
-    case ActionType.GET_FILM:
+    case ActionType.SET_FILM:
       return extend(state, {film: action.payload});
     case ActionType.SET_ERROR:
       return extend(state, {
@@ -159,6 +166,8 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         reviews: action.payload,
       });
+    case ActionType.SET_FILM_ID:
+      return extend(state, {filmId: action.payload});
     default:
       break;
   }

@@ -28,7 +28,7 @@ const CatalogCard = (props) => {
       onMouseLeave={_onFilmStopHover}
       onClick={_onFilmClick}
     >
-      <Link to={getRoute(AppRoute.MOVIE, id)}>
+      <Link to={getRoute(AppRoute.FILMS, id)}>
         <div className="small-movie-card__image">
           {renderVideo()}
         </div>

@@ -33,11 +33,13 @@ import {
   getMovieCover,
   getLoadingStatus,
   getCommentFormSendingResult,
-  getFilm
+  getFilm,
+  getFilmId
 } from "@reducers/data/selectors.js";
 
 import history from "../../history";
 import {AppRoute, AuthorizationStatus} from "@utils/constants";
+import {getRoute} from "@utils/utils";
 
 const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
 const MainComponentWrapped = withMovieList(withCatalog(Main));
@@ -63,77 +65,9 @@ const App = (props) => {
     isSignInLoading,
     authFormSendingResult,
     film,
-    toggleFilmFavorite
+    toggleFilmFavorite,
+    activeFilmId
   } = props;
-
-  // const movieDetails = films.find((filmItem) => filmItem.id === activeFilmId) || film;
-  // function _renderPages() {
-  //   switch (activePage) {
-  //     case PageTypes.MAIN:
-  //       return (
-  //         <React.Fragment>
-  //           {_renderErrorMessage()}
-  //           <MainComponentWrapped
-  //             userData={userData}
-  //             authStatus={authStatus}
-  //             promoMovie={promoMovie}
-  //             onFilmClick={onPageChange}
-  //             onSignInClick={onPageChange}
-  //             activeGenre={activeGenre}
-  //             onGenreTabClick={onGenreTabClick}
-  //             isFullscreenPlayerActive={isFullscreenPlayerActive}
-  //             onFullScreenToggle={onFullScreenToggle}
-  //             films={films}
-  //           />
-  //         </React.Fragment>
-  //       );
-  //     case PageTypes.MOVIE:
-  //       return (
-  //         <React.Fragment>
-  //           {_renderErrorMessage()}
-  //           <MovieExtendedComponentWrapped
-  //             userData={userData}
-  //             authStatus={authStatus}
-  //             onFilmClick={onPageChange}
-  //             onSignInClick={onPageChange}
-  //             films={films}
-  //             movieDetails={movieDetails}
-  //             isFullscreenPlayerActive={isFullscreenPlayerActive}
-  //             onFullScreenToggle={onFullScreenToggle}
-  //             reviews={reviews}
-  //           />
-  //         </React.Fragment>
-  //       );
-  //     case PageTypes.LOADING:
-  //       return (
-  //         <Loading />
-  //       );
-  //     case PageTypes.AUTH:
-  //       return (
-  //         <SignIn
-  //           onSubmit={login}
-  //           userErrors={error}
-  //           isLoading={isSignInLoading}
-  //           authFormSendingResult={authFormSendingResult}
-  //         />
-  //       );
-  //     case PageTypes.REVIEW:
-  //       return (
-  //         <ReviewComponentWrapped
-  //           userData={userData}
-  //           authStatus={authStatus}
-  //           movieDetails={movieDetails}
-  //           onSignInClick={onPageChange}
-  //           onSubmit={sendReview}
-  //           reviewError={error}
-  //           isLoading={isReviewFromLoading}
-  //           commentFormSendingResult={commentFormSendingResult}
-  //         />
-  //       );
-  //   }
-  //
-  //   return null;
-  // }
 
   function _renderErrorMessage() {
     if (Object.keys(error).length) {
@@ -193,22 +127,24 @@ const App = (props) => {
             authFormSendingResult={authFormSendingResult}
           />
         </Route>
-        <Route exact path={`${AppRoute.MOVIE}/:id`}>
-          <React.Fragment>
-            {_renderErrorMessage()}
-            <MovieExtendedComponentWrapped
-              userData={userData}
-              authStatus={authStatus}
-              onFilmClick={onFilmClick}
-              films={films}
-              movieDetails={film}
-              isFullscreenPlayerActive={isFullscreenPlayerActive}
-              onFullScreenToggle={onFullScreenToggle}
-              reviews={reviews}
-              toggleFilmFavorite={toggleFilmFavorite}
-            />
-          </React.Fragment>
-        </Route>
+        <Route exact path={`${AppRoute.FILMS}/:id`}
+          render={() => (
+            <React.Fragment>
+              {_renderErrorMessage()}
+              <MovieExtendedComponentWrapped
+                userData={userData}
+                authStatus={authStatus}
+                onFilmClick={onFilmClick}
+                films={films}
+                movieDetails={film}
+                isFullscreenPlayerActive={isFullscreenPlayerActive}
+                onFullScreenToggle={onFullScreenToggle}
+                reviews={reviews}
+                toggleFilmFavorite={toggleFilmFavorite}
+              />
+            </React.Fragment>
+          )}
+        />
         <Route exact path={`${AppRoute.REVIEW}/:id`}>
           <ReviewComponentWrapped
             userData={userData}
@@ -248,7 +184,8 @@ const mapStateToProps = (state) => ({
   isDataLoading: getLoadingStatus(state),
   commentFormSendingResult: getCommentFormSendingResult(state),
   isSignInLoading: getSignInLoadingStatus(state),
-  authFormSendingResult: getAuthFormSendingResult(state)
+  authFormSendingResult: getAuthFormSendingResult(state),
+  activeFilmId: getFilmId(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -256,6 +193,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(DataActionCreator.changeGenre(activeGenre));
   },
   onFilmClick(film) {
+    // dispatch(DataActionCreator.setFilmId(id));
     dispatch(DataActionCreator.setFilm(film));
     dispatch(DataOperation.loadReviews(film.id));
   },

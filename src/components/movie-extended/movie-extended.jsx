@@ -22,7 +22,6 @@ const WrappedFullScreenVideo = withVideoPlayer(FullscreenPlayer);
 
 const MovieExtended = (props) => {
   const {
-    movieDetails,
     reviews,
     films,
     renderTabs,
@@ -32,8 +31,9 @@ const MovieExtended = (props) => {
     isFullscreenPlayerActive,
     userData,
     authStatus,
-    onAddReviewClick,
     toggleFilmFavorite,
+    activeFilmId,
+    movieDetails
   } = props;
 
   const {
@@ -91,7 +91,6 @@ const MovieExtended = (props) => {
         <Link
           to={getRoute(AppRoute.REVIEW, id)}
           className="btn movie-card__button"
-          onClick={onAddReviewClick}
         >
           Add review
         </Link>

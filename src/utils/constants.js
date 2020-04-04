@@ -59,7 +59,7 @@ const RATING_ERROR_TEXT = `Оцените фильм`;
 
 const AppRoute = {
   LOGIN: `/login`,
-  MOVIE: `/films`,
+  FILMS: `/films`,
   REVIEW: `/review`,
   MY_LIST: `/mylist`,
   ROOT: `/`,
