@@ -30,8 +30,6 @@ export default class MovieExtended extends PureComponent {
       match: {params},
     } = props;
 
-    console.log(findFilm(films, params.id));
-
     this.movieDetails = film || findFilm(films, params.id);
   }
 

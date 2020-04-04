@@ -71,7 +71,7 @@ class AddReview extends PureComponent {
       match: {params},
     } = this.props;
 
-    const movieDetails = findFilm(films, params);
+    const movieDetails = findFilm(films, params.id);
 
     const {
       name,
