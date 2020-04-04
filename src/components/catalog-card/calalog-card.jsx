@@ -18,7 +18,7 @@ const CatalogCard = (props) => {
   }
 
   function _onFilmClick() {
-    onFilmClick(id);
+    onFilmClick(film);
   }
 
   return (

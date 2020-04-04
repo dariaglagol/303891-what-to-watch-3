@@ -63,7 +63,6 @@ class AddReview extends PureComponent {
     const {
       userData,
       authStatus,
-      onSignInClick,
       movieDetails,
       isSubmitButtonDisable,
       isLoading,
@@ -88,7 +87,6 @@ class AddReview extends PureComponent {
           <Header
             userData={userData}
             authStatus={authStatus}
-            onSignInClick={onSignInClick}
           />
 
           <div className="movie-card__poster movie-card__poster--small">
@@ -141,7 +139,6 @@ class AddReview extends PureComponent {
 AddReview.propTypes = {
   onStarsChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  onSignInClick: PropTypes.func.isRequired,
   userData: PropTypes.oneOfType([
     PropTypes.exact({
       id: PropTypes.number.isRequired,

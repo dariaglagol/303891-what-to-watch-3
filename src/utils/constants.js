@@ -81,6 +81,11 @@ const AppRoute = {
   ROOT: `/`,
 };
 
+const FilmStatusFavorite = {
+  FAVORITE: 1,
+  NOT_FAVORITE: 0,
+};
+
 export {
   MovieMarksTypes,
   FILM_REVIEWS_COLUMN_COUNT,
@@ -99,5 +104,6 @@ export {
   RATING_STARS_COUNT,
   TextAreaMinMaxValues,
   RATING_ERROR_TEXT,
-  AppRoute
+  AppRoute,
+  FilmStatusFavorite
 };

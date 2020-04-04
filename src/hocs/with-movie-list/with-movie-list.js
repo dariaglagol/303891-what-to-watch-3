@@ -1,7 +1,6 @@
 import React, {PureComponent} from "react";
 import MoviesList from "@components/movies-list/movies-list";
 import PropTypes from "prop-types";
-import {PageTypes} from "@utils/constants";
 
 const withMovieList = (Component) => {
   class WithMovieList extends PureComponent {
@@ -38,9 +37,10 @@ const withMovieList = (Component) => {
       });
     }
 
-    _filmCatalogClickHandler(id) {
+    _filmCatalogClickHandler(film) {
+      console.log(film);
       const {onFilmClick} = this.props;
-      onFilmClick(PageTypes.MOVIE, id);
+      onFilmClick(film);
     }
 
     render() {

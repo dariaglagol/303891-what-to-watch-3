@@ -1,7 +1,6 @@
 import {extend, itemAdapter, itemsAdapter} from "@utils/utils.js";
 import MovieReviews from "@mocks/reviews";
-import {DEFAULT_ACTIVE_GENRE, AppRoute, StatusCode} from "@utils/constants";
-import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
+import {DEFAULT_ACTIVE_GENRE, StatusCode} from "@utils/constants";
 import {ActionCreator as ErrorActionCreator} from "@reducers/common-error/common-error";
 import history from "../../history";
 
@@ -20,8 +19,7 @@ const ActionType = {
   LOAD_FILMS: `LOAD_FILMS`,
   LOAD_PROMO_FILM: `LOAD_PROMO_FILM`,
   CHANGE_GENRE: `CHANGE_GENRE`,
-  GET_ACTIVE_FILM_ID: `GET_ACTIVE_FILM_ID`,
-  GET_ACTIVE_FILM: `GET_ACTIVE_FILM`,
+  GET_FILM: `GET_FILM`,
   SET_ERROR: `SET_ERROR`,
   SET_LOADING_STATUS: `SET_LOADING_STATUS`,
   SET_COMMENT_FORM_ACTION_RESULT: `SET_COMMENT_FORM_ACTION_RESULT`
@@ -44,16 +42,12 @@ const ActionCreator = {
     type: ActionType.CHANGE_GENRE,
     payload: newGenre,
   }),
-  getFilm: (film) => {
+  setFilm: (film) => {
     return {
-      type: ActionType.GET_ACTIVE_FILM,
-      payload: film
+      type: ActionType.GET_FILM,
+      payload: itemAdapter(film)
     };
   },
-  getActiveFilmId: (id) => ({
-    type: ActionType.GET_ACTIVE_FILM_ID,
-    payload: id
-  }),
   setError: () => ({
     type: ActionType.SET_ERROR
   }),
@@ -78,14 +72,20 @@ const Operation = {
         dispatch(ActionCreator.loadFilms(response.data));
       });
   },
-  loadFilm: (id) => (dispatch, getState, api) => {
+  toggleFilmFavorite: (id, status) => (dispatch, getState, api) => {
     dispatch(ActionCreator.setLoadingStatus(true));
+    return api.post(`/favorite/${id}/${status}`, {
+      film_id: id,
+      status,
+    }).then((response) => {
+      dispatch(ActionCreator.setLoadingStatus(false));
+      if (id === getState().DATA.promoMovie.id) {
+        dispatch(ActionCreator.loadPromoFilm(response.data));
+        return;
+      }
 
-    return api.get(`/films/${id}`)
-      .then(() => {
-        dispatch(ActionCreator.setLoadingStatus(false));
-        dispatch(ActionCreator.getFilm);
-      });
+      dispatch(ActionCreator.setFilm(response.data));
+    });
   },
   loadPromoFilm: () => (dispatch, getState, api) => {
     dispatch(ActionCreator.setLoadingStatus(true));
@@ -130,8 +130,8 @@ const reducer = (state = initialState, action) => {
       });
     case ActionType.CHANGE_GENRE:
       return extend(state, {activeGenre: action.payload});
-    case ActionType.GET_ACTIVE_FILM_ID:
-      return extend(state, {activeFilmId: action.payload});
+    case ActionType.GET_FILM:
+      return extend(state, {film: action.payload});
     case ActionType.SET_ERROR:
       return extend(state, {
         isLoading: false,

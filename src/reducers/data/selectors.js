@@ -35,8 +35,8 @@ const getReviews = (state) => {
   return state[NAME].reviews;
 };
 
-const getActiveFilmId = (state) => {
-  return state[NAME].activeFilmId;
+const getFilm = (state) => {
+  return state[NAME].film;
 };
 
 const getLoadingStatus = (state) => {
@@ -64,7 +64,7 @@ export {
   getMovieCover,
   getActiveGenre,
   getFilmsSelector,
-  getActiveFilmId,
   getLoadingStatus,
-  getCommentFormSendingResult
+  getCommentFormSendingResult,
+  getFilm
 };

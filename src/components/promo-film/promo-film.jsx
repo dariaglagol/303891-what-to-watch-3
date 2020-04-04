@@ -1,20 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Header from "@components/header/header";
-import {PageTypes} from "@utils/constants";
+import {FilmStatusFavorite, PageTypes} from "@utils/constants";
 
 const PromoFilm = (props) => {
   const {
     promoMovie: {
       name,
       genre,
-      released, posterImage, backgroundImage
+      released,
+      posterImage,
+      backgroundImage,
+      isFavorite,
+      id
     },
     onFilmClick,
     onPlayButtonClick,
     userData,
-    onSignInClick,
-    authStatus
+    authStatus,
+    toggleFilmFavorite
   } = props;
 
   function _onFilmClickHandler() {
@@ -23,6 +27,35 @@ const PromoFilm = (props) => {
 
   function _playButtonClickHandler() {
     onPlayButtonClick();
+  }
+
+  function _addToFavoriteButtonClickHandler() {
+    const statusFavoriteInvert = isFavorite ?
+      FilmStatusFavorite.NOT_FAVORITE : FilmStatusFavorite.FAVORITE;
+
+    toggleFilmFavorite(id, statusFavoriteInvert);
+  }
+
+  function _renderAddToListButton() {
+    return (
+      <button
+        className="btn btn--list movie-card__button" type="button"
+        onClick={_addToFavoriteButtonClickHandler}
+      >
+        {
+          isFavorite ? (
+            <svg viewBox="0 0 18 14" width="18" height="14">
+              <use xlinkHref="#in-list"></use>
+            </svg>
+          ) : (
+            <svg viewBox="0 0 19 20" width="19" height="20">
+              <use xlinkHref="#add"/>
+            </svg>
+          )
+        }
+        <span>My list</span>
+      </button>
+    );
   }
 
   return (
@@ -75,12 +108,7 @@ const PromoFilm = (props) => {
                 </svg>
                 <span>Play</span>
               </button>
-              <button className="btn btn--list movie-card__button" type="button">
-                <svg viewBox="0 0 19 20" width="19" height="20">
-                  <use xlinkHref="#add"/>
-                </svg>
-                <span>My list</span>
-              </button>
+              {_renderAddToListButton()}
             </div>
           </div>
         </div>
@@ -112,7 +140,6 @@ PromoFilm.propTypes = {
     }),
     PropTypes.exact({})
   ]).isRequired,
-  onSignInClick: PropTypes.func.isRequired,
   authStatus: PropTypes.string.isRequired,
 };
 

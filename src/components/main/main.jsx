@@ -16,8 +16,8 @@ const Main = (props) => {
     isFullscreenPlayerActive,
     onFullScreenToggle,
     userData,
-    onSignInClick,
     authStatus,
+    toggleFilmFavorite
   } = props;
 
   function _getPlayEvent() {
@@ -27,12 +27,12 @@ const Main = (props) => {
   return (
     <React.Fragment>
       <PromoFilm
-        onSignInClick={onSignInClick}
         userData={userData}
         authStatus={authStatus}
         promoMovie={promoMovie}
         onFilmClick={onFilmClick}
         onPlayButtonClick={_getPlayEvent}
+        toggleFilmFavorite={toggleFilmFavorite}
       />
       <div className="page-content">
         {renderCatalog()}
@@ -114,7 +114,6 @@ Main.propTypes = {
     }),
     PropTypes.exact({})
   ]).isRequired,
-  onSignInClick: PropTypes.func.isRequired,
   authStatus: PropTypes.string.isRequired,
 };
 

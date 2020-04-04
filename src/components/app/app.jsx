@@ -31,11 +31,10 @@ import {
   getFilmsSelector,
   getReviews,
   getMovieCover,
-  getActiveFilmId,
   getLoadingStatus,
-  getCommentFormSendingResult
+  getCommentFormSendingResult,
+  getFilm
 } from "@reducers/data/selectors.js";
-
 
 import history from "../../history";
 import {AppRoute, AuthorizationStatus} from "@utils/constants";
@@ -51,7 +50,7 @@ const App = (props) => {
     reviews,
     activeGenre,
     onGenreTabClick,
-    onPageChange,
+    onFilmClick,
     isFullscreenPlayerActive,
     onFullScreenToggle,
     login,
@@ -63,11 +62,11 @@ const App = (props) => {
     error,
     isSignInLoading,
     authFormSendingResult,
-    activeFilmId
+    film,
+    toggleFilmFavorite
   } = props;
 
-  const movieDetails = films.find((film) => film.id === activeFilmId) || {};
-
+  // const movieDetails = films.find((filmItem) => filmItem.id === activeFilmId) || film;
   // function _renderPages() {
   //   switch (activePage) {
   //     case PageTypes.MAIN:
@@ -168,13 +167,13 @@ const App = (props) => {
           userData={userData}
           authStatus={authStatus}
           promoMovie={promoMovie}
-          onFilmClick={onPageChange}
-          onSignInClick={onPageChange}
+          onFilmClick={onFilmClick}
           activeGenre={activeGenre}
           onGenreTabClick={onGenreTabClick}
           isFullscreenPlayerActive={isFullscreenPlayerActive}
           onFullScreenToggle={onFullScreenToggle}
           films={films}
+          toggleFilmFavorite={toggleFilmFavorite}
         />
       </React.Fragment>
     );
@@ -200,13 +199,13 @@ const App = (props) => {
             <MovieExtendedComponentWrapped
               userData={userData}
               authStatus={authStatus}
-              onFilmClick={onPageChange}
-              onSignInClick={onPageChange}
+              onFilmClick={onFilmClick}
               films={films}
-              movieDetails={movieDetails}
+              movieDetails={film}
               isFullscreenPlayerActive={isFullscreenPlayerActive}
               onFullScreenToggle={onFullScreenToggle}
               reviews={reviews}
+              toggleFilmFavorite={toggleFilmFavorite}
             />
           </React.Fragment>
         </Route>
@@ -214,8 +213,7 @@ const App = (props) => {
           <ReviewComponentWrapped
             userData={userData}
             authStatus={authStatus}
-            movieDetails={movieDetails}
-            onSignInClick={onPageChange}
+            movieDetails={film}
             onSubmit={sendReview}
             reviewError={error}
             isLoading={isDataLoading}
@@ -242,7 +240,7 @@ const mapStateToProps = (state) => ({
   promoMovie: getMovieCover(state),
   reviews: getReviews(state),
   activePage: getActivePage(state),
-  activeFilmId: getActiveFilmId(state),
+  film: getFilm(state),
   isFullscreenPlayerActive: getFullScreenPlayerState(state),
   authStatus: getAuthStatus(state),
   userData: getUserData(state),
@@ -257,12 +255,10 @@ const mapDispatchToProps = (dispatch) => ({
   onGenreTabClick(activeGenre) {
     dispatch(DataActionCreator.changeGenre(activeGenre));
   },
-  onPageChange(activePage, id) {
-    if (id) {
-      dispatch(DataActionCreator.getActiveFilmId(id));
-      // dispatch(DataOperation.loadFilm(id));
+  onFilmClick(film) {
+    if (film) {
+      dispatch(DataActionCreator.setFilm(film));
     }
-    dispatch(CommonActionCreator.setActivePage(activePage));
   },
   onFullScreenToggle(state) {
     dispatch(CommonActionCreator.toggleFullscreenPlayer(state));
@@ -272,6 +268,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   sendReview(reviewData) {
     dispatch(DataOperation.sendReview(reviewData));
+  },
+  toggleFilmFavorite(id, status) {
+    dispatch(DataOperation.toggleFilmFavorite(id, status));
   }
 });
 
@@ -331,11 +330,10 @@ App.propTypes = {
     single: PropTypes.string.isRequired,
   }).isRequired,
   onGenreTabClick: PropTypes.func.isRequired,
-  onPageChange: PropTypes.func.isRequired,
+  onFilmClick: PropTypes.func.isRequired,
   activePage: PropTypes.string.isRequired,
   isFullscreenPlayerActive: PropTypes.bool.isRequired,
   onFullScreenToggle: PropTypes.func.isRequired,
-  activeFilmId: PropTypes.number.isRequired,
   authStatus: PropTypes.string.isRequired,
   userData: PropTypes.oneOfType([
     PropTypes.exact({

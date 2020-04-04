@@ -9,7 +9,14 @@ import MovieReviews from "@components/movie-extended/blocks/movies-reviews/movie
 import FullscreenPlayer from "@components/fullscreen-player/fullscreen-player";
 import withVideoPlayer from "@hocs/with-video-player/with-video-player";
 import {getRoute, getSimilarMovies} from "@utils/utils";
-import {TabTypes, DEFAULT_SHOWN_FILMS, FULLSCREEN_VIDEO_CLASS, AuthorizationStatus, AppRoute} from "@utils/constants";
+import {
+  TabTypes,
+  DEFAULT_SHOWN_FILMS,
+  FULLSCREEN_VIDEO_CLASS,
+  AuthorizationStatus,
+  AppRoute,
+  FilmStatusFavorite
+} from "@utils/constants";
 
 const WrappedFullScreenVideo = withVideoPlayer(FullscreenPlayer);
 
@@ -26,6 +33,7 @@ const MovieExtended = (props) => {
     userData,
     authStatus,
     onAddReviewClick,
+    toggleFilmFavorite,
   } = props;
 
   const {
@@ -41,6 +49,7 @@ const MovieExtended = (props) => {
     rating,
     description,
     id,
+    isFavorite,
   } = movieDetails;
 
   const similarFilms = getSimilarMovies(genre, films);
@@ -92,6 +101,35 @@ const MovieExtended = (props) => {
     return null;
   }
 
+  function _addToFavoriteButtonClickHandler() {
+    const statusFavoriteInvert = isFavorite ?
+      FilmStatusFavorite.NOT_FAVORITE : FilmStatusFavorite.FAVORITE;
+
+    toggleFilmFavorite(id, statusFavoriteInvert);
+  }
+
+  function _renderAddToListButton() {
+    return (
+      <button
+        className="btn btn--list movie-card__button" type="button"
+        onClick={_addToFavoriteButtonClickHandler}
+      >
+        {
+          isFavorite ? (
+            <svg viewBox="0 0 19 20" width="19" height="20">
+              <use xlinkHref="#add"/>
+            </svg>
+          ) : (
+            <svg viewBox="0 0 18 14" width="18" height="14">
+              <use xlinkHref="#in-list" />
+            </svg>
+          )
+        }
+        <span>My list</span>
+      </button>
+    );
+  }
+
   return (
     <React.Fragment>
       <section className="movie-card movie-card--full">
@@ -126,12 +164,7 @@ const MovieExtended = (props) => {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list movie-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"/>
-                  </svg>
-                  <span>My list</span>
-                </button>
+                {_renderAddToListButton()}
                 {_renderAddReviewButton()}
               </div>
             </div>
@@ -246,7 +279,6 @@ MovieExtended.propTypes = {
     PropTypes.exact({})
   ]).isRequired,
   authStatus: PropTypes.string.isRequired,
-  onAddReviewClick: PropTypes.func.isRequired,
 };
 
 export default MovieExtended;
