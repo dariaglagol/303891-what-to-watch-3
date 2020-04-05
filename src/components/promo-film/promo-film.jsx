@@ -4,7 +4,6 @@ import Header from "@components/header/header";
 import {Link} from "react-router-dom";
 import {AppRoute, FilmStatusFavorite} from "@utils/constants";
 import {getRoute} from "@utils/utils";
-import app from "@components/app/app";
 
 const PromoFilm = (props) => {
   const {

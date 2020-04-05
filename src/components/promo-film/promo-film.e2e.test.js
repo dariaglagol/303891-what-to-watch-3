@@ -1,6 +1,6 @@
 import React from "react";
 import {Router} from "react-router-dom";
-import Enzyme, {mount} from "enzyme";
+import Enzyme, {mount, shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import PromoFilm from "./promo-film";
 import history from "../../history.js";
@@ -63,7 +63,7 @@ it(`Should header be clicked`, () => {
   movieCardTitle.simulate(`click`);
 
   expect(movieTitleClickHandler.mock.calls.length).toBe(1);
-  expect(history.location.pathname).toBe("/login");
+  expect(history.location.pathname).toBe(`/login`);
 });
 
 it(`Should poster be clicked`, () => {
@@ -78,6 +78,7 @@ it(`Should poster be clicked`, () => {
         userData={userData}
         onSignInClick={signInClickHandler}
         onFilmClick={moviePosterClickHeader}
+        toggleFilmFavorite={toggleFilmFavorite}
         authStatus={`NO_AUTH`}
         onPlayButtonClick={playButtonClickHandler}
       />
@@ -88,7 +89,7 @@ it(`Should poster be clicked`, () => {
   movieCardTitle.simulate(`click`);
 
   expect(moviePosterClickHeader).toHaveBeenCalledTimes(1);
-  expect(moviePosterClickHeader).toBeCalledWith(pageType);
+  expect(moviePosterClickHeader).toBeCalledWith();
 });
 
 it(`Click on play button calls callback to switch on video`, () => {

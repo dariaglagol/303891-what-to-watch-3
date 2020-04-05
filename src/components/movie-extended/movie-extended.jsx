@@ -118,8 +118,6 @@ export default class MovieExtended extends PureComponent {
     const statusFavoriteInvert = isFavorite ?
       FilmStatusFavorite.NOT_FAVORITE : FilmStatusFavorite.FAVORITE;
 
-    console.log(this.movieDetails);
-
     toggleFilmFavorite(id, statusFavoriteInvert);
   }
 

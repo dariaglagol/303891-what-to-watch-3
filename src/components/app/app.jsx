@@ -33,7 +33,6 @@ import {
   getPromoMovie,
   getLoadingStatus,
   getCommentFormSendingResult,
-  getFilm,
   getFilms
 } from "@reducers/data/selectors.js";
 
@@ -65,7 +64,6 @@ const App = (props) => {
     isSignInLoading,
     authFormSendingResult,
     toggleFilmFavorite,
-    film
   } = props;
 
   function _renderErrorMessage() {
@@ -139,7 +137,6 @@ const App = (props) => {
                 authStatus={authStatus}
                 onFilmLoad={onFilmLoad}
                 films={filteredFilms}
-                film={film}
                 isFullscreenPlayerActive={isFullscreenPlayerActive}
                 onFullScreenToggle={onFullScreenToggle}
                 reviews={reviews}
@@ -182,7 +179,6 @@ const mapStateToProps = (state) => ({
   activeGenre: getActiveGenre(state),
   promoMovie: getPromoMovie(state),
   reviews: getReviews(state),
-  film: getFilm(state),
   isFullscreenPlayerActive: getFullScreenPlayerState(state),
   authStatus: getAuthStatus(state),
   userData: getUserData(state),
@@ -281,25 +277,6 @@ App.propTypes = {
       previewVideoLink: PropTypes.string.isRequired,
     })).isRequired,
   ]).isRequired,
-  film: PropTypes.exact({
-    name: PropTypes.string.isRequired,
-    posterImage: PropTypes.string.isRequired,
-    previewImage: PropTypes.string.isRequired,
-    backgroundImage: PropTypes.string.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
-    scoresCount: PropTypes.number.isRequired,
-    director: PropTypes.string.isRequired,
-    starring: PropTypes.array.isRequired,
-    runTime: PropTypes.number.isRequired,
-    genre: PropTypes.string.isRequired,
-    released: PropTypes.number.isRequired,
-    id: PropTypes.number.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-    videoLink: PropTypes.string.isRequired,
-    previewVideoLink: PropTypes.string.isRequired,
-  }),
   reviews: PropTypes.arrayOf(PropTypes.exact({
     comment: PropTypes.string.isRequired,
     user: PropTypes.exact({
@@ -312,7 +289,7 @@ App.propTypes = {
   })),
   activeGenre: PropTypes.string.isRequired,
   onGenreTabClick: PropTypes.func.isRequired,
-  onFilmClick: PropTypes.func.isRequired,
+  onFilmLoad: PropTypes.func.isRequired,
   toggleFilmFavorite: PropTypes.func.isRequired,
   isFullscreenPlayerActive: PropTypes.bool.isRequired,
   onFullScreenToggle: PropTypes.func.isRequired,
