@@ -6,7 +6,7 @@ import {AppRoute, AuthorizationStatus} from "@utils/constants";
 import {getAuthStatus} from "@reducers/user/selectors";
 
 const PrivateRoute = (props) => {
-  const {render, path, exact, authorizationStatus} = props;
+  const {render, path, exact, authStatus} = props;
 
   return (
     <Route
@@ -14,7 +14,7 @@ const PrivateRoute = (props) => {
       exact={exact}
       render={() => {
         return (
-          authorizationStatus === AuthorizationStatus.AUTH
+          authStatus === AuthorizationStatus.AUTH
             ? render()
             : <Redirect to={AppRoute.LOGIN} />
         );
@@ -24,7 +24,7 @@ const PrivateRoute = (props) => {
 };
 
 PrivateRoute.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
+  authStatus: PropTypes.string.isRequired,
   exact: PropTypes.bool.isRequired,
   path: PropTypes.string.isRequired,
   render: PropTypes.func.isRequired,
@@ -34,5 +34,5 @@ const mapStateToProps = (state) => ({
   authStatus: getAuthStatus(state),
 });
 
-export default connect(mapStateToProps)(PrivateRoute);
 export {PrivateRoute};
+export default connect(mapStateToProps)(PrivateRoute);

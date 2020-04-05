@@ -15,6 +15,7 @@ import AddReview from "@components/add-review/add-review";
 import ErrorMessage from "@components/error-message/error-message";
 import withVideoPlayer from "@hocs/with-video-player/with-video-player";
 import FullscreenPlayer from "@components/fullscreen-player/fullscreen-player";
+import PrivateRoute from "@components/private-route/private-route";
 
 import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
 import {getFullScreenPlayerState} from "@reducers/common/selectors";
@@ -41,7 +42,6 @@ import {
 import history from "../../history";
 import {AppRoute, AuthorizationStatus, FULLSCREEN_VIDEO_CLASS} from "@utils/constants";
 import {findFilm} from "@utils/utils";
-
 
 const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
 const MainComponentWrapped = withMovieList(withCatalog(Main));
@@ -109,17 +109,6 @@ const App = (props) => {
     );
   }
 
-  if (authStatus === AuthorizationStatus.NO_AUTH) {
-    return (
-      <SignIn
-        onSubmit={login}
-        userErrors={error}
-        isLoading={isSignInLoading}
-        authFormSendingResult={authFormSendingResult}
-      />
-    );
-  }
-
   return (
     <Router history={history}>
       <Switch>
@@ -154,20 +143,22 @@ const App = (props) => {
             </React.Fragment>
           )}
         />
-        <Route
+        <PrivateRoute
           exact
-          path={`${AppRoute.FILMS}/:id/${AppRoute.REVIEW}`}
-          render={({match}) => (
-            <ReviewComponentWrapped
-              match={match}
-              userData={userData}
-              authStatus={authStatus}
-              onSubmit={sendReview}
-              reviewError={error}
-              isLoading={isDataLoading}
-              films={filteredFilms}
-              commentFormSendingResult={commentFormSendingResult}
-            />)}
+          path={`${AppRoute.FILMS}/:id${AppRoute.REVIEW}`}
+          render={({match}) => {
+            return (
+              <ReviewComponentWrapped
+                match={match}
+                userData={userData}
+                authStatus={authStatus}
+                onSubmit={sendReview}
+                reviewError={error}
+                isLoading={isDataLoading}
+                films={filteredFilms}
+                commentFormSendingResult={commentFormSendingResult}
+              />);
+          }}
         />
         <Route
           exact
