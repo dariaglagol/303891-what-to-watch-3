@@ -100,7 +100,7 @@ export default class MovieExtended extends PureComponent {
     if (authStatus === AuthorizationStatus.AUTH) {
       return (
         <Link
-          to={getRoute(AppRoute.REVIEW, id)}
+          to={getRoute(AppRoute.FILMS, id, AppRoute.REVIEW)}
           className="btn movie-card__button"
         >
           Add review

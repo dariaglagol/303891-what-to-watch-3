@@ -147,7 +147,7 @@ const App = (props) => {
         />
         <Route
           exact
-          path={`${AppRoute.REVIEW}/:id`}
+          path={`${AppRoute.FILMS}/:id/${AppRoute.REVIEW}`}
           render={({match}) => (
             <ReviewComponentWrapped
               match={match}

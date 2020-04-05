@@ -65,8 +65,10 @@ const isSubmitButtonDisable = (stars, textStatus) => {
   return !stars || textStatus !== ``;
 };
 
-const getRoute = (route, id) => {
-  return `${route}/${id}`;
+const getRoute = (route, id, additionalRoute) => {
+
+  return additionalRoute ?
+    `${route}/${id}/${additionalRoute}` : `${route}/${id}`;
 };
 
 const getGenres = (films) => {
