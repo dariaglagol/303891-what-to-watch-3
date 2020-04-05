@@ -16,15 +16,10 @@ const PromoFilm = (props) => {
       isFavorite,
       id
     },
-    onPlayButtonClick,
     userData,
     authStatus,
     toggleFilmFavorite
   } = props;
-
-  function _playButtonClickHandler() {
-    onPlayButtonClick();
-  }
 
   function _addToFavoriteButtonClickHandler() {
     const statusFavoriteInvert = isFavorite ?
@@ -97,16 +92,17 @@ const PromoFilm = (props) => {
             </p>
 
             <div className="movie-card__buttons">
-              <button
-                className="btn btn--play movie-card__button"
-                type="button"
-                onClick={_playButtonClickHandler}
-              >
-                <svg viewBox="0 0 19 19" width="19" height="19">
-                  <use xlinkHref="#play-s"/>
-                </svg>
-                <span>Play</span>
-              </button>
+              <Link to={getRoute(AppRoute.PLAYER, id)}>
+                <button
+                  className="btn btn--play movie-card__button"
+                  type="button"
+                >
+                  <svg viewBox="0 0 19 19" width="19" height="19">
+                    <use xlinkHref="#play-s"/>
+                  </svg>
+                  <span>Play</span>
+                </button>
+              </Link>
               {_renderAddToListButton()}
             </div>
           </div>
@@ -130,7 +126,6 @@ PromoFilm.propTypes = {
     }),
     PropTypes.shape({}).isRequired
   ]),
-  onPlayButtonClick: PropTypes.func.isRequired,
   toggleFilmFavorite: PropTypes.func.isRequired,
   userData: PropTypes.oneOfType([
     PropTypes.exact({

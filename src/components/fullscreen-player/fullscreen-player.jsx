@@ -1,15 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
 import moment from "moment";
+import {getRoute} from "@utils/utils";
+import {AppRoute} from "@utils/constants";
 
 const FullscreenPlayer = (props) => {
   const {
-    onExitClick,
     renderVideo,
     progress,
     duration,
     onPlayClick,
-    onFullScreenButtonClick
+    onFullScreenButtonClick,
+    film
   } = props;
 
   const preparedDurationHours = moment.duration(duration, `seconds`).get(`hours`);
@@ -19,7 +22,9 @@ const FullscreenPlayer = (props) => {
   return (
     <div className="player">
       {renderVideo()}
-      <button type="button" className="player__exit" onClick={onExitClick}>Exit</button>
+      <Link to={getRoute(AppRoute.FILMS, film.id)}>
+        <button type="button" className="player__exit">Exit</button>
+      </Link>
 
       <div className="player__controls">
         <div className="player__controls-row">
@@ -54,7 +59,9 @@ const FullscreenPlayer = (props) => {
 FullscreenPlayer.displayName = `FullscreenPlayer`;
 
 FullscreenPlayer.propTypes = {
-  onExitClick: PropTypes.func.isRequired,
+  film: PropTypes.shape({
+    id: PropTypes.number.isRequired
+  }),
   renderVideo: PropTypes.func.isRequired,
   onPlayClick: PropTypes.func.isRequired,
   onFullScreenButtonClick: PropTypes.func.isRequired,

@@ -54,6 +54,7 @@ const AppRoute = {
   FILMS: `/films`,
   REVIEW: `/review`,
   MY_LIST: `/mylist`,
+  PLAYER: `/player`,
   ROOT: `/`,
 };
 

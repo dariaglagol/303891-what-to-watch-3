@@ -2,26 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import PromoFilm from "@components/promo-film/promo-film";
 import Footer from "@components/footer/footer";
-import FullscreenPlayer from "@components/fullscreen-player/fullscreen-player";
-import withVideoPlayer from "@hocs/with-video-player/with-video-player";
-import {FULLSCREEN_VIDEO_CLASS} from "@utils/constants";
-
-const WrappedFullScreenVideo = withVideoPlayer(FullscreenPlayer);
 
 const Main = (props) => {
   const {
     promoMovie,
     renderCatalog,
-    isFullscreenPlayerActive,
-    onFullScreenToggle,
     userData,
     authStatus,
     toggleFilmFavorite
   } = props;
-
-  function _getPlayEvent() {
-    onFullScreenToggle(!isFullscreenPlayerActive);
-  }
 
   return (
     <React.Fragment>
@@ -29,22 +18,13 @@ const Main = (props) => {
         userData={userData}
         authStatus={authStatus}
         promoMovie={promoMovie}
-        onPlayButtonClick={_getPlayEvent}
         toggleFilmFavorite={toggleFilmFavorite}
       />
       <div className="page-content">
         {renderCatalog()}
         <Footer />
       </div>
-      {isFullscreenPlayerActive &&
-        <WrappedFullScreenVideo
-          isPlaying={true}
-          film={promoMovie}
-          className={FULLSCREEN_VIDEO_CLASS}
-          isFullscreenPlayerActive={isFullscreenPlayerActive}
-          onExitClick={_getPlayEvent}
-        />
-      }
+
     </React.Fragment>
   );
 };

@@ -13,6 +13,8 @@ import Loading from "@components/loading/loading";
 import SignIn from "@components/sign-in/sign-in";
 import AddReview from "@components/add-review/add-review";
 import ErrorMessage from "@components/error-message/error-message";
+import withVideoPlayer from "@hocs/with-video-player/with-video-player";
+import FullscreenPlayer from "@components/fullscreen-player/fullscreen-player";
 
 import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
 import {getFullScreenPlayerState} from "@reducers/common/selectors";
@@ -37,11 +39,14 @@ import {
 } from "@reducers/data/selectors.js";
 
 import history from "../../history";
-import {AppRoute, AuthorizationStatus} from "@utils/constants";
+import {AppRoute, AuthorizationStatus, FULLSCREEN_VIDEO_CLASS} from "@utils/constants";
+import {findFilm} from "@utils/utils";
+
 
 const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
 const MainComponentWrapped = withMovieList(withCatalog(Main));
 const ReviewComponentWrapped = withReview(AddReview);
+const WrappedFullScreenVideo = withVideoPlayer(FullscreenPlayer);
 
 const App = (props) => {
   const {
@@ -92,6 +97,10 @@ const App = (props) => {
         />
       </React.Fragment>
     );
+  }
+
+  function _closeFilmButtonClick() {
+    history.back();
   }
 
   if (isDataLoading || films.length === 0) {
@@ -159,6 +168,23 @@ const App = (props) => {
               films={filteredFilms}
               commentFormSendingResult={commentFormSendingResult}
             />)}
+        />
+        <Route
+          exact
+          path={`${AppRoute.PLAYER}/:id`}
+          render={({match}) => {
+            const film = findFilm(films, match.params.id);
+            return (
+              <WrappedFullScreenVideo
+                isPlaying={true}
+                film={film}
+                className={FULLSCREEN_VIDEO_CLASS}
+                isFullscreenPlayerActive={isFullscreenPlayerActive}
+                match={match}
+                onExitClick={_closeFilmButtonClick}
+              />
+            );
+          }}
         />
       </Switch>
     </Router>

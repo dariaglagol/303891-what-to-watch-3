@@ -6,19 +6,14 @@ import Footer from "@components/footer/footer";
 import MovieDetails from "@components/movie-extended/blocks/movie-details/movie-details";
 import MovieOverview from "@components/movie-extended/blocks/movie-overview/movie-overview";
 import MovieReviews from "@components/movie-extended/blocks/movies-reviews/movies-reviews";
-import FullscreenPlayer from "@components/fullscreen-player/fullscreen-player";
-import withVideoPlayer from "@hocs/with-video-player/with-video-player";
 import {findFilm, getRoute, getSimilarMovies} from "@utils/utils";
 import {
   TabTypes,
   DEFAULT_SHOWN_FILMS,
-  FULLSCREEN_VIDEO_CLASS,
   AuthorizationStatus,
   AppRoute,
   FilmStatusFavorite
 } from "@utils/constants";
-
-const WrappedFullScreenVideo = withVideoPlayer(FullscreenPlayer);
 
 export default class MovieExtended extends PureComponent {
   constructor(props) {
@@ -150,7 +145,6 @@ export default class MovieExtended extends PureComponent {
       films,
       renderTabs,
       renderMovieList,
-      isFullscreenPlayerActive,
       userData,
       authStatus,
     } = this.props;
@@ -161,6 +155,7 @@ export default class MovieExtended extends PureComponent {
       released,
       posterImage,
       backgroundImage,
+      id,
     } = this.movieDetails;
 
     const similarFilms = getSimilarMovies(genre, films);
@@ -187,19 +182,22 @@ export default class MovieExtended extends PureComponent {
                   <span className="movie-card__genre">{genre}</span>
                   <span className="movie-card__year">{released}</span>
                 </p>
-
                 <div className="movie-card__buttons">
-                  <button
-                    className="btn btn--play movie-card__button"
-                    type="button"
-                    onClick={this._getPlayEvent}
-                  >
-                    <svg viewBox="0 0 19 19" width="19" height="19">
-                      <use xlinkHref="#play-s"/>
-                    </svg>
-                    <span>Play</span>
-                  </button>
+
+                  <Link to={getRoute(AppRoute.PLAYER, id)}>
+                    <button
+                      className="btn btn--play movie-card__button"
+                      type="button"
+                    >
+                      <svg viewBox="0 0 19 19" width="19" height="19">
+                        <use xlinkHref="#play-s"/>
+                      </svg>
+                      <span>Play</span>
+                    </button>
+                  </Link>
+
                   {this._renderAddToListButton()}
+
                   {this._renderAddReviewButton()}
                 </div>
               </div>
@@ -216,7 +214,6 @@ export default class MovieExtended extends PureComponent {
                   height="327"
                 />
               </div>
-
               <div className="movie-card__desc">
                 {renderTabs()}
                 {this._renderTabsText()}
@@ -233,16 +230,6 @@ export default class MovieExtended extends PureComponent {
 
           <Footer/>
         </div>
-
-        {isFullscreenPlayerActive &&
-          <WrappedFullScreenVideo
-            isPlaying={true}
-            film={this.movieDetails}
-            className={FULLSCREEN_VIDEO_CLASS}
-            isFullscreenPlayerActive={isFullscreenPlayerActive}
-            onExitClick={this._getPlayEvent}
-          />
-        }
       </React.Fragment>
     );
   }
