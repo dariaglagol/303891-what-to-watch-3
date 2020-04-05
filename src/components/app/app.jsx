@@ -123,10 +123,10 @@ const App = (props) => {
         <Route
           exact
           path={AppRoute.LOGIN}
-          render={() => {
+          render={({location: {state: {from}}}) => {
             if (authStatus === AuthorizationStatus.AUTH) {
               return (
-                <Redirect to={AppRoute.ROOT} />
+                <Redirect to={from} />
               );
             }
 
