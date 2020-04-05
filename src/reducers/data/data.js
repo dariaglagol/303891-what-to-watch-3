@@ -7,11 +7,9 @@ import {getFilms} from "@reducers/data/selectors";
 const initialState = {
   films: [],
   promoMovie: {},
-  filmId: 0,
   reviews: [],
   activeGenre: DEFAULT_ACTIVE_GENRE,
   commentFormSendingResult: null,
-  film: null,
   isLoading: false,
 };
 
@@ -21,7 +19,7 @@ const ActionType = {
   LOAD_REVIEWS: `LOAD_REVIEWS`,
   CHANGE_GENRE: `CHANGE_GENRE`,
   SET_FILM: `SET_FILM`,
-  SET_ERROR: `SET_ERROR`,
+  // SET_ERROR: `SET_ERROR`,
   SET_LOADING_STATUS: `SET_LOADING_STATUS`,
   SET_COMMENT_FORM_ACTION_RESULT: `SET_COMMENT_FORM_ACTION_RESULT`,
 };
@@ -49,9 +47,6 @@ const ActionCreator = {
     type: ActionType.CHANGE_GENRE,
     payload: newGenre,
   }),
-  setError: () => ({
-    type: ActionType.SET_ERROR
-  }),
   setLoadingStatus: (value) => ({
     type: ActionType.SET_LOADING_STATUS,
     payload: value
@@ -62,12 +57,6 @@ const ActionCreator = {
       payload: value,
     };
   },
-  setFilm: (film) => {
-    return {
-      type: ActionType.SET_FILM,
-      payload: itemAdapter(film),
-    };
-  }
 };
 
 const Operation = {
@@ -113,8 +102,8 @@ const Operation = {
 
         if (response && response.status === StatusCode.SUCCESS) {
           dispatch(ActionCreator.setCommentFormSendingResult(true));
-          history(history.goBack());
           dispatch(ErrorActionCreator.setError({}));
+          history.goBack();
         }
 
         dispatch(ActionCreator.setCommentFormSendingResult(false));
@@ -140,15 +129,6 @@ const reducer = (state = initialState, action) => {
       });
     case ActionType.CHANGE_GENRE:
       return extend(state, {activeGenre: action.payload});
-    case ActionType.SET_FILM:
-      return extend(state, {
-        film: action.payload
-      });
-    case ActionType.SET_ERROR:
-      return extend(state, {
-        isLoading: false,
-        commentFormSendingResult: false,
-      });
     case ActionType.SET_LOADING_STATUS:
       return extend(state, {
         isLoading: action.payload,

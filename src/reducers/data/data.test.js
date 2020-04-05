@@ -5,7 +5,6 @@ import {
   getReviews,
   getPromoMovie,
   getActiveGenre,
-  getFilm,
   getLoadingStatus,
   getCommentFormSendingResult
 } from "./selectors";
@@ -92,53 +91,28 @@ const filmList = [
 ];
 
 const reviewsList = [{
-  text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-  author: `Kate Muir`,
-  date: `December 24, 2016`,
-  rating: 8.9
+  comment: `text`,
+  user: {
+    name: `author`,
+    id: 1
+  },
+  date: `2020-04-04T05:57:30.676Z`,
+  rating: 8.9,
+  id: 1
 }, {
-  text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-  author: `Bill Goodykoontz`,
-  date: `November 18, 2015`,
-  rating: 8.0
-}, {
-  text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-  author: `Kate Muir`,
-  date: `December 24, 2016`,
-  rating: 8.9
-}, {
-  text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-  author: `Bill Goodykoontz`,
-  date: `November 18, 2015`,
-  rating: 8.0
-}, {
-  text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-  author: `Kate Muir`,
-  date: `December 24, 2016`,
-  rating: 8.9
-}, {
-  text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-  author: `Bill Goodykoontz`,
-  date: `November 18, 2015`,
-  rating: 8.0
-}, {
-  text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-  author: `Kate Muir`,
-  date: `December 24, 2016`,
-  rating: 8.9
-}, {
-  text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-  author: `Bill Goodykoontz`,
-  date: `November 18, 2015`,
-  rating: 8.0
+  comment: `text`,
+  user: {
+    name: `author`,
+    id: 4
+  },
+  date: `2020-04-03T05:57:30.676Z`,
+  rating: 8.9,
+  id: 3
 }];
 
 const changedActiveFilmId = 1;
 
-const GIVEN_GENRE = {
-  multiply: `Comedies`,
-  single: `Comedy`,
-};
+const GIVEN_GENRE = `Comedy`;
 
 const singleMovie = {
   name: `givenPromoMovie name`,
@@ -221,50 +195,8 @@ const state = {
       previewVideoLink: `givenPromoMovie previewVideoLink`,
     },
     activeGenre: DEFAULT_ACTIVE_GENRE,
-    reviews: [{
-      text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-      author: `Kate Muir`,
-      date: `December 24, 2016`,
-      rating: 8.9
-    }, {
-      text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-      author: `Bill Goodykoontz`,
-      date: `November 18, 2015`,
-      rating: 8.0
-    }, {
-      text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-      author: `Kate Muir`,
-      date: `December 24, 2016`,
-      rating: 8.9
-    }, {
-      text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-      author: `Bill Goodykoontz`,
-      date: `November 18, 2015`,
-      rating: 8.0
-    }, {
-      text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-      author: `Kate Muir`,
-      date: `December 24, 2016`,
-      rating: 8.9
-    }, {
-      text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-      author: `Bill Goodykoontz`,
-      date: `November 18, 2015`,
-      rating: 8.0
-    }, {
-      text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-      author: `Kate Muir`,
-      date: `December 24, 2016`,
-      rating: 8.9
-    }, {
-      text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-      author: `Bill Goodykoontz`,
-      date: `November 18, 2015`,
-      rating: 8.0
-    },
-    ],
-    activeFilmId: 1,
-    error: {},
+    reviews: reviewsList,
+    commentFormSendingResult: true,
     isLoading: false,
   }
 };
@@ -273,51 +205,9 @@ const initialState = {
   films: [],
   activeGenre: DEFAULT_ACTIVE_GENRE,
   promoMovie: {},
-  activeFilmId: 0,
-  error: {},
   isLoading: false,
-  reviews: [{
-    text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-    author: `Kate Muir`,
-    date: `December 24, 2016`,
-    rating: 8.9
-  }, {
-    text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-    author: `Bill Goodykoontz`,
-    date: `November 18, 2015`,
-    rating: 8.0
-  }, {
-    text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-    author: `Kate Muir`,
-    date: `December 24, 2016`,
-    rating: 8.9
-  }, {
-    text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-    author: `Bill Goodykoontz`,
-    date: `November 18, 2015`,
-    rating: 8.0
-  }, {
-    text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-    author: `Kate Muir`,
-    date: `December 24, 2016`,
-    rating: 8.9
-  }, {
-    text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-    author: `Bill Goodykoontz`,
-    date: `November 18, 2015`,
-    rating: 8.0
-  }, {
-    text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-    author: `Kate Muir`,
-    date: `December 24, 2016`,
-    rating: 8.9
-  }, {
-    text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-    author: `Bill Goodykoontz`,
-    date: `November 18, 2015`,
-    rating: 8.0
-  },
-  ],
+  reviews: [],
+  commentFormSendingResult: null,
 };
 
 describe(`Data reducer tests`, () => {
@@ -379,15 +269,6 @@ describe(`Data reducer tests`, () => {
     });
   });
 
-  it(`Reducer should set error object by a given value`, () => {
-    const {error} = initialState;
-
-    expect(reducer({error}, {
-      type: ActionType.SET_ERROR,
-      payload: {error: `Error`}
-    })).toEqual({error: {error: `Error`}});
-  });
-
   it(`Reducer should set isLoading property by a given value`, () => {
     const {isLoading} = initialState;
 
@@ -395,6 +276,7 @@ describe(`Data reducer tests`, () => {
       type: ActionType.SET_LOADING_STATUS,
       payload: true
     })).toEqual({
+      commentFormSendingResult: null,
       isLoading: true
     });
   });
@@ -451,10 +333,6 @@ describe(`Selectors tests`, () => {
 
   it(`Selector getFilms return right key`, () => {
     expect(getFilms(state)).toEqual(filmList);
-  });
-
-  it(`Selector getFilm return film`, () => {
-    expect(getFilm(state)).toEqual(singleMovie);
   });
 
   it(`Selector getFilteredFilms return right key`, () => {

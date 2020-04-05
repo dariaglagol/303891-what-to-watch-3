@@ -2,13 +2,11 @@ import {reducer, ActionCreator, ActionType} from "./common";
 import {getFullScreenPlayerState} from "./selectors";
 
 const initialState = {
-  activePage: `loading`,
   isFullscreenPlayerActive: false,
 };
 
 const state = {
   COMMON: {
-    activePage: `main`,
     isFullscreenPlayerActive: false
   }
 };
