@@ -85,6 +85,11 @@ const findFilm = (films, id) => {
   });
 };
 
+const replaceFilmItem = (filmList, replaceFilm) => {
+  const changedFilmPosition = filmList.findIndex((item) => replaceFilm.id === item.id);
+  return [].concat(filmList.slice(0, changedFilmPosition), replaceFilm, filmList.slice(changedFilmPosition + 1));
+};
+
 export {
   getMovieMark,
   getSimilarMovies,
@@ -97,5 +102,6 @@ export {
   getRoute,
   getGenres,
   toRawItemsAdapter,
-  findFilm
+  findFilm,
+  replaceFilmItem
 };

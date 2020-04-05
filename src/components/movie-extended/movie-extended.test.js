@@ -79,7 +79,7 @@ it(`Movie details render with NO_AUTH status`, () => {
           movieDetails={movieDetails}
           films={mockCatalogFilms}
           renderTabs={() => {}}
-          onFilmClick={() => {}}
+          onFilmLoad={() => {}}
           onFullScreenToggle={() => {}}
           renderMovieList={() => {}}
           activeTab={activeTab}
@@ -104,7 +104,7 @@ it(`Movie details render with AUTH status`, () => {
           movieDetails={movieDetails}
           films={mockCatalogFilms}
           renderTabs={() => {}}
-          onFilmClick={() => {}}
+          onFilmload={() => {}}
           onFullScreenToggle={() => {}}
           renderMovieList={() => {}}
           activeTab={activeTab}

@@ -26,20 +26,27 @@ export default class MovieExtended extends PureComponent {
 
     const {
       films,
-      film,
       match: {params},
-    } = props;
+    } = this.props;
 
-    this.movieDetails = film || findFilm(films, params.id);
+    this.movieDetails = findFilm(films, params.id);
 
     this._addToFavoriteButtonClickHandler = this._addToFavoriteButtonClickHandler.bind(this);
   }
 
-  // componentDidMount() {
-  //   console.log('update');
-  //   const {onFilmClick} = this.props;
-  //   onFilmClick(this.movieDetails);
-  // }
+  componentDidMount() {
+    const {onFilmLoad} = this.props;
+
+    onFilmLoad(this.movieDetails);
+  }
+
+  componentDidUpdate() {
+    const {
+      films,
+      match: {params},
+    } = this.props;
+    this.movieDetails = findFilm(films, params.id);
+  }
 
   _renderTabsText() {
     const {reviews, activeTab} = this.props;
@@ -110,6 +117,8 @@ export default class MovieExtended extends PureComponent {
 
     const statusFavoriteInvert = isFavorite ?
       FilmStatusFavorite.NOT_FAVORITE : FilmStatusFavorite.FAVORITE;
+
+    console.log(this.movieDetails);
 
     toggleFilmFavorite(id, statusFavoriteInvert);
   }
@@ -286,25 +295,6 @@ MovieExtended.propTypes = {
     })).isRequired,
     PropTypes.shape([]).isRequired,
   ]).isRequired,
-  film: PropTypes.exact({
-    name: PropTypes.string.isRequired,
-    posterImage: PropTypes.string.isRequired,
-    previewImage: PropTypes.string.isRequired,
-    backgroundImage: PropTypes.string.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
-    scoresCount: PropTypes.number.isRequired,
-    director: PropTypes.string.isRequired,
-    starring: PropTypes.array.isRequired,
-    runTime: PropTypes.number.isRequired,
-    genre: PropTypes.string.isRequired,
-    released: PropTypes.number.isRequired,
-    id: PropTypes.number.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-    videoLink: PropTypes.string.isRequired,
-    previewVideoLink: PropTypes.string.isRequired,
-  }),
   reviews: PropTypes.arrayOf(PropTypes.exact({
     comment: PropTypes.string.isRequired,
     user: PropTypes.exact({
@@ -315,7 +305,7 @@ MovieExtended.propTypes = {
     rating: PropTypes.number.isRequired,
     id: PropTypes.number.isRequired,
   })),
-  onFilmClick: PropTypes.func.isRequired,
+  onFilmLoad: PropTypes.func.isRequired,
   renderTabs: PropTypes.func.isRequired,
   renderMovieList: PropTypes.func.isRequired,
   activeTab: PropTypes.string.isRequired,

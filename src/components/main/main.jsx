@@ -11,7 +11,6 @@ const WrappedFullScreenVideo = withVideoPlayer(FullscreenPlayer);
 const Main = (props) => {
   const {
     promoMovie,
-    onFilmClick,
     renderCatalog,
     isFullscreenPlayerActive,
     onFullScreenToggle,
@@ -30,7 +29,6 @@ const Main = (props) => {
         userData={userData}
         authStatus={authStatus}
         promoMovie={promoMovie}
-        onFilmClick={onFilmClick}
         onPlayButtonClick={_getPlayEvent}
         toggleFilmFavorite={toggleFilmFavorite}
       />
@@ -96,7 +94,6 @@ Main.propTypes = {
     })),
     PropTypes.shape([]).isRequired,
   ]).isRequired,
-  onFilmClick: PropTypes.func.isRequired,
   activeGenre: PropTypes.string.isRequired,
   onGenreTabClick: PropTypes.func.isRequired,
   renderCatalog: PropTypes.func.isRequired,

@@ -47,17 +47,11 @@ const mockedCatalogFilmList = [
   },
 ];
 
-const defaultActiveGenre = {
-  single: `All genres`,
-  multiply: `All genres`
-};
+const defaultActiveGenre = `All genres`;
 
 const currentShownFilms = 8;
 
-const activeGenre = {
-  multiply: `Comedies`,
-  single: `Comedy`,
-};
+const activeGenre = `Comedy`;
 
 it(`Genre tab call callback`, () => {
   const renderMovieList = jest.fn();

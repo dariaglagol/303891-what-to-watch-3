@@ -52,7 +52,7 @@ const App = (props) => {
     reviews,
     activeGenre,
     onGenreTabClick,
-    onFilmClick,
+    onFilmLoad,
     isFullscreenPlayerActive,
     onFullScreenToggle,
     login,
@@ -84,7 +84,6 @@ const App = (props) => {
           userData={userData}
           authStatus={authStatus}
           promoMovie={promoMovie}
-          onFilmClick={onFilmClick}
           activeGenre={activeGenre}
           onGenreTabClick={onGenreTabClick}
           isFullscreenPlayerActive={isFullscreenPlayerActive}
@@ -138,7 +137,7 @@ const App = (props) => {
                 match={match}
                 userData={userData}
                 authStatus={authStatus}
-                onFilmClick={onFilmClick}
+                onFilmLoad={onFilmLoad}
                 films={filteredFilms}
                 film={film}
                 isFullscreenPlayerActive={isFullscreenPlayerActive}
@@ -198,7 +197,7 @@ const mapDispatchToProps = (dispatch) => ({
   onGenreTabClick(activeGenre) {
     dispatch(DataActionCreator.changeGenre(activeGenre));
   },
-  onFilmClick(film) {
+  onFilmLoad(film) {
     dispatch(DataOperation.loadReviews(film.id));
   },
   onFullScreenToggle(state) {

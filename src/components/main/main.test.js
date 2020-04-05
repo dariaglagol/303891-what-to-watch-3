@@ -82,7 +82,6 @@ it(`Main component render`, () => {
         <Main
           promoMovie={mockFilmData}
           films={mockedCatalogFilms}
-          onFilmClick={() => {}}
           renderCatalog={() => {}}
           activeGenre={defaultActiveGenre}
           isFullscreenPlayerActive={isFullscreenPlayerActive}

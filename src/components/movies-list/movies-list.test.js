@@ -71,7 +71,6 @@ it(`Movie list render`, () => {
     .create(
         <MoviesList
           films={catalogFilmList}
-          onFilmClick={() => {}}
           onFilmCatalogCardHover={() => {}}
           activeFilm={mockedFilm}
           currentShownFilms={currentShownFilms}

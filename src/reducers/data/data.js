@@ -1,8 +1,8 @@
-import {extend, itemAdapter, itemsAdapter, toRawItemsAdapter} from "@utils/utils.js";
+import {extend, itemAdapter, itemsAdapter, toRawItemsAdapter, replaceFilmItem} from "@utils/utils.js";
 import {DEFAULT_ACTIVE_GENRE, StatusCode} from "@utils/constants";
 import {ActionCreator as ErrorActionCreator} from "@reducers/common-error/common-error";
 import history from "../../history";
-import {getPromoMovie} from "@reducers/data/selectors";
+import {getFilms} from "@reducers/data/selectors";
 
 const initialState = {
   films: [],
@@ -86,13 +86,11 @@ const Operation = {
     return api.post(`/favorite/${filmId}/${status}`, data).then((response) => {
       dispatch(ActionCreator.setLoadingStatus(false));
       const freshFilm = response.data;
-      const promoFilm = getPromoMovie(getState());
-      if (filmId === promoFilm.id) {
-        dispatch(ActionCreator.loadPromoFilm(freshFilm));
-        return;
-      }
+      const filmsList = getFilms(getState());
 
-      dispatch(ActionCreator.setFilm(response.data));
+      const freshFilms = replaceFilmItem(filmsList, freshFilm);
+      dispatch(ActionCreator.loadPromoFilm(freshFilm));
+      dispatch(ActionCreator.loadFilms(freshFilms));
     });
   },
   loadPromoFilm: () => (dispatch, getState, api) => {
@@ -123,10 +121,8 @@ const Operation = {
       });
   },
   loadReviews: (id) => (dispatch, getState, api) => {
-    dispatch(ActionCreator.setLoadingStatus(true));
     return api.get(`/comments/${id}`)
       .then((response) => {
-        dispatch(ActionCreator.setLoadingStatus(false));
         dispatch(ActionCreator.loadReviews(response.data));
       });
   },

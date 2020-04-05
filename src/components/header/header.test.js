@@ -2,6 +2,7 @@ import React from "react";
 import {Router} from "react-router-dom";
 import renderer from "react-test-renderer";
 import Header from "./header";
+import history from "../../history.js";
 
 const userData = {
   id: 1,
@@ -13,7 +14,7 @@ const userData = {
 it(`Header render`, () => {
   const headerComponent = renderer
     .create(
-        <Router>
+        <Router history={history}>
           <Header
             userData={userData}
             authStatus={`NO_AUTH`}

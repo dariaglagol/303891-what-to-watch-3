@@ -35,14 +35,12 @@ const mockHoverEvent = {};
 
 it(`Hover on film card, film's info should pass to callback`, () => {
   const filmCatalogCardHoverHandler = jest.fn();
-  const onFilmClick = jest.fn();
   const renderVideo = jest.fn();
 
   const filmCard = shallow(
       <CatalogCard
         film={mockedFilm}
         onFilmCatalogCardHover={filmCatalogCardHoverHandler}
-        onFilmClick={onFilmClick}
         renderVideo={renderVideo}
         isPlaying={mockedPlayProp}
       />
@@ -56,14 +54,12 @@ it(`Hover on film card, film's info should pass to callback`, () => {
 
 it(`Stop hover on film card, film's info should pass to callback`, () => {
   const filmCatalogCardHoverHandler = jest.fn();
-  const onFilmClick = jest.fn();
   const renderVideo = jest.fn();
 
   const filmCard = shallow(
       <CatalogCard
         film={mockedFilm}
         onFilmCatalogCardHover={filmCatalogCardHoverHandler}
-        onFilmClick={onFilmClick}
         renderVideo={renderVideo}
         isPlaying={mockedPlayProp}
       />

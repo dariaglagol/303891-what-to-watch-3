@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Header from "@components/header/header";
-import {FilmStatusFavorite, PageTypes} from "@utils/constants";
+import {FilmStatusFavorite} from "@utils/constants";
 
 const PromoFilm = (props) => {
   const {
@@ -20,6 +20,8 @@ const PromoFilm = (props) => {
     authStatus,
     toggleFilmFavorite
   } = props;
+
+  // TODO вот эту логику перелиновать
 
   function _onFilmClickHandler() {
     onFilmClick(PageTypes.MOVIE);

@@ -42,10 +42,7 @@ const mockedCatalogFilmList = [
   },
 ];
 
-const defaultActiveGenre = {
-  single: `All genres`,
-  multiply: `All genres`
-};
+const defaultActiveGenre = `All genres`;
 
 const CURRENT_SHOWN_FILMS = 8;
 

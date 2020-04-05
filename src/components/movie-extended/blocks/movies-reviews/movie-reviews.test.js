@@ -4,15 +4,23 @@ import MovieReviews from "./movies-reviews";
 
 const movieReviewsMock = [
   {
-    text: `text`,
-    author: `author`,
+    comment: `text`,
+    user: {
+      name: `author`,
+      id: 1
+    },
     date: `date`,
-    rating: 8.9
+    rating: 8.9,
+    id: 1
   }, {
-    text: `text`,
-    author: `author 1`,
-    date: `date 2`,
-    rating: 8.0
+    comment: `text`,
+    user: {
+      name: `author`,
+      id: 4
+    },
+    date: `date`,
+    rating: 8.9,
+    id: 3
   }
 ];
 

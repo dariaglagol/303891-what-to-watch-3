@@ -32,7 +32,6 @@ it(`Render catalog card`, () => {
           <CatalogCard
             film={mockedFilm}
             onFilmCatalogCardHover={() => {}}
-            onFilmClick={() => {}}
             renderVideo={() => {}}
             isPlaying={mockedPlayProp}
           />

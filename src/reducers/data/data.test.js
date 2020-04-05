@@ -140,7 +140,7 @@ const GIVEN_GENRE = {
   single: `Comedy`,
 };
 
-const givenPromoMovie = {
+const singleMovie = {
   name: `givenPromoMovie name`,
   genre: `givenPromoMovie genre`,
   posterImage: `givenPromoMovie posterImage`,
@@ -373,9 +373,9 @@ describe(`Data reducer tests`, () => {
       promoMovie
     }, {
       type: ActionType.LOAD_PROMO_FILM,
-      payload: givenPromoMovie
+      payload: singleMovie
     })).toEqual({
-      promoMovie: givenPromoMovie,
+      promoMovie: singleMovie,
     });
   });
 
@@ -430,9 +430,9 @@ describe(`Action Creator tests`, () => {
   });
 
   it(`Action creator return correct promo film`, () => {
-    expect(ActionCreator.loadPromoFilm(givenPromoMovie)).toEqual({
+    expect(ActionCreator.loadPromoFilm(singleMovie)).toEqual({
       type: ActionType.LOAD_PROMO_FILM,
-      payload: givenPromoMovie,
+      payload: singleMovie,
     });
   });
 
@@ -453,6 +453,10 @@ describe(`Selectors tests`, () => {
     expect(getFilms(state)).toEqual(filmList);
   });
 
+  it(`Selector getFilm return film`, () => {
+    expect(getFilm(state)).toEqual(singleMovie);
+  });
+
   it(`Selector getFilteredFilms return right key`, () => {
     state.DATA.activeGenre = GIVEN_GENRE;
 
@@ -463,19 +467,15 @@ describe(`Selectors tests`, () => {
     expect(getReviews(state)).toEqual(reviewsList);
   });
 
-  it(`Selector getMovieDetails return right key`, () => {
-    expect(getActiveFilmId(state)).toEqual(changedActiveFilmId);
-  });
-
   it(`Selector getMovieCover return right key`, () => {
-    expect(getMovieCover(state)).toEqual(givenPromoMovie);
+    expect(getPromoMovie(state)).toEqual(singleMovie);
   });
 
   it(`Selector getActiveGenre return right key`, () => {
     expect(getActiveGenre(state)).toEqual(GIVEN_GENRE);
   });
 
-  it(`Selector getReviewError return right key`, () => {
-    expect(getDataError(state)).toEqual({});
+  it(`Selector getCommentFormSendingResult return right key`, () => {
+    expect(getCommentFormSendingResult(state)).toEqual(false);
   });
 });

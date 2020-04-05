@@ -1,6 +1,8 @@
 import React from "react";
+import {Router} from "react-router-dom";
 import renderer from "react-test-renderer";
 import PromoFilm from "./promo-film";
+import history from "../../history.js";
 
 const mockFilmData = {
   name: `name`,
@@ -32,14 +34,16 @@ const userData = {
 it(`Movie card render`, () => {
   const movieCardComponent = renderer
     .create(
-        <PromoFilm
-          promoMovie={mockFilmData}
-          userData={userData}
-          onFilmClick={() => {}}
-          onSignInClick={() => {}}
-          authStatus={`NO_AUTH`}
-          onPlayButtonClick={() => {}}
-        />
+        <Router history={history}>
+          <PromoFilm
+            promoMovie={mockFilmData}
+            userData={userData}
+            onFilmClick={() => {}}
+            onSignInClick={() => {}}
+            authStatus={`NO_AUTH`}
+            onPlayButtonClick={() => {}}
+          />
+        </Router>
     )
     .toJSON();
 

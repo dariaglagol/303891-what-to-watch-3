@@ -81,7 +81,6 @@ const mocks = {
 
 it(`Click on play video button send callback with params`, () => {
   const {mockFilmData, defaultActiveGenre, mockedCatalogFilms, userData, isFullscreenPlayerActive} = mocks;
-  const filmClickHandler = jest.fn();
   const renderCatalog = jest.fn();
   const genreTabClickHandler = jest.fn();
   const fullScreenToggleHandler = jest.fn();
@@ -91,7 +90,6 @@ it(`Click on play video button send callback with params`, () => {
       <Main
         promoMovie={mockFilmData}
         films={mockedCatalogFilms}
-        onFilmClick={filmClickHandler}
         renderCatalog={renderCatalog}
         activeGenre={defaultActiveGenre}
         userData={userData}

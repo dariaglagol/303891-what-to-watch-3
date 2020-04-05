@@ -5,7 +5,7 @@ import {getRoute} from "@utils/utils";
 import {AppRoute} from "@utils/constants";
 
 const CatalogCard = (props) => {
-  const {film, onFilmCatalogCardHover, onFilmClick, renderVideo} = props;
+  const {film, onFilmCatalogCardHover, renderVideo} = props;
 
   const {name, id} = film;
 
@@ -17,16 +17,11 @@ const CatalogCard = (props) => {
     onFilmCatalogCardHover();
   }
 
-  function _onFilmClick() {
-    onFilmClick(film);
-  }
-
   return (
     <article
       className="small-movie-card catalog__movies-card"
       onMouseEnter={_onFilmHover}
       onMouseLeave={_onFilmStopHover}
-      onClick={_onFilmClick}
     >
       <Link to={getRoute(AppRoute.FILMS, id)}>
         <div className="small-movie-card__image">
@@ -61,7 +56,6 @@ CatalogCard.propTypes = {
     previewVideoLink: PropTypes.string.isRequired,
   }),
   onFilmCatalogCardHover: PropTypes.func.isRequired,
-  onFilmClick: PropTypes.func.isRequired,
   renderVideo: PropTypes.func.isRequired,
   isPlaying: PropTypes.bool.isRequired,
 };
