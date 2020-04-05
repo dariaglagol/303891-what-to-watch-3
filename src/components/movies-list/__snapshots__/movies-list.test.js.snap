@@ -6,61 +6,67 @@ exports[`Movie list render 1`] = `
 >
   <article
     className="small-movie-card catalog__movies-card"
-    onClick={[Function]}
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
-    <div
-      className="small-movie-card__image"
+    <a
+      href="/films/1"
+      onClick={[Function]}
     >
-      <video
-        className=""
-        poster="backgroundImage"
+      <div
+        className="small-movie-card__image"
       >
-        <source
-          src="previewVideoLink"
-        />
-      </video>
-    </div>
-    <h3
-      className="small-movie-card__title"
-    >
-      <a
-        className="small-movie-card__link"
-        href="movie-page.html"
+        <video
+          className=""
+          poster="backgroundImage"
+        >
+          <source
+            src="previewVideoLink"
+          />
+        </video>
+      </div>
+      <h3
+        className="small-movie-card__title"
       >
-        name
-      </a>
-    </h3>
+        <span
+          className="small-movie-card__link"
+        >
+          name
+        </span>
+      </h3>
+    </a>
   </article>
   <article
     className="small-movie-card catalog__movies-card"
-    onClick={[Function]}
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
-    <div
-      className="small-movie-card__image"
+    <a
+      href="/films/2"
+      onClick={[Function]}
     >
-      <video
-        className=""
-        poster="backgroundImage 2"
+      <div
+        className="small-movie-card__image"
       >
-        <source
-          src="previewVideoLink 2"
-        />
-      </video>
-    </div>
-    <h3
-      className="small-movie-card__title"
-    >
-      <a
-        className="small-movie-card__link"
-        href="movie-page.html"
+        <video
+          className=""
+          poster="backgroundImage 2"
+        >
+          <source
+            src="previewVideoLink 2"
+          />
+        </video>
+      </div>
+      <h3
+        className="small-movie-card__title"
       >
-        name 2
-      </a>
-    </h3>
+        <span
+          className="small-movie-card__link"
+        >
+          name 2
+        </span>
+      </h3>
+    </a>
   </article>
 </div>
 `;

@@ -10,6 +10,8 @@ it(`Render sign in`, () => {
         <SignIn
           onSubmit={() => {}}
           userErrors={userErrors}
+          invalidFields={[]}
+          isLoading={true}
         />
     ).toJSON();
 

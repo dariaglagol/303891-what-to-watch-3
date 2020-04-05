@@ -38,10 +38,9 @@ it(`Movie card render`, () => {
           <PromoFilm
             promoMovie={mockFilmData}
             userData={userData}
-            onFilmClick={() => {}}
-            onSignInClick={() => {}}
             authStatus={`NO_AUTH`}
             onPlayButtonClick={() => {}}
+            toggleFilmFavorite={() => {}}
           />
         </Router>
     )

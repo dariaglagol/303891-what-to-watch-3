@@ -12,7 +12,7 @@ it(`error render`, () => {
   const errorMessage = renderer
     .create(
         <ErrorMessage
-          response={mockedResponse}
+          errorMessage={mockedResponse}
         />
     ).toJSON();
 

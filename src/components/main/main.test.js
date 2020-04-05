@@ -24,10 +24,7 @@ const mocks = {
     videoLink: `videoLink`,
     previewVideoLink: `previewVideoLink`,
   },
-  defaultActiveGenre: {
-    single: `All genres`,
-    multiply: `All genres`
-  },
+  defaultActiveGenre: `All genres`,
   mockedCatalogFilms: [
     {
       name: `name`,
@@ -85,14 +82,14 @@ it(`Main component render`, () => {
           <Main
             promoMovie={mockFilmData}
             films={mockedCatalogFilms}
-            renderCatalog={() => {}}
             activeGenre={defaultActiveGenre}
+            onGenreTabClick={() => {}}
+            renderCatalog={() => {}}
             isFullscreenPlayerActive={isFullscreenPlayerActive}
             onFullScreenToggle={() => {}}
-            onGenreTabClick={() => {}}
+            toggleFilmFavorite={() => {}}
             userData={userData}
             authStatus={`NO_AUTH`}
-            onSignInClick={() => {}}
           />
         </Router>, {createNodeMock: () => {
           return {};

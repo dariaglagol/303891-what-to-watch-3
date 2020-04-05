@@ -62,17 +62,9 @@ const mocks = {
     },
   ],
   activeFilmId: 0,
-  defaultActiveGenre: {
-    single: `All genres`,
-    multiply: `All genres`
-  },
+  defaultActiveGenre: `All genres`,
   defaultActivePage: `main`,
   isFullscreenPlayerActive: false,
-  userErrors: {
-    data: {
-      error: `error`,
-    }
-  },
   userData: {
     id: 1,
     email: `email`,
@@ -80,8 +72,22 @@ const mocks = {
     avatarUrl: `avatarUrl`
   },
   authStatus: `NO_AUTH`,
-  dataError: {},
+  error: {},
   isLoading: false,
+  reviews: [
+    {comment: `text`,
+      user: {name: `author`, id: 1},
+      date: `2020-04-04T05:57:30.676Z`,
+      rating: 8.9,
+      id: 1
+    }, {
+      comment: `text`,
+      user: {name: `author`, id: 4},
+      date: `2020-04-03T05:57:30.676Z`,
+      rating: 8.9,
+      id: 3
+    }
+  ]
 };
 
 it(`Render App`, () => {
@@ -89,35 +95,36 @@ it(`Render App`, () => {
     mockFilmData,
     authStatus,
     mockCatalogFilms,
-    activeFilmId,
     defaultActiveGenre,
-    defaultActivePage,
     isFullscreenPlayerActive,
-    userErrors,
     userData,
-    dataError,
-    isLoading
+    error,
+    isLoading,
+    reviews
   } = mocks;
 
   const appComponent = renderer
     .create(
         <App
+          filteredFilms={mockCatalogFilms}
           promoMovie={mockFilmData}
           films={mockCatalogFilms}
-          activeFilmId={activeFilmId}
+          reviews={reviews}
           activeGenre={defaultActiveGenre}
           onGenreTabClick={() => {}}
-          onPageChange={() => {}}
+          onFilmLoad={() => {}}
+          toggleFilmFavorite={() => {}}
           onFullScreenToggle={() => {}}
-          activePage={defaultActivePage}
           isFullscreenPlayerActive={isFullscreenPlayerActive}
-          login={() => {}}
           authStatus={authStatus}
-          userErrors={userErrors}
           userData={userData}
-          addReview={() => {}}
-          dataError={dataError}
-          isLoading={isLoading}
+          login={() => {}}
+          sendReview={() => {}}
+          error={error}
+          isDataLoading={isLoading}
+          isSignInLoading={isLoading}
+          commentFormSendingResult={true}
+          authFormSendingResult={true}
         />
         , {createNodeMock: () => {
           return {};

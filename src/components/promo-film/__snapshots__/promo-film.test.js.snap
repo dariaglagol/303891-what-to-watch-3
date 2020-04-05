@@ -25,6 +25,8 @@ exports[`Movie card render 1`] = `
     >
       <a
         className="logo__link"
+        href="/"
+        onClick={[Function]}
       >
         <span
           className="logo__letter logo__letter--1"
@@ -48,7 +50,7 @@ exports[`Movie card render 1`] = `
     >
       <a
         className="user-block__link"
-        href="sign-in.html"
+        href="/login"
         onClick={[Function]}
       >
         Sign in
@@ -63,24 +65,32 @@ exports[`Movie card render 1`] = `
     >
       <div
         className="movie-card__poster"
-        onClick={[Function]}
       >
-        <img
-          alt="The Grand Budapest Hotel poster"
-          height="327"
-          src="posterImage"
-          width="218"
-        />
+        <a
+          href="/films/1"
+          onClick={[Function]}
+        >
+          <img
+            alt="The Grand Budapest Hotel poster"
+            height="327"
+            src="posterImage"
+            width="218"
+          />
+        </a>
       </div>
       <div
         className="movie-card__desc"
       >
-        <h2
-          className="movie-card__title"
+        <a
+          href="/films/1"
           onClick={[Function]}
         >
-          name
-        </h2>
+          <h2
+            className="movie-card__title"
+          >
+            name
+          </h2>
+        </a>
         <p
           className="movie-card__meta"
         >
@@ -118,6 +128,7 @@ exports[`Movie card render 1`] = `
           </button>
           <button
             className="btn btn--list movie-card__button"
+            onClick={[Function]}
             type="button"
           >
             <svg

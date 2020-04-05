@@ -3,22 +3,25 @@
 exports[`Render catalog card 1`] = `
 <article
   className="small-movie-card catalog__movies-card"
-  onClick={[Function]}
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
-  <div
-    className="small-movie-card__image"
-  />
-  <h3
-    className="small-movie-card__title"
+  <a
+    href="/films/1"
+    onClick={[Function]}
   >
-    <a
-      className="small-movie-card__link"
-      href="movie-page.html"
+    <div
+      className="small-movie-card__image"
+    />
+    <h3
+      className="small-movie-card__title"
     >
-      name
-    </a>
-  </h3>
+      <span
+        className="small-movie-card__link"
+      >
+        name
+      </span>
+    </h3>
+  </a>
 </article>
 `;
