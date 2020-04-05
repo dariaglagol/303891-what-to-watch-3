@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Router, Switch, Route} from "react-router-dom";
+import {Router, Switch, Route, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 
 import Main from "@components/main/main";
@@ -23,7 +23,7 @@ import {getFullScreenPlayerState} from "@reducers/common/selectors";
 
 import {getError} from "@reducers/common-error/selectors";
 
-import {Operation as UserOperation} from "@reducers/user/user";
+import {AuthorizationStatus, Operation as UserOperation} from "@reducers/user/user";
 import {getAuthStatus, getUserData, getSignInLoadingStatus, getAuthFormSendingResult} from "@reducers/user/selectors";
 
 import {
@@ -120,14 +120,26 @@ const App = (props) => {
         <Route exact path={AppRoute.ROOT}>
           {_renderRoot()}
         </Route>
-        <Route exact path={AppRoute.LOGIN}>
-          <SignIn
-            onSubmit={login}
-            userErrors={error}
-            isLoading={isSignInLoading}
-            authFormSendingResult={authFormSendingResult}
-          />
-        </Route>
+        <Route
+          exact
+          path={AppRoute.LOGIN}
+          render={() => {
+            if (authStatus === AuthorizationStatus.AUTH) {
+              return (
+                <Redirect to={AppRoute.ROOT} />
+              );
+            }
+
+            return (
+              <SignIn
+                onSubmit={login}
+                userErrors={error}
+                isLoading={isSignInLoading}
+                authFormSendingResult={authFormSendingResult}
+              />
+            );
+          }}
+        />
         <Route
           exact
           path={`${AppRoute.FILMS}/:id`}
@@ -182,7 +194,7 @@ const App = (props) => {
             );
           }}
         />
-        <Route
+        <PrivateRoute
           exact
           path={AppRoute.MY_LIST}
           render={() => (
@@ -353,6 +365,29 @@ App.propTypes = {
   isSignInLoading: PropTypes.bool.isRequired,
   commentFormSendingResult: PropTypes.bool,
   authFormSendingResult: PropTypes.bool,
+  watchList: PropTypes.oneOfType([
+    PropTypes.exact([]).isRequired,
+    PropTypes.arrayOf(PropTypes.exact({
+      name: PropTypes.string.isRequired,
+      posterImage: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
+      backgroundColor: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      scoresCount: PropTypes.number.isRequired,
+      director: PropTypes.string.isRequired,
+      starring: PropTypes.array.isRequired,
+      runTime: PropTypes.number.isRequired,
+      genre: PropTypes.string.isRequired,
+      released: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+      videoLink: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
+    })).isRequired,
+  ]).isRequired,
+  loadWatchFilm: PropTypes.func.isRequired,
 };
 
 export {App};
