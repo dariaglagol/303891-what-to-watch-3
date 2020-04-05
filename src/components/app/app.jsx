@@ -162,8 +162,8 @@ const App = (props) => {
         />
         <PrivateRoute
           exact
-          path={`${AppRoute.FILMS}/:id${AppRoute.REVIEW}`}
-          render={({match}) => {
+          path={`${AppRoute.FILMS}/:id/${AppRoute.REVIEW}`}
+          render={(match) => {
             return (
               <ReviewComponentWrapped
                 match={match}
