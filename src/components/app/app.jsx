@@ -40,7 +40,7 @@ import {
 } from "@reducers/data/selectors.js";
 
 import history from "../../history";
-import {AppRoute, AuthorizationStatus, FULLSCREEN_VIDEO_CLASS} from "@utils/constants";
+import {AppRoute, FULLSCREEN_VIDEO_CLASS} from "@utils/constants";
 import {findFilm} from "@utils/utils";
 
 const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
