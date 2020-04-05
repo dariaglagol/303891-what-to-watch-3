@@ -1,6 +1,7 @@
-import {AuthorizationStatus, StatusCode} from "@utils/constants";
+import {AppRoute, AuthorizationStatus, StatusCode} from "@utils/constants";
 import {extend, itemAdapter} from "@utils/utils";
 import {ActionCreator as ErrorActionCreator} from "@reducers/common-error/common-error";
+import history from "../../history";
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
@@ -100,6 +101,7 @@ const Operation = {
           dispatch(ActionCreator.setUserData(response.data));
           dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
           dispatch(ErrorActionCreator.setError({}));
+          history.push(AppRoute.ROOT);
         }
 
         dispatch(ActionCreator.setAuthFormSendingResult(false));
