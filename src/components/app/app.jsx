@@ -187,7 +187,7 @@ const App = (props) => {
                 isPlaying={true}
                 film={film}
                 className={FULLSCREEN_VIDEO_CLASS}
-                isFullscreenPlayerActive={isFullscreenPlayerActive}
+                isFullscreenPlayerActive={true}
                 match={match}
                 onExitClick={_closeFilmButtonClick}
               />

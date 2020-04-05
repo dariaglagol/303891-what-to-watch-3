@@ -57,7 +57,6 @@ const withVideoPlayer = (Component) => {
 
     _setFullScreenPlayer() {
       const {isFullscreenPlayerActive} = this.props;
-
       if (isFullscreenPlayerActive) {
         this._videoRef.current.requestFullscreen();
       }

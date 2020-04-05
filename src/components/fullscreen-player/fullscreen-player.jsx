@@ -42,7 +42,7 @@ const FullscreenPlayer = (props) => {
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">Transpotting</div>
+          <div className="player__name">{film.name}</div>
 
           <button type="button" className="player__full-screen" onClick={onFullScreenButtonClick}>
             <svg viewBox="0 0 27 27" width="27" height="27">
@@ -60,7 +60,8 @@ FullscreenPlayer.displayName = `FullscreenPlayer`;
 
 FullscreenPlayer.propTypes = {
   film: PropTypes.shape({
-    id: PropTypes.number.isRequired
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
   }),
   renderVideo: PropTypes.func.isRequired,
   onPlayClick: PropTypes.func.isRequired,

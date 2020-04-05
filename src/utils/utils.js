@@ -70,7 +70,6 @@ const isSubmitButtonDisable = (stars, textStatus) => {
 };
 
 const getRoute = (route, id, additionalRoute) => {
-
   return additionalRoute ?
     `${route}/${id}/${additionalRoute}` : `${route}/${id}`;
 };
