@@ -6,7 +6,7 @@ import GenresList from "./genres-list";
 Enzyme.configure({
   adapter: new Adapter(),
 });
-const activeGenre = `Comedy`;
+const activeGenre = `Genre`;
 
 const genreList = [`All genres`, `Genre`, `genre2`];
 

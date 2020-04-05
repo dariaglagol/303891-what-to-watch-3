@@ -9,7 +9,7 @@ const movieReviewsMock = [
       name: `author`,
       id: 1
     },
-    date: `date`,
+    date: `2020-04-04T05:57:30.676Z`,
     rating: 8.9,
     id: 1
   }, {
@@ -18,7 +18,7 @@ const movieReviewsMock = [
       name: `author`,
       id: 4
     },
-    date: `date`,
+    date: `2020-04-03T05:57:30.676Z`,
     rating: 8.9,
     id: 3
   }

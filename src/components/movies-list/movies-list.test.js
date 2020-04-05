@@ -1,6 +1,8 @@
 import React from "react";
 import renderer from "react-test-renderer";
+import {Router} from "react-router-dom";
 import MoviesList from "./movies-list";
+import history from "../../history.js";
 
 const mock = {
   catalogFilmList: [
@@ -69,13 +71,14 @@ it(`Movie list render`, () => {
 
   const moviesListComponent = renderer
     .create(
-        <MoviesList
-          films={catalogFilmList}
-          onFilmCatalogCardHover={() => {}}
-          activeFilm={mockedFilm}
-          currentShownFilms={currentShownFilms}
-        />
-        , {createNodeMock: () => {
+        <Router history={history}>
+          <MoviesList
+            films={catalogFilmList}
+            onFilmCatalogCardHover={() => {}}
+            activeFilm={mockedFilm}
+            currentShownFilms={currentShownFilms}
+          />
+        </Router>, {createNodeMock: () => {
           return {};
         }}
     ).toJSON();

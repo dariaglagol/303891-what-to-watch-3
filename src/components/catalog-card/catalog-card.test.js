@@ -2,6 +2,7 @@ import React from "react";
 import {Router} from "react-router-dom";
 import renderer from "react-test-renderer";
 import CatalogCard from "./calalog-card";
+import history from "../../history.js";
 
 const mockedFilm = {
   name: `name`,
@@ -28,7 +29,7 @@ const mockedPlayProp = false;
 it(`Render catalog card`, () => {
   const catalogCardComponent = renderer
     .create(
-        <Router>
+        <Router history={history}>
           <CatalogCard
             film={mockedFilm}
             onFilmCatalogCardHover={() => {}}

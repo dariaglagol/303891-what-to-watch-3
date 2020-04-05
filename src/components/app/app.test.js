@@ -68,7 +68,11 @@ const mocks = {
   },
   defaultActivePage: `main`,
   isFullscreenPlayerActive: false,
-  userErrors: {},
+  userErrors: {
+    data: {
+      error: `error`,
+    }
+  },
   userData: {
     id: 1,
     email: `email`,

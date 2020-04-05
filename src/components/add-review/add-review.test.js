@@ -33,6 +33,11 @@ const mock = {
   isSubmitButtonDisable: true,
   validationErrors: [],
   isLoading: false,
+  match: {
+    params: {
+      id: 1,
+    }
+  }
 };
 
 it(`Render add review component`, () => {

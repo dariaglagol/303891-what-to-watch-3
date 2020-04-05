@@ -1,6 +1,8 @@
 import React from "react";
 import renderer from "react-test-renderer";
+import {Router} from "react-router-dom";
 import Main from "./main";
+import history from "../../history.js";
 
 const mocks = {
   mockFilmData: {
@@ -79,18 +81,20 @@ it(`Main component render`, () => {
 
   const mainComponent = renderer
     .create(
-        <Main
-          promoMovie={mockFilmData}
-          films={mockedCatalogFilms}
-          renderCatalog={() => {}}
-          activeGenre={defaultActiveGenre}
-          isFullscreenPlayerActive={isFullscreenPlayerActive}
-          onFullScreenToggle={() => {}}
-          onGenreTabClick={() => {}}
-          userData={userData}
-          authStatus={`NO_AUTH`}
-          onSignInClick={() => {}}
-        />, {createNodeMock: () => {
+        <Router history={history}>
+          <Main
+            promoMovie={mockFilmData}
+            films={mockedCatalogFilms}
+            renderCatalog={() => {}}
+            activeGenre={defaultActiveGenre}
+            isFullscreenPlayerActive={isFullscreenPlayerActive}
+            onFullScreenToggle={() => {}}
+            onGenreTabClick={() => {}}
+            userData={userData}
+            authStatus={`NO_AUTH`}
+            onSignInClick={() => {}}
+          />
+        </Router>, {createNodeMock: () => {
           return {};
         }}
     )
