@@ -35,7 +35,7 @@ export default class MovieExtended extends PureComponent {
     onFilmLoad(this.movieDetails);
   }
 
-  componentDidUpdate() {
+  componentWillUpdate() {
     const {
       films,
       match: {params},
@@ -83,11 +83,6 @@ export default class MovieExtended extends PureComponent {
     return null;
   }
 
-  _getPlayEvent() {
-    const {onFullScreenToggle, isFullscreenPlayerActive} = this.props;
-    onFullScreenToggle(!isFullscreenPlayerActive);
-  }
-
   _renderAddReviewButton() {
     const {authStatus} = this.props;
     const {id} = this.movieDetails;
@@ -126,12 +121,12 @@ export default class MovieExtended extends PureComponent {
       >
         {
           isFavorite ? (
-            <svg viewBox="0 0 19 20" width="19" height="20">
-              <use xlinkHref="#add"/>
-            </svg>
-          ) : (
             <svg viewBox="0 0 18 14" width="18" height="14">
               <use xlinkHref="#in-list" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 19 20" width="19" height="20">
+              <use xlinkHref="#add"/>
             </svg>
           )
         }
