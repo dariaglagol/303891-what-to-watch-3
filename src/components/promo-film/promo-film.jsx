@@ -1,7 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Header from "@components/header/header";
-import {FilmStatusFavorite} from "@utils/constants";
+import {Link} from "react-router-dom";
+import {AppRoute, FilmStatusFavorite} from "@utils/constants";
+import {getRoute} from "@utils/utils";
+import app from "@components/app/app";
 
 const PromoFilm = (props) => {
   const {
@@ -14,18 +17,11 @@ const PromoFilm = (props) => {
       isFavorite,
       id
     },
-    onFilmClick,
     onPlayButtonClick,
     userData,
     authStatus,
     toggleFilmFavorite
   } = props;
-
-  // TODO вот эту логику перелиновать
-
-  function _onFilmClickHandler() {
-    onFilmClick(PageTypes.MOVIE);
-  }
 
   function _playButtonClickHandler() {
     onPlayButtonClick();
@@ -77,23 +73,25 @@ const PromoFilm = (props) => {
         <div className="movie-card__info">
           <div
             className="movie-card__poster"
-            onClick={_onFilmClickHandler}
           >
-            <img
-              src={posterImage}
-              alt="The Grand Budapest Hotel poster"
-              width="218"
-              height="327"
-            />
+            <Link to={getRoute(AppRoute.FILMS, id)}>
+              <img
+                src={posterImage}
+                alt="The Grand Budapest Hotel poster"
+                width="218"
+                height="327"
+              />
+            </Link>
           </div>
 
           <div className="movie-card__desc">
-            <h2
-              className="movie-card__title"
-              onClick={_onFilmClickHandler}
-            >
-              {name}
-            </h2>
+            <Link to={getRoute(AppRoute.FILMS, id)}>
+              <h2
+                className="movie-card__title"
+              >
+                {name}
+              </h2>
+            </Link>
             <p className="movie-card__meta">
               <span className="movie-card__genre">{genre}</span>
               <span className="movie-card__year">{released}</span>
@@ -133,7 +131,6 @@ PromoFilm.propTypes = {
     }),
     PropTypes.shape({}).isRequired
   ]),
-  onFilmClick: PropTypes.func.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,
   toggleFilmFavorite: PropTypes.func.isRequired,
   userData: PropTypes.oneOfType([
