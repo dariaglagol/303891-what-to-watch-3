@@ -35,14 +35,13 @@ export default class MovieExtended extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-
     const {
       films,
       match: {params},
       onFilmLoad
     } = this.props;
     const film = findFilm(films, params.id);
-    const prevFilm = findFilm(prevProps.films, params.id);
+    const prevFilm = findFilm(prevProps.films, prevProps.match.params.id);
 
     if (prevFilm.id !== film.id) {
       onFilmLoad(film);
