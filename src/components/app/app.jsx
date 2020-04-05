@@ -199,7 +199,7 @@ const App = (props) => {
           path={AppRoute.MY_LIST}
           render={() => (
             <WatchListScreenWrapped
-              authStatus={authStatus}
+              userData={userData}
               films={watchList}
               loadWatchFilm={loadWatchFilm}
             />
