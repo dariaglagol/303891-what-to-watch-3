@@ -16,6 +16,7 @@ import ErrorMessage from "@components/error-message/error-message";
 import withVideoPlayer from "@hocs/with-video-player/with-video-player";
 import FullscreenPlayer from "@components/fullscreen-player/fullscreen-player";
 import PrivateRoute from "@components/private-route/private-route";
+import WatchList from "@components/watch-list/watch-list";
 
 import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
 import {getFullScreenPlayerState} from "@reducers/common/selectors";
@@ -36,7 +37,8 @@ import {
   getPromoMovie,
   getLoadingStatus,
   getCommentFormSendingResult,
-  getFilms
+  getFilms,
+  getWatchListSelector
 } from "@reducers/data/selectors.js";
 
 import history from "../../history";
@@ -47,6 +49,7 @@ const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
 const MainComponentWrapped = withMovieList(withCatalog(Main));
 const ReviewComponentWrapped = withReview(AddReview);
 const WrappedFullScreenVideo = withVideoPlayer(FullscreenPlayer);
+const WatchListScreenWrapped = withMovieList(WatchList);
 
 const App = (props) => {
   const {
@@ -69,6 +72,8 @@ const App = (props) => {
     isSignInLoading,
     authFormSendingResult,
     toggleFilmFavorite,
+    loadWatchFilm,
+    watchList
   } = props;
 
   function _renderErrorMessage() {
@@ -177,6 +182,18 @@ const App = (props) => {
             );
           }}
         />
+        <Route
+          exact
+          path={AppRoute.MY_LIST}
+          render={() => (
+            <WatchListScreenWrapped
+              authStatus={authStatus}
+              films={watchList}
+              userData={userData}
+              loadWatchFilm={loadWatchFilm}
+            />
+          )}
+        />
       </Switch>
     </Router>
   );
@@ -204,6 +221,7 @@ const mapStateToProps = (state) => ({
   commentFormSendingResult: getCommentFormSendingResult(state),
   isSignInLoading: getSignInLoadingStatus(state),
   authFormSendingResult: getAuthFormSendingResult(state),
+  watchList: getWatchListSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -224,6 +242,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   toggleFilmFavorite(id, status) {
     dispatch(DataOperation.toggleFilmFavorite(id, status));
+  },
+  loadWatchFilm() {
+    dispatch(DataOperation.loadWatchList());
   }
 });
 

@@ -11,6 +11,7 @@ const initialState = {
   activeGenre: DEFAULT_ACTIVE_GENRE,
   commentFormSendingResult: null,
   isLoading: false,
+  watchList: [],
 };
 
 const ActionType = {
@@ -19,9 +20,9 @@ const ActionType = {
   LOAD_REVIEWS: `LOAD_REVIEWS`,
   CHANGE_GENRE: `CHANGE_GENRE`,
   SET_FILM: `SET_FILM`,
-  // SET_ERROR: `SET_ERROR`,
   SET_LOADING_STATUS: `SET_LOADING_STATUS`,
   SET_COMMENT_FORM_ACTION_RESULT: `SET_COMMENT_FORM_ACTION_RESULT`,
+  LOAD_WATCH_LIST: `LOAD_WATCH_LIST`
 };
 
 const ActionCreator = {
@@ -57,6 +58,12 @@ const ActionCreator = {
       payload: value,
     };
   },
+  setWatchList: (films) => {
+    return {
+      type: ActionType.LOAD_WATCH_LIST,
+      payload: itemsAdapter(films)
+    };
+  }
 };
 
 const Operation = {
@@ -115,6 +122,12 @@ const Operation = {
         dispatch(ActionCreator.loadReviews(response.data));
       });
   },
+  loadWatchList: () => (dispatch, getState, api) => {
+    return api.get(`/favorite`)
+      .then((response) => {
+        dispatch(ActionCreator.setWatchList(response.data));
+      });
+  }
 };
 
 const reducer = (state = initialState, action) => {
@@ -137,6 +150,10 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_REVIEWS:
       return extend(state, {
         reviews: action.payload,
+      });
+    case ActionType.LOAD_WATCH_LIST:
+      return extend(state, {
+        watchList: action.payload,
       });
     default:
       break;

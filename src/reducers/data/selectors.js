@@ -39,6 +39,17 @@ const getCommentFormSendingResult = (state) => {
   return state[NAME].commentFormSendingResult;
 };
 
+const getWatchList = (state) => {
+  return state[NAME].watchList;
+};
+
+const getWatchListSelector = createSelector(
+    [getWatchList],
+    (watchList) => {
+      return watchList;
+    }
+);
+
 const getFilmsSelector = createSelector(
     [getFilms, getFilteredFilms, getActiveGenre],
     (films, filteredFilms, activeGenre) => {
@@ -58,4 +69,6 @@ export {
   getFilmsSelector,
   getLoadingStatus,
   getCommentFormSendingResult,
+  getWatchList,
+  getWatchListSelector
 };
