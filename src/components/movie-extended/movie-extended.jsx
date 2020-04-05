@@ -19,31 +19,37 @@ export default class MovieExtended extends PureComponent {
   constructor(props) {
     super(props);
 
-    const {
-      films,
-      match: {params},
-    } = this.props;
-
-    this.movieDetails = findFilm(films, params.id);
-
     this._addToFavoriteButtonClickHandler = this._addToFavoriteButtonClickHandler.bind(this);
   }
 
-  componentDidMount() {
-    const {onFilmLoad} = this.props;
-
-    onFilmLoad(this.movieDetails);
-  }
-
-  componentWillUpdate() {
+  componentWillMount() {
     const {
       films,
       match: {params},
+      onFilmLoad
     } = this.props;
-    this.movieDetails = findFilm(films, params.id);
+
+    const film = findFilm(films, params.id);
+
+    onFilmLoad(film);
   }
 
-  _renderTabsText() {
+  componentDidUpdate(prevProps) {
+
+    const {
+      films,
+      match: {params},
+      onFilmLoad
+    } = this.props;
+    const film = findFilm(films, params.id);
+    const prevFilm = findFilm(prevProps.films, params.id);
+
+    if (prevFilm.id !== film.id) {
+      onFilmLoad(film);
+    }
+  }
+
+  _renderTabsText(film) {
     const {reviews, activeTab} = this.props;
 
     const {
@@ -55,7 +61,7 @@ export default class MovieExtended extends PureComponent {
       scoresCount,
       rating,
       description,
-    } = this.movieDetails;
+    } = film;
 
     switch (activeTab) {
       case TabTypes.OVERVIEW:
@@ -83,9 +89,9 @@ export default class MovieExtended extends PureComponent {
     return null;
   }
 
-  _renderAddReviewButton() {
+  _renderAddReviewButton(film) {
     const {authStatus} = this.props;
-    const {id} = this.movieDetails;
+    const {id} = film;
 
     if (authStatus === AuthorizationStatus.AUTH) {
       return (
@@ -101,8 +107,8 @@ export default class MovieExtended extends PureComponent {
     return null;
   }
 
-  _addToFavoriteButtonClickHandler() {
-    const {isFavorite, id} = this.movieDetails;
+  _addToFavoriteButtonClickHandler(film) {
+    const {isFavorite, id} = film;
     const {toggleFilmFavorite} = this.props;
 
     const statusFavoriteInvert = isFavorite ?
@@ -111,13 +117,13 @@ export default class MovieExtended extends PureComponent {
     toggleFilmFavorite(id, statusFavoriteInvert);
   }
 
-  _renderAddToListButton() {
-    const {isFavorite} = this.movieDetails;
+  _renderAddToListButton(film) {
+    const {isFavorite} = film;
 
     return (
       <button
         className="btn btn--list movie-card__button" type="button"
-        onClick={this._addToFavoriteButtonClickHandler}
+        onClick={() => this._addToFavoriteButtonClickHandler(film)}
       >
         {
           isFavorite ? (
@@ -142,7 +148,10 @@ export default class MovieExtended extends PureComponent {
       renderMovieList,
       userData,
       authStatus,
+      match: {params}
     } = this.props;
+
+    const film = findFilm(films, params.id);
 
     const {
       name,
@@ -151,7 +160,7 @@ export default class MovieExtended extends PureComponent {
       posterImage,
       backgroundImage,
       id,
-    } = this.movieDetails;
+    } = film;
 
     const similarFilms = getSimilarMovies(genre, films, id);
 
@@ -191,9 +200,9 @@ export default class MovieExtended extends PureComponent {
                     </button>
                   </Link>
 
-                  {this._renderAddToListButton()}
+                  {this._renderAddToListButton(film)}
 
-                  {this._renderAddReviewButton()}
+                  {this._renderAddReviewButton(film)}
                 </div>
               </div>
             </div>
@@ -211,7 +220,7 @@ export default class MovieExtended extends PureComponent {
               </div>
               <div className="movie-card__desc">
                 {renderTabs()}
-                {this._renderTabsText()}
+                {this._renderTabsText(film)}
               </div>
             </div>
           </div>

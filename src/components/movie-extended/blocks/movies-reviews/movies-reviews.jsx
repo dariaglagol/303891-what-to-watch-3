@@ -32,7 +32,11 @@ const MovieReviews = (props) => {
   function _renderReviews() {
     const [firstChunk, secondChunk] = _prepareReviewsArray();
 
-    if (secondChunk > 1) {
+    if (!firstChunk) {
+      return (<p>Nobody left review</p>);
+    }
+
+    if (secondChunk) {
       return (
         <React.Fragment>
           <div className="movie-card__reviews-col">

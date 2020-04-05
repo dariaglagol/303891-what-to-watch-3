@@ -18,6 +18,8 @@ const getSimilarMovies = (genre, movies, id) => {
     if (id !== movie.id) {
       return movie.genre === genre;
     }
+
+    return null;
   }).slice(0, SIMILAR_FILM_COUNT);
 };
 
