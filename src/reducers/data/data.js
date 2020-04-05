@@ -2,7 +2,7 @@ import {extend, itemAdapter, itemsAdapter, toRawItemsAdapter, replaceFilmItem} f
 import {DEFAULT_ACTIVE_GENRE, StatusCode} from "@utils/constants";
 import {ActionCreator as ErrorActionCreator} from "@reducers/common-error/common-error";
 import history from "../../history";
-import {getFilms} from "@reducers/data/selectors";
+import {getFilms, getPromoMovie} from "@reducers/data/selectors";
 
 const initialState = {
   films: [],
@@ -83,9 +83,12 @@ const Operation = {
       dispatch(ActionCreator.setLoadingStatus(false));
       const freshFilm = response.data;
       const filmsList = getFilms(getState());
+      const promoMovie = getPromoMovie(getState());
 
       const freshFilms = replaceFilmItem(filmsList, freshFilm);
-      dispatch(ActionCreator.loadPromoFilm(freshFilm));
+      if (freshFilm.id === promoMovie.id) {
+        dispatch(ActionCreator.loadPromoFilm(freshFilm));
+      }
       dispatch(ActionCreator.loadFilms(freshFilms));
     });
   },

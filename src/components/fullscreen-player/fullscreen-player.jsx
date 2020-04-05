@@ -8,11 +8,11 @@ import {AppRoute} from "@utils/constants";
 const FullscreenPlayer = (props) => {
   const {
     renderVideo,
-    progress,
     duration,
     onPlayClick,
     onFullScreenButtonClick,
-    film
+    film,
+    progress
   } = props;
 
   const preparedDurationHours = moment.duration(duration, `seconds`).get(`hours`);
@@ -29,8 +29,8 @@ const FullscreenPlayer = (props) => {
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value={progress} max="100" />
-            <div className="player__toggler" styles="left: 30%;">Toggler</div>
+            <progress className="player__progress" value={(60 / 100) * progress} max="100" />
+            <div className="player__toggler" style={{left: `${(60 / 100) * progress}%`}}>Toggler</div>
           </div>
           <div className="player__time-value">{preparedDurationHours}:{preparedDurationMinutes}:{preparedDurationSeconds}</div>
         </div>

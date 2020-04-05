@@ -47,6 +47,7 @@ const withVideoPlayer = (Component) => {
     componentDidUpdate() {
       const video = this._videoRef.current;
 
+      console.log(this.props.isPlaying)
       if (this.props.isPlaying) {
         video.muted = true;
         video.play();
