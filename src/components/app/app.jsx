@@ -201,7 +201,6 @@ const App = (props) => {
             <WatchListScreenWrapped
               authStatus={authStatus}
               films={watchList}
-              userData={userData}
               loadWatchFilm={loadWatchFilm}
             />
           )}

@@ -158,7 +158,7 @@ export default class MovieExtended extends PureComponent {
       id,
     } = this.movieDetails;
 
-    const similarFilms = getSimilarMovies(genre, films);
+    const similarFilms = getSimilarMovies(genre, films, id);
 
     return (
       <React.Fragment>

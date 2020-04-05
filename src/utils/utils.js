@@ -13,9 +13,11 @@ const getMovieMark = (score) => {
   return key;
 };
 
-const getSimilarMovies = (genre, movies) => {
+const getSimilarMovies = (genre, movies, id) => {
   return movies.filter((movie) => {
-    return movie.genre === genre;
+    if (id !== movie.id) {
+      return movie.genre === genre;
+    }
   }).slice(0, SIMILAR_FILM_COUNT);
 };
 
@@ -105,5 +107,5 @@ export {
   getGenres,
   toRawItemsAdapter,
   findFilm,
-  replaceFilmItem
+  replaceFilmItem,
 };

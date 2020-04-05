@@ -12,6 +12,7 @@ it(`Render full screen component`, () => {
           onPlayClick={() => {}}
           progress={10}
           duration={33}
+          film={{id: 2}}
         />
     ).toJSON();
 
