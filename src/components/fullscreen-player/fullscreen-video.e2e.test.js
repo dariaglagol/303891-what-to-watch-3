@@ -18,7 +18,7 @@ it(`Click on close player button called callback`, () => {
       <MemoryRouter>
         <FullscreenPlayer
           onExitClick={exitClickHandler}
-          film={{id: 2}}
+          film={{id: 2, name: `name`}}
           renderVideo={renderVideo}
           onFullScreenButtonClick={onFullScreenButtonClick}
           onPlayClick={onPlayClick}
@@ -49,7 +49,7 @@ it(`Click on fullscreen player button called callback`, () => {
         onPlayClick={onPlayClick}
         progress={10}
         duration={33}
-        film={{id: 3}}
+        film={{id: 3, name: `name`}}
       />
   );
 
@@ -74,7 +74,7 @@ it(`Click on pause player button called callback`, () => {
         onPlayClick={onPlayClick}
         progress={10}
         duration={33}
-        film={{id: 3}}
+        film={{id: 3, name: `name`}}
       />
   );
 

@@ -62,6 +62,7 @@ it(`Genre tab call callback`, () => {
   const catalogComponent = mount(
       <Catalog
         films={mockedCatalogFilmList}
+        rawFilms={mockedCatalogFilmList}
         renderMovieList={renderMovieList}
         onGenreTabClick={onGenreTabClick}
         onShowMoreButtonClick={showMoreButtonClickHandler}

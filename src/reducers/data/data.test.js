@@ -6,7 +6,8 @@ import {
   getPromoMovie,
   getActiveGenre,
   getLoadingStatus,
-  getCommentFormSendingResult
+  getCommentFormSendingResult,
+  getWatchList
 } from "./selectors";
 import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
 
@@ -110,8 +111,6 @@ const reviewsList = [{
   id: 3
 }];
 
-const changedActiveFilmId = 1;
-
 const GIVEN_GENRE = `Comedy`;
 
 const singleMovie = {
@@ -198,6 +197,45 @@ const state = {
     reviews: reviewsList,
     commentFormSendingResult: true,
     isLoading: false,
+    watchList: [
+      {
+        name: `name`,
+        genre: `Comedy`,
+        posterImage: `posterImage`,
+        previewImage: `previewImage`,
+        backgroundImage: `backgroundImage`,
+        backgroundColor: `backgroundColor`,
+        description: `description`,
+        rating: 124,
+        scoresCount: 8.9,
+        director: `director`,
+        starring: [`starring`, `starring`],
+        runTime: 113,
+        released: 2020,
+        id: 1,
+        isFavorite: false,
+        videoLink: `videoLink`,
+        previewVideoLink: `previewVideoLink`,
+      }, {
+        name: `name 2`,
+        genre: `Comedy`,
+        posterImage: `posterImage 2`,
+        previewImage: `previewImage 2`,
+        backgroundImage: `backgroundImage 2`,
+        backgroundColor: `backgroundColor 2`,
+        description: `description 2`,
+        rating: 124,
+        scoresCount: 8.9,
+        director: `director 2`,
+        starring: [`starring 2`, `starring 2`],
+        runTime: 113,
+        released: 2020,
+        id: 2,
+        isFavorite: false,
+        videoLink: `videoLink 2`,
+        previewVideoLink: `previewVideoLink 2`,
+      },
+    ]
   }
 };
 
@@ -208,6 +246,7 @@ const initialState = {
   isLoading: false,
   reviews: [],
   commentFormSendingResult: null,
+  watchList: [],
 };
 
 describe(`Data reducer tests`, () => {
@@ -230,16 +269,16 @@ describe(`Data reducer tests`, () => {
     });
   });
 
-  it(`Reducer should change current film id by a given value`, () => {
-    const {activeFilmId} = initialState;
+  it(`Reducer should change current watchlist film id by a given value`, () => {
+    const {watchList} = initialState;
 
     expect(reducer({
-      activeFilmId
+      watchList
     }, {
-      type: ActionType.GET_ACTIVE_FILM_ID,
-      payload: activeFilmId
+      type: ActionType.LOAD_WATCH_LIST,
+      payload: filmList
     })).toEqual({
-      activeFilmId,
+      watchList: filmList
     });
   });
 
@@ -280,6 +319,17 @@ describe(`Data reducer tests`, () => {
       isLoading: true
     });
   });
+
+  it(`Reducer should set reviews property by a given value`, () => {
+    const {reviews} = initialState;
+
+    expect(reducer({reviews}, {
+      type: ActionType.LOAD_REVIEWS,
+      payload: reviews
+    })).toEqual({
+      reviews
+    });
+  });
 });
 
 describe(`Action Creator tests`, () => {
@@ -291,16 +341,16 @@ describe(`Action Creator tests`, () => {
   });
 
   it(`Action creator return correct action after call`, () => {
-    expect(ActionCreator.setError({error: {error: `error`}})).toEqual({
-      type: ActionType.SET_ERROR,
-      payload: {error: {error: `error`}},
+    expect(ActionCreator.loadReviews(reviewsList)).toEqual({
+      type: ActionType.LOAD_REVIEWS,
+      payload: reviewsList,
     });
   });
 
-  it(`Action creator return correct film id`, () => {
-    expect(ActionCreator.getActiveFilmId(changedActiveFilmId)).toEqual({
-      type: ActionType.GET_ACTIVE_FILM_ID,
-      payload: changedActiveFilmId,
+  it(`Action creator return correct watch list`, () => {
+    expect(ActionCreator.setWatchList(filmList)).toEqual({
+      type: ActionType.LOAD_WATCH_LIST,
+      payload: filmList,
     });
   });
 
@@ -321,6 +371,13 @@ describe(`Action Creator tests`, () => {
   it(`Action creator return correct isLoading status`, () => {
     expect(ActionCreator.setLoadingStatus(true)).toEqual({
       type: ActionType.SET_LOADING_STATUS,
+      payload: true,
+    });
+  });
+
+  it(`Action creator return correct commentFormSendingResult status`, () => {
+    expect(ActionCreator.setCommentFormSendingResult(true)).toEqual({
+      type: ActionType.SET_COMMENT_FORM_ACTION_RESULT,
       payload: true,
     });
   });
@@ -354,6 +411,10 @@ describe(`Selectors tests`, () => {
   });
 
   it(`Selector getCommentFormSendingResult return right key`, () => {
-    expect(getCommentFormSendingResult(state)).toEqual(false);
+    expect(getCommentFormSendingResult(state)).toEqual(true);
+  });
+
+  it(`Selector getWatchList return right key`, () => {
+    expect(getWatchList(state)).toEqual(filmList);
   });
 });

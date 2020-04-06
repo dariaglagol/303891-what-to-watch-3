@@ -22,7 +22,7 @@ export default class MovieExtended extends PureComponent {
     this._addToFavoriteButtonClickHandler = this._addToFavoriteButtonClickHandler.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const {
       films,
       match: {params},

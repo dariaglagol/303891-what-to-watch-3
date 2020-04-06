@@ -31,9 +31,6 @@ const ActionCreator = {
       payload: preparedUserData
     };
   },
-  setError: () => ({
-    type: ActionType.SET_ERROR
-  }),
   setLoadingStatus: (value) => ({
     type: ActionType.SET_LOADING_STATUS,
     payload: value
@@ -55,11 +52,6 @@ const reducer = (state = initialState, action) => {
     case ActionType.SET_USER_DATA:
       return extend(state, {
         userData: action.payload
-      });
-    case ActionType.SET_ERROR:
-      return extend(state, {
-        isLoading: false,
-        authSendingResult: false,
       });
     case ActionType.SET_LOADING_STATUS:
       return extend(state, {

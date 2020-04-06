@@ -1,5 +1,6 @@
 import React from "react";
 import Enzyme, {mount} from "enzyme";
+import {MemoryRouter} from "react-router-dom";
 import Adapter from "enzyme-adapter-react-16";
 import SignIn from "./sign-in";
 
@@ -17,10 +18,14 @@ it(`Sign in submit click`, () => {
   const submitHandler = jest.fn();
 
   const signInComponent = mount(
-      <SignIn
-        onSubmit={submitHandler}
-        userErrors={userErrors}
-      />
+      <MemoryRouter>
+        <SignIn
+          onSubmit={submitHandler}
+          userErrors={userErrors}
+          invalidFields={[]}
+          isLoading={true}
+        />
+      </MemoryRouter>
   );
 
   const submitButton = signInComponent.find(`.sign-in__form`);

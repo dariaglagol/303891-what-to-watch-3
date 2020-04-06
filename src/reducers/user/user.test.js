@@ -1,6 +1,6 @@
 import {reducer, ActionType, ActionCreator} from "./user";
 import {AuthorizationStatus} from "@utils/constants";
-import {getAuthStatus, getUserData, getUserError} from "./selectors";
+import {getAuthStatus, getUserData, getSignInLoadingStatus, getAuthFormSendingResult} from "./selectors";
 
 const userData = {
   id: 1,
@@ -9,16 +9,13 @@ const userData = {
   avatarUrl: `avatarUrl`
 };
 
-const error = {
-  error: `error`,
-};
-
 const givenAuthorizationStatus = `NO_AUTH`;
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   userData: {},
-  error: {},
+  authSendingResult: null,
+  isLoading: false
 };
 
 const state = {
@@ -29,9 +26,10 @@ const state = {
       name: `name`,
       avatarUrl: `avatarUrl`
     },
-    error,
-    authorizationStatus: givenAuthorizationStatus
-  }
+    authorizationStatus: givenAuthorizationStatus,
+    authSendingResult: null,
+    isLoading: true,
+  },
 };
 
 const userDataWithFullAvatarUrl = {
@@ -56,14 +54,6 @@ describe(`User reducer test`, () => {
     });
   });
 
-  it(`Reducer should set user error`, () => {
-    expect(reducer(initialState.error, {
-      type: ActionType.SET_ERROR,
-      payload: error
-    }
-    )).toEqual({error});
-  });
-
   it(`Reducer should toggle authorization status`, () => {
     const {authorizationStatus} = initialState;
 
@@ -73,6 +63,19 @@ describe(`User reducer test`, () => {
           payload: `NO_AUTH`
         })).toEqual({
       authorizationStatus: `NO_AUTH`
+    });
+  });
+
+  it(`Reducer should toggle set loading and sending form result statuses`, () => {
+    const {authSendingResult, isLoading} = initialState;
+
+    expect(reducer(
+        {isLoading, authSendingResult}, {
+          type: ActionType.SET_LOADING_STATUS,
+          payload: true
+        })).toEqual({
+      authSendingResult: null,
+      isLoading: true
     });
   });
 
@@ -90,15 +93,18 @@ describe(`User reducer test`, () => {
     });
   });
 
-  it(`Action creator return correct action after users error`, () => {
-    expect(ActionCreator.setError(error)).toEqual({
-      type: ActionType.SET_ERROR,
-      payload: error,
+  it(`Action creator return correct action after set sending form result`, () => {
+    expect(ActionCreator.setAuthFormSendingResult(true)).toEqual({
+      type: ActionType.SET_AUTH_FORM_ACTION_RESULT,
+      payload: true,
     });
   });
 
-  it(`Selector getUserError return right key`, () => {
-    expect(getUserError(state)).toEqual(error);
+  it(`Action creator return correct action after set loading status`, () => {
+    expect(ActionCreator.setLoadingStatus(true)).toEqual({
+      type: ActionType.SET_LOADING_STATUS,
+      payload: true,
+    });
   });
 
   it(`Selector getAuthStatus return right key`, () => {
@@ -107,5 +113,13 @@ describe(`User reducer test`, () => {
 
   it(`Selector getUserData return right key`, () => {
     expect(getUserData(state)).toEqual(userData);
+  });
+
+  it(`Selector getSignInLoadingStatus return right key`, () => {
+    expect(getSignInLoadingStatus(state)).toEqual(true);
+  });
+
+  it(`Selector getSignInLoadingStatus return right key`, () => {
+    expect(getAuthFormSendingResult(state)).toEqual(null);
   });
 });
