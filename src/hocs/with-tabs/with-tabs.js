@@ -24,8 +24,8 @@ const withTabs = (Component) => {
       const {activeTab} = this.state;
 
       return <Component
-        activeTab={activeTab}
         {...this.props}
+        activeTab={activeTab}
         renderTabs={() => {
           return (
             <Tabs

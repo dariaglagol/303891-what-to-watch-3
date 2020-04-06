@@ -5,12 +5,8 @@ import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
 const NAME = NameSpace.DATA;
 
 const _filterFilmsByGenre = (movies, activeGenre) => {
-  if (activeGenre.single === DEFAULT_ACTIVE_GENRE.single) {
-    return movies;
-  }
-
   return movies.filter((movie) => {
-    return movie.genre === activeGenre.single;
+    return movie.genre === activeGenre;
   });
 };
 
@@ -27,16 +23,12 @@ const getActiveGenre = (state) => {
   return state[NAME].activeGenre;
 };
 
-const getMovieCover = (state) => {
+const getPromoMovie = (state) => {
   return state[NAME].promoMovie;
 };
 
 const getReviews = (state) => {
   return state[NAME].reviews;
-};
-
-const getActiveFilmId = (state) => {
-  return state[NAME].activeFilmId;
 };
 
 const getLoadingStatus = (state) => {
@@ -47,10 +39,21 @@ const getCommentFormSendingResult = (state) => {
   return state[NAME].commentFormSendingResult;
 };
 
+const getWatchList = (state) => {
+  return state[NAME].watchList;
+};
+
+const getWatchListSelector = createSelector(
+    [getWatchList],
+    (watchList) => {
+      return watchList;
+    }
+);
+
 const getFilmsSelector = createSelector(
     [getFilms, getFilteredFilms, getActiveGenre],
     (films, filteredFilms, activeGenre) => {
-      if (activeGenre.single !== DEFAULT_ACTIVE_GENRE.single) {
+      if (activeGenre !== DEFAULT_ACTIVE_GENRE) {
         return _filterFilmsByGenre(films, activeGenre);
       }
       return films;
@@ -61,10 +64,11 @@ export {
   getFilms,
   getFilteredFilms,
   getReviews,
-  getMovieCover,
+  getPromoMovie,
   getActiveGenre,
   getFilmsSelector,
-  getActiveFilmId,
   getLoadingStatus,
-  getCommentFormSendingResult
+  getCommentFormSendingResult,
+  getWatchList,
+  getWatchListSelector
 };

@@ -14,7 +14,7 @@ const getSignInLoadingStatus = (state) => {
 };
 
 const getAuthFormSendingResult = (state) => {
-  return state[NAME].commentFormSendingResult;
+  return state[NAME].authSendingResult;
 };
 
 export {getAuthStatus, getUserData, getSignInLoadingStatus, getAuthFormSendingResult};

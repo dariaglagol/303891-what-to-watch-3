@@ -1,5 +1,6 @@
 import React from "react";
-import Enzyme, {shallow} from "enzyme";
+import Enzyme, {mount, shallow} from "enzyme";
+import {MemoryRouter} from "react-router-dom";
 import Adapter from "enzyme-adapter-react-16";
 import FullscreenPlayer from "./fullscreen-player";
 
@@ -13,22 +14,25 @@ it(`Click on close player button called callback`, () => {
   const onFullScreenButtonClick = jest.fn();
   const onPlayClick = jest.fn();
 
-  const fullScreenComponent = shallow(
-      <FullscreenPlayer
-        onExitClick={exitClickHandler}
-        renderVideo={renderVideo}
-        onFullScreenButtonClick={onFullScreenButtonClick}
-        onPlayClick={onPlayClick}
-        progress={10}
-        duration={33}
-      />
+  const fullScreenComponent = mount(
+      <MemoryRouter>
+        <FullscreenPlayer
+          onExitClick={exitClickHandler}
+          film={{id: 2, name: `name`}}
+          renderVideo={renderVideo}
+          onFullScreenButtonClick={onFullScreenButtonClick}
+          onPlayClick={onPlayClick}
+          progress={10}
+          duration={33}
+        />
+      </MemoryRouter>
   );
 
-  const closeVideoButton = fullScreenComponent.find(`.player__exit`);
-  closeVideoButton.simulate(`click`);
-
-  expect(exitClickHandler).toHaveBeenCalledTimes(1);
-  expect(exitClickHandler).toBeCalledWith();
+  expect(
+      fullScreenComponent
+      .find(`Link`)
+      .at(0).props().to
+  ).toEqual(`/films/2`);
 });
 
 it(`Click on fullscreen player button called callback`, () => {
@@ -45,6 +49,7 @@ it(`Click on fullscreen player button called callback`, () => {
         onPlayClick={onPlayClick}
         progress={10}
         duration={33}
+        film={{id: 3, name: `name`}}
       />
   );
 
@@ -69,6 +74,7 @@ it(`Click on pause player button called callback`, () => {
         onPlayClick={onPlayClick}
         progress={10}
         duration={33}
+        film={{id: 3, name: `name`}}
       />
   );
 

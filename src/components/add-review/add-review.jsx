@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Header from "@components/header/header";
 import RatingStar from "@components/add-review/blocks/rating-star";
 import {RATING_STARS_COUNT} from "@utils/constants";
+import {findFilm} from "@utils/utils";
 
 class AddReview extends PureComponent {
   constructor(props) {
@@ -33,8 +34,8 @@ class AddReview extends PureComponent {
 
   _submitHandler(e) {
     e.preventDefault();
-    const {onSubmit} = this.props;
-    onSubmit();
+    const {onSubmit, match: {params}} = this.props;
+    onSubmit(params.id);
   }
 
   _reviewChangeHandler(e) {
@@ -63,12 +64,14 @@ class AddReview extends PureComponent {
     const {
       userData,
       authStatus,
-      onSignInClick,
-      movieDetails,
       isSubmitButtonDisable,
       isLoading,
-      text
+      text,
+      films,
+      match: {params},
     } = this.props;
+
+    const movieDetails = findFilm(films, params.id);
 
     const {
       name,
@@ -88,7 +91,6 @@ class AddReview extends PureComponent {
           <Header
             userData={userData}
             authStatus={authStatus}
-            onSignInClick={onSignInClick}
           />
 
           <div className="movie-card__poster movie-card__poster--small">
@@ -139,9 +141,30 @@ class AddReview extends PureComponent {
 }
 
 AddReview.propTypes = {
+  films: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.exact({
+      name: PropTypes.string.isRequired,
+      posterImage: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
+      backgroundColor: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      scoresCount: PropTypes.number.isRequired,
+      director: PropTypes.string.isRequired,
+      starring: PropTypes.array.isRequired,
+      runTime: PropTypes.number.isRequired,
+      genre: PropTypes.string.isRequired,
+      released: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+      videoLink: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
+    })),
+    PropTypes.shape([]).isRequired,
+  ]).isRequired,
   onStarsChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  onSignInClick: PropTypes.func.isRequired,
   userData: PropTypes.oneOfType([
     PropTypes.exact({
       id: PropTypes.number.isRequired,
@@ -190,7 +213,12 @@ AddReview.propTypes = {
     PropTypes.arrayOf(PropTypes.string)
   ]).isRequired,
   onTextChange: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired
+  isLoading: PropTypes.bool.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.exact({
+      id: PropTypes.string
+    })
+  }),
 };
 
 export default AddReview;

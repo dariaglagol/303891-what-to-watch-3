@@ -2,10 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import GenresList from "@components/genres-list/genres-list";
 import ShowMoreButton from "@components/show-more-button/show-more-button";
+import {getGenres} from "@utils/utils";
 
 const Catalog = (props) => {
   const {
     films,
+    rawFilms,
     activeGenre,
     onGenreTabClick,
     onShowMoreButtonClick,
@@ -27,6 +29,7 @@ const Catalog = (props) => {
       <GenresList
         onGenreTabClick={_onTabClick}
         activeGenre={activeGenre}
+        genreList={getGenres(rawFilms)}
       />
       {renderMovieList(currentShownFilms)}
       {
@@ -64,10 +67,29 @@ Catalog.propTypes = {
     })),
     PropTypes.shape([]).isRequired,
   ]).isRequired,
-  activeGenre: PropTypes.exact({
-    multiply: PropTypes.string.isRequired,
-    single: PropTypes.string.isRequired,
-  }).isRequired,
+  rawFilms: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.exact({
+      name: PropTypes.string.isRequired,
+      posterImage: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
+      backgroundColor: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      scoresCount: PropTypes.number.isRequired,
+      director: PropTypes.string.isRequired,
+      starring: PropTypes.array.isRequired,
+      runTime: PropTypes.number.isRequired,
+      genre: PropTypes.string.isRequired,
+      released: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+      videoLink: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
+    })),
+    PropTypes.shape([]).isRequired,
+  ]).isRequired,
+  activeGenre: PropTypes.string.isRequired,
   onGenreTabClick: PropTypes.func.isRequired,
   onShowMoreButtonClick: PropTypes.func.isRequired,
   resetShownFilms: PropTypes.func.isRequired,

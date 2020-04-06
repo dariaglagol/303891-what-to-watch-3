@@ -1,7 +1,9 @@
 import React from "react";
-import Enzyme, {shallow} from "enzyme";
+import {Router} from "react-router-dom";
+import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import PromoFilm from "./promo-film";
+import history from "../../history.js";
 
 Enzyme.configure({
   adapter: new Adapter()
@@ -34,76 +36,96 @@ const userData = {
   name: `name`,
 };
 
-const pageType = `movie`;
-
 it(`Should header be clicked`, () => {
-  const movieTitleClickHandler = jest.fn();
   const playButtonClickHandler = jest.fn();
-  const signInClickHandler = jest.fn();
+  const toggleFilmFavorite = jest.fn();
 
-  const movieCard = shallow(
-      <PromoFilm
-        promoMovie={mockFilmData}
-        userData={userData}
-        onSignInClick={signInClickHandler}
-        onFilmClick={movieTitleClickHandler}
-        authStatus={`NO_AUTH`}
-        onPlayButtonClick={playButtonClickHandler}
-      />
+  const movieCard = mount(
+      <Router history={history}>
+        <PromoFilm
+          promoMovie={mockFilmData}
+          userData={userData}
+          authStatus={`NO_AUTH`}
+          onPlayButtonClick={playButtonClickHandler}
+          toggleFilmFavorite={toggleFilmFavorite}
+        />
+      </Router>
   );
 
-  const movieCardTitle = movieCard.find(`.movie-card__title`);
-
-  movieCardTitle.simulate(`click`);
-
-  expect(movieTitleClickHandler.mock.calls.length).toBe(1);
-  expect(movieTitleClickHandler).toBeCalledWith(pageType);
+  expect(
+      movieCard
+      .find(`Link`)
+      .at(2).props().to
+  ).toEqual(`/films/1`);
 });
 
 it(`Should poster be clicked`, () => {
-  const moviePosterClickHeader = jest.fn();
   const playButtonClickHandler = jest.fn();
-  const signInClickHandler = jest.fn();
+  const toggleFilmFavorite = jest.fn();
 
-  const movieCard = shallow(
-      <PromoFilm
-        promoMovie={mockFilmData}
-        userData={userData}
-        onSignInClick={signInClickHandler}
-        onFilmClick={moviePosterClickHeader}
-        authStatus={`NO_AUTH`}
-        onPlayButtonClick={playButtonClickHandler}
-      />
+  const movieCard = mount(
+      <Router history={history}>
+        <PromoFilm
+          promoMovie={mockFilmData}
+          userData={userData}
+          authStatus={`NO_AUTH`}
+          onPlayButtonClick={playButtonClickHandler}
+          toggleFilmFavorite={toggleFilmFavorite}
+        />
+      </Router>
   );
 
-  const movieCardTitle = movieCard.find(`.movie-card__poster`);
-
-  movieCardTitle.simulate(`click`);
-
-  expect(moviePosterClickHeader).toHaveBeenCalledTimes(1);
-  expect(moviePosterClickHeader).toBeCalledWith(pageType);
+  expect(
+      movieCard
+      .find(`Link`)
+      .at(3).props().to
+  ).toEqual(`/films/1`);
 });
 
 it(`Click on play button calls callback to switch on video`, () => {
-  const moviePosterClickHeader = jest.fn();
   const playButtonClickHandler = jest.fn();
-  const signInClickHandler = jest.fn();
+  const toggleFilmFavorite = jest.fn();
 
-  const movieCard = shallow(
-      <PromoFilm
-        promoMovie={mockFilmData}
-        userData={userData}
-        onSignInClick={signInClickHandler}
-        onFilmClick={moviePosterClickHeader}
-        authStatus={`NO_AUTH`}
-        onPlayButtonClick={playButtonClickHandler}
-      />
+  const movieCard = mount(
+      <Router history={history}>
+        <PromoFilm
+          promoMovie={mockFilmData}
+          userData={userData}
+          authStatus={`NO_AUTH`}
+          onPlayButtonClick={playButtonClickHandler}
+          toggleFilmFavorite={toggleFilmFavorite}
+        />
+      </Router>
   );
 
-  const playButton = movieCard.find(`.btn--play`);
+  expect(
+      movieCard
+      .find(`Link`)
+      .at(4).props().to
+  ).toEqual(`/player/1`);
+});
 
-  playButton.simulate(`click`);
+it(`Click on add to list button calls callback`, () => {
+  const playButtonClickHandler = jest.fn();
+  const toggleFilmFavorite = jest.fn();
 
-  expect(playButtonClickHandler).toHaveBeenCalledTimes(1);
-  expect(playButtonClickHandler).toBeCalledWith();
+  const movieCard = mount(
+      <Router history={history}>
+        <PromoFilm
+          promoMovie={mockFilmData}
+          userData={userData}
+          authStatus={`AUTH`}
+          onPlayButtonClick={playButtonClickHandler}
+          toggleFilmFavorite={toggleFilmFavorite}
+        />
+      </Router>
+  );
+
+  const promoMovieId = mockFilmData.id;
+  const status = 1;
+
+  const button = movieCard.find(`.btn--list`);
+  button.simulate(`click`);
+  expect(toggleFilmFavorite).toHaveBeenCalledTimes(1);
+  expect(toggleFilmFavorite).toBeCalledWith(promoMovieId, status);
 });

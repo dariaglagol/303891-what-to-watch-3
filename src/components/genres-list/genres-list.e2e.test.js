@@ -6,28 +6,24 @@ import GenresList from "./genres-list";
 Enzyme.configure({
   adapter: new Adapter(),
 });
+const activeGenre = `Genre`;
 
-const defaultActiveGenre = {
-  single: `All genres`,
-  multiply: `All genres`
-};
+const genreList = new Set([`All genres`, `Genre`, `genre2`]);
 
-const activeGenre = {
-  multiply: `Comedies`,
-  single: `Comedy`,
-};
+const defaultActiveGenre = `All genres`;
 
 it(`Click to genre tab`, () => {
   const genreTabClickHandler = jest.fn();
 
-  const genreList = shallow(
+  const genreListComponent = shallow(
       <GenresList
+        genreList={genreList}
         activeGenre={defaultActiveGenre}
         onGenreTabClick={genreTabClickHandler}
       />
   );
 
-  const genreTabItem = genreList.find(`.catalog__genres-item`).at(1);
+  const genreTabItem = genreListComponent.find(`.catalog__genres-item`).at(1);
 
   genreTabItem.simulate(`click`);
 

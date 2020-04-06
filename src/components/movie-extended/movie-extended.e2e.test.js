@@ -1,5 +1,6 @@
 import React from "react";
-import Enzyme, {shallow} from "enzyme";
+import Enzyme, {mount} from "enzyme";
+import {MemoryRouter} from "react-router-dom";
 import Adapter from "enzyme-adapter-react-16";
 import MovieExtended from "./movie-extended";
 
@@ -19,7 +20,7 @@ const mocks = {
     rating: 124,
     scoresCount: 8.9,
     director: ` givenPromoMovie director`,
-    starring: [` givenPromoMovie starring`, `givenPromoMovie starring`],
+    starring: [` givenPromoMovie starring`, `givenPromoMovie starring 2`],
     runTime: 113,
     released: 2020,
     id: 1,
@@ -45,7 +46,7 @@ const mocks = {
       rating: 124,
       scoresCount: 8.9,
       director: `director`,
-      starring: [`starring`, `starring`],
+      starring: [`starring`, `starring 1`],
       runTime: 113,
       released: 2020,
       id: 1,
@@ -63,7 +64,7 @@ const mocks = {
       rating: 124,
       scoresCount: 8.9,
       director: `director 2`,
-      starring: [`starring 2`, `starring 2`],
+      starring: [`starring 2`, `starring 3`],
       runTime: 113,
       released: 2020,
       id: 2,
@@ -74,72 +75,83 @@ const mocks = {
   ],
   activeTab: `Overview`,
   isFullscreenPlayerActive: false,
+  match: {
+    params: {
+      id: `2`
+    }
+  }
 };
 
 it(`Press on play button call full screen player`, () => {
-  const {movieDetails, userData, mockCatalogFilms, activeTab, isFullscreenPlayerActive} = mocks;
+  const {movieDetails, userData, mockCatalogFilms, match, activeTab, isFullscreenPlayerActive} = mocks;
 
   const signInClickHandler = jest.fn();
   const filmClickHandler = jest.fn();
   const fullScreenClickHandler = jest.fn();
-  const addReviewClickHandler = jest.fn();
+  const toggleFilmFavorite = jest.fn();
   const renderTabs = jest.fn();
   const renderMovieList = jest.fn();
 
-  const movieExtendedComponent = shallow(
-      <MovieExtended
-        movieDetails={movieDetails}
-        userData={userData}
-        films={mockCatalogFilms}
-        activeTab={activeTab}
-        isFullscreenPlayerActive={isFullscreenPlayerActive}
-        authStatus={`NO_AUTH`}
-        onSignInClick={signInClickHandler}
-        renderTabs={renderTabs}
-        onFilmClick={filmClickHandler}
-        onFullScreenToggle={fullScreenClickHandler}
-        renderMovieList={renderMovieList}
-        onAddReviewClick={addReviewClickHandler}
-      />
+  const movieExtendedComponent = mount(
+      <MemoryRouter>
+        <MovieExtended
+          movieDetails={movieDetails}
+          films={mockCatalogFilms}
+          renderTabs={renderTabs}
+          onFilmLoad={filmClickHandler}
+          renderMovieList={renderMovieList}
+          activeTab={activeTab}
+          isFullscreenPlayerActive={isFullscreenPlayerActive}
+          onFullScreenToggle={fullScreenClickHandler}
+          userData={userData}
+          onSignInClick={signInClickHandler}
+          authStatus={`NO_AUTH`}
+          match={match}
+          toggleFilmFavorite={toggleFilmFavorite}
+        />
+      </MemoryRouter>
   );
 
-  const playButton = movieExtendedComponent.find(`.btn--play`);
-  playButton.simulate(`click`);
-
-  expect(fullScreenClickHandler).toHaveBeenCalledTimes(1);
-  expect(fullScreenClickHandler).toBeCalledWith(!isFullscreenPlayerActive);
+  expect(
+      movieExtendedComponent
+      .find(`Link`)
+      .at(2).props().to
+  ).toEqual(`/player/2`);
 });
 
 it(`Press on review button call callback`, () => {
-  const {movieDetails, userData, mockCatalogFilms, activeTab, isFullscreenPlayerActive} = mocks;
+  const {movieDetails, userData, mockCatalogFilms, match, activeTab, isFullscreenPlayerActive} = mocks;
 
   const signInClickHandler = jest.fn();
   const filmClickHandler = jest.fn();
   const fullScreenClickHandler = jest.fn();
-  const addReviewClickHandler = jest.fn();
+  const toggleFilmFavorite = jest.fn();
   const renderTabs = jest.fn();
   const renderMovieList = jest.fn();
 
-  const movieExtendedComponent = shallow(
-      <MovieExtended
-        movieDetails={movieDetails}
-        userData={userData}
-        films={mockCatalogFilms}
-        activeTab={activeTab}
-        isFullscreenPlayerActive={isFullscreenPlayerActive}
-        authStatus={`AUTH`}
-        onSignInClick={signInClickHandler}
-        renderTabs={renderTabs}
-        onFilmClick={filmClickHandler}
-        onFullScreenToggle={fullScreenClickHandler}
-        renderMovieList={renderMovieList}
-        onAddReviewClick={addReviewClickHandler}
-      />
+  const movieExtendedComponent = mount(
+      <MemoryRouter>
+        <MovieExtended
+          movieDetails={movieDetails}
+          films={mockCatalogFilms}
+          renderTabs={renderTabs}
+          onFilmLoad={filmClickHandler}
+          renderMovieList={renderMovieList}
+          activeTab={activeTab}
+          isFullscreenPlayerActive={isFullscreenPlayerActive}
+          onFullScreenToggle={fullScreenClickHandler}
+          userData={userData}
+          onSignInClick={signInClickHandler}
+          authStatus={`AUTH`}
+          match={match}
+          toggleFilmFavorite={toggleFilmFavorite}
+        />
+      </MemoryRouter>
   );
 
-  const reviewButton = movieExtendedComponent.find(`.movie-card__button`).at(2);
-  reviewButton.simulate(`click`);
-
-  expect(addReviewClickHandler).toHaveBeenCalledTimes(1);
-  expect(addReviewClickHandler).toBeCalledWith();
+  expect(
+      movieExtendedComponent
+      .find(`Link`)
+      .at(3).props().to
+  ).toEqual(`/films/2/review`);
 });

@@ -1,6 +1,5 @@
-import {AuthorizationStatus, PageTypes, StatusCode} from "@utils/constants";
+import {AuthorizationStatus, StatusCode} from "@utils/constants";
 import {extend, itemAdapter} from "@utils/utils";
-import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
 import {ActionCreator as ErrorActionCreator} from "@reducers/common-error/common-error";
 
 const initialState = {
@@ -32,9 +31,6 @@ const ActionCreator = {
       payload: preparedUserData
     };
   },
-  setError: () => ({
-    type: ActionType.SET_ERROR
-  }),
   setLoadingStatus: (value) => ({
     type: ActionType.SET_LOADING_STATUS,
     payload: value
@@ -56,11 +52,6 @@ const reducer = (state = initialState, action) => {
     case ActionType.SET_USER_DATA:
       return extend(state, {
         userData: action.payload
-      });
-    case ActionType.SET_ERROR:
-      return extend(state, {
-        isLoading: false,
-        authSendingResult: false,
       });
     case ActionType.SET_LOADING_STATUS:
       return extend(state, {
@@ -99,12 +90,8 @@ const Operation = {
 
         if (response && response.status === StatusCode.SUCCESS) {
           dispatch(ActionCreator.setUserData(response.data));
-          dispatch(CommonActionCreator.setActivePage(PageTypes.MAIN));
           dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
           dispatch(ErrorActionCreator.setError({}));
-        }
-        if (response && response.status === StatusCode.AUTH_ERROR) {
-          dispatch(ErrorActionCreator.setError(response.data));
         }
 
         dispatch(ActionCreator.setAuthFormSendingResult(false));

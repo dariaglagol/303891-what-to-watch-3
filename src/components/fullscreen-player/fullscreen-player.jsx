@@ -1,15 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
 import moment from "moment";
+import {getRoute} from "@utils/utils";
+import {AppRoute} from "@utils/constants";
 
 const FullscreenPlayer = (props) => {
   const {
-    onExitClick,
     renderVideo,
-    progress,
     duration,
     onPlayClick,
-    onFullScreenButtonClick
+    onFullScreenButtonClick,
+    film,
+    progress
   } = props;
 
   const preparedDurationHours = moment.duration(duration, `seconds`).get(`hours`);
@@ -19,13 +22,15 @@ const FullscreenPlayer = (props) => {
   return (
     <div className="player">
       {renderVideo()}
-      <button type="button" className="player__exit" onClick={onExitClick}>Exit</button>
+      <Link to={getRoute(AppRoute.FILMS, film.id)}>
+        <button type="button" className="player__exit">Exit</button>
+      </Link>
 
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value={progress} max="100" />
-            <div className="player__toggler" styles="left: 30%;">Toggler</div>
+            <progress className="player__progress" value={(60 / 100) * progress} max="100" />
+            <div className="player__toggler" style={{left: `${(60 / 100) * progress}%`}}>Toggler</div>
           </div>
           <div className="player__time-value">{preparedDurationHours}:{preparedDurationMinutes}:{preparedDurationSeconds}</div>
         </div>
@@ -37,7 +42,7 @@ const FullscreenPlayer = (props) => {
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">Transpotting</div>
+          <div className="player__name">{film.name}</div>
 
           <button type="button" className="player__full-screen" onClick={onFullScreenButtonClick}>
             <svg viewBox="0 0 27 27" width="27" height="27">
@@ -54,7 +59,10 @@ const FullscreenPlayer = (props) => {
 FullscreenPlayer.displayName = `FullscreenPlayer`;
 
 FullscreenPlayer.propTypes = {
-  onExitClick: PropTypes.func.isRequired,
+  film: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+  }),
   renderVideo: PropTypes.func.isRequired,
   onPlayClick: PropTypes.func.isRequired,
   onFullScreenButtonClick: PropTypes.func.isRequired,

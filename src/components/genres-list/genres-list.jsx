@@ -1,23 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Genres} from "@utils/constants";
 
 const GenresList = (props) => {
-  const {activeGenre, onGenreTabClick} = props;
+  const {activeGenre, onGenreTabClick, genreList} = props;
 
   function _renderGenres() {
-    return [...Genres.values()].map((genre) => {
-      const genreTabName = genre.multiply;
-      const activeGenreMultipleName = activeGenre.multiply;
+    return [...genreList.values()].map((genre) => {
       return (
         <li
-          className={`catalog__genres-item ${activeGenreMultipleName === genreTabName ? `catalog__genres-item--active` : ``}`}
-          key={genreTabName}
+          className={`catalog__genres-item ${activeGenre === genre ? `catalog__genres-item--active` : ``}`}
+          key={genre}
           onClick={() => {
             onGenreTabClick(genre);
           }}
         >
-          <a href="#" className="catalog__genres-link">{genreTabName}</a>
+          <a href="#" className="catalog__genres-link">{genre}</a>
         </li>
       );
     });
@@ -31,10 +28,8 @@ const GenresList = (props) => {
 };
 
 GenresList.propTypes = {
-  activeGenre: PropTypes.exact({
-    multiply: PropTypes.string.isRequired,
-    single: PropTypes.string.isRequired,
-  }).isRequired,
+  genreList: PropTypes.exact(PropTypes.string.isRequired).isRequired,
+  activeGenre: PropTypes.string.isRequired,
   onGenreTabClick: PropTypes.func.isRequired,
 };
 

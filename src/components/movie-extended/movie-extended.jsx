@@ -1,50 +1,67 @@
-import React from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
 import Header from "@components/header/header";
 import Footer from "@components/footer/footer";
 import MovieDetails from "@components/movie-extended/blocks/movie-details/movie-details";
 import MovieOverview from "@components/movie-extended/blocks/movie-overview/movie-overview";
 import MovieReviews from "@components/movie-extended/blocks/movies-reviews/movies-reviews";
-import FullscreenPlayer from "@components/fullscreen-player/fullscreen-player";
-import withVideoPlayer from "@hocs/with-video-player/with-video-player";
-import {getSimilarMovies} from "@utils/utils";
-import {TabTypes, DEFAULT_SHOWN_FILMS, FULLSCREEN_VIDEO_CLASS, AuthorizationStatus} from "@utils/constants";
+import {findFilm, getRoute, getSimilarMovies} from "@utils/utils";
+import {
+  TabTypes,
+  DEFAULT_SHOWN_FILMS,
+  AuthorizationStatus,
+  AppRoute,
+  FilmStatusFavorite
+} from "@utils/constants";
 
-const WrappedFullScreenVideo = withVideoPlayer(FullscreenPlayer);
+export default class MovieExtended extends PureComponent {
+  constructor(props) {
+    super(props);
 
-const MovieExtended = (props) => {
-  const {
-    movieDetails,
-    reviews,
-    films,
-    renderTabs,
-    activeTab,
-    renderMovieList,
-    onFullScreenToggle,
-    isFullscreenPlayerActive,
-    userData,
-    onSignInClick,
-    authStatus,
-    onAddReviewClick,
-  } = props;
+    this._addToFavoriteButtonClickHandler = this._addToFavoriteButtonClickHandler.bind(this);
+  }
 
-  const {
-    name,
-    genre,
-    released,
-    posterImage,
-    backgroundImage,
-    director,
-    starring,
-    runTime,
-    scoresCount,
-    rating,
-    description
-  } = movieDetails;
+  componentDidMount() {
+    const {
+      films,
+      match: {params},
+      onFilmLoad
+    } = this.props;
 
-  const similarFilms = getSimilarMovies(genre, films);
+    const film = findFilm(films, params.id);
 
-  function _renderTabsText() {
+    onFilmLoad(film);
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      films,
+      match: {params},
+      onFilmLoad
+    } = this.props;
+    const film = findFilm(films, params.id);
+    const prevFilm = findFilm(prevProps.films, prevProps.match.params.id);
+
+    if (prevFilm.id !== film.id) {
+      onFilmLoad(film);
+    }
+  }
+
+  _renderTabsText(film) {
+    const {reviews, activeTab} = this.props;
+
+    const {
+      genre,
+      released,
+      director,
+      starring,
+      runTime,
+      scoresCount,
+      rating,
+      description,
+    } = film;
+
     switch (activeTab) {
       case TabTypes.OVERVIEW:
         return <MovieOverview
@@ -71,113 +88,160 @@ const MovieExtended = (props) => {
     return null;
   }
 
-  function _getPlayEvent() {
-    onFullScreenToggle(!isFullscreenPlayerActive);
-  }
+  _renderAddReviewButton(film) {
+    const {authStatus} = this.props;
+    const {id} = film;
 
-  function _renderAddReviewButton() {
     if (authStatus === AuthorizationStatus.AUTH) {
       return (
-        <a
-          href="add-review.html"
+        <Link
+          to={getRoute(AppRoute.FILMS, id, AppRoute.REVIEW)}
           className="btn movie-card__button"
-          onClick={onAddReviewClick}
         >
           Add review
-        </a>
+        </Link>
       );
     }
 
     return null;
   }
 
-  return (
-    <React.Fragment>
-      <section className="movie-card movie-card--full">
-        <div className="movie-card__hero">
-          <div className="movie-card__bg">
-            <img src={backgroundImage} alt={name}/>
-          </div>
+  _addToFavoriteButtonClickHandler(film) {
+    const {isFavorite, id} = film;
+    const {toggleFilmFavorite} = this.props;
 
-          <h1 className="visually-hidden">WTW</h1>
+    const statusFavoriteInvert = isFavorite ?
+      FilmStatusFavorite.NOT_FAVORITE : FilmStatusFavorite.FAVORITE;
 
-          <Header
-            userData={userData}
-            authStatus={authStatus}
-            onSignInClick={onSignInClick}
-          />
+    toggleFilmFavorite(id, statusFavoriteInvert);
+  }
 
-          <div className="movie-card__wrap">
-            <div className="movie-card__desc">
-              <h2 className="movie-card__title">{name}</h2>
-              <p className="movie-card__meta">
-                <span className="movie-card__genre">{genre}</span>
-                <span className="movie-card__year">{released}</span>
-              </p>
+  _renderAddToListButton(film) {
+    const {authStatus} = this.props;
+    const {isFavorite} = film;
 
-              <div className="movie-card__buttons">
-                <button
-                  className="btn btn--play movie-card__button"
-                  type="button"
-                  onClick={_getPlayEvent}
-                >
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"/>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button className="btn btn--list movie-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"/>
-                  </svg>
-                  <span>My list</span>
-                </button>
-                {_renderAddReviewButton()}
+    if (authStatus === AuthorizationStatus.AUTH) {
+      return (
+        <button
+          className="btn btn--list movie-card__button" type="button"
+          onClick={() => this._addToFavoriteButtonClickHandler(film)}
+        >
+          {
+            isFavorite ? (
+              <svg viewBox="0 0 18 14" width="18" height="14">
+                <use xlinkHref="#in-list" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 19 20" width="19" height="20">
+                <use xlinkHref="#add"/>
+              </svg>
+            )
+          }
+          <span>My list</span>
+        </button>
+      );
+    }
+
+    return null;
+  }
+
+  render() {
+    const {
+      films,
+      renderTabs,
+      renderMovieList,
+      userData,
+      authStatus,
+      match: {params}
+    } = this.props;
+
+    const film = findFilm(films, params.id);
+
+    const {
+      name,
+      genre,
+      released,
+      posterImage,
+      backgroundImage,
+      id,
+    } = film;
+
+    const similarFilms = getSimilarMovies(genre, films, id);
+
+    return (
+      <React.Fragment>
+        <section className="movie-card movie-card--full">
+          <div className="movie-card__hero">
+            <div className="movie-card__bg">
+              <img src={backgroundImage} alt={name}/>
+            </div>
+
+            <h1 className="visually-hidden">WTW</h1>
+
+            <Header
+              userData={userData}
+              authStatus={authStatus}
+            />
+
+            <div className="movie-card__wrap">
+              <div className="movie-card__desc">
+                <h2 className="movie-card__title">{name}</h2>
+                <p className="movie-card__meta">
+                  <span className="movie-card__genre">{genre}</span>
+                  <span className="movie-card__year">{released}</span>
+                </p>
+                <div className="movie-card__buttons">
+
+                  <Link to={getRoute(AppRoute.PLAYER, id)}>
+                    <button
+                      className="btn btn--play movie-card__button"
+                      type="button"
+                    >
+                      <svg viewBox="0 0 19 19" width="19" height="19">
+                        <use xlinkHref="#play-s"/>
+                      </svg>
+                      <span>Play</span>
+                    </button>
+                  </Link>
+
+                  {this._renderAddToListButton(film)}
+
+                  {this._renderAddReviewButton(film)}
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="movie-card__wrap movie-card__translate-top">
-          <div className="movie-card__info">
-            <div className="movie-card__poster movie-card__poster--big">
-              <img
-                src={posterImage}
-                alt={name}
-                width="218"
-                height="327"
-              />
-            </div>
-
-            <div className="movie-card__desc">
-              {renderTabs()}
-              {_renderTabsText()}
+          <div className="movie-card__wrap movie-card__translate-top">
+            <div className="movie-card__info">
+              <div className="movie-card__poster movie-card__poster--big">
+                <img
+                  src={posterImage}
+                  alt={name}
+                  width="218"
+                  height="327"
+                />
+              </div>
+              <div className="movie-card__desc">
+                {renderTabs()}
+                {this._renderTabsText(film)}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      <div className="page-content">
-        <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">More like this</h2>
-          {renderMovieList(DEFAULT_SHOWN_FILMS, similarFilms)}
         </section>
 
-        <Footer/>
-      </div>
+        <div className="page-content">
+          <section className="catalog catalog--like-this">
+            <h2 className="catalog__title">More like this</h2>
+            {renderMovieList(DEFAULT_SHOWN_FILMS, similarFilms)}
+          </section>
 
-      {isFullscreenPlayerActive &&
-        <WrappedFullScreenVideo
-          isPlaying={true}
-          film={movieDetails}
-          className={FULLSCREEN_VIDEO_CLASS}
-          isFullscreenPlayerActive={isFullscreenPlayerActive}
-          onExitClick={_getPlayEvent}
-        />
-      }
-    </React.Fragment>
-  );
-};
+          <Footer/>
+        </div>
+      </React.Fragment>
+    );
+  }
+}
 
 MovieExtended.propTypes = {
   movieDetails: PropTypes.oneOfType([
@@ -225,17 +289,22 @@ MovieExtended.propTypes = {
     PropTypes.shape([]).isRequired,
   ]).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.exact({
-    text: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
+    comment: PropTypes.string.isRequired,
+    user: PropTypes.exact({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired
+    }),
     date: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
   })),
-  onFilmClick: PropTypes.func.isRequired,
+  onFilmLoad: PropTypes.func.isRequired,
   renderTabs: PropTypes.func.isRequired,
   renderMovieList: PropTypes.func.isRequired,
   activeTab: PropTypes.string.isRequired,
   isFullscreenPlayerActive: PropTypes.bool.isRequired,
   onFullScreenToggle: PropTypes.func.isRequired,
+  toggleFilmFavorite: PropTypes.func.isRequired,
   userData: PropTypes.oneOfType([
     PropTypes.exact({
       id: PropTypes.number.isRequired,
@@ -245,9 +314,10 @@ MovieExtended.propTypes = {
     }),
     PropTypes.exact({})
   ]).isRequired,
-  onSignInClick: PropTypes.func.isRequired,
   authStatus: PropTypes.string.isRequired,
-  onAddReviewClick: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.exact({
+      id: PropTypes.string.isRequired
+    })
+  })
 };
-
-export default MovieExtended;

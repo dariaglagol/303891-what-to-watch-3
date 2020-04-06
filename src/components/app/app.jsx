@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {BrowserRouter, Switch, Route} from "react-router-dom";
+import {Router, Switch, Route, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 
 import Main from "@components/main/main";
@@ -9,14 +9,21 @@ import withTabs from "@hocs/with-tabs/with-tabs";
 import withCatalog from "@hocs/with-catalog/with-catalog";
 import withMovieList from "@hocs/with-movie-list/with-movie-list";
 import withReview from "@hocs/with-review/with-review";
-import {PageTypes} from "@utils/constants";
+import Loading from "@components/loading/loading";
+import SignIn from "@components/sign-in/sign-in";
+import AddReview from "@components/add-review/add-review";
+import ErrorMessage from "@components/error-message/error-message";
+import withVideoPlayer from "@hocs/with-video-player/with-video-player";
+import FullscreenPlayer from "@components/fullscreen-player/fullscreen-player";
+import PrivateRoute from "@components/private-route/private-route";
+import WatchList from "@components/watch-list/watch-list";
 
 import {ActionCreator as CommonActionCreator} from "@reducers/common/common";
-import {getActivePage, getFullScreenPlayerState} from "@reducers/common/selectors";
+import {getFullScreenPlayerState} from "@reducers/common/selectors";
 
 import {getError} from "@reducers/common-error/selectors";
 
-import {Operation as UserOperation} from "@reducers/user/user";
+import {AuthorizationStatus, Operation as UserOperation} from "@reducers/user/user";
 import {getAuthStatus, getUserData, getSignInLoadingStatus, getAuthFormSendingResult} from "@reducers/user/selectors";
 
 import {
@@ -27,119 +34,47 @@ import {
   getActiveGenre,
   getFilmsSelector,
   getReviews,
-  getMovieCover,
-  getActiveFilmId,
+  getPromoMovie,
   getLoadingStatus,
-  getCommentFormSendingResult
+  getCommentFormSendingResult,
+  getFilms,
+  getWatchListSelector
 } from "@reducers/data/selectors.js";
 
-import Loading from "@components/loading/loading";
-import SignIn from "@components/sign-in/sign-in";
-import AddReview from "@components/add-review/add-review";
-import ErrorMessage from "@components/error-message/error-message";
+import history from "../../history";
+import {AppRoute, FULLSCREEN_VIDEO_CLASS} from "@utils/constants";
+import {findFilm} from "@utils/utils";
 
 const MovieExtendedComponentWrapped = withMovieList(withTabs(MovieExtended));
 const MainComponentWrapped = withMovieList(withCatalog(Main));
 const ReviewComponentWrapped = withReview(AddReview);
+const WrappedFullScreenVideo = withVideoPlayer(FullscreenPlayer);
+const WatchListScreenWrapped = withMovieList(WatchList);
 
 const App = (props) => {
   const {
     promoMovie,
     films,
+    filteredFilms,
     reviews,
     activeGenre,
     onGenreTabClick,
-    activePage,
-    onPageChange,
+    onFilmLoad,
     isFullscreenPlayerActive,
     onFullScreenToggle,
-    activeFilmId,
     login,
     userData,
     authStatus,
     sendReview,
-    isReviewFromLoading,
+    isDataLoading,
     commentFormSendingResult,
     error,
     isSignInLoading,
-    authFormSendingResult
+    authFormSendingResult,
+    toggleFilmFavorite,
+    loadWatchFilm,
+    watchList
   } = props;
-
-  const movieDetails = films.find((film) => film.id === activeFilmId) || {};
-
-  function _renderPages() {
-    switch (activePage) {
-      case PageTypes.MAIN:
-        return (
-          <React.Fragment>
-            {_renderErrorMessage()}
-            <MainComponentWrapped
-              userData={userData}
-              authStatus={authStatus}
-              promoMovie={promoMovie}
-              onFilmClick={onPageChange}
-              onSignInClick={onPageChange}
-              activeGenre={activeGenre}
-              onGenreTabClick={onGenreTabClick}
-              isFullscreenPlayerActive={isFullscreenPlayerActive}
-              onFullScreenToggle={onFullScreenToggle}
-              films={films}
-            />
-          </React.Fragment>
-        );
-      case PageTypes.MOVIE:
-        return (
-          <React.Fragment>
-            {_renderErrorMessage()}
-            <MovieExtendedComponentWrapped
-              userData={userData}
-              authStatus={authStatus}
-              onAddReviewClick={_addReviewClickHandler}
-              onFilmClick={onPageChange}
-              onSignInClick={onPageChange}
-              films={films}
-              movieDetails={movieDetails}
-              isFullscreenPlayerActive={isFullscreenPlayerActive}
-              onFullScreenToggle={onFullScreenToggle}
-              reviews={reviews}
-            />
-          </React.Fragment>
-        );
-      case PageTypes.LOADING:
-        return (
-          <Loading />
-        );
-      case PageTypes.AUTH:
-        return (
-          <SignIn
-            onSubmit={login}
-            userErrors={error}
-            isLoading={isSignInLoading}
-            authFormSendingResult={authFormSendingResult}
-          />
-        );
-      case PageTypes.REVIEW:
-        return (
-          <ReviewComponentWrapped
-            userData={userData}
-            authStatus={authStatus}
-            movieDetails={movieDetails}
-            onSignInClick={onPageChange}
-            onSubmit={sendReview}
-            reviewError={error}
-            isLoading={isReviewFromLoading}
-            commentFormSendingResult={commentFormSendingResult}
-          />
-        );
-    }
-
-    return null;
-  }
-
-  function _addReviewClickHandler(evt) {
-    evt.preventDefault();
-    onPageChange(PageTypes.REVIEW);
-  }
 
   function _renderErrorMessage() {
     if (Object.keys(error).length) {
@@ -149,42 +84,129 @@ const App = (props) => {
     return null;
   }
 
+  function _renderRoot() {
+    return (
+      <React.Fragment>
+        {_renderErrorMessage()}
+        <MainComponentWrapped
+          userData={userData}
+          authStatus={authStatus}
+          promoMovie={promoMovie}
+          activeGenre={activeGenre}
+          onGenreTabClick={onGenreTabClick}
+          isFullscreenPlayerActive={isFullscreenPlayerActive}
+          onFullScreenToggle={onFullScreenToggle}
+          films={filteredFilms}
+          rawFilms={films}
+          toggleFilmFavorite={toggleFilmFavorite}
+        />
+      </React.Fragment>
+    );
+  }
+
+  function _closeFilmButtonClick() {
+    history.back();
+  }
+
+  if (isDataLoading || films.length === 0) {
+    return (
+      <Loading />
+    );
+  }
+
   return (
-    <BrowserRouter>
+    <Router history={history}>
       <Switch>
-        <Route exact path="/">
-          {_renderPages()}
+        <Route exact path={AppRoute.ROOT}>
+          {_renderRoot()}
         </Route>
-        <Route exact path="/dev-movie-details">
-          {_renderErrorMessage()}
-          <MovieExtendedComponentWrapped
-            userData={userData}
-            authStatus={authStatus}
-            onFilmClick={onPageChange}
-            onSignInClick={onPageChange}
-            onAddReviewClick={_addReviewClickHandler}
-            films={films}
-            movieDetails={movieDetails}
-            isFullscreenPlayerActive={isFullscreenPlayerActive}
-            onFullScreenToggle={onFullScreenToggle}
-            reviews={reviews}
-          />
-        </Route>
-        <Route exact path="/dev-review">
-          {_renderErrorMessage()}
-          <ReviewComponentWrapped
-            userData={userData}
-            authStatus={authStatus}
-            movieDetails={movieDetails}
-            onSignInClick={onPageChange}
-            onSubmit={sendReview}
-            reviewError={error}
-            isLoading={isReviewFromLoading}
-            commentFormSendingResult={commentFormSendingResult}
-          />
-        </Route>
+        <Route
+          exact
+          path={AppRoute.LOGIN}
+          render={({location: {state: {from}}}) => {
+            if (authStatus === AuthorizationStatus.AUTH) {
+              return (
+                <Redirect to={from} />
+              );
+            }
+
+            return (
+              <SignIn
+                onSubmit={login}
+                userErrors={error}
+                isLoading={isSignInLoading}
+                authFormSendingResult={authFormSendingResult}
+              />
+            );
+          }}
+        />
+        <Route
+          exact
+          path={`${AppRoute.FILMS}/:id`}
+          render={({match}) => (
+            <React.Fragment>
+              {_renderErrorMessage()}
+              <MovieExtendedComponentWrapped
+                match={match}
+                userData={userData}
+                authStatus={authStatus}
+                onFilmLoad={onFilmLoad}
+                films={filteredFilms}
+                isFullscreenPlayerActive={isFullscreenPlayerActive}
+                onFullScreenToggle={onFullScreenToggle}
+                reviews={reviews}
+                toggleFilmFavorite={toggleFilmFavorite}
+              />
+            </React.Fragment>
+          )}
+        />
+        <PrivateRoute
+          exact
+          path={`${AppRoute.FILMS}/:id/${AppRoute.REVIEW}`}
+          render={(match) => {
+            return (
+              <ReviewComponentWrapped
+                match={match}
+                userData={userData}
+                authStatus={authStatus}
+                onSubmit={sendReview}
+                reviewError={error}
+                isLoading={isDataLoading}
+                films={filteredFilms}
+                commentFormSendingResult={commentFormSendingResult}
+              />);
+          }}
+        />
+        <Route
+          exact
+          path={`${AppRoute.PLAYER}/:id`}
+          render={({match}) => {
+            const film = findFilm(films, match.params.id);
+            return (
+              <WrappedFullScreenVideo
+                isPlaying={true}
+                film={film}
+                className={FULLSCREEN_VIDEO_CLASS}
+                isFullscreenPlayerActive={true}
+                match={match}
+                onExitClick={_closeFilmButtonClick}
+              />
+            );
+          }}
+        />
+        <PrivateRoute
+          exact
+          path={AppRoute.MY_LIST}
+          render={() => (
+            <WatchListScreenWrapped
+              userData={userData}
+              films={watchList}
+              loadWatchFilm={loadWatchFilm}
+            />
+          )}
+        />
       </Switch>
-    </BrowserRouter>
+    </Router>
   );
 };
 
@@ -197,32 +219,28 @@ App.defaultProps = {
 };
 
 const mapStateToProps = (state) => ({
-  films: getFilmsSelector(state),
+  films: getFilms(state),
   filteredFilms: getFilmsSelector(state),
   activeGenre: getActiveGenre(state),
-  promoMovie: getMovieCover(state),
+  promoMovie: getPromoMovie(state),
   reviews: getReviews(state),
-  activePage: getActivePage(state),
-  activeFilmId: getActiveFilmId(state),
   isFullscreenPlayerActive: getFullScreenPlayerState(state),
   authStatus: getAuthStatus(state),
   userData: getUserData(state),
   error: getError(state),
-  isReviewFromLoading: getLoadingStatus(state),
+  isDataLoading: getLoadingStatus(state),
   commentFormSendingResult: getCommentFormSendingResult(state),
   isSignInLoading: getSignInLoadingStatus(state),
-  authFormSendingResult: getAuthFormSendingResult(state)
+  authFormSendingResult: getAuthFormSendingResult(state),
+  watchList: getWatchListSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onGenreTabClick(activeGenre) {
     dispatch(DataActionCreator.changeGenre(activeGenre));
   },
-  onPageChange(activePage, id) {
-    if (id) {
-      dispatch(DataActionCreator.getActiveFilmId(id));
-    }
-    dispatch(CommonActionCreator.setActivePage(activePage));
+  onFilmLoad(film) {
+    dispatch(DataOperation.loadReviews(film.id));
   },
   onFullScreenToggle(state) {
     dispatch(CommonActionCreator.toggleFullscreenPlayer(state));
@@ -232,10 +250,38 @@ const mapDispatchToProps = (dispatch) => ({
   },
   sendReview(reviewData) {
     dispatch(DataOperation.sendReview(reviewData));
+  },
+  toggleFilmFavorite(id, status) {
+    dispatch(DataOperation.toggleFilmFavorite(id, status));
+  },
+  loadWatchFilm() {
+    dispatch(DataOperation.loadWatchList());
   }
 });
 
 App.propTypes = {
+  filteredFilms: PropTypes.oneOfType([
+    PropTypes.exact([]).isRequired,
+    PropTypes.arrayOf(PropTypes.exact({
+      name: PropTypes.string.isRequired,
+      posterImage: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
+      backgroundColor: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      scoresCount: PropTypes.number.isRequired,
+      director: PropTypes.string.isRequired,
+      starring: PropTypes.array.isRequired,
+      runTime: PropTypes.number.isRequired,
+      genre: PropTypes.string.isRequired,
+      released: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+      videoLink: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
+    })).isRequired,
+  ]).isRequired,
   promoMovie: PropTypes.oneOfType([
     PropTypes.shape({
       name: PropTypes.string.isRequired,
@@ -281,21 +327,21 @@ App.propTypes = {
     })).isRequired,
   ]).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.exact({
-    text: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
+    comment: PropTypes.string.isRequired,
+    user: PropTypes.exact({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired
+    }),
     date: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
   })),
-  activeGenre: PropTypes.exact({
-    multiply: PropTypes.string.isRequired,
-    single: PropTypes.string.isRequired,
-  }).isRequired,
+  activeGenre: PropTypes.string.isRequired,
   onGenreTabClick: PropTypes.func.isRequired,
-  onPageChange: PropTypes.func.isRequired,
-  activePage: PropTypes.string.isRequired,
+  onFilmLoad: PropTypes.func.isRequired,
+  toggleFilmFavorite: PropTypes.func.isRequired,
   isFullscreenPlayerActive: PropTypes.bool.isRequired,
   onFullScreenToggle: PropTypes.func.isRequired,
-  activeFilmId: PropTypes.number.isRequired,
   authStatus: PropTypes.string.isRequired,
   userData: PropTypes.oneOfType([
     PropTypes.exact({
@@ -314,10 +360,33 @@ App.propTypes = {
     }),
     PropTypes.shape({})
   ]),
-  isReviewFromLoading: PropTypes.bool.isRequired,
+  isDataLoading: PropTypes.bool.isRequired,
   isSignInLoading: PropTypes.bool.isRequired,
   commentFormSendingResult: PropTypes.bool,
   authFormSendingResult: PropTypes.bool,
+  watchList: PropTypes.oneOfType([
+    PropTypes.exact([]).isRequired,
+    PropTypes.arrayOf(PropTypes.exact({
+      name: PropTypes.string.isRequired,
+      posterImage: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
+      backgroundColor: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      scoresCount: PropTypes.number.isRequired,
+      director: PropTypes.string.isRequired,
+      starring: PropTypes.array.isRequired,
+      runTime: PropTypes.number.isRequired,
+      genre: PropTypes.string.isRequired,
+      released: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+      videoLink: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
+    })).isRequired,
+  ]).isRequired,
+  loadWatchFilm: PropTypes.func.isRequired,
 };
 
 export {App};

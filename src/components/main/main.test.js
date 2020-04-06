@@ -1,6 +1,8 @@
 import React from "react";
 import renderer from "react-test-renderer";
+import {Router} from "react-router-dom";
 import Main from "./main";
+import history from "../../history.js";
 
 const mocks = {
   mockFilmData: {
@@ -22,10 +24,7 @@ const mocks = {
     videoLink: `videoLink`,
     previewVideoLink: `previewVideoLink`,
   },
-  defaultActiveGenre: {
-    single: `All genres`,
-    multiply: `All genres`
-  },
+  defaultActiveGenre: `All genres`,
   mockedCatalogFilms: [
     {
       name: `name`,
@@ -79,19 +78,20 @@ it(`Main component render`, () => {
 
   const mainComponent = renderer
     .create(
-        <Main
-          promoMovie={mockFilmData}
-          films={mockedCatalogFilms}
-          onFilmClick={() => {}}
-          renderCatalog={() => {}}
-          activeGenre={defaultActiveGenre}
-          isFullscreenPlayerActive={isFullscreenPlayerActive}
-          onFullScreenToggle={() => {}}
-          onGenreTabClick={() => {}}
-          userData={userData}
-          authStatus={`NO_AUTH`}
-          onSignInClick={() => {}}
-        />, {createNodeMock: () => {
+        <Router history={history}>
+          <Main
+            promoMovie={mockFilmData}
+            films={mockedCatalogFilms}
+            activeGenre={defaultActiveGenre}
+            onGenreTabClick={() => {}}
+            renderCatalog={() => {}}
+            isFullscreenPlayerActive={isFullscreenPlayerActive}
+            onFullScreenToggle={() => {}}
+            toggleFilmFavorite={() => {}}
+            userData={userData}
+            authStatus={`NO_AUTH`}
+          />
+        </Router>, {createNodeMock: () => {
           return {};
         }}
     )

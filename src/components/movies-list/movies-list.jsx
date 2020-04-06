@@ -14,7 +14,6 @@ const MoviesList = (props) => {
   function _renderFilmCatalogCards() {
     const {
       films,
-      onFilmClick,
       onFilmCatalogCardHover,
       activeFilm,
       currentShownFilms
@@ -27,13 +26,12 @@ const MoviesList = (props) => {
     const filmsToShow = sliceMovieArray(films, currentShownFilms);
 
     return (
-      filmsToShow.map((film, index) => (
+      filmsToShow.map((film) => (
         <WrappedMovieCard
           onFilmCatalogCardHover={onFilmCatalogCardHover}
-          onFilmClick={onFilmClick}
           isPlaying={_isFilmActive(activeFilm, film)}
           film={film}
-          key={`${film.title}-${index}`}
+          key={`${film.title}-${film.id}`}
         />
       ))
     );
@@ -71,7 +69,6 @@ MoviesList.propTypes = {
     })),
     PropTypes.shape([]).isRequired,
   ]).isRequired,
-  onFilmClick: PropTypes.func.isRequired,
   onFilmCatalogCardHover: PropTypes.func.isRequired,
   activeFilm: PropTypes.oneOfType([
     PropTypes.exact({

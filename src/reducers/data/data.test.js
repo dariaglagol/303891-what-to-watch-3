@@ -3,11 +3,11 @@ import {
   getFilms,
   getFilteredFilms,
   getReviews,
-  getActiveFilmId,
-  getMovieCover,
+  getPromoMovie,
   getActiveGenre,
-  getDataError,
-  getLoadingStatus
+  getLoadingStatus,
+  getCommentFormSendingResult,
+  getWatchList
 } from "./selectors";
 import {DEFAULT_ACTIVE_GENRE} from "@utils/constants";
 
@@ -92,55 +92,28 @@ const filmList = [
 ];
 
 const reviewsList = [{
-  text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-  author: `Kate Muir`,
-  date: `December 24, 2016`,
-  rating: 8.9
+  comment: `text`,
+  user: {
+    name: `author`,
+    id: 1
+  },
+  date: `2020-04-04T05:57:30.676Z`,
+  rating: 8.9,
+  id: 1
 }, {
-  text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-  author: `Bill Goodykoontz`,
-  date: `November 18, 2015`,
-  rating: 8.0
-}, {
-  text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-  author: `Kate Muir`,
-  date: `December 24, 2016`,
-  rating: 8.9
-}, {
-  text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-  author: `Bill Goodykoontz`,
-  date: `November 18, 2015`,
-  rating: 8.0
-}, {
-  text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-  author: `Kate Muir`,
-  date: `December 24, 2016`,
-  rating: 8.9
-}, {
-  text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-  author: `Bill Goodykoontz`,
-  date: `November 18, 2015`,
-  rating: 8.0
-}, {
-  text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-  author: `Kate Muir`,
-  date: `December 24, 2016`,
-  rating: 8.9
-}, {
-  text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-  author: `Bill Goodykoontz`,
-  date: `November 18, 2015`,
-  rating: 8.0
+  comment: `text`,
+  user: {
+    name: `author`,
+    id: 4
+  },
+  date: `2020-04-03T05:57:30.676Z`,
+  rating: 8.9,
+  id: 3
 }];
 
-const changedActiveFilmId = 1;
+const GIVEN_GENRE = `Comedy`;
 
-const GIVEN_GENRE = {
-  multiply: `Comedies`,
-  single: `Comedy`,
-};
-
-const givenPromoMovie = {
+const singleMovie = {
   name: `givenPromoMovie name`,
   genre: `givenPromoMovie genre`,
   posterImage: `givenPromoMovie posterImage`,
@@ -221,51 +194,48 @@ const state = {
       previewVideoLink: `givenPromoMovie previewVideoLink`,
     },
     activeGenre: DEFAULT_ACTIVE_GENRE,
-    reviews: [{
-      text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-      author: `Kate Muir`,
-      date: `December 24, 2016`,
-      rating: 8.9
-    }, {
-      text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-      author: `Bill Goodykoontz`,
-      date: `November 18, 2015`,
-      rating: 8.0
-    }, {
-      text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-      author: `Kate Muir`,
-      date: `December 24, 2016`,
-      rating: 8.9
-    }, {
-      text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-      author: `Bill Goodykoontz`,
-      date: `November 18, 2015`,
-      rating: 8.0
-    }, {
-      text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-      author: `Kate Muir`,
-      date: `December 24, 2016`,
-      rating: 8.9
-    }, {
-      text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-      author: `Bill Goodykoontz`,
-      date: `November 18, 2015`,
-      rating: 8.0
-    }, {
-      text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-      author: `Kate Muir`,
-      date: `December 24, 2016`,
-      rating: 8.9
-    }, {
-      text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-      author: `Bill Goodykoontz`,
-      date: `November 18, 2015`,
-      rating: 8.0
-    },
-    ],
-    activeFilmId: 1,
-    error: {},
+    reviews: reviewsList,
+    commentFormSendingResult: true,
     isLoading: false,
+    watchList: [
+      {
+        name: `name`,
+        genre: `Comedy`,
+        posterImage: `posterImage`,
+        previewImage: `previewImage`,
+        backgroundImage: `backgroundImage`,
+        backgroundColor: `backgroundColor`,
+        description: `description`,
+        rating: 124,
+        scoresCount: 8.9,
+        director: `director`,
+        starring: [`starring`, `starring`],
+        runTime: 113,
+        released: 2020,
+        id: 1,
+        isFavorite: false,
+        videoLink: `videoLink`,
+        previewVideoLink: `previewVideoLink`,
+      }, {
+        name: `name 2`,
+        genre: `Comedy`,
+        posterImage: `posterImage 2`,
+        previewImage: `previewImage 2`,
+        backgroundImage: `backgroundImage 2`,
+        backgroundColor: `backgroundColor 2`,
+        description: `description 2`,
+        rating: 124,
+        scoresCount: 8.9,
+        director: `director 2`,
+        starring: [`starring 2`, `starring 2`],
+        runTime: 113,
+        released: 2020,
+        id: 2,
+        isFavorite: false,
+        videoLink: `videoLink 2`,
+        previewVideoLink: `previewVideoLink 2`,
+      },
+    ]
   }
 };
 
@@ -273,51 +243,10 @@ const initialState = {
   films: [],
   activeGenre: DEFAULT_ACTIVE_GENRE,
   promoMovie: {},
-  activeFilmId: 0,
-  error: {},
   isLoading: false,
-  reviews: [{
-    text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-    author: `Kate Muir`,
-    date: `December 24, 2016`,
-    rating: 8.9
-  }, {
-    text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-    author: `Bill Goodykoontz`,
-    date: `November 18, 2015`,
-    rating: 8.0
-  }, {
-    text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-    author: `Kate Muir`,
-    date: `December 24, 2016`,
-    rating: 8.9
-  }, {
-    text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-    author: `Bill Goodykoontz`,
-    date: `November 18, 2015`,
-    rating: 8.0
-  }, {
-    text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-    author: `Kate Muir`,
-    date: `December 24, 2016`,
-    rating: 8.9
-  }, {
-    text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-    author: `Bill Goodykoontz`,
-    date: `November 18, 2015`,
-    rating: 8.0
-  }, {
-    text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed movies in years.`,
-    author: `Kate Muir`,
-    date: `December 24, 2016`,
-    rating: 8.9
-  }, {
-    text: `Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-    author: `Bill Goodykoontz`,
-    date: `November 18, 2015`,
-    rating: 8.0
-  },
-  ],
+  reviews: [],
+  commentFormSendingResult: null,
+  watchList: [],
 };
 
 describe(`Data reducer tests`, () => {
@@ -340,16 +269,16 @@ describe(`Data reducer tests`, () => {
     });
   });
 
-  it(`Reducer should change current film id by a given value`, () => {
-    const {activeFilmId} = initialState;
+  it(`Reducer should change current watchlist film id by a given value`, () => {
+    const {watchList} = initialState;
 
     expect(reducer({
-      activeFilmId
+      watchList
     }, {
-      type: ActionType.GET_ACTIVE_FILM_ID,
-      payload: activeFilmId
+      type: ActionType.LOAD_WATCH_LIST,
+      payload: filmList
     })).toEqual({
-      activeFilmId,
+      watchList: filmList
     });
   });
 
@@ -373,19 +302,10 @@ describe(`Data reducer tests`, () => {
       promoMovie
     }, {
       type: ActionType.LOAD_PROMO_FILM,
-      payload: givenPromoMovie
+      payload: singleMovie
     })).toEqual({
-      promoMovie: givenPromoMovie,
+      promoMovie: singleMovie,
     });
-  });
-
-  it(`Reducer should set error object by a given value`, () => {
-    const {error} = initialState;
-
-    expect(reducer({error}, {
-      type: ActionType.SET_ERROR,
-      payload: {error: `Error`}
-    })).toEqual({error: {error: `Error`}});
   });
 
   it(`Reducer should set isLoading property by a given value`, () => {
@@ -395,7 +315,19 @@ describe(`Data reducer tests`, () => {
       type: ActionType.SET_LOADING_STATUS,
       payload: true
     })).toEqual({
+      commentFormSendingResult: null,
       isLoading: true
+    });
+  });
+
+  it(`Reducer should set reviews property by a given value`, () => {
+    const {reviews} = initialState;
+
+    expect(reducer({reviews}, {
+      type: ActionType.LOAD_REVIEWS,
+      payload: reviews
+    })).toEqual({
+      reviews
     });
   });
 });
@@ -409,16 +341,16 @@ describe(`Action Creator tests`, () => {
   });
 
   it(`Action creator return correct action after call`, () => {
-    expect(ActionCreator.setError({error: {error: `error`}})).toEqual({
-      type: ActionType.SET_ERROR,
-      payload: {error: {error: `error`}},
+    expect(ActionCreator.loadReviews(reviewsList)).toEqual({
+      type: ActionType.LOAD_REVIEWS,
+      payload: reviewsList,
     });
   });
 
-  it(`Action creator return correct film id`, () => {
-    expect(ActionCreator.getActiveFilmId(changedActiveFilmId)).toEqual({
-      type: ActionType.GET_ACTIVE_FILM_ID,
-      payload: changedActiveFilmId,
+  it(`Action creator return correct watch list`, () => {
+    expect(ActionCreator.setWatchList(filmList)).toEqual({
+      type: ActionType.LOAD_WATCH_LIST,
+      payload: filmList,
     });
   });
 
@@ -430,15 +362,22 @@ describe(`Action Creator tests`, () => {
   });
 
   it(`Action creator return correct promo film`, () => {
-    expect(ActionCreator.loadPromoFilm(givenPromoMovie)).toEqual({
+    expect(ActionCreator.loadPromoFilm(singleMovie)).toEqual({
       type: ActionType.LOAD_PROMO_FILM,
-      payload: givenPromoMovie,
+      payload: singleMovie,
     });
   });
 
   it(`Action creator return correct isLoading status`, () => {
     expect(ActionCreator.setLoadingStatus(true)).toEqual({
       type: ActionType.SET_LOADING_STATUS,
+      payload: true,
+    });
+  });
+
+  it(`Action creator return correct commentFormSendingResult status`, () => {
+    expect(ActionCreator.setCommentFormSendingResult(true)).toEqual({
+      type: ActionType.SET_COMMENT_FORM_ACTION_RESULT,
       payload: true,
     });
   });
@@ -463,19 +402,19 @@ describe(`Selectors tests`, () => {
     expect(getReviews(state)).toEqual(reviewsList);
   });
 
-  it(`Selector getMovieDetails return right key`, () => {
-    expect(getActiveFilmId(state)).toEqual(changedActiveFilmId);
-  });
-
   it(`Selector getMovieCover return right key`, () => {
-    expect(getMovieCover(state)).toEqual(givenPromoMovie);
+    expect(getPromoMovie(state)).toEqual(singleMovie);
   });
 
   it(`Selector getActiveGenre return right key`, () => {
     expect(getActiveGenre(state)).toEqual(GIVEN_GENRE);
   });
 
-  it(`Selector getReviewError return right key`, () => {
-    expect(getDataError(state)).toEqual({});
+  it(`Selector getCommentFormSendingResult return right key`, () => {
+    expect(getCommentFormSendingResult(state)).toEqual(true);
+  });
+
+  it(`Selector getWatchList return right key`, () => {
+    expect(getWatchList(state)).toEqual(filmList);
   });
 });

@@ -30,7 +30,7 @@ exports[`Render movie reviews 1`] = `
             className="review__date"
             dateTime="2016-12-24"
           >
-            date
+            April 04, 2020
           </time>
         </footer>
       </blockquote>
@@ -57,20 +57,20 @@ exports[`Render movie reviews 1`] = `
           <cite
             className="review__author"
           >
-            author 1
+            author
           </cite>
           <time
             className="review__date"
             dateTime="2016-12-24"
           >
-            date 2
+            April 03, 2020
           </time>
         </footer>
       </blockquote>
       <div
         className="review__rating"
       >
-        8
+        8.9
       </div>
     </div>
   </div>

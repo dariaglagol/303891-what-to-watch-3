@@ -1,11 +1,11 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import {Router} from "react-router-dom";
-import MoviesList from "./movies-list";
-import history from "../../history.js";
+import WatchList from "./watch-list";
+import history from "../../history";
 
-const mock = {
-  catalogFilmList: [
+const mocks = {
+  mockCatalogFilms: [
     {
       name: `name`,
       genre: `Comedy`,
@@ -44,44 +44,28 @@ const mock = {
       previewVideoLink: `previewVideoLink 2`,
     },
   ],
-  mockedFilm: {
-    name: `name`,
-    genre: `genre`,
-    posterImage: `posterImage`,
-    previewImage: `previewImage`,
-    backgroundImage: `backgroundImage`,
-    backgroundColor: `backgroundColor`,
-    description: `description`,
-    rating: 124,
-    scoresCount: 8.9,
-    director: `director`,
-    starring: [`starring`, `starring`],
-    runTime: 113,
-    released: 2020,
+  userData: {
     id: 1,
-    isFavorite: false,
-    videoLink: `videoLink`,
-    previewVideoLink: `previewVideoLink`,
+    email: `email`,
+    name: `name`,
+    avatarUrl: `avatarUrl`
   },
-  currentShownFilms: 8,
 };
 
-it(`Movie list render`, () => {
-  const {mockedFilm, currentShownFilms, catalogFilmList} = mock;
+it(`Render watch list`, () => {
+  const {mockCatalogFilms, userData} = mocks;
 
-  const moviesListComponent = renderer
+  const watchListComponent = renderer
     .create(
         <Router history={history}>
-          <MoviesList
-            films={catalogFilmList}
-            onFilmCatalogCardHover={() => {}}
-            activeFilm={mockedFilm}
-            currentShownFilms={currentShownFilms}
+          <WatchList
+            films={mockCatalogFilms}
+            userData={userData}
+            renderMovieList={() => {}}
+            loadWatchFilm={() => {}}
           />
-        </Router>, {createNodeMock: () => {
-          return {};
-        }}
+        </Router>
     ).toJSON();
 
-  expect(moviesListComponent).toMatchSnapshot();
+  expect(watchListComponent).toMatchSnapshot();
 });

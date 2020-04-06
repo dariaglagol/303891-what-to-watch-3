@@ -12,31 +12,7 @@ const TabTypes = {
   REVIEWS: `Reviews`
 };
 
-const Genres = new Map([
-  [`ALL_GENRES`, {single: `All genres`, multiply: `All genres`}],
-  [`COMEDY`, {single: `Comedy`, multiply: `Comedies`}],
-  [`CRIME`, {single: `Crime`, multiply: `Crime`}],
-  [`DOCUMENTARY`, {single: `Documentary`, multiply: `Documentary`}],
-  [`DRAMA`, {single: `Drama`, multiply: `Dramas`}],
-  [`HORROR`, {single: `Horror`, multiply: `Horror`}],
-  [`KIDS_AND_FAMILY`, {single: `Kids & Family`, multiply: `Kids & Family`}],
-  [`ROMANCE`, {single: `Romance`, multiply: `Romance`}],
-  [`SCI_FI`, {single: `Sci-Fi`, multiply: `Sci-Fi`}],
-  [`THRILLER`, {single: `Thriller`, multiply: `Thrillers`}],
-]);
-
-const DEFAULT_ACTIVE_GENRE = {
-  single: `All genres`,
-  multiply: `All genres`
-};
-
-const PageTypes = {
-  MAIN: `main`,
-  MOVIE: `movie`,
-  AUTH: `auth`,
-  LOADING: `loading`,
-  REVIEW: `review`
-};
+const DEFAULT_ACTIVE_GENRE = `All genres`;
 
 const SIMILAR_FILM_COUNT = 4;
 
@@ -73,12 +49,24 @@ const TextAreaMinMaxValues = {
 
 const RATING_ERROR_TEXT = `Оцените фильм`;
 
+const AppRoute = {
+  LOGIN: `/login`,
+  FILMS: `/films`,
+  REVIEW: `review`,
+  MY_LIST: `/mylist`,
+  PLAYER: `/player`,
+  ROOT: `/`,
+};
+
+const FilmStatusFavorite = {
+  FAVORITE: 1,
+  NOT_FAVORITE: 0,
+};
+
 export {
   MovieMarksTypes,
   FILM_REVIEWS_COLUMN_COUNT,
   TabTypes,
-  Genres,
-  PageTypes,
   TABS,
   SIMILAR_FILM_COUNT,
   DEFAULT_ACTIVE_GENRE,
@@ -91,4 +79,6 @@ export {
   RATING_STARS_COUNT,
   TextAreaMinMaxValues,
   RATING_ERROR_TEXT,
+  AppRoute,
+  FilmStatusFavorite
 };

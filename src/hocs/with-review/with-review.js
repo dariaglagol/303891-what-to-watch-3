@@ -21,6 +21,20 @@ const withReview = (Component) => {
       this._textChangeHandler = this._textChangeHandler.bind(this);
     }
 
+    componentDidUpdate() {
+      const {commentFormSendingResult} = this.state;
+
+      if (commentFormSendingResult) {
+        this.setState({
+          stars: 0,
+          text: ``,
+          starStatus: null,
+          textStatus: null,
+          isSubmitButtonDisable: true,
+        });
+      }
+    }
+
     _starsChangeHandler(stars) {
       this.setState({
         stars,
@@ -35,21 +49,11 @@ const withReview = (Component) => {
       });
     }
 
-    _submitHandler() {
-      const {onSubmit, commentFormSendingResult} = this.props;
+    _submitHandler(id) {
+      const {onSubmit} = this.props;
       const {stars, text} = this.state;
 
-      onSubmit({stars, text});
-
-      if (commentFormSendingResult) {
-        this.setState({
-          stars: 0,
-          text: ``,
-          starStatus: null,
-          textStatus: null,
-          isSubmitButtonDisable: true,
-        });
-      }
+      onSubmit({stars, text, id});
     }
 
     render() {

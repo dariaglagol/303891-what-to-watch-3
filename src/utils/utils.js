@@ -1,5 +1,5 @@
-import {camelCase, mapKeys} from "lodash";
-import {MovieMarksTypes, SIMILAR_FILM_COUNT, TextAreaMinMaxValues} from './constants';
+import {camelCase, mapKeys, snakeCase} from "lodash";
+import {MovieMarksTypes, SIMILAR_FILM_COUNT, TextAreaMinMaxValues, DEFAULT_ACTIVE_GENRE} from './constants';
 
 const getMovieMark = (score) => {
   let key = ``;
@@ -13,9 +13,13 @@ const getMovieMark = (score) => {
   return key;
 };
 
-const getSimilarMovies = (genre, movies) => {
+const getSimilarMovies = (genre, movies, id) => {
   return movies.filter((movie) => {
-    return movie.genre === genre;
+    if (id !== movie.id) {
+      return movie.genre === genre;
+    }
+
+    return null;
   }).slice(0, SIMILAR_FILM_COUNT);
 };
 
@@ -39,6 +43,12 @@ const itemsAdapter = (films) => {
   });
 };
 
+const toRawItemsAdapter = (data) => {
+  return mapKeys(data, (value, key) => {
+    return snakeCase(key);
+  });
+};
+
 const validateTextAreaInput = (text) => {
   const textLength = text.length;
   let remainingCharacters = 0;
@@ -56,11 +66,33 @@ const validateTextAreaInput = (text) => {
 };
 
 const isSubmitButtonDisable = (stars, textStatus) => {
-  if (!stars || textStatus !== ``) {
-    return true;
-  }
+  return !stars || textStatus !== ``;
+};
 
-  return false;
+const getRoute = (route, id, additionalRoute) => {
+  return additionalRoute ?
+    `${route}/${id}/${additionalRoute}` : `${route}/${id}`;
+};
+
+const getGenres = (films) => {
+  const genres = new Set();
+  genres.add(DEFAULT_ACTIVE_GENRE);
+  films.forEach((film) => {
+    genres.add(film.genre);
+  });
+
+  return genres;
+};
+
+const findFilm = (films, id) => {
+  return films.find((film) => {
+    return film.id === parseInt(id, 10);
+  });
+};
+
+const replaceFilmItem = (filmList, replaceFilm) => {
+  const changedFilmPosition = filmList.findIndex((item) => replaceFilm.id === item.id);
+  return [].concat(filmList.slice(0, changedFilmPosition), replaceFilm, filmList.slice(changedFilmPosition + 1));
 };
 
 export {
@@ -71,5 +103,10 @@ export {
   validateTextAreaInput,
   sliceMovieArray,
   itemAdapter,
-  itemsAdapter
+  itemsAdapter,
+  getRoute,
+  getGenres,
+  toRawItemsAdapter,
+  findFilm,
+  replaceFilmItem,
 };
