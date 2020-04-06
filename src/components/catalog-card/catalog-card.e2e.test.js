@@ -86,8 +86,9 @@ it(`Click on film card to change page`, () => {
       />
   );
 
-  filmCard.simulate(`click`);
-
-  expect(onFilmClick.mock.calls.length).toBe(1);
-  expect(onFilmClick).toBeCalledWith(filmId);
+  expect(
+      filmCard
+      .find(`Link`)
+      .at(0).props().to
+  ).toEqual(`/films/${filmId}`);
 });
