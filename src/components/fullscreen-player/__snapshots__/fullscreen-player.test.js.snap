@@ -4,13 +4,17 @@ exports[`Render full screen component 1`] = `
 <div
   className="player"
 >
-  <button
-    className="player__exit"
+  <a
+    href="/films/2"
     onClick={[Function]}
-    type="button"
   >
-    Exit
-  </button>
+    <button
+      className="player__exit"
+      type="button"
+    >
+      Exit
+    </button>
+  </a>
   <div
     className="player__controls"
   >
@@ -23,11 +27,15 @@ exports[`Render full screen component 1`] = `
         <progress
           className="player__progress"
           max="100"
-          value={10}
+          value={6}
         />
         <div
           className="player__toggler"
-          styles="left: 30%;"
+          style={
+            Object {
+              "left": "6%",
+            }
+          }
         >
           Toggler
         </div>
@@ -66,7 +74,7 @@ exports[`Render full screen component 1`] = `
       <div
         className="player__name"
       >
-        Transpotting
+        name
       </div>
       <button
         className="player__full-screen"
