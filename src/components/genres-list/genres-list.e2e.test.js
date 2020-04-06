@@ -8,7 +8,7 @@ Enzyme.configure({
 });
 const activeGenre = `Genre`;
 
-const genreList = [`All genres`, `Genre`, `genre2`];
+const genreList = new Set([`All genres`, `Genre`, `genre2`]);
 
 const defaultActiveGenre = `All genres`;
 

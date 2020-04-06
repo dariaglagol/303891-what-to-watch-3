@@ -2,7 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import GenresList from "./genres-list";
 
-const genreList = [`All genres`, `Genre`, `genre2`];
+const genreList = new Set([`All genres`, `Genre`, `genre2`]);
 
 const defaultActiveGenre = `All genres`;
 
