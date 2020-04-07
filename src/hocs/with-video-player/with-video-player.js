@@ -11,7 +11,7 @@ const withVideoPlayer = (Component) => {
         progress: 0,
         isLoading: true,
         duration: 0,
-        fullScreenVideoIsPlaying: true
+        fullScreenVideoIsPlaying: false,
       };
 
       this._videoRef = createRef();
@@ -47,7 +47,6 @@ const withVideoPlayer = (Component) => {
     componentDidUpdate() {
       const video = this._videoRef.current;
       const {isFullscreenPlayerActive} = this.props;
-      const {fullScreenVideoIsPlaying} = this.state;
 
       if (!isFullscreenPlayerActive) {
         if (this.props.isPlaying) {
@@ -56,14 +55,6 @@ const withVideoPlayer = (Component) => {
         } else {
           video.load();
         }
-
-        return;
-      }
-
-      if (fullScreenVideoIsPlaying) {
-        video.play();
-      } else {
-        video.pause();
       }
     }
 
@@ -71,14 +62,27 @@ const withVideoPlayer = (Component) => {
       const {isFullscreenPlayerActive} = this.props;
 
       if (isFullscreenPlayerActive) {
+        this.setState({
+          fullScreenVideoIsPlaying: true
+        });
 
+        this._videoRef.current.play();
         this._videoRef.current.requestFullscreen();
       }
     }
 
     _playButtonClick() {
+      const video = this._videoRef.current;
+
       this.setState((prevState) => {
         return {fullScreenVideoIsPlaying: !prevState.fullScreenVideoIsPlaying};
+      }, () => {
+        const {fullScreenVideoIsPlaying} = this.state;
+        if (!fullScreenVideoIsPlaying) {
+          video.play();
+        } else {
+          video.pause();
+        }
       });
     }
 
