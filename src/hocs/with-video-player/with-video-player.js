@@ -78,8 +78,17 @@ const withVideoPlayer = (Component) => {
         return {fullScreenVideoIsPlaying: !prevState.fullScreenVideoIsPlaying};
       }, () => {
         const {fullScreenVideoIsPlaying} = this.state;
+
         if (!fullScreenVideoIsPlaying) {
-          video.play();
+          const playPromise = video.play();
+
+          if (playPromise !== undefined) {
+            playPromise
+              .then((res) => res)
+              .catch(() => {
+                video.pause();
+              });
+          }
         } else {
           video.pause();
         }
