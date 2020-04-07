@@ -167,8 +167,7 @@ it(`Render App`, () => {
           authFormSendingResult={true}
           watchList={watchList}
           loadWatchFilm={() => {}}
-        />
-        , {createNodeMock: () => {
+        />, {createNodeMock: () => {
           return {};
         }}
     )

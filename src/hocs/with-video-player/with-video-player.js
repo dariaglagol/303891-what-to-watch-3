@@ -62,13 +62,13 @@ const withVideoPlayer = (Component) => {
       const {isFullscreenPlayerActive} = this.props;
 
       if (isFullscreenPlayerActive) {
+        this.setState({
+          fullScreenVideoIsPlaying: true
+        });
+
         this._videoRef.current.play();
         this._videoRef.current.requestFullscreen();
       }
-
-      this.setState({
-        fullScreenVideoIsPlaying: true
-      });
     }
 
     _playButtonClick() {
@@ -78,7 +78,7 @@ const withVideoPlayer = (Component) => {
         return {fullScreenVideoIsPlaying: !prevState.fullScreenVideoIsPlaying};
       }, () => {
         const {fullScreenVideoIsPlaying} = this.state;
-        if (fullScreenVideoIsPlaying) {
+        if (!fullScreenVideoIsPlaying) {
           video.play();
         } else {
           video.pause();
